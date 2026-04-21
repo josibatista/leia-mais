@@ -22,6 +22,7 @@ module.exports = (sequelize, Sequelize) => {
         dataCriacao: {
             type: Sequelize.DATE,
             allowNull: false,
+            defaultValue: Sequelize.NOW,
             field: 'data_criacao'
         },
         tipo: {
@@ -41,6 +42,9 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             defaultValue: 0
         }
+    }, {
+        tableName: 'Usuario',
+        timestamps: false
     });
     return Usuario;
 }
