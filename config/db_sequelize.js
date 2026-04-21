@@ -18,6 +18,6 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Models
-db.usuario = require('../models/usuario')(sequelize, Sequelize);
+db.Usuario = require('../models/usuario')(sequelize, Sequelize);
 
 module.exports = db;

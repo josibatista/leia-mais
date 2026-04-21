@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Usuario = sequelize.define("usuario", {
+    const Usuario = sequelize.define("Usuario", {
         id: {
             type: Sequelize.BIGINT,
             autoIncrement: true,

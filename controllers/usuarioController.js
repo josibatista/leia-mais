@@ -13,7 +13,7 @@ module.exports = {
             //validar e-mail
             if (email) {
                 //verificar se o email já existe
-                const usuarioExistente = await db.usuario.findOne({ where: { email } });
+                const usuarioExistente = await db.Usuario.findOne({ where: { email } });
                 if (usuarioExistente) {
                     return res.status(400).json({ error: 'Email já cadastrado' });
                 }
@@ -50,7 +50,7 @@ module.exports = {
                 return res.status(422).json({error: 'O campo tipo é obrigatório'});
             }
 
-            const usuario = await db.usuario.create({
+            const usuario = await db.Usuario.create({
                 nome,
                 email,
                 senha: senhaHash,
@@ -63,4 +63,12 @@ module.exports = {
             res.status(500).json({ error: 'Erro ao criar usuário' });
         }
     },
+    async getUsuarios(req, res) {
+        try {
+            const usuarios = await db.usu
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao buscar usuários' });
+        }
+    }
 }
