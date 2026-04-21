@@ -12,5 +12,7 @@ router.get('/usuarios', usuarioController.getUsuarios);
 router.get('/usuarios/:id', usuarioController.getUsuarioById);
 //rota para atualizar usuário
 router.put('/atualizar-usuario/:id', usuarioController.putUsuario);
+//rota para deletar usuário
+router.delete('/deletar-usuario/:id', usuarioController.deleteUsuario);
 
 module.exports = router;

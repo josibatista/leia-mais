@@ -165,5 +165,20 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao atualizar usuário' });
         }
+    },
+    async deleteUsuario(req, res) {
+        try {
+            const deleted = await db.Usuario.destroy({
+                where: { id: req.params.id }
+            });
+            if (deleted) {
+                res.status(204).send();
+            } else {
+                res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao deletar usuário' });
+        }
     }
 }
