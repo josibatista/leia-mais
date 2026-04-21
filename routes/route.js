@@ -8,5 +8,7 @@ const router = express.Router();
 router.post('/cadastrar-usuario', usuarioController.postUsuario);
 //rota para buscar todos os usuários
 router.get('/usuarios', usuarioController.getUsuarios);
+//rota para buscar usuário por id
+router.get('/usuarios/:id', usuarioController.getUsuarioById);
 
 module.exports = router;

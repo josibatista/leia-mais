@@ -71,6 +71,21 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao buscar usuários' });
         }
-    }
+    },
+    async getUsuarioById(req, res) {
+        try {
+            const idSolicitado = req.params.id;
 
+            const usuario = await db.Usuario.findByPk(req.params.id);
+
+            if (usuario) {
+                res.status(200).json(usuario);
+            } else {
+                res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao buscar usuário' });
+        }
+    }
 }
