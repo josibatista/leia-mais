@@ -65,10 +65,12 @@ module.exports = {
     },
     async getUsuarios(req, res) {
         try {
-            const usuarios = await db.usu
+            const usuarios = await db.Usuario.findAll();
+            res.status(200).json(usuarios);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao buscar usuários' });
         }
     }
+
 }
