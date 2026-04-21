@@ -10,5 +10,7 @@ router.post('/cadastrar-usuario', usuarioController.postUsuario);
 router.get('/usuarios', usuarioController.getUsuarios);
 //rota para buscar usuário por id
 router.get('/usuarios/:id', usuarioController.getUsuarioById);
+//rota para atualizar usuário
+router.put('/atualizar-usuario/:id', usuarioController.putUsuario);
 
 module.exports = router;

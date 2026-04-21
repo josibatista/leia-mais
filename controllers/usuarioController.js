@@ -6,6 +6,7 @@ module.exports = {
         try {
             const { nome, email, senha, tipo } = req.body;
 
+            //validar nome
             if (!nome) {
                 return res.status(422).json({error: 'O campo nome é obrigatório'});
             }
@@ -43,7 +44,7 @@ module.exports = {
             //validar tipo
             const tipos = ['admin', 'usuario'];
             if(tipo) {
-                if(!tipos.includes(tipo)) {
+                if(!tipo || !tipos.includes(tipo)) {
                     return res.status(422).json({error: 'O campo tipo deve ser "admin" ou "usuario"'});
                 }
             } else {
@@ -86,6 +87,83 @@ module.exports = {
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao buscar usuário' });
+        }
+    },
+    async putUsuario(req, res) {
+        try {
+            const id = req.params.id;
+            const { nome, email, senha, tipo, imagemPerfil } = req.body;
+
+            const dadosAtualizados = {};
+
+            //validar nome
+            if (nome) {
+                dadosAtualizados.nome = nome;
+            }
+
+            //validar e-mail
+            if (email) {
+                const usuarioExistente = await db.Usuario.findOne({ where: { email } });
+
+                if (usuarioExistente && usuarioExistente.id != id) {
+                    return res.status(400).json({ error: 'Email já cadastrado' });
+                }
+
+                dadosAtualizados.email = email;
+            }
+
+            //validar tipo
+            if (tipo) {
+                const tipos = ['admin', 'usuario'];
+
+                if (!tipos.includes(tipo)) {
+                    return res.status(422).json({ error: 'Tipo inválido' });
+                }
+
+                dadosAtualizados.tipo = tipo;
+            }
+
+            //validar senha
+            if (senha) {
+                if (senha.length < 8) {
+                    return res.status(422).json({ error: 'A senha deve conter no mínimo 8 caracteres' });
+                } else if (!/[a-zA-Z]/.test(senha)) {
+                    return res.status(422).json({ error: 'A senha deve conter pelo menos uma letra' });
+                } else if (!/\d/.test(senha)) {
+                    return res.status(422).json({ error: 'A senha deve conter pelo menos um número' });
+                } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(senha)) {
+                    return res.status(422).json({ error: 'A senha deve conter pelo menos um caractere especial' });
+                }
+
+                dadosAtualizados.senha = await bcrypt.hash(senha, 10);
+            }
+
+            //validar imagemPerfil
+            if (imagemPerfil !== undefined) {
+                if (imagemPerfil && typeof imagemPerfil !== 'string') {
+                    return res.status(422).json({ error: 'O campo imagemPerfil deve ser uma string' });
+                }
+                dadosAtualizados.imagemPerfil = imagemPerfil;
+            }
+
+            //verifica se mandou algo
+            if (Object.keys(dadosAtualizados).length === 0) {
+                return res.status(400).json({ error: 'Nenhum dado para atualizar' });
+            }
+
+            const [updated] = await db.Usuario.update(dadosAtualizados, {
+                where: { id }
+            });
+
+            if (updated) {
+                const usuarioAtualizado = await db.Usuario.findByPk(id);
+                return res.status(200).json(usuarioAtualizado);
+            } else {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao atualizar usuário' });
         }
     }
 }
