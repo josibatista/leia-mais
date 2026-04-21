@@ -19,9 +19,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             allowNull: false
         },
-        data_criacao: {
+        dataCriacao: {
             type: Sequelize.DATE,
             allowNull: false,
+            field: 'data_criacao'
         },
         tipo: {
             type: Sequelize.TEXT,
@@ -32,7 +33,8 @@ module.exports = (sequelize, Sequelize) => {
         },
         imagemPerfil: {
             type: Sequelize.TEXT,
-            allowNull: true
+            allowNull: true,
+            field: 'imagem_perfil'
         },
         xp: {
             type: Sequelize.BIGINT,
