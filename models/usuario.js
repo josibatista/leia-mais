@@ -22,8 +22,7 @@ module.exports = (sequelize, Sequelize) => {
         dataCriacao: {
             type: Sequelize.DATE,
             allowNull: false,
-            defaultValue: Sequelize.NOW,
-            field: 'data_criacao'
+            defaultValue: Sequelize.NOW
         },
         tipo: {
             type: Sequelize.TEXT,
@@ -35,7 +34,6 @@ module.exports = (sequelize, Sequelize) => {
         imagemPerfil: {
             type: Sequelize.TEXT,
             allowNull: true,
-            field: 'imagem_perfil'
         },
         xp: {
             type: Sequelize.BIGINT,
