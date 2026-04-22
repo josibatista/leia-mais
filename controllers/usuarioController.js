@@ -81,10 +81,9 @@ module.exports = {
             const id = req.params.id;
 
             //checagem se está no próprio perfil ou é administrador
-            if (req.usuario.tipo !== 'administrador' && req.usuario.id != id) {
+            if (req.usuario.tipo !== 'administrador' && String(req.usuario.id) !== String(id)) {
                 return res.status(403).json({ error: 'Acesso negado' });
             }
-            const idSolicitado = req.params.id;
 
             const usuario = await db.Usuario.findByPk(id, {
                 attributes: { exclude: ['senha'] }
@@ -103,6 +102,12 @@ module.exports = {
     async putUsuario(req, res) {
         try {
             const id = req.params.id;
+
+            //checagem se está no próprio perfil ou é administrador
+            if (req.usuario.tipo !== 'administrador' && String(req.usuario.id) !== String(id)) {
+                return res.status(403).json({ error: 'Acesso negado' });
+            }
+
             const { nome, email, senha, tipo, imagemPerfil } = req.body;
 
             const dadosAtualizados = {};
@@ -167,7 +172,9 @@ module.exports = {
             });
 
             if (updated) {
-                const usuarioAtualizado = await db.Usuario.findByPk(id);
+                const usuarioAtualizado = await db.Usuario.findByPk(id, {
+                    attributes: { exclude: ['senha'] }
+                });
                 return res.status(200).json(usuarioAtualizado);
             } else {
                 return res.status(404).json({ error: 'Usuário não encontrado' });
@@ -182,9 +189,10 @@ module.exports = {
             const id = req.params.id;
 
             //checagem se está no próprio perfil ou é administrador
-            if (req.usuario.tipo !== 'administrador' && req.usuario.id != id) {
+            if (req.usuario.tipo !== 'administrador' && String(req.usuario.id) !== String(id)) {
                 return res.status(403).json({ error: 'Acesso negado' });
             }
+
             const deleted = await db.Usuario.destroy({
                 where: { id: req.params.id }
             });
