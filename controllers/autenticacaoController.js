@@ -1,51 +1,55 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const db = require('../config/db_sequelize');
+const secretKey = process.env.JWT_SECRET;
 
 module.exports = {
     async login(req, res) {
         try {
-            const { email, senha } = req.body;
+            let { email, senha } = req.body;
 
-            // busca usuário
-            const user = await db.Usuario.findOne({ where: { email } });
-
-            if (!user) {
-                return res.status(401).json({ error: 'Credenciais inválidas' });
+            if (email) {
+                email = email?.trim();
             }
 
-            // verifica senha
-            const senhaValida = await bcrypt.compare(senha, user.senha);
+            //verifica se o usuário existe
+            const usuario = await db.Usuario.findOne({ where: { email } });
+            if (!usuario) {
+                return res.status(401).json({ error: 'Usuário não encontrado' });
+            }
 
+            //verifica se a senha está correta
+            const senhaValida = await bcrypt.compare(senha, usuario.senha);
             if (!senhaValida) {
-                return res.status(401).json({ error: 'Credenciais inválidas' });
+                return res.status(401).json({ error: 'Senha incorreta' });
             }
 
-            // gera token
-            const token = jwt.sign(
-                {
-                    id: user.id,
-                    tipo: user.tipo
-                },
-                process.env.JWT_SECRET,
-                { expiresIn: '1h' }
-            );
+            const token = generateToken(usuario);
 
-            return res.status(200).json({
+            //retorna o token e dados básicos
+            res.status(200).json({
                 token,
                 usuario: {
-                    id: user.id,
-                    nome: user.nome,
-                    email: user.email,
-                    tipo: user.tipo,
-                    imagemPerfil: user.imagemPerfil,
-                    xp: user.xp
+                    id: usuario.id,
+                    nome: usuario.nome,
+                    email: usuario.email,
+                    tipo: usuario.tipo
                 }
             });
-
         } catch (error) {
-            console.error('Erro no login:', error);
-            return res.status(500).json({ error: 'Erro ao realizar login' });
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao processar login' });
         }
     }
 };
+
+function generateToken(usuario) {
+    const payload = {
+        id: usuario.id,
+        nome: usuario.nome,
+        email: usuario.email,
+        tipo: usuario.tipo
+    };
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+    return token;
+}
