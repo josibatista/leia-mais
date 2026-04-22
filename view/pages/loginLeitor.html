@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leia Mais - Login Leitor</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="blContainerPrincipal">
+
+        <div class="blContainerLogo">
+            <img src="../assets/logo.png" alt="Logo Leia Mais" class="blLogoImagem">
+        </div>
+
+        <!-- Seção de Login de Usuário/Leitor -->
+        <div id="blLoginLeitor" class="blCartaoLogin">
+            <h1>Login</h1>
+            
+            <form id="blFormLoginLeitor">
+                <div class="blGrupoInput">
+                    <label for="blEmailLeitor">Email</label>
+                    <input type="email" id="blEmailLeitor" name="email">
+                </div>
+
+                <div class="blGrupoInput">
+                    <label for="blSenhaLeitor">Senha</label>
+                    <input type="password" id="blSenhaLeitor" name="senha">
+                    <div class="blEsqueceuSenha">
+                        <a href="#">Esqueceu a senha?</a>
+                    </div>
+                </div>
+
+                <button type="submit" class="blBotaoPrimario">Entrar</button>
+            </form>
+
+            <div class="blLinksRodape">
+                <p>Não possui conta? <a href="cadastroLeitor.html" class="blLinkDestaque">Cadastre-se aqui.</a></p>
+                <a href="loginAdm.html" id="blMudarParaAdmin" class="blLinkDestaque">Entrar como administrador.</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>
