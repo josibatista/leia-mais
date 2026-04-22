@@ -29,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             allowNull: false,
             validate: {
-                isIn: [['admin', 'usuario']]
+                isIn: [['administrador', 'usuario']]
             }
         },
         imagemPerfil: {

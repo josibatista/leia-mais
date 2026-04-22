@@ -42,10 +42,10 @@ module.exports = {
             }
 
             //validar tipo
-            const tipos = ['admin', 'usuario'];
+            const tipos = ['administrador', 'usuario'];
             if(tipo) {
                 if(!tipo || !tipos.includes(tipo)) {
-                    return res.status(422).json({error: 'O campo tipo deve ser "admin" ou "usuario"'});
+                    return res.status(422).json({error: 'O campo tipo deve ser "administrador ou "usuario"'});
                 }
             } else {
                 return res.status(422).json({error: 'O campo tipo é obrigatório'});
@@ -66,7 +66,9 @@ module.exports = {
     },
     async getUsuarios(req, res) {
         try {
-            const usuarios = await db.Usuario.findAll();
+            const usuarios = await db.Usuario.findAll({
+                attributes: { exclude: ['senha'] }
+            });
             res.status(200).json(usuarios);
         } catch (error) {
             console.error(error);
@@ -75,10 +77,19 @@ module.exports = {
     },
     async getUsuarioById(req, res) {
         try {
+
+            const id = req.params.id;
+
+            //checagem se está no próprio perfil ou é administrador
+            if (req.usuario.tipo !== 'administrador' && req.usuario.id != id) {
+                return res.status(403).json({ error: 'Acesso negado' });
+            }
             const idSolicitado = req.params.id;
 
-            const usuario = await db.Usuario.findByPk(req.params.id);
-
+            const usuario = await db.Usuario.findByPk(id, {
+                attributes: { exclude: ['senha'] }
+            });
+            
             if (usuario) {
                 res.status(200).json(usuario);
             } else {
@@ -114,7 +125,7 @@ module.exports = {
 
             //validar tipo
             if (tipo) {
-                const tipos = ['admin', 'usuario'];
+                const tipos = ['administrador', 'usuario'];
 
                 if (!tipos.includes(tipo)) {
                     return res.status(422).json({ error: 'Tipo inválido' });
@@ -168,6 +179,12 @@ module.exports = {
     },
     async deleteUsuario(req, res) {
         try {
+            const id = req.params.id;
+
+            //checagem se está no próprio perfil ou é administrador
+            if (req.usuario.tipo !== 'administrador' && req.usuario.id != id) {
+                return res.status(403).json({ error: 'Acesso negado' });
+            }
             const deleted = await db.Usuario.destroy({
                 where: { id: req.params.id }
             });
