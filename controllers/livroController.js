@@ -112,5 +112,25 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao atualizar livro' });
         }
+    },
+    async deleteLivro(req, res) {
+        try {
+            const { id } = req.params;
+
+            const idExistente = await db.Livro.findOne({ where: { id } });
+            if (!idExistente) {
+                return res.status(404).json({ error: 'Livro não encontrado' });
+            }
+
+            await db.Livro.destroy({ where: { id } });
+
+            res.status(200).json({ 
+                message: 'Livro deletado com sucesso',
+                livroId: idExistente.id
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao deletar livro' });
+        }
     }
 }
