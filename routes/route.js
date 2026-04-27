@@ -6,9 +6,9 @@ const autenticarToken = require('../middleware/autenticarToken');
 const checkAdmin = require('../middleware/checkAdmin');
 
 
-router.post('/admin/livros', livroController.postLivro);
-router.put('/admin/livros/:id', livroController.putLivro);
-router.delete('/admin/livros/:id', livroController.deleteLivro);
+router.post('/livros/admin', livroController.postLivro);
+router.put('/livros/:id/admin', livroController.putLivro);
+router.delete('/livros/:id/admin', livroController.deleteLivro);
 
 router.get('/livros', livroController.getLivros);
 router.get('/livros/:id', livroController.getLivroById);
