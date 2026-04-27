@@ -6,5 +6,6 @@ const router = express.Router();
 router.post('/livros', livroController.postLivro);
 router.put('/livros/:id', livroController.putLivro);
 router.delete('/livros/:id', livroController.deleteLivro);
+router.get('/livros', livroController.getLivros);
 
 module.exports = router;

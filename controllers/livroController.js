@@ -44,7 +44,10 @@ module.exports = {
                 imagemCapa
             });
 
-           res.status(201).json(livro);
+            res.status(201).json({
+                message: 'Livro criado com sucesso',
+                livro
+            });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao criar livro' });
@@ -106,7 +109,10 @@ module.exports = {
             });
 
             const livroAtualizado = await db.Livro.findOne({ where: { id } });
-            res.status(200).json(livroAtualizado);
+            res.status(200).json({
+                messsage: 'Livro atualizado com sucesso',
+                livroAtualizado
+            });
 
         } catch (error) {
             console.error(error);
@@ -131,6 +137,18 @@ module.exports = {
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao deletar livro' });
+        }
+    },
+    async getLivros(req, res) {
+        try {
+            const livros = await db.Livro.findAll();
+            if (livros === 0) {
+                return res.status(404).json({ error: 'Nenhum livro cadastrado' });
+            }
+            res.status(200).json(livros);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao consultar livros' });
         }
     }
 }
