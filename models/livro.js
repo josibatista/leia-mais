@@ -15,6 +15,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             allowNull: true
         },
+        editora: {
+            type: Sequelize.TEXT,
+            allowNull: false
+        },
         anoPublicacao: {
             type: Sequelize.BIGINT,
             allowNull: true
