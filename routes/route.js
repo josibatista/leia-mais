@@ -7,5 +7,6 @@ router.post('/livros', livroController.postLivro);
 router.put('/livros/:id', livroController.putLivro);
 router.delete('/livros/:id', livroController.deleteLivro);
 router.get('/livros', livroController.getLivros);
+router.get('/livros/:id', livroController.getLivroById);
 
 module.exports = router;
