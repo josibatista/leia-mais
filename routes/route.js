@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 const livroController = require('../controllers/livroController');
-const autenticarToken = require('../middlewares/autenticarToken');
-const checkAdmin = require('../middlewares/checkAdmin');
+const autenticarToken = require('../middleware/autenticarToken');
+const checkAdmin = require('../middleware/checkAdmin');
 
 
-router.post('/livros', livroController.postLivro);
-router.put('/livros/:id', livroController.putLivro);
-router.delete('/livros/:id', livroController.deleteLivro);
+router.post('/admin/livros', livroController.postLivro);
+router.put('/admin/livros/:id', livroController.putLivro);
+router.delete('/admin/livros/:id', livroController.deleteLivro);
+
 router.get('/livros', livroController.getLivros);
 router.get('/livros/:id', livroController.getLivroById);
 
