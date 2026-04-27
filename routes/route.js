@@ -14,9 +14,9 @@ router.get('/livros', livroController.getLivros);
 router.get('/livros/:id', livroController.getLivroById);
 
 /*
-// Rotas apenas para administradores ou para o próprio usuário
-router.get('/livros', autenticarToken, livroController.getLivros);
-router.get('/livros/:id', autenticarToken, livroController.getLivroById);
+// Rotas para administradores, para o próprio usuário ou leitor*
+router.get('/livros', livroController.getLivros);
+router.get('/livros/:id', livroController.getLivroById);
 
 // Rotas apenas para administradores 
 router.post('/livros', autenticarToken, checkAdmin, livroController.postLivro);
