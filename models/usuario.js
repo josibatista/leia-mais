@@ -39,6 +39,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BIGINT,
             allowNull: false,
             defaultValue: 0
+        },
+        username: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+            unique: true
         }
     }, {
         tableName: 'Usuario',

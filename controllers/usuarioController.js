@@ -4,7 +4,10 @@ const bcrypt = require('bcrypt');
 module.exports = {
     async postUsuario(req, res) {
         try {
-            const { nome, email, senha, tipo } = req.body;
+            let { nome, email, username, senha, tipo } = req.body;
+            nome = nome?.trim();
+            email = email?.trim();
+            username = username?.trim();
 
             //validar nome
             if (!nome) {
@@ -20,6 +23,17 @@ module.exports = {
                 }
             } else {
                 return res.status(422).json({error: 'O campo e-mail é obrigatório'});
+            }
+
+            //validar username
+            if (username) {
+                //verificar se o username já existe
+                const usuarioExistente = await db.Usuario.findOne({ where: { username } });
+                if (usuarioExistente) {
+                    return res.status(400).json({ error: 'Username já cadastrado' });
+                }
+            } else {
+                return res.status(422).json({ error: 'O campo username é obrigatório' });
             }
 
             //validar senha
@@ -54,6 +68,7 @@ module.exports = {
             const usuario = await db.Usuario.create({
                 nome,
                 email,
+                username,
                 senha: senhaHash,
                 tipo
             });

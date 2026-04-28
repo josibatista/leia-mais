@@ -8,11 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
         formLogin.addEventListener('submit', async (evento) => {
             evento.preventDefault();
 
-            const email = document.getElementById('blEmailLeitor').value.trim();
+            const login = document.getElementById('blInputLoginLeitor').value.trim();
             const senha = document.getElementById('blSenhaLeitor').value.trim();
 
-            if (!email || !senha) {
-                alert('Preencha e-mail e senha.');
+            if (!login || !senha) {
+                alert('Preencha e-mail ou username e senha.');
                 return;
             }
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ email, senha })
+                    body: JSON.stringify({ login, senha })
                 });
 
                 const dados = await resposta.json();
@@ -53,9 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const nome = document.getElementById('blNomeLeitor').value.trim();
             const email = document.getElementById('blEmailLeitor').value.trim();
             const senha = document.getElementById('blSenhaLeitor').value.trim();
+            const username = document.getElementById('blUsuarioLeitor').value.trim();
 
-            if (!nome || !email || !senha) {
-                alert('Preencha nome, e-mail e senha.');
+            if (!nome || !email || !senha || !username) {
+                alert('Preencha nome, username, e-mail e senha.');
                 return;
             }
 
@@ -68,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({
                         nome,
                         email,
+                        username,
                         senha,
                         tipo: 'usuario'
                     })
