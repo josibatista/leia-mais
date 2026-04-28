@@ -164,6 +164,15 @@ input:focus {
     font-weight: 600;
 }
 
+/* Estilos da Tela de Recuperação de Senha */
+.blDescricaoRecuperacao {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--blCorPrimaria);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
 /* Responsividade */
 @media (max-width: 480px) {
     .blContainerPrincipal {
