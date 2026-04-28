@@ -1,0 +1,1065 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*VARIÁVEIS GLOBAIS*/
+
+:root {
+  --lmMarromEscuro: #3e2a1f;
+  --lmMarromClaro: #6b4f3a;
+  --lmBranco: #ffffff;
+  --lmPreto: #000000;
+  --lmBege: #f5ede4;
+  --lmBordaSuave: rgba(107, 79, 58, 0.2);
+  --lmSombra: rgba(62, 42, 31, 0.14);
+  --lmFundoOverlay: rgba(0, 0, 0, 0.45);
+
+  --lmCadastroMarromEscuro: #3e2a1f;
+  --lmCadastroMarromClaro: #6b4f3a;
+  --lmCadastroBranco: #ffffff;
+  --lmCadastroPreto: #000000;
+  --lmCadastroBege: #f5ede4;
+  --lmCadastroBordaSuave: rgba(107, 79, 58, 0.2);
+  --lmCadastroSombra: rgba(62, 42, 31, 0.12);
+}
+
+/* Compartilhados*/
+
+.lmCabecalhoLogoImagem {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin: 0 auto 0.75rem;
+  display: block;
+}
+
+.lmCabecalhoBotao {
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.lmMenuLateral {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100vh;
+  box-shadow: 8px 0 30px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  transition: left 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.lmMenuLateralAberto {
+  left: 0;
+}
+
+.lmMenuLateralCabecalho {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.lmMenuLogoLeiaMulheres {
+  width: 150px;
+  height: auto;
+  display: block;
+}
+
+.lmMenuFecharBotao {
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.lmMenuNavegacao {
+  display: flex;
+  flex-direction: column;
+}
+
+.lmMenuItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  text-decoration: none;
+  font-size: 0.98rem;
+}
+
+.lmMenuRodape {
+  margin-top: auto;
+  padding: 1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lmMenuSair {
+  text-decoration: none;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lmBotaoTema {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+.lmIconeTema,
+.lmIconeSair {
+  width: 20px;
+  height: 20px;
+}
+
+.lmMenuOverlay {
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 998;
+  transition: 0.3s ease;
+}
+
+.lmMenuOverlayAtivo {
+  opacity: 1;
+  visibility: visible;
+}
+
+/*ACERVO DE LIVROS*/
+
+/* ===== BUSCA HEADER ===== */
+
+.lmBuscaHeader {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.lmBuscaHeader.ativo {
+  max-height: 80px;
+  margin-top: 1rem;
+}
+
+.lmBuscaHeader input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid var(--lmBordaSuave);
+  font-family: "Poppins", sans-serif;
+  background-color: #fffdfa;
+  color: var(--lmMarromEscuro);
+}
+
+body.lmTemaEscuro .lmBuscaHeader input {
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--lmBege);
+  color: var(--lmMarromEscuro);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.lmAcervoBody .lmTituloProjetoImagem {
+  width: min(320px, 80%);
+  height: auto;
+  display: block;
+  margin: 0 auto 0.75rem;
+}
+
+.lmBuscaAcervo {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto 1.5rem;
+}
+
+.lmCampoBuscaLivros {
+  width: 100%;
+  border: 1px solid var(--lmBordaSuave);
+  border-radius: 0.8rem;
+  background-color: #fffdfa;
+  color: var(--lmMarromEscuro);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  padding: 0.9rem 1rem;
+  outline: none;
+}
+
+.lmCampoBuscaLivros:focus {
+  border-color: var(--lmMarromClaro);
+}
+
+body.lmTemaEscuro .lmCampoBuscaLivros {
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
+  color: #cccccc;
+}
+
+.lmAcervoBody .lmCabecalho {
+  width: 100%;
+  border-bottom: 1px solid var(--lmBordaSuave);
+}
+
+.lmAcervoBody .lmCabecalhoSuperior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid var(--lmBordaSuave);
+}
+
+.lmAcervoBody .lmCabecalhoBotao {
+  color: var(--lmMarromEscuro);
+}
+
+.lmAcervoBody .lmIconeBusca {
+  width: 20px;
+  height: 20px;
+  color: var(--lmMarromEscuro);
+}
+
+.lmAcervoBody .lmDescricaoContainer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.lmAcervoBody .lmDescricaoContainer.ativo {
+  max-height: 300px;
+}
+
+.lmAcervoBody .lmToggleDescricao {
+  margin-top: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--lmMarromClaro);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.lmAcervoBody .lmToggleDescricao.rotacionado {
+  transform: rotate(180deg);
+}
+
+.lmAcervoBody .lmCabecalhoDominio {
+  font-size: 0.75rem;
+  color: var(--lmBranco);
+  background-color: var(--lmMarromClaro);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.lmAcervoBody .lmCabecalhoCentro {
+  text-align: center;
+  padding: 1.5rem 1rem 1rem;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.lmAcervoBody .lmCabecalhoLogo {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 0.75rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, var(--lmMarromClaro), var(--lmMarromEscuro));
+}
+
+.lmAcervoBody .lmTituloProjeto {
+  font-family: "Great Vibes", cursive;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.lmAcervoBody .lmDescricaoProjeto {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 760px;
+  margin: 0 auto 0.75rem;
+}
+
+.lmAcervoBody .lmConteudoPrincipal {
+  width: 100%;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.lmAcervoBody .lmSecaoAcervo {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.lmAcervoBody .lmSecaoTopo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  gap: 0.25rem;
+}
+
+.lmAcervoBody .lmSetaSecao {
+  background: transparent;
+  border: none;
+  color: var(--lmMarromClaro);
+  font-size: 1.25rem;
+}
+
+.lmAcervoBody .lmTituloSecao {
+  font-size: 1.35rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.lmAcervoBody .lmGradeLivros {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.lmAcervoBody .lmCardLivro {
+  background-color: var(--lmBranco);
+  border: 1px solid var(--lmBordaSuave);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 24px var(--lmSombra);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.lmAcervoBody .lmCardImagem {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.lmAcervoBody .lmImagemLivroUm {
+  background: linear-gradient(135deg, #0d2c47, #264d73);
+}
+
+.lmAcervoBody .lmImagemLivroDois {
+  background: linear-gradient(135deg, #e54a6d, #85b7ff);
+}
+
+.lmAcervoBody .lmImagemLivroTres {
+  background: linear-gradient(135deg, #57b4d9, #f3d7cf);
+}
+
+.lmAcervoBody .lmImagemLivroQuatro {
+  background: linear-gradient(135deg, #8a362c, #d6a167);
+}
+
+.lmAcervoBody .lmImagemLivroCinco {
+  background: linear-gradient(135deg, #622c77, #d976de);
+}
+
+.lmAcervoBody .lmImagemLivroSeis {
+  background: linear-gradient(135deg, #f15050, #ffb562);
+}
+
+.lmAcervoBody .lmCardConteudo {
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+.lmAcervoBody .lmCardTitulo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.lmAcervoBody .lmCardAutor {
+  font-size: 0.85rem;
+  color: var(--lmMarromClaro);
+}
+
+.lmAcervoBody .lmBotaoSaibaMais {
+  margin-top: auto;
+  border: none;
+  background-color: var(--lmMarromClaro);
+  color: var(--lmBranco);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.7rem 1rem;
+  border-radius: 0.65rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.lmAcervoBody .lmBotaoSaibaMais:hover {
+  background-color: var(--lmMarromEscuro);
+}
+
+.lmAcervoBody .lmMenuLateral {
+  background-color: var(--lmBege);
+  border-right: 1px solid var(--lmBordaSuave);
+}
+
+.lmAcervoBody .lmMenuLateralCabecalho {
+  justify-content: flex-end;
+}
+
+.lmAcervoBody .lmMenuFecharBotao {
+  color: var(--lmMarromEscuro);
+}
+
+.lmAcervoBody .lmMenuItem {
+  color: var(--lmMarromEscuro);
+  border-top: 1px solid var(--lmBordaSuave);
+}
+
+.lmAcervoBody .lmMenuMarca .lmMarcaTexto {
+  font-family: "Great Vibes", cursive;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.lmAcervoBody .lmMenuRodape {
+  border-top: 1px solid var(--lmBordaSuave);
+}
+
+.lmAcervoBody .lmMenuSair,
+.lmAcervoBody .lmBotaoTema {
+  color: var(--lmMarromEscuro);
+}
+
+.lmAcervoBody .lmMenuOverlay {
+  background-color: var(--lmFundoOverlay);
+}
+
+.lmAcervoBody .lmModalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+  transition: 0.25s ease;
+}
+
+.lmAcervoBody .lmModalOverlayAtivo {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lmAcervoBody .lmModalConteudo {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  background-color: var(--lmBranco);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.2);
+}
+
+.lmAcervoBody .lmModalFechar {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  border: none;
+  background: transparent;
+  font-size: 2rem;
+  color: var(--lmMarromEscuro);
+  cursor: pointer;
+}
+
+.lmAcervoBody .lmModalTitulo {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  padding-right: 2rem;
+}
+
+.lmAcervoBody .lmModalLinha,
+.lmAcervoBody .lmModalBlocoDescricao {
+  margin-bottom: 0.85rem;
+  line-height: 1.6;
+}
+
+.lmAcervoBody .lmModalRotulo {
+  font-weight: 600;
+  color: var(--lmMarromClaro);
+}
+
+.lmAcervoBody .lmModalAvaliacao {
+  color: #d4a017;
+  letter-spacing: 0.08rem;
+}
+
+.lmAcervoBody .lmCardAcoesAdmin {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.lmAcervoBody .lmBotaoAdminLivro {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--lmBordaSuave);
+  border-radius: 0.6rem;
+  background-color: transparent;
+  color: var(--lmMarromEscuro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lmAcervoBody .lmBotaoAdminLivro:hover {
+  background-color: var(--lmBege);
+}
+
+.lmAcervoBody .lmIconeAdminLivro {
+  width: 17px;
+  height: 17px;
+}
+
+/*CADASTRO DE LIVROS */
+
+body.lmCadastroBody {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--lmCadastroBege);
+  color: var(--lmCadastroMarromEscuro);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.lmCadastroBody .lmCadastroCabecalho {
+  border-bottom: 1px solid var(--lmCadastroBordaSuave);
+  background-color: var(--lmCadastroBege);
+}
+
+.lmCadastroBody .lmCadastroCabecalhoTopo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--lmCadastroBordaSuave);
+}
+
+.lmCadastroBody .lmCabecalhoBotao {
+  color: var(--lmCadastroMarromEscuro);
+}
+
+.lmCadastroBody .lmCadastroDominio {
+  font-size: 0.75rem;
+  color: var(--lmCadastroBranco);
+  background-color: var(--lmCadastroMarromClaro);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.lmCadastroBody .lmCadastroCabecalhoCentro {
+  text-align: center;
+  padding: 1.5rem 1rem 1.25rem;
+}
+
+.lmCadastroTituloProjetoImagem {
+  width: min(320px, 80%);
+  height: auto;
+  display: block;
+  margin: 0 auto 0.75rem;
+}
+
+.lmCadastroBody .lmCadastroLogo {
+  width: 58px;
+  height: 58px;
+  margin: 0 auto 0.75rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, var(--lmCadastroMarromClaro), var(--lmCadastroMarromEscuro));
+}
+
+.lmCadastroBody .lmCadastroTituloProjeto {
+  font-family: "Great Vibes", cursive;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.lmCadastroBody .lmCadastroSubtitulo {
+  font-size: 0.95rem;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.lmCadastroBody .lmCadastroConteudoPrincipal {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.lmCadastroBody .lmCadastroSecaoFormulario {
+  width: 100%;
+  max-width: 680px;
+  padding: 1.5rem;
+  background-color: var(--lmCadastroBranco);
+  border: 1px solid var(--lmCadastroBordaSuave);
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px var(--lmCadastroSombra);
+}
+
+.lmCadastroBody .lmCadastroSecaoObservacao {
+  padding: 1.25rem;
+  background-color: var(--lmCadastroBranco);
+  border: 1px solid var(--lmCadastroBordaSuave);
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px var(--lmCadastroSombra);
+}
+
+.lmCadastroBody .lmCadastroSecaoCabecalho {
+  margin-bottom: 1.25rem;
+}
+
+.lmCadastroBody .lmCadastroTituloSecao {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.lmCadastroBody .lmCadastroTextoSecao {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.lmCadastroBody .lmCadastroFormularioLivro {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lmCadastroBody .lmCadastroGrupoCampo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.lmCadastroBody .lmCadastroGrupoLinha {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.lmCadastroBody .lmCadastroRotuloCampo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--lmCadastroMarromClaro);
+}
+
+.lmCadastroBody .lmCadastroCampoTexto,
+.lmCadastroBody .lmCadastroCampoSelecao,
+.lmCadastroBody .lmCadastroCampoTextoArea,
+.lmCadastroBody .lmCadastroCampoArquivo {
+  width: 100%;
+  border: 1px solid var(--lmCadastroBordaSuave);
+  border-radius: 0.8rem;
+  background-color: #fffdfa;
+  color: var(--lmCadastroMarromEscuro);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  padding: 0.9rem 1rem;
+  outline: none;
+}
+
+.lmCadastroBody .lmCadastroCampoTexto:focus,
+.lmCadastroBody .lmCadastroCampoSelecao:focus,
+.lmCadastroBody .lmCadastroCampoTextoArea:focus,
+.lmCadastroBody .lmCadastroCampoArquivo:focus {
+  border-color: var(--lmCadastroMarromClaro);
+}
+
+.lmCadastroBody .lmCadastroCampoTextoArea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.lmCadastroBody .lmCadastroAcoesFormulario {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.lmCadastroBody .lmCadastroBotaoPrimario,
+.lmCadastroBody .lmCadastroBotaoSecundario {
+  border: none;
+  border-radius: 0.8rem;
+  padding: 0.9rem 1rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.lmCadastroBody .lmCadastroBotaoPrimario {
+  background-color: var(--lmCadastroMarromClaro);
+  color: var(--lmCadastroBranco);
+}
+
+.lmCadastroBody .lmCadastroBotaoPrimario:hover {
+  background-color: var(--lmCadastroMarromEscuro);
+}
+
+.lmCadastroBody .lmCadastroBotaoSecundario {
+  background-color: #efe4d8;
+  color: var(--lmCadastroMarromEscuro);
+}
+
+.lmCadastroBody .lmCadastroBotaoSecundario:hover {
+  background-color: #e5d5c4;
+}
+
+.lmCadastroBody .lmCadastroTituloObservacao {
+  font-size: 1.15rem;
+  margin-bottom: 0.85rem;
+}
+
+.lmCadastroBody .lmCadastroListaObservacao {
+  padding-left: 1.2rem;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.lmCadastroBody .lmMenuLateral {
+  background-color: var(--lmCadastroBege);
+  border-right: 1px solid var(--lmCadastroBordaSuave);
+}
+
+.lmCadastroBody .lmMenuLateralCabecalho {
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--lmCadastroBordaSuave);
+}
+
+.lmCadastroBody .lmMenuLateralLogoAdmin {
+  justify-content: space-between;
+}
+
+.lmCadastroBody .lmMenuMarcaAdmin {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.lmCadastroBody .lmMenuLogoAdmin {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.lmCadastroBody .lmMenuNomeAdmin {
+  font-size: 1.45rem;
+  font-weight: 1000;
+  color: var(--lmCadastroMarromEscuro);
+}
+
+.lmCadastroBody .lmMenuFecharBotao {
+  color: var(--lmCadastroMarromEscuro);
+}
+
+.lmCadastroBody .lmMenuItem {
+  color: var(--lmCadastroMarromEscuro);
+  border-bottom: 1px solid var(--lmCadastroBordaSuave);
+  font-weight: 500;
+}
+
+.lmCadastroBody .lmMenuRodape {
+  border-top: 1px solid var(--lmCadastroBordaSuave);
+}
+
+.lmCadastroBody .lmMenuSair,
+.lmCadastroBody .lmBotaoTema {
+  color: var(--lmCadastroMarromEscuro);
+}
+
+.lmCadastroBody .lmMenuOverlay {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+/*TEMA ESCURO - ACERVO*/
+
+body.lmAcervoBody.lmTemaEscuro,
+body.lmTemaEscuro.lmAcervoBody {
+  background-color: #1f1f1f;
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmCabecalho,
+body.lmTemaEscuro.lmAcervoBody .lmCabecalho {
+  background-color: #1f1f1f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmCabecalhoSuperior,
+body.lmTemaEscuro.lmAcervoBody .lmCabecalhoSuperior {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmCabecalhoBotao,
+body.lmAcervoBody.lmTemaEscuro .lmIconeBusca,
+body.lmAcervoBody.lmTemaEscuro .lmTituloProjeto,
+body.lmAcervoBody.lmTemaEscuro .lmDescricaoProjeto,
+body.lmAcervoBody.lmTemaEscuro .lmTituloSecao {
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmConteudoPrincipal,
+body.lmAcervoBody.lmTemaEscuro .lmSecaoAcervo {
+  background-color: #1f1f1f;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmCardLivro {
+  background-color: #2b2b2b;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmCardTitulo,
+body.lmAcervoBody.lmTemaEscuro .lmCardAutor {
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmBotaoSaibaMais {
+  background-color: #6b4f3a;
+  color: #ffffff;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmModalConteudo {
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmModalRotulo,
+body.lmAcervoBody.lmTemaEscuro .lmModalFechar {
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmMenuLateral {
+  background-color: #242424;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmMenuItem,
+body.lmAcervoBody.lmTemaEscuro .lmMenuSair,
+body.lmAcervoBody.lmTemaEscuro .lmBotaoTema,
+body.lmAcervoBody.lmTemaEscuro .lmMenuFecharBotao {
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmMenuItem {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmMenuRodape {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmBotaoAdminLivro {
+  color: #f5f5f5;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmBotaoAdminLivro:hover {
+  background-color: #242424;
+}
+
+/*TEMA ESCURO - CADASTRO*/
+
+body.lmCadastroBody.lmTemaEscuro,
+body.lmTemaEscuro.lmCadastroBody {
+  background-color: #1f1f1f;
+  color: #f5f5f5;
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroCabecalho,
+body.lmTemaEscuro.lmCadastroBody .lmCadastroCabecalho {
+  background-color: #1f1f1f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroCabecalhoTopo,
+body.lmTemaEscuro.lmCadastroBody .lmCadastroCabecalhoTopo {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCabecalhoBotao,
+body.lmCadastroBody.lmTemaEscuro .lmCadastroTituloProjeto,
+body.lmCadastroBody.lmTemaEscuro .lmCadastroSubtitulo,
+body.lmCadastroBody.lmTemaEscuro .lmCadastroTituloSecao,
+body.lmCadastroBody.lmTemaEscuro .lmCadastroTextoSecao {
+  color: #f5f5f5;
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroConteudoPrincipal {
+  background-color: #1f1f1f;
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroSecaoFormulario,
+body.lmCadastroBody.lmTemaEscuro .lmCadastroSecaoObservacao {
+  background-color: #2b2b2b;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f5f5f5;
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroRotuloCampo {
+  color: #e4c8af;
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroCampoTexto,
+body.lmCadastroBody.lmTemaEscuro .lmCadastroCampoSelecao,
+body.lmCadastroBody.lmTemaEscuro .lmCadastroCampoTextoArea,
+body.lmCadastroBody.lmTemaEscuro .lmCadastroCampoArquivo {
+  background-color: #242424;
+  color: #f5f5f5;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroCampoTexto::placeholder,
+body.lmCadastroBody.lmTemaEscuro .lmCadastroCampoTextoArea::placeholder {
+  color: rgba(245, 245, 245, 0.55);
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroBotaoPrimario {
+  background-color: #6b4f3a;
+  color: #ffffff;
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroBotaoSecundario {
+  background-color: #3a3a3a;
+  color: #f5f5f5;
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmCadastroBotaoSecundario:hover {
+  background-color: #444444;
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmMenuLateral {
+  background-color: #242424;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmMenuLateralCabecalho,
+body.lmCadastroBody.lmTemaEscuro .lmMenuRodape {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmMenuItem,
+body.lmCadastroBody.lmTemaEscuro .lmMenuSair,
+body.lmCadastroBody.lmTemaEscuro .lmBotaoTema,
+body.lmCadastroBody.lmTemaEscuro .lmMenuFecharBotao,
+body.lmCadastroBody.lmTemaEscuro .lmMenuNomeAdmin {
+  color: #f5f5f5;
+}
+
+body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/*RESPONSIVIDADE - ACERVO*/
+
+@media (min-width: 640px) {
+  .lmAcervoBody .lmGradeLivros {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .lmAcervoBody .lmTituloProjeto {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .lmAcervoBody .lmCabecalhoSuperior {
+    padding: 1rem 2rem;
+  }
+
+  .lmAcervoBody .lmConteudoPrincipal {
+    padding: 2rem;
+  }
+
+  .lmAcervoBody .lmGradeLivros {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .lmAcervoBody .lmCardTitulo {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .lmAcervoBody .lmGradeLivros {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/*RESPONSIVIDADE - CADASTRO*/
+
+@media (min-width: 768px) {
+  .lmCadastroBody .lmCadastroTituloProjeto {
+    font-size: 4rem;
+  }
+
+  .lmCadastroBody .lmCadastroConteudoPrincipal {
+    padding: 2rem;
+  }
+
+  .lmCadastroBody .lmCadastroGrupoLinha {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lmCadastroBody .lmCadastroAcoesFormulario {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .lmCadastroBody .lmCadastroBotaoPrimario,
+  .lmCadastroBody .lmCadastroBotaoSecundario {
+    min-width: 140px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lmCadastroBody .lmCadastroConteudoPrincipal {
+    align-items: start;
+  }
+}
