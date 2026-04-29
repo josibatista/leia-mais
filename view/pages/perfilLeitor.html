@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leia Mais - Perfil Leitor</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="blCorpoDashboard">
+
+    <!-- Barra Lateral (visível apenas no Desktop) -->
+    <aside class="blMenuLateral blMenuLateralLeitor">
+        <div class="blLogoDashboard">
+            <img src="../assets/logo.png" alt="Logo">
+            <span>Leia+</span>
+        </div>
+
+        <nav class="blMenuNavegacao">
+            <a href="#" class="blMenuItem"><span id="blSaudacaoUsuario">Olá!</span></a>
+            <a href="#" class="blMenuItem ativo">Perfil <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="blMenuItem">Catálogo de Trilhas <i class="fa-solid fa-chevron-right"></i></a>
+
+            <a href="#" class="blMenuItem blMenuMarca">
+                <img src="../assets/logoLeiaClaro.png" alt="Acervo Leia Mulheres" class="blMenuLogoLeiaMulheres">
+            <i class="fa-solid fa-chevron-right"></i></a>
+            
+            <a href="#" class="blMenuItem">Comunidade <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="blMenuItem">Configurações <i class="fa-solid fa-chevron-right"></i></a>   
+        </nav>
+        <div class="blMenuRodape">
+            <a href="loginLeitor.html" class="blBotaoSair"><i class="fa-solid fa-power-off"></i> Sair</a>
+            <i class="fa-solid fa-circle-half-stroke blIconeTema"></i>
+        </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+     <main class="blConteudoPrincipal blConteudoLeitor">
+       
+        <!-- Cabeçalho Mobile (Oculto no Desktop) -->
+        <header class="blCabecalhoSuperior blMobileApenas">
+            <i class="fa-solid fa-bars blIconeMenu"></i>
+            <img src="../assets/logo.png" alt="Logo" class="blLogoMini">
+            <i class="fa-solid fa-arrow-up-from-bracket blIconeCompartilhar"></i>
+        </header>
+
+        <!-- Botão Voltar (Mobile Apenas) -->
+        <div class="blContainerVoltar blMobileApenas">
+            <i class="fa-solid fa-arrow-left blIconeVoltar"></i>
+        </div>
+
+        <!-- Informações do Usuário -->
+         <section class="blSecaoUsuario">
+            <div class="blAvatarContainer">
+                <div class="blAvatarCirculo">B</div>
+                <div class="blCoroaIcone">👑</div>
+            </div>
+            
+            <div class="blInfoTexto">
+                <div class="blLinhaInfo">
+                    <span class="blRotulo">Nome:</span>
+                    <span class="blValor">Beatriz Lopes</span>
+                    <i class="fa-regular fa-pen-to-square blIconeEditar"></i>
+                </div>
+                <div class="blLinhaInfo">
+                    <span class="blRotulo">Usuário:</span>
+                    <span class="blValor">bia123</span>
+                    <i class="fa-regular fa-pen-to-square blIconeEditar"></i>
+                </div>
+                <div class="blLinhaInfo">
+                    <span class="blRotulo">Senha:</span>
+                    <span class="blValor">*******</span>
+                    <i class="fa-regular fa-pen-to-square blIconeEditar"></i>
+                </div>
+            </div>
+         </section>
+
+         <!-- Estatísticas Rápidas -->
+        <section class="blGradeEstatisticas">
+            <div class="blCardEstatistica">
+                <i class="fa-solid fa-book blIconeCard"></i>
+                <span class="blNumeroEstatistica">3</span>
+                <span class="blTextoEstatistica">Livros Lidos</span>
+            </div>
+            <div class="blCardEstatistica">
+                <i class="fa-solid fa-fire blIconeCard"></i>
+                <span class="blNumeroEstatistica">34</span>
+                <span class="blTextoEstatistica">Dias Seguidos</span>
+            </div>
+            <div class="blCardEstatistica">
+                <i class="fa-solid fa-book-open blIconeCard"></i>
+                <span class="blNumeroEstatistica">1027</span>
+                <span class="blTextoEstatistica">Páginas Lidas</span>
+            </div>
+        </section>
+
+        <!-- Metas do Mês -->
+        <section class="blSecaoMetas">
+            <div class="blMetaTitulo">
+                Metas do mês: <span class="blMetaDestaque">200 páginas</span>
+            </div>
+            <div class="blBarraProgressoContainer">
+                <div class="blBarraProgresso" style="width: 75%;"></div>
+                <span class="blProgressoTexto">150/200</span>
+            </div>
+        </section>
+
+        <!-- Trilhas -->
+        <section class="blSecaoLista">
+            <div class="blListaCabecalho">
+                <h3>Trilhas</h3>
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="blItemTrilha">
+                <img src="../assets/livro1.jpg" alt="Trilha" class="blTrilhaImagem">
+                <div class="blTrilhaInfo">
+                    <span class="blTrilhaNome">Leia Mulheres</span>
+                    <div class="blBarraProgressoTrilhaContainer">
+                        <div class="blBarraProgressoTrilha" style="width: 67%;"></div>
+                    </div>
+                </div>
+                <span class="blTrilhaPorcentagem">67%</span>
+                <i class="fa-solid fa-chevron-right blIconeSeta"></i>
+            </div>
+        </section>
+
+        <!-- Livros -->
+        <section class="blSecaoLista">
+            <div class="blListaCabecalho">
+                <div class="blLivrosTitulos">
+                    <h3>Livros</h3>
+                    <span class="blLivrosSubtitulo">Lendo | Para Ler | Lidos</span>
+                </div>
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="blCarrosselLivros">
+                <img src="../assets/livro1.jpg" alt="Livro 1" class="blLivroCapa">
+                <img src="../assets/livro2.jpg" alt="Livro 2" class="blLivroCapa">
+                <img src="../assets/livro3.jpg" alt="Livro 3" class="blLivroCapa">
+                <img src="../assets/livro1.jpg" alt="Livro 4" class="blLivroCapa">
+                <img src="../assets/livro2.jpg" alt="Livro 5" class="blLivroCapa">
+            </div>
+        </section>
+
+     </main>
+    
+</body>
+</html>
