@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leia Mais - Perfil Leitor</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
@@ -56,7 +56,7 @@
          <section class="blSecaoUsuario">
             <div class="blAvatarContainer">
                 <div class="blAvatarCirculo">B</div>
-                <div class="blCoroaIcone">👑</div>
+                <div class="blCoroaIcone"><i class="fa-solid fa-crown"></i></div>
             </div>
             
             <div class="blInfoTexto">
@@ -132,7 +132,11 @@
             <div class="blListaCabecalho">
                 <div class="blLivrosTitulos">
                     <h3>Livros</h3>
-                    <span class="blLivrosSubtitulo">Lendo | Para Ler | Lidos</span>
+                    <div class="blMenuLivros">
+                        <button class="blFiltroLivro ativo" data-status="lendo">Lendo</button>
+                        <button class="blFiltroLivro" data-status="paraLer">Para Ler</button>
+                        <button class="blFiltroLivro" data-status="lidos">Lidos</button>
+                    </div>
                 </div>
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
