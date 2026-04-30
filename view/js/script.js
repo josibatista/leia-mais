@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 alert('Login realizado com sucesso!');
              
-                window.location.href = 'index.html';
+                window.location.href = 'perfilLeitor.html';
 
             } catch (erro) {
                 console.error('Erro no login:', erro);

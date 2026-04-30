@@ -20,7 +20,7 @@
         </div>
 
         <nav class="blMenuNavegacao">
-            <a href="#" class="blMenuItem"><span id="blSaudacaoUsuario">Olá!</span></a>
+            <a href="#" class="blMenuItem"><span id="blSaudacao">Olá!</span></a>
             <a href="#" class="blMenuItem ativo">Perfil <i class="fa-solid fa-chevron-right"></i></a>
             <a href="#" class="blMenuItem">Catálogo de Trilhas <i class="fa-solid fa-chevron-right"></i></a>
 
@@ -55,24 +55,24 @@
         <!-- Informações do Usuário -->
          <section class="blSecaoUsuario">
             <div class="blAvatarContainer">
-                <div class="blAvatarCirculo">B</div>
+                <div class="blAvatarCirculo" id="blLetraPerfil">B</div>
                 <div class="blCoroaIcone"><i class="fa-solid fa-crown"></i></div>
             </div>
             
             <div class="blInfoTexto">
                 <div class="blLinhaInfo">
                     <span class="blRotulo">Nome:</span>
-                    <span class="blValor">Beatriz Lopes</span>
+                    <span class="blValor" id="blNomePerfil">Beatriz Lopes</span>
                     <i class="fa-regular fa-pen-to-square blIconeEditar"></i>
                 </div>
                 <div class="blLinhaInfo">
                     <span class="blRotulo">Usuário:</span>
-                    <span class="blValor">bia123</span>
+                    <span class="blValor" id="blUsuarioPerfil">bia123</span>
                     <i class="fa-regular fa-pen-to-square blIconeEditar"></i>
                 </div>
                 <div class="blLinhaInfo">
                     <span class="blRotulo">Senha:</span>
-                    <span class="blValor">*******</span>
+                    <span class="blValor" id="blSenhaPerfil">*******</span>
                     <i class="fa-regular fa-pen-to-square blIconeEditar"></i>
                 </div>
             </div>
@@ -151,5 +151,6 @@
 
      </main>
     
+     <script src="../js/perfilLeitor.js"></script>
 </body>
 </html>
