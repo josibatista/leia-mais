@@ -126,4 +126,20 @@ module.exports = {
             res.status(500).json({ error: 'Erro ao consultar autores' });
         }
     },
+    async getAutorById(req, res) {
+        try {
+            const id = req.params.id;
+    
+            const autor = await db.Autor.findByPk(id);
+    
+            if (!autor) {
+                return res.status(404).json({ error: 'Autor não encontrado' });
+            }
+    
+            res.status(200).json(autor);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao consultar autores' });
+        }
+    }
 }

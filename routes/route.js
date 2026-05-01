@@ -32,5 +32,6 @@ router.put('/autores/:id/admin', autorController.putAutor);
 router.delete('/autores/:id/admin', autorController.deleteAutor);
 
 router.get('/autores', autorController.getAutores);
+router.get('/autores/:id', autorController.getAutorById);
 
 module.exports = router;
