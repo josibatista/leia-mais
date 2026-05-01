@@ -5,6 +5,7 @@ const livroController = require('../controllers/livroController');
 const autorController = require('../controllers/autorController');
 const autenticarToken = require('../middleware/autenticarToken');
 const checkAdmin = require('../middleware/checkAdmin');
+const autor = require('../models/autor');
 
 // Rotas - Livro
 router.post('/livros/admin', livroController.postLivro);
@@ -29,5 +30,7 @@ router.delete('/livros/:id', autenticarToken, checkAdmin, livroController.delete
 router.post('/autores/admin', autorController.postAutor);
 router.put('/autores/:id/admin', autorController.putAutor);
 router.delete('/autores/:id/admin', autorController.deleteAutor);
+
+router.get('/autores', autorController.getAutores);
 
 module.exports = router;
