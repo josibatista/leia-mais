@@ -17,7 +17,7 @@ module.exports = {
                 return res.status(422).json({ error: 'O campo título é obrigatório' });
             }
 
-            const tituloExistente = await db.Livro.findOne({
+            const tituloLivroExistente = await db.Livro.findOne({
                 where: {
                     titulo: {
                         [Op.iLike]: titulo
@@ -25,7 +25,7 @@ module.exports = {
                 }
             });
 
-            if (tituloExistente) {
+            if (tituloLivroExistente) {
                 return res.status(400).json({ error: 'Título já cadastrado' });
             }
 
@@ -76,7 +76,7 @@ module.exports = {
             }
 
             if (titulo !== undefined && titulo !== livro.titulo?.trim()) {
-                const tituloExistente = await db.Livro.findOne({
+                const tituloLivroExistente = await db.Livro.findOne({
                     where: {
                         titulo: {
                             [Op.iLike]: titulo
@@ -87,7 +87,7 @@ module.exports = {
                     }
                 });
 
-                if (tituloExistente) {
+                if (tituloLivroExistente) {
                     return res.status(400).json({ error: 'Título já cadastrado' });
                 }
             }
