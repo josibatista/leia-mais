@@ -435,13 +435,13 @@ input:focus {
 
 .blBarraProgressoTrilha {
     height: 100%;
-    background-color: var(--blCorDestaque);
+    background-color: var(--corDestaque);
 }
 
 .blTrilhaPorcentagem {
     font-weight: 700;
     font-size: 18px;
-    color: var(--blCorDestaque);
+    color: var(--corDestaque);
 }
 
 .blCarrosselLivros {
@@ -456,7 +456,7 @@ input:focus {
 }
 
 .blCarrosselLivros::-webkit-scrollbar-thumb {
-    background: var(--blCorSecundaria);
+    background: var(--corSecundaria);
     border-radius: 10px;
 }
 
@@ -518,9 +518,116 @@ input:focus {
 .blDescricaoRecuperacao {
     font-size: 16px;
     font-weight: 500;
-    color: var(--blCorPrimaria);
+    color: var(--corPrimaria);
     margin-bottom: 10px;
     line-height: 1.5;
+}
+
+/* Estilos da Tela de Configurações */
+.blCabecalhoConfiguracoes {
+    margin-bottom:30px;
+    text-align: left;
+}
+
+.blTituloPagina {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--corPrimaria);
+}
+
+.blContainerConfiguracoes {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 800px;
+}
+
+.blSecaoConfiguracao {
+    text-align: left;
+}
+
+.blTituloCategoria {
+    font-size: 22px;
+    font-weight: 700px;
+    color: var(--corPrimaria);
+    border-bottom: 2px solid var(--corPrimaria);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.blListaItensConfig {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    overflow: hidden
+}
+
+.blItemConfig {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(62, 42, 31, 0.1);
+    transition: background-color 0.2s;
+}
+
+.blItemConfig:last-child {
+    border-bottom: none;
+}
+
+.blItemConfig:hover {
+    background-color: rgba(62, 42, 31, 0.05);
+}
+
+.blInfoItem {
+    display: flex;
+    flex-direction: column;
+}
+
+.blNomeItem {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--corPrimaria);
+}
+
+.blValorItem {
+    font-size: 14px;
+    color: var(--corSecundaria);
+    font-weight: 500;
+}
+
+.blBotaoEditar {
+    background-color: var(--corSecundaria);
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.blItemPerigo .blNomeItem {
+    color: red;
+}
+
+.blItemPerigo i {
+    color: red;
+}
+
+.blSeletorConfig {
+    background-color: var(--corFundoInput);
+    border: 1px solid rgba(62, 42, 31, 0.2);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--corPrimaria);
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
 }
 
 /* Responsividade e Ajustes Mobile */
@@ -592,7 +699,7 @@ input:focus {
     }
 
     .blSecaoUsuario {
-        flex-direction: row; /* Mantém horizontal conforme protótipo mobile */
+        flex-direction: row;
         gap: 15px;
     }
 
@@ -637,4 +744,18 @@ input:focus {
         width: 90px;
         height: 135px;
     }
+
+    /* Configurações */
+    .blTituloPagina {
+        font-size:28px;
+    }
+
+    .blItemConfig {
+        padding: 12px 15px;
+    }
+
+    .blNomeItem {
+        font-size: 16px;
+    }
+
 }

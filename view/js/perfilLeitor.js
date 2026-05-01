@@ -13,5 +13,5 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('blSaudacao').textContent = `Olá, ${usuario.nome}!`;
     document.getElementById('blNomePerfil').textContent = usuario.nome;
     document.getElementById('blUsuarioPerfil').textContent = usuario.email;
-    document.getElementById('blSenhaPerfil').textContent = '********';
+    document.getElementById('blSenhaPerfil').textContent = usuario.senha;
 });
