@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 module.exports = {
     async postUsuario(req, res) {
         try {
-            let { nome, email, username, senha, tipo } = req.body;
+            let { nome, email, username, senha, tipo, iconePerfil } = req.body;
             nome = nome?.trim();
             email = email?.trim();
             username = username?.trim();
@@ -123,7 +123,7 @@ module.exports = {
                 return res.status(403).json({ error: 'Acesso negado' });
             }
 
-            const { nome, email, senha, tipo, imagemPerfil } = req.body;
+            const { nome, email, username, senha, tipo, iconePerfil } = req.body;
 
             const dadosAtualizados = {};
 
@@ -141,6 +141,17 @@ module.exports = {
                 }
 
                 dadosAtualizados.email = email;
+            }
+
+            //validar username
+            if (username) {
+                const usuarioExistente = await db.Usuario.findOne({ where: { username } });
+
+                if (usuarioExistente && usuarioExistente.id != id) {
+                    return res.status(400).json({ error: 'Username já cadastrado' });
+                }
+
+                dadosAtualizados.username = username;
             }
 
             //validar tipo
@@ -169,12 +180,12 @@ module.exports = {
                 dadosAtualizados.senha = await bcrypt.hash(senha, 10);
             }
 
-            //validar imagemPerfil
-            if (imagemPerfil !== undefined) {
-                if (imagemPerfil && typeof imagemPerfil !== 'string') {
-                    return res.status(422).json({ error: 'O campo imagemPerfil deve ser uma string' });
+            //validar iconePerfil
+            if (iconePerfil !== undefined) {
+                if (iconePerfil && typeof iconePerfil !== 'string') {
+                    return res.status(422).json({ error: 'O campo iconePerfil deve ser uma string' });
                 }
-                dadosAtualizados.imagemPerfil = imagemPerfil;
+                dadosAtualizados.iconePerfil = iconePerfil;
             }
 
             //verifica se mandou algo

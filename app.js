@@ -1,3 +1,5 @@
+console.log('Iniciando servidor...');
+
 require('dotenv').config();
 
 const express = require('express');
@@ -18,3 +20,13 @@ app.use(routes);
 app.listen(8080, function(){
   console.log("Servidor no http://localhost:8080");
 })
+
+db.sequelize.sync()
+  .then(() => {
+    app.listen(8080, () => {
+      console.log('Servidor no http://localhost:8080');
+    });
+  })
+  .catch((erro) => {
+    console.error('Erro ao iniciar servidor:', erro);
+  });

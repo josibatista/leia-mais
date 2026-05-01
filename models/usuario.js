@@ -31,15 +31,15 @@ module.exports = (sequelize, Sequelize) => {
                 isIn: [['administrador', 'usuario']]
             }
         },
-        imagemPerfil: {
+        iconePerfil: {
             type: Sequelize.TEXT,
             allowNull: true,
         },
-        xp: {
-            type: Sequelize.BIGINT,
-            allowNull: false,
-            defaultValue: 0
-        },
+        //xp: {
+        //    type: Sequelize.BIGINT,
+        //    allowNull: false,
+        //    defaultValue: 0
+        //},
         username: {
             type: Sequelize.TEXT,
             allowNull: false,
