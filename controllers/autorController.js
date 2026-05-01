@@ -91,5 +91,25 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao atualizar autor' });
         }
-    }
+    },
+    async deleteAutor(req, res) {
+            try {
+                const id = req.params.id;
+    
+                const autor = await db.Autor.findByPk(id);
+                if (!autor) {
+                    return res.status(404).json({ error: 'Autor não encontrado' });
+                }
+    
+                await db.Autor.destroy({ where: { id } });
+    
+                res.status(200).json({
+                    message: 'Autor deletado com sucesso',
+                    livroId: id
+                });
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ error: 'Erro ao deletar autor' });
+            }
+        },
 }

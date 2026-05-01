@@ -28,5 +28,6 @@ router.delete('/livros/:id', autenticarToken, checkAdmin, livroController.delete
 //Rotas - Autor
 router.post('/autores/admin', autorController.postAutor);
 router.put('/autores/:id/admin', autorController.putAutor);
+router.delete('/autores/:id/admin', autorController.deleteAutor);
 
 module.exports = router;
