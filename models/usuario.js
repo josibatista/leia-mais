@@ -35,11 +35,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             allowNull: true,
         },
-        //xp: {
-        //    type: Sequelize.BIGINT,
-        //    allowNull: false,
-        //    defaultValue: 0
-        //},
+        xpTotal: {
+            type: Sequelize.BIGINT,
+            defaultValue: 0
+        },
         username: {
             type: Sequelize.TEXT,
             allowNull: false,
