@@ -20,5 +20,8 @@ router.get('/usuarios/:id', autenticarToken, usuarioController.getUsuarioById);
 router.put('/usuarios/:id', autenticarToken, usuarioController.putUsuario);
 //rota para deletar usuário (apenas para administradores ou para o próprio usuário)
 router.delete('/usuarios/:id', autenticarToken, usuarioController.deleteUsuario);
+//rotas para recuperação de senha (envio de código e redefinição de senha)
+router.post('/esqueci-senha', usuarioController.enviarCodigo);
+router.put('/redefinir-senha', usuarioController.redefinirSenha);
 
 module.exports = router;

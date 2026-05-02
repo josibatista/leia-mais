@@ -1,5 +1,6 @@
 const db = require('../config/db_sequelize');
 const bcrypt = require('bcrypt');
+const codigosRecuperacao = {};
 
 module.exports = {
     async postUsuario(req, res) {
@@ -230,6 +231,84 @@ module.exports = {
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao deletar usuário' });
+        }
+    },
+    async enviarCodigo(req, res) {
+        try {
+            const { email } = req.body;
+
+            if (!email) {
+                return res.status(422).json({ error: 'E-mail obrigatório' });
+            }
+
+            const usuario = await db.Usuario.findOne({ where: { email } });
+
+            if (!usuario) {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+
+            const codigo = Math.floor(100000 + Math.random() * 900000);
+
+            //salvar código em memória
+            codigosRecuperacao[email] = codigo;
+
+            console.log("Código:", codigo);
+
+            res.json({ msg: 'Código enviado no console' });
+
+        } catch (error) {
+            res.status(500).json({ error: 'Erro ao enviar código' });
+        }
+    }, 
+    async redefinirSenha(req, res) {
+        try {
+            const { email, codigo, novaSenha } = req.body;
+
+            const usuario = await db.Usuario.findOne({ where: { email } });
+
+            if (!usuario) {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+
+            const codigoSalvo = codigosRecuperacao[email];
+
+            console.log("Código salvo:", codigoSalvo);
+            console.log("Código recebido:", codigo);
+
+            if (String(codigoSalvo) !== String(codigo)) {
+                return res.status(403).json({ error: 'Código inválido' });
+            }
+
+            //validar senha
+            if (!novaSenha) {
+                return res.status(422).json({ error: 'O campo senha é obrigatório' });
+            }
+
+            if (novaSenha.length < 8) {
+                return res.status(422).json({ error: 'Senha deve ter no mínimo 8 caracteres' });
+            }
+            if (!/[a-zA-Z]/.test(novaSenha)) {
+                return res.status(422).json({ error: 'A senha deve conter pelo menos uma letra' });
+            }
+            if (!/\d/.test(novaSenha)) {
+                return res.status(422).json({ error: 'A senha deve conter pelo menos um número' });
+            }
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(novaSenha)) {
+                return res.status(422).json({ error: 'A senha deve conter pelo menos um caractere especial' });
+            }
+
+            const hash = await bcrypt.hash(novaSenha, 10);
+
+            usuario.senha = hash;
+            await usuario.save();
+
+            delete codigosRecuperacao[email];
+
+            res.json({ msg: 'Senha alterada com sucesso' });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao redefinir senha' });
         }
     }
 }
