@@ -630,6 +630,90 @@ input:focus {
     cursor: pointer;
 }
 
+/* Formulários (Cadastro) do Admin) */
+.blCabecalhoPagina {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.blTextoApoio {
+    font-size: 16px;
+    color: var(--corSecundaria);
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.blContainerFormulario {
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 700px;
+    text-align: left;
+}
+
+.blFormularioPadrao {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.blFormularioPadrao label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--corPrimaria);
+}
+
+.blFormularioPadrao input, 
+.blFormularioPadrao textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(62, 42, 31, 0.2);
+    border-radius: 8px;
+    background-color: var(--corFundoInput);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: var(--corPrimaria);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.blFormularioPadrao input:focus, 
+.blFormularioPadrao textarea:focus {
+    border-color: var(--corDestaque);
+}
+
+.blFormularioPadrao textarea {
+    resize: vertical;
+}
+
+.blAcoesFormulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.blBotaoSecundario {
+    padding: 12px 25px;
+    background-color: transparent;
+    color: var(--corPrimaria);
+    border: 2px solid var(--corPrimaria);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.blBotaoSecundario:hover {
+    background-color: var(--corPrimaria);
+    color: white;
+}
+
 /* Responsividade e Ajustes Mobile */
 .blMobileApenas {
     display:none;
@@ -758,4 +842,15 @@ input:focus {
         font-size: 16px;
     }
 
+    .blContainerFormulario {
+        padding: 20px;
+    }
+
+     .blAcoesFormulario {
+        flex-direction: column;
+    }
+    
+    .blBotaoPrimario, .blBotaoSecundario {
+        width: 100%;
+    }
 }
