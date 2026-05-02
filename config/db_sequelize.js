@@ -25,11 +25,13 @@ db.Livro.belongsToMany(
   db.Autor, { 
     through: db.LivroAutor, 
     foreignKey: 'livroId' 
-  });
+  }
+);
 db.Autor.belongsToMany(
   db.Livro, {
      through: db.LivroAutor,
      foreignKey: 'autorId' 
-    });
+  }
+);
 
 module.exports = db;

@@ -30,6 +30,14 @@ module.exports = (sequelize, Sequelize) => {
         imagemCapa: {
             type: Sequelize.TEXT,
             allowNull: true
+        },
+        mediaNota: {
+            type: Sequelize.FLOAT,
+            allowNull: true
+        },
+        paginas: {
+            type: Sequelize.BIGINT,
+            allowNull: false
         }
     }, {
         tableName: 'Livro',

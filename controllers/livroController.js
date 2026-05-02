@@ -5,13 +5,15 @@ module.exports = {
 
     async postLivro(req, res) {
         try {
-            let { titulo, descricao, editora, anoPublicacao, genero, imagemCapa } = req.body;
+            let { titulo, descricao, editora, anoPublicacao, genero, imagemCapa, mediaNota, paginas } = req.body;
 
             titulo = titulo?.trim();
             descricao = descricao?.trim();
             editora = editora?.trim();
             genero = genero?.trim();
             imagemCapa = imagemCapa?.trim();
+            mediaNota = mediaNota?.trim();  
+             // fazer tratamento mediaNota e paginas**
 
             if (!titulo) {
                 return res.status(422).json({ error: 'O campo título é obrigatório' });
@@ -43,7 +45,9 @@ module.exports = {
                 editora,
                 anoPublicacao,
                 genero,
-                imagemCapa
+                imagemCapa,
+                mediaNota,
+                paginas
             });
 
             res.status(201).json({
