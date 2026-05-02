@@ -97,4 +97,8 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Não foi possível apagar a conta.");
     }
   });
+
+  document.getElementById("blGithub").addEventListener("click", () => {
+    window.open("https://github.com/josibatista/leia-mais", "_blank");
+  });
 });
