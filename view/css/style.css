@@ -1,0 +1,856 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --corPrimaria: #3E2A1F;
+    --corSecundaria: #6B4F3A;
+    --corDestaque: #C76D5E;
+    --corFundo: #F5EFE6; 
+    --corFundoInput: #E5DDD3;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--corFundo);
+    color: var(--corPrimaria);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.blContainerPrincipal {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Logo */
+.blContainerLogo {
+    margin-bottom: 25px;
+}
+
+.blLogoImagem {
+    width: 120px;
+    height: auto;
+    border-radius: 15px;
+}
+
+/* Card de Login */
+.blCartaoLogin {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    letter-spacing: -1px;
+}
+
+.blSubtitulo {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+/* Formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.blGrupoInput {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.blGrupoInput label {
+    font-weight: 600;
+    font-size: 18px;
+    margin-left: 2px;
+}
+
+input {
+    width: 100%;
+    height: 48px;
+    background-color: var(--corFundoInput);
+    border: 1px solid rgba(62, 42, 31, 0.2);
+    border-radius: 8px;
+    padding: 0 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: var(--corPrimaria);
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: var(--corPrimaria);
+}
+
+.blEsqueceuSenha {
+    text-align: right;
+    margin-top: 4px;
+}
+
+.blEsqueceuSenha a {
+    font-size: 13px;
+    color: var(--corDestaque);
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+/* Botão */
+.blBotaoPrimario {
+    background-color: var(--corSecundaria);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    height: 54px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    margin: 25px auto 10px;
+    padding: 0 45px;
+    width: fit-content;
+}
+
+.blBotaoPrimario:hover {
+    opacity: 0.9;
+}
+
+/* Layout Dashboard (Geral) */
+.blCorpoDashboard {
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+}
+
+.blMenuLateral {
+    width: 260px;
+    background-color: #f0E8DE;
+    border-right: 1px solid rgba(62, 42, 31, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.blLogoDashboard {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 20px 30px;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.blLogoDashboard img{
+    width: 40px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.blMenuNavegacao {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+.blMenuItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: var(--corPrimaria);
+    font-weight: 600;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(62, 42, 31, 0.05);
+}
+
+.blMenuMarca {
+    font-family:"Great Vibes", cursive;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.blMenuLogoLeiaMulheres {
+    width: 150px;
+    height: auto;
+    display: block;
+}
+
+.blMenuItem.ativo {
+    background-color: rgba(62, 42, 31, 0.05);
+}
+
+.blMenuItem i {
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+.blMenuRodape {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.blBotaoSair {
+    text-decoration: none;
+    color: var(--corPrimaria);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.blIconeTema {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.blConteudoPrincipal {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+/* Componentes da Tela do Perfil */
+.blSecaoUsuario {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.blAvatarContainer {
+    position: relative;
+}
+
+.blAvatarCirculo {
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--corPrimaria);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    font-family: 'Great Vibes', cursive;
+    color: var(--corDestaque);
+}
+
+.blCoroaIcone {
+    position: absolute;
+    top: -10px;
+    right: -5px;
+    font-size: 24px;
+    transform: rotate(45deg);
+}
+
+.blInfoTexto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+
+.blLinhaInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+}
+
+.blRotulo {
+    font-weight: 700;
+    min-width: 80px;
+}
+
+.blValor {
+    font-weight: 400;
+}
+
+.blIconeEditar {
+    font-size: 16px;
+    color: var(--corPrimaria);
+    cursor: pointer;
+}
+
+.blGradeEstatisticas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.blCardEstatistica {
+    border: 2px solid var(--corPrimaria);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.blIconeCard {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.blNumeroEstatistica {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--corDestaque);
+}
+
+.blTextoEstatistica {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.blSecaoMetas {
+    border: 2px solid var(--corPrimaria);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.blMetaTitulo {
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.blMetaDestaque {
+    color: var(--corDestaque);
+}
+
+.blBarraProgressoContainer {
+    position: relative;
+    width: 100%;
+    height: 30px;
+    background-color: #FFF;
+    border: 1px solid var(--corPrimaria);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.blBarraProgresso {
+    height: 100%;
+    background-color: var(--corDestaque);
+}
+
+.blProgressoTexto {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--corDestaque);
+}
+
+.blSecaoLista {
+    margin-bottom: 30px;
+}
+
+.blListaCabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.blListaCabecalho h3 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.blItemTrilha {
+    background-color: rgba(199, 109, 94, 0.15);
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.blTrilhaImagem {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--corPrimaria);
+}
+
+.blTrilhaInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.blTrilhaNome {
+    font-weight: 700;
+    font-size: 18px;
+    text-align: left;
+}
+
+.blBarraProgressoTrilhaContainer {
+    width: 100%;
+    height: 15px;
+    background-color: #FFF;
+    border: 1px solid var(--corPrimaria);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.blBarraProgressoTrilha {
+    height: 100%;
+    background-color: var(--corDestaque);
+}
+
+.blTrilhaPorcentagem {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--corDestaque);
+}
+
+.blCarrosselLivros {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.blCarrosselLivros::-webkit-scrollbar {
+    height: 6px;
+}
+
+.blCarrosselLivros::-webkit-scrollbar-thumb {
+    background: var(--corSecundaria);
+    border-radius: 10px;
+}
+
+.blLivroCapa {
+    width: 120px;
+    height: 180px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.blMenuLivros {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.blFiltroLivro {
+    border: none;
+    background-color: transparent;
+    color: var(--corSecundaria);
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 0;
+}
+
+.blFiltroLivro.ativo {
+    color: var(--corPrimaria);
+    font-weight: 600;
+    border-bottom: 2px solid #C76D5E;
+}
+
+/* Links de Rodapé do Login*/
+.blLinksRodape {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.blLinksRodape p {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--corPrimaria);
+}
+
+.blLinkDestaque {
+    color: var(--corDestaque);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+#blMudarParaAdmin, #blMudarParaLeitor {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Estilos da Tela de Recuperação de Senha */
+.blDescricaoRecuperacao {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--corPrimaria);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* Estilos da Tela de Configurações */
+.blCabecalhoConfiguracoes {
+    margin-bottom:30px;
+    text-align: left;
+}
+
+.blTituloPagina {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--corPrimaria);
+}
+
+.blContainerConfiguracoes {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 800px;
+}
+
+.blSecaoConfiguracao {
+    text-align: left;
+}
+
+.blTituloCategoria {
+    font-size: 22px;
+    font-weight: 700px;
+    color: var(--corPrimaria);
+    border-bottom: 2px solid var(--corPrimaria);
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.blListaItensConfig {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    overflow: hidden
+}
+
+.blItemConfig {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(62, 42, 31, 0.1);
+    transition: background-color 0.2s;
+}
+
+.blItemConfig:last-child {
+    border-bottom: none;
+}
+
+.blItemConfig:hover {
+    background-color: rgba(62, 42, 31, 0.05);
+}
+
+.blInfoItem {
+    display: flex;
+    flex-direction: column;
+}
+
+.blNomeItem {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--corPrimaria);
+}
+
+.blValorItem {
+    font-size: 14px;
+    color: var(--corSecundaria);
+    font-weight: 500;
+}
+
+.blBotaoEditar {
+    background-color: var(--corSecundaria);
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.blItemPerigo .blNomeItem {
+    color: red;
+}
+
+.blItemPerigo i {
+    color: red;
+}
+
+.blSeletorConfig {
+    background-color: var(--corFundoInput);
+    border: 1px solid rgba(62, 42, 31, 0.2);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: var(--corPrimaria);
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Formulários (Cadastro) do Admin) */
+.blCabecalhoPagina {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.blTextoApoio {
+    font-size: 16px;
+    color: var(--corSecundaria);
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.blContainerFormulario {
+    background-color: rgba(255, 255, 255, 0.3);
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 700px;
+    text-align: left;
+}
+
+.blFormularioPadrao {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.blFormularioPadrao label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--corPrimaria);
+}
+
+.blFormularioPadrao input, 
+.blFormularioPadrao textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(62, 42, 31, 0.2);
+    border-radius: 8px;
+    background-color: var(--corFundoInput);
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: var(--corPrimaria);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.blFormularioPadrao input:focus, 
+.blFormularioPadrao textarea:focus {
+    border-color: var(--corDestaque);
+}
+
+.blFormularioPadrao textarea {
+    resize: vertical;
+}
+
+.blAcoesFormulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.blBotaoSecundario {
+    padding: 12px 25px;
+    background-color: transparent;
+    color: var(--corPrimaria);
+    border: 2px solid var(--corPrimaria);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.blBotaoSecundario:hover {
+    background-color: var(--corPrimaria);
+    color: white;
+}
+
+/* Responsividade e Ajustes Mobile */
+.blMobileApenas {
+    display:none;
+}
+
+@media (max-width: 1024px) {
+    .blMenuLateral {
+        width: 80px;
+    }
+    .blLogoDashboard span, .blItemMenu span, .blItemMenu i, .blBotaoSair {
+        display: none;
+    }
+    .blItemMenu {
+        justify-content: center;
+    }
+    .blGradeEstatisticasAdmin, .blGradeAcoes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .blLayoutInferior {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .blContainerPrincipal {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    
+    h1 {
+        font-size: 44px;
+    }
+
+    .blBotaoPrimario {
+        width: auto;
+        min-width: 160px;
+    }
+
+    .blMenuLateral {
+        display: none;
+    }
+
+    .blMobileApenas {
+        display: flex;
+    }
+
+    .blConteudoPrincipal {
+        padding: 15px;
+    }
+
+    .blCabecalhoSuperior {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(62, 42, 31, 0.1);
+        margin-bottom: 10px;
+    }
+
+    .blLogoMini {
+        height: 40px;
+    }
+
+    .blContainerVoltar {
+        padding: 10px 0;
+        text-align: left;
+    }
+
+    .blSecaoUsuario {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .blAvatarCirculo {
+        width: 80px;
+        height: 80px;
+        font-size: 36px;
+    }
+
+    .blGradeEstatisticas {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .blCardEstatistica {
+        padding: 10px 5px;
+    }
+
+    .blNumeroEstatistica {
+        font-size: 24px;
+    }
+
+    .blTextoEstatistica {
+        font-size: 11px;
+    }
+
+    .blItemTrilha {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .blTrilhaImagem {
+        width: 60px;
+        height: 60px;
+    }
+
+    .blTrilhaPorcentagem {
+        font-size: 14px;
+    }
+
+    .blLivroCapa {
+        width: 90px;
+        height: 135px;
+    }
+
+    /* Configurações */
+    .blTituloPagina {
+        font-size:28px;
+    }
+
+    .blItemConfig {
+        padding: 12px 15px;
+    }
+
+    .blNomeItem {
+        font-size: 16px;
+    }
+
+    .blContainerFormulario {
+        padding: 20px;
+    }
+
+     .blAcoesFormulario {
+        flex-direction: column;
+    }
+    
+    .blBotaoPrimario, .blBotaoSecundario {
+        width: 100%;
+    }
+}
