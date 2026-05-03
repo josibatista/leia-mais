@@ -33,5 +33,7 @@ db.Autor.belongsToMany(
      foreignKey: 'autorId' 
   }
 );
+// Models
+db.Usuario = require('../models/usuario')(sequelize, Sequelize);
 
 module.exports = db;

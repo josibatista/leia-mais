@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leia Mais - Cadastro Autor</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="blCorpoDashboard">
+
+    <!-- Barra Lateral (Padrão Admin) -->
+    <aside class="blMenuLateral">
+        <div class="blLogoDashboard">
+            <img src="../assets/logo.png" alt="Logo">
+            <span>Leia+</span>
+        </div>
+
+        <nav class="blMenuNavegacao">
+            <a href="#" class="blMenuItem">Perfil <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="blMenuItem">Dashboard <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="blMenuItem">Usuários <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="blMenuItem">Livros <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="blMenuItem ativo">Autores <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="#" class="blMenuItem">Trilhas <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="configuracoes.html" class="blMenuItem">Configurações <i class="fa-solid fa-chevron-right"></i></a>   
+        </nav>
+
+        <div class="blMenuRodape">
+            <a href="loginAdmin.html" class="blBotaoSair"><i class="fa-solid fa-power-off"></i> Sair</a>
+            <i class="fa-solid fa-circle-half-stroke blIconeTema"></i>
+        </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="blConteudoPrincipal">
+
+        <!-- Cabeçalho Mobile (Oculto no Desktop) -->
+        <header class="blCabecalhoSuperior blMobileApenas">
+            <i class="fa-solid fa-bars blIconeMenu"></i>
+            <img src="../assets/logo.png" alt="Logo" class="blLogoMini">
+            <i></i>
+        </header>
+
+        <header class="blCabecalhoPagina">
+            <h1 class="blTituloPagina">Cadastrar autor</h1>
+            <p class="blTextoApoio">Adicione um novo autor ao acervo do sistema preenchendo as informações abaixo.</p>
+        </header>
+
+        <section class="blContainerFormulario">
+            <form id="blFormularioCadastroAutor" class="blFormularioPadrao">
+                <!-- Campo: Nome do Autor -->
+                <div class="blGrupoInput">
+                    <label for="blNomeAutor">Nome do autor</label>
+                    <input type="text" id="blNomeAutor" name="nome" placeholder="Digite o nome completo do autor" required>
+                </div>
+
+                <!-- Campo: Biografia -->
+                <div class="blGrupoInput">
+                    <label for="blBiografiaAutor">Biografia</label>
+                    <textarea id="blBiografiaAutor" name="biografia" rows="6" placeholder="Escreva uma breve biografia do autor..." required></textarea>
+                </div>
+
+                <!-- Ações do Formulário -->
+                <div class="blAcoesFormulario">
+                    <button type="submit" class="blBotaoPrimario">Cadastrar autor</button>
+                    <a href="#" class="blBotaoSecundario">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src=""></script>
+</body>
+</html>

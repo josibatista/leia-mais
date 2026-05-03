@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leia Mais - Recuperar Senha</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="blContainerPrincipal">
+
+        <div class="blContainerLogo">
+            <img src="../assets/logo.png" alt="Logo Leia Mais" class="blLogoImagem">
+        </div>
+
+        <div id="blRecuperarSenha" class="blCartaoInterface">
+            <h1>Recuperar Senha</h1>
+            <p class="blDescricaoRecuperacao">Insira o seu e-mail abaixo para receber as instruções de recuperação de senha.</p>
+            
+            <form id="blFormuRecuperarSenha">
+                <div class="blGrupoInput">
+                    <label for="blEmailRecuperacao">E-mail</label>
+                    <input type="email" id="blEmailRecuperacao" name="email" required>
+                </div>
+
+                <button type="submit" class="blBotaoPrimario">Enviar</button>
+            </form>
+
+            <div class="blLinksRodape">
+                <p>Lembrou a senha? <a href="loginLeitor.html" class="blLinkDestaque">Voltar para o login.</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="../js/recuperarConta.js"></script>
+</body>
+</html>
