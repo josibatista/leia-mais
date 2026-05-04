@@ -51,8 +51,6 @@ router.post('/livros/:id/autores/admin', livroAutorController.vincularAutores);
 router.delete('/livros/:id/autores/:autorId/admin', livroAutorController.desvincularAutor);
 const autenticacaoController = require('../controllers/autenticacaoController');
 const usuarioController = require('../controllers/usuarioController');
-const autenticarToken = require('../middleware/autenticarToken');
-const checkAdmin = require('../middleware/checkAdmin');
 
 //rota de login
 router.post('/login', autenticacaoController.login);
