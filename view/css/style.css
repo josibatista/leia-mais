@@ -1081,7 +1081,7 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
     --corFundoInput: #E5DDD3;
 }
 
-body {
+.blBody {
     font-family: 'Poppins', sans-serif;
     background-color: var(--corFundo);
     color: var(--corPrimaria);
