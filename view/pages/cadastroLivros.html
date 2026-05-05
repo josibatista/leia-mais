@@ -25,12 +25,12 @@
     </div>
 
     <nav class="lmMenuNavegacao">
-      <a href="#" class="lmMenuItem"><span>Perfil</span><span>&gt;</span></a>
-      <a href="#" class="lmMenuItem"><span>Dashboard</span><span>&gt;</span></a>
-      <a href="#" class="lmMenuItem"><span>Usuários</span><span>&gt;</span></a>
-      <a href="#" class="lmMenuItem"><span>Livros</span><span>&gt;</span></a>
-      <a href="#" class="lmMenuItem"><span>Autores</span><span>&gt;</span></a>
-      <a href="#" class="lmMenuItem"><span>Trilhas</span><span>&gt;</span></a>
+      <a href="perfilLeitor.html" class="lmMenuItem"><span>Perfil</span><span>&gt;</span></a>
+      <a href="dashboard.html" class="lmMenuItem"><span>Dashboard</span><span>&gt;</span></a>
+      <a href="usuarios.html" class="lmMenuItem"><span>Usuários</span><span>&gt;</span></a>
+      <a href="acervoLivros.html" class="lmMenuItem"><span>Livros</span><span>&gt;</span></a>
+      <a href="autores.html" class="lmMenuItem"><span>Autores</span><span>&gt;</span></a>
+      <a href="trilhas.html" class="lmMenuItem"><span>Trilhas</span><span>&gt;</span></a>
     </nav>
 
     <div class="lmMenuRodape">
@@ -119,6 +119,19 @@
         </div>
 
         <div class="lmCadastroGrupoCampo">
+          <label for="paginas" class="lmCadastroRotuloCampo">Número de páginas</label>
+          <input
+            type="number"
+            id="paginas"
+            name="paginas"
+            class="lmCadastroCampoTexto"
+            placeholder="Digite o número de páginas"
+            min="1"
+            required
+          />
+        </div>
+
+        <div class="lmCadastroGrupoCampo">
           <label for="idAutor" class="lmCadastroRotuloCampo">Autor</label>
           <select
             id="idAutor"
@@ -189,6 +202,7 @@
     </section>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/view/js/cadastroLivros.js"></script>
 </body>
 </html>

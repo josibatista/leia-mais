@@ -1,10 +1,8 @@
-const lmApiLivrosUrl = '/api/livros';
+const lmApiLivrosUrl = 'http://localhost:8080/livros';
 
 const lmSaudacaoUsuario = document.getElementById('lmSaudacaoUsuario');
 
-const lmUsuario = {
-  nome: 'Maria'
-};
+const lmUsuario = JSON.parse(localStorage.getItem('usuario')) || {};
 
 function lmAtualizarSaudacaoUsuario() {
   if (lmUsuario.nome && lmUsuario.nome.trim() !== '') {
@@ -96,9 +94,168 @@ function lmAbrirModalLivro(livro) {
   lmModalAutor.textContent = lmObterNomeAutor(livro);
   lmModalGenero.textContent = livro.genero || 'Gênero não informado';
   lmModalDescricao.textContent = livro.descricao || 'Descrição não informada.';
-  lmModalAvaliacao.textContent = lmFormatarAvaliacao(livro.avaliacaoLivro);
+  lmModalAvaliacao.textContent = lmFormatarAvaliacao(livro.mediaNota);
 
   lmModalOverlay.classList.add('lmModalOverlayAtivo');
+}
+
+function lmObterHeadersJson() {
+  const token = localStorage.getItem('token');
+
+  const headers = {
+    'Content-Type': 'application/json'
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
+}
+
+async function lmCarregarAutoresDisponiveis() {
+  try {
+    const resposta = await fetch('http://localhost:8080/autores/disponiveis');
+
+    if (!resposta.ok) {
+      throw new Error('Erro ao carregar autores disponíveis.');
+    }
+
+    const dados = await resposta.json();
+
+    return dados.autores || [];
+  } catch (erro) {
+    console.error('Erro ao carregar autores:', erro);
+    return [];
+  }
+}
+
+async function lmAtualizarAutoresDoLivro(livroId, autoresAtuais, novoAutorId) {
+  for (const autor of autoresAtuais) {
+    await fetch(`http://localhost:8080/livros/${livroId}/autores/${autor.id}/admin`, {
+      method: 'DELETE',
+      headers: lmObterHeadersJson()
+    });
+  }
+
+  const respostaVinculo = await fetch(`http://localhost:8080/livros/${livroId}/autores/admin`, {
+    method: 'POST',
+    headers: lmObterHeadersJson(),
+    body: JSON.stringify({
+      autoresIds: [Number(novoAutorId)]
+    })
+  });
+
+  const dadosVinculo = await respostaVinculo.json();
+
+  if (!respostaVinculo.ok) {
+    throw new Error(dadosVinculo.error || 'Livro editado, mas não foi possível atualizar o autor.');
+  }
+}
+
+async function lmEditarLivro(livro) {
+  const autoresDisponiveis = await lmCarregarAutoresDisponiveis();
+
+  if (autoresDisponiveis.length === 0) {
+    alert('Nenhum autor disponível para vincular ao livro.');
+    return;
+  }
+
+  const listaAutores = autoresDisponiveis
+    .map(function (autor) {
+      return `${autor.id} - ${autor.nome}`;
+    })
+    .join('\n');
+
+  const titulo = prompt('Título do livro:', livro.titulo || '');
+  if (titulo === null) return;
+
+  const editora = prompt('Editora:', livro.editora || '');
+  if (editora === null) return;
+
+  const anoPublicacao = prompt('Ano de publicação:', livro.anoPublicacao || '');
+  if (anoPublicacao === null) return;
+
+  const genero = prompt('Gênero:', livro.genero || '');
+  if (genero === null) return;
+
+  const descricao = prompt('Descrição:', livro.descricao || '');
+  if (descricao === null) return;
+
+  const imagemCapa = prompt('URL da imagem de capa:', livro.imagemCapa || '');
+  if (imagemCapa === null) return;
+
+  const autorAtualId = livro.autores && livro.autores.length > 0 ? livro.autores[0].id : '';
+
+  const novoAutorId = prompt(
+    `Digite o ID do novo autor:\n\n${listaAutores}`,
+    autorAtualId
+  );
+
+  if (novoAutorId === null) return;
+
+  const autorExiste = autoresDisponiveis.some(function (autor) {
+    return Number(autor.id) === Number(novoAutorId);
+  });
+
+  if (!autorExiste) {
+    alert('Autor inválido. Informe um ID existente.');
+    return;
+  }
+
+  try {
+    const resposta = await fetch(`http://localhost:8080/livros/${livro.id}/admin`, {
+      method: 'PUT',
+      headers: lmObterHeadersJson(),
+      body: JSON.stringify({
+        titulo,
+        editora,
+        anoPublicacao,
+        genero,
+        descricao,
+        imagemCapa
+      })
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || 'Erro ao editar livro.');
+    }
+
+    await lmAtualizarAutoresDoLivro(livro.id, livro.autores || [], novoAutorId);
+
+    alert('Livro e autor atualizados com sucesso.');
+    lmCarregarLivros();
+  } catch (erro) {
+    console.error('Erro ao editar livro:', erro);
+    alert(erro.message || 'Não foi possível editar o livro.');
+  }
+}
+
+async function lmExcluirLivro(idLivro) {
+  const confirmar = confirm('Tem certeza que deseja excluir este livro?');
+
+  if (!confirmar) return;
+
+  try {
+    const resposta = await fetch(`http://localhost:8080/livros/${idLivro}/admin`, {
+      method: 'DELETE',
+      headers: lmObterHeadersJson()
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || 'Erro ao excluir livro.');
+    }
+
+    alert('Livro excluído com sucesso.');
+    lmCarregarLivros();
+  } catch (erro) {
+    console.error('Erro ao excluir livro:', erro);
+    alert(erro.message || 'Não foi possível excluir o livro.');
+  }
 }
 
 function lmCriarCardLivro(livro) {
@@ -155,6 +312,9 @@ function lmCriarCardLivro(livro) {
         <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
       </svg>
     `;
+    botaoEditarLivro.addEventListener('click', function () {
+      lmEditarLivro(livro);
+    });
 
     const botaoExcluirLivro = document.createElement('button');
     botaoExcluirLivro.classList.add('lmBotaoAdminLivro');
@@ -171,6 +331,9 @@ function lmCriarCardLivro(livro) {
         <path d="M9 6V4h6v2"></path>
       </svg>
     `;
+    botaoExcluirLivro.addEventListener('click', function () {
+      lmExcluirLivro(livro.id);
+    });
 
     acoesAdmin.appendChild(botaoEditarLivro);
     acoesAdmin.appendChild(botaoExcluirLivro);
@@ -229,6 +392,16 @@ function lmFiltrarLivros() {
   lmRenderizarLivros(livrosFiltrados);
 }
 
+function lmCarregarAutoresDoLivro(livroId) {
+  return fetch(`http://localhost:8080/livros/${livroId}/autores`)
+    .then(res => {
+      if (!res.ok) return [];
+      return res.json();
+    })
+    .then(data => data.autores || [])
+    .catch(() => []);
+}
+
 async function lmCarregarLivros() {
   try {
     const resposta = await fetch(lmApiLivrosUrl);
@@ -239,8 +412,20 @@ async function lmCarregarLivros() {
 
     const livros = await resposta.json();
 
-    lmLivrosCarregados = livros;
+    const livrosComAutores = await Promise.all(
+      livros.map(async (livro) => {
+        const autores = await lmCarregarAutoresDoLivro(livro.id);
+
+        return {
+          ...livro,
+          autores
+        };
+      })
+    );
+
+    lmLivrosCarregados = livrosComAutores;
     lmRenderizarLivros(lmLivrosCarregados);
+
   } catch (erro) {
     lmGradeLivros.innerHTML = '';
 
@@ -303,12 +488,21 @@ lmBotaoTema.addEventListener('click', function () {
   }
 });
 
-const lmUsuarioLogado = {
-  tipoUsuario: 'admin' // ou 'usuario'
-};
-
 function lmUsuarioEhAdmin() {
-  return lmUsuarioLogado.tipoUsuario === 'admin';
+  return lmUsuario.tipo === 'administrador';
+}
+
+const lmBotaoSair = document.querySelector('.lmMenuSair');
+
+if (lmBotaoSair) {
+  lmBotaoSair.addEventListener('click', function (evento) {
+    evento.preventDefault();
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+
+    window.location.href = 'loginLeitor.html';
+  });
 }
 
 lmCampoBuscaLivros.addEventListener('input', lmFiltrarLivros);

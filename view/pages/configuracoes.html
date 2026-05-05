@@ -12,8 +12,7 @@
 
 <body class="blCorpoDashboard">
 
-    <!-- Barra Lateral -->
-     <aside class="blMenuLateral blMenuLateralLeitor">
+    <aside class="blMenuLateral blMenuLateralLeitor">
         <div class="blLogoDashboard">
             <img src="../assets/logo.png" alt="Logo">
             <span>Leia+</span>
@@ -31,16 +30,15 @@
             <a href="#" class="blMenuItem">Comunidade <i class="fa-solid fa-chevron-right"></i></a>
             <a href="#" class="blMenuItem ativo">Configurações <i class="fa-solid fa-chevron-right"></i></a>   
         </nav>
+
         <div class="blMenuRodape">
             <a href="loginLeitor.html" class="blBotaoSair"><i class="fa-solid fa-power-off"></i> Sair</a>
             <i class="fa-solid fa-circle-half-stroke blIconeTema"></i>
         </div>
     </aside>
     
-    <!-- Conteúdo Principal -->
     <main class="blConteudoPrincipal">
 
-        <!-- Cabeçalho Mobile (Oculto no Desktop) -->
         <header class="blCabecalhoSuperior blMobileApenas">
             <i class="fa-solid fa-bars blIconeMenu"></i>
             <img src="../assets/logo.png" alt="Logo" class="blLogoMini">
@@ -52,31 +50,35 @@
         </header>
 
         <div class="blContainerConfiguracoes">
-            <!-- Categoria: Conta -->
+
             <section class="blSecaoConfiguracao">
                 <h2 class="blTituloCategoria">Conta</h2>
                 <div class="blListaItensConfig">
+
                     <div class="blItemConfig">
                         <div class="blInfoItem">
                             <span class="blNomeItem">Nome</span>
-                            <span class="blValorItem" id="blNomePerfil">Beatriz Lopes</span>
+                            <span class="blValorItem" id="blNomePerfil"></span>
                         </div>
                         <button class="blBotaoEditar" data-campo="nome">Editar</button>
                     </div>
+
                     <div class="blItemConfig">
                         <div class="blInfoItem">
                             <span class="blNomeItem">Usuário</span>
-                            <span class="blValorItem" id="blUsuarioPerfil">bia123</span>
+                            <span class="blValorItem" id="blUsuarioPerfil"></span>
                         </div>
                         <button class="blBotaoEditar" data-campo="username">Editar</button>
                     </div>
+
                     <div class="blItemConfig">
                         <div class="blInfoItem">
                             <span class="blNomeItem">Email</span>
-                            <span class="blValorItem" id="blEmailPerfil">beatriz@exemplo.com</span>
+                            <span class="blValorItem" id="blEmailPerfil"></span>
                         </div>
                         <button class="blBotaoEditar" data-campo="email">Editar</button>
                     </div>
+
                     <div class="blItemConfig">
                         <div class="blInfoItem">
                             <span class="blNomeItem">Senha</span>
@@ -84,18 +86,19 @@
                         </div>
                         <button class="blBotaoEditar" data-campo="senha">Editar</button>
                     </div>
+
                     <div class="blItemConfig blItemPerigo" id="blApagarConta">
                         <span class="blNomeItem">Apagar conta</span>
                         <i class="fa-solid fa-trash-can"></i>
                     </div>
+
                 </div>
             </section>
 
-            <!-- Categoria: Preferências -->
             <section class="blSecaoConfiguracao">
                 <h2 class="blTituloCategoria">Preferências</h2>
                 <div class="blListaItensConfig">
-                    <!-- Visível apenas para Admin -->
+
                     <div class="blItemConfig">
                         <span class="blNomeItem">Nível de Usuário</span>
                         <select class="blSeletorConfig">
@@ -103,6 +106,7 @@
                             <option value="admin">Modo Admin</option>
                         </select>
                     </div>
+
                     <div class="blItemConfig">
                         <span class="blNomeItem">Modo escuro / Modo claro</span>
                         <select class="blSeletorConfig">
@@ -110,6 +114,7 @@
                             <option value="escuro">Modo Escuro</option>
                         </select>
                     </div>
+
                     <div class="blItemConfig">
                         <span class="blNomeItem">Nível de dificuldade</span>
                         <select class="blSeletorConfig">
@@ -118,16 +123,17 @@
                             <option value="avancado">Avançado</option>
                         </select>
                     </div>
+
                     <div class="blItemConfig">
                         <span class="blNomeItem">Idioma</span>
                         <select class="blSeletorConfig">
                             <option value="pt">Português</option>
                         </select>
                     </div>
+
                 </div>
             </section>
 
-            <!-- Categoria: Suporte -->
             <section class="blSecaoConfiguracao">
                 <h2 class="blTituloCategoria">Suporte</h2>
                 <div class="blListaItensConfig">
@@ -142,7 +148,6 @@
                 </div>
             </section>
 
-            <!-- Categoria: Sobre -->
             <section class="blSecaoConfiguracao">
                 <h2 class="blTituloCategoria">Sobre</h2>
                 <div class="blListaItensConfig">
@@ -160,6 +165,7 @@
                     </div>
                 </div>
             </section>
+
         </div>
     </main>
 

@@ -1,8 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const API_URL = "http://localhost:8080";
 
-  const token = localStorage.getItem("token");
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  let token = localStorage.getItem("token");
+  let usuario = JSON.parse(localStorage.getItem("usuario"));
 
   if (!token || !usuario) {
     alert("Faça login novamente.");
@@ -10,11 +10,42 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  document.getElementById("blSaudacao").textContent = `Olá, ${usuario.nome}!`;
-  document.getElementById("blNomePerfil").textContent = usuario.nome;
-  document.getElementById("blUsuarioPerfil").textContent = usuario.username;
-  document.getElementById("blEmailPerfil").textContent = usuario.email;
-  document.getElementById("blSenhaPerfil").textContent = "********";
+  async function carregarUsuario() {
+    try {
+      const res = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error);
+      }
+
+      usuario = data;
+      localStorage.setItem("usuario", JSON.stringify(data));
+
+      preencherTela();
+
+    } catch (erro) {
+      console.error(erro);
+      alert("Sessão expirada.");
+      localStorage.clear();
+      window.location.href = "loginLeitor.html";
+    }
+  }
+
+  function preencherTela() {
+    document.getElementById("blSaudacao").textContent = `Olá, ${usuario.nome}!`;
+    document.getElementById("blNomePerfil").textContent = usuario.nome;
+    document.getElementById("blUsuarioPerfil").textContent = usuario.username;
+    document.getElementById("blEmailPerfil").textContent = usuario.email;
+    document.getElementById("blSenhaPerfil").textContent = "********";
+  }
+
+  await carregarUsuario();
 
   const botoesEditar = document.querySelectorAll(".blBotaoEditar");
 
@@ -23,80 +54,88 @@ document.addEventListener("DOMContentLoaded", () => {
       const campo = botao.dataset.campo;
 
       let novoValor = prompt(`Digite o novo valor para ${campo}:`);
-
-      if (!novoValor) {
-        return;
-      }
+      if (!novoValor) return;
 
       novoValor = novoValor.trim();
 
-      const dadosAtualizados = {
-        [campo]: novoValor,
-      };
+      if (campo === "senha") {
+        if (novoValor.length < 8 ||
+            !/[a-zA-Z]/.test(novoValor) ||
+            !/\d/.test(novoValor) ||
+            !/[!@#$%^&*(),.?\":{}|<>]/.test(novoValor)) {
+          alert("Senha deve ter 8+ caracteres, letra, número e especial.");
+          return;
+        }
+      }
 
       try {
-        const resposta = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
+        const res = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(dadosAtualizados),
+          body: JSON.stringify({ [campo]: novoValor }),
         });
 
-        const dados = await resposta.json();
+        const data = await res.json();
 
-        if (!resposta.ok) {
-          alert(dados.error || "Erro ao atualizar dados.");
+        if (!res.ok) {
+          alert(data.error);
           return;
         }
 
-        localStorage.setItem("usuario", JSON.stringify(dados));
+        usuario = data;
+        localStorage.setItem("usuario", JSON.stringify(data));
 
-        alert("Dados atualizados com sucesso!");
-        location.reload();
+        preencherTela();
+        alert("Atualizado com sucesso!");
+
       } catch (erro) {
-        console.error("Erro ao atualizar usuário:", erro);
-        alert("Não foi possível atualizar os dados.");
+        console.error(erro);
+        alert("Erro ao atualizar.");
       }
     });
   });
 
-  const botaoApagarConta = document.getElementById("blApagarConta");
+  document.getElementById("blApagarConta").addEventListener("click", async () => {
+    const confirmar = confirm("Deseja realmente apagar sua conta?");
 
-  botaoApagarConta.addEventListener("click", async () => {
-    const confirmar = confirm(
-      "Tem certeza que deseja apagar sua conta? Essa ação não poderá ser desfeita.",
-    );
-
-    if (!confirmar) {
-      return;
-    }
+    if (!confirmar) return;
 
     try {
-      const resposta = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
+      const res = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      if (!resposta.ok) {
-        const dados = await resposta.json();
-        alert(dados.error || "Erro ao apagar conta.");
+      if (!res.ok) {
+        const data = await res.json();
+        alert(data.error);
         return;
       }
 
-      localStorage.removeItem("token");
-      localStorage.removeItem("usuario");
-
+      localStorage.clear();
       alert("Conta apagada com sucesso.");
       window.location.href = "loginLeitor.html";
+
     } catch (erro) {
-      console.error("Erro ao apagar conta:", erro);
-      alert("Não foi possível apagar a conta.");
+      console.error(erro);
+      alert("Erro ao apagar conta.");
     }
   });
+
+  const botaoSair = document.querySelector(".blBotaoSair");
+
+  if (botaoSair) {
+    botaoSair.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.clear();
+      window.location.href = "loginLeitor.html";
+    });
+  }
 
   document.getElementById("blGithub").addEventListener("click", () => {
     window.open("https://github.com/josibatista/leia-mais", "_blank");

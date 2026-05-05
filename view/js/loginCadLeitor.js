@@ -16,19 +16,21 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      const payloadLogin = { login, senha };
+
       try {
         const resposta = await fetch(`${API_URL}/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ login, senha }),
+          body: JSON.stringify(payloadLogin),
         });
 
         const dados = await resposta.json();
 
         if (!resposta.ok) {
-          alert(dados.error || "Erro ao fazer login.");
+          alert(dados.error || dados.message || "Erro ao fazer login.");
           return;
         }
 
@@ -37,7 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         alert("Login realizado com sucesso!");
 
-        window.location.href = "perfilLeitor.html";
+        if (dados.usuario && dados.usuario.tipo === "administrador") {
+          window.location.href = "perfilAdmin.html";
+        } else {
+          window.location.href = "perfilLeitor.html";
+        }
       } catch (erro) {
         console.error("Erro no login:", erro);
         alert("Não foi possível conectar ao servidor.");
@@ -77,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const dados = await resposta.json();
 
         if (!resposta.ok) {
-          alert(dados.error || "Erro ao cadastrar.");
+          alert(dados.error || dados.message || "Erro ao cadastrar.");
           return;
         }
 

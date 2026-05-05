@@ -23,13 +23,15 @@
             <form id="blFormNovaSenha">
                 <div class="blGrupoInput">
                     <label for="codigo">Código</label>
-                    <input type="text" id="codigo" required>
+                    <input type="text" id="codigo" required placeholder="Digite o código recebido">
                 </div>
 
                 <div class="blGrupoInput">
                     <label for="novaSenha">Nova senha</label>
-                    <input type="password" id="novaSenha" required>
+                    <input type="password" id="novaSenha" required placeholder="Digite sua nova senha" minlength="8">
                 </div>
+
+                <p class="blTextoApoioSenha">Mínimo 8 caracteres, com letra, número e símbolo.</p>
 
                 <button type="submit" class="blBotaoPrimario">
                     Redefinir senha
@@ -45,6 +47,6 @@
 
     </div>
 
-    <script src="../js/recuperarConta.js"></script>
+    <script src="../js/recuperarSenha.js"></script>
 </body>
 </html>
