@@ -177,6 +177,56 @@
     </div>
   </div>
 
+  <div class="lmModalOverlay" id="lmModalEditarLivro">
+    <div class="lmModalConteudo">
+      <button class="lmModalFechar" id="lmFecharModalEditarLivro" type="button">&times;</button>
+
+      <h2 class="lmModalTitulo">Editar Livro</h2>
+
+      <form id="lmFormularioEditarLivro">
+        <input type="hidden" id="lmEditarLivroId">
+
+        <div class="lmCadastroGrupoCampo">
+          <label for="lmEditarTitulo">Título</label>
+          <input type="text" id="lmEditarTitulo" required>
+        </div>
+
+        <div class="lmCadastroGrupoCampo">
+          <label for="lmEditarEditora">Editora</label>
+          <input type="text" id="lmEditarEditora" required>
+        </div>
+
+        <div class="lmCadastroGrupoCampo">
+          <label for="lmEditarAnoPublicacao">Ano de publicação</label>
+          <input type="number" id="lmEditarAnoPublicacao">
+        </div>
+
+        <div class="lmCadastroGrupoCampo">
+          <label for="lmEditarGenero">Gênero</label>
+          <input type="text" id="lmEditarGenero" required>
+        </div>
+
+        <div class="lmCadastroGrupoCampo">
+          <label for="lmEditarDescricao">Descrição</label>
+          <textarea id="lmEditarDescricao"></textarea>
+        </div>
+
+        <div class="lmCadastroGrupoCampo">
+          <label for="lmEditarAutor">Autor</label>
+          <select id="lmEditarAutor" required></select>
+        </div>
+
+        <div class="lmCadastroGrupoCampo">
+          <label for="lmEditarImagemCapa">Nova imagem de capa</label>
+          <input type="file" id="lmEditarImagemCapa" accept="image/*">
+        </div>
+
+        <button type="submit" class="lmCadastroBotaoPrimario">Salvar alterações</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/view/js/acervoLivros.js"></script>
 </body>
 </html>
