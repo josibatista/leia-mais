@@ -1,4 +1,7 @@
 const lmApiLivrosUrl = 'http://localhost:8080/livros';
+const SUPABASE_URL = 'https://htregzpvwyhrrqdzqtrd.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_F5w-U17IUYOQoZySjx0RQQ_UdYMH0MP';
+const SUPABASE_BUCKET = 'capa-livros';
 
 const lmSaudacaoUsuario = document.getElementById('lmSaudacaoUsuario');
 
@@ -153,84 +156,59 @@ async function lmAtualizarAutoresDoLivro(livroId, autoresAtuais, novoAutorId) {
   }
 }
 
+let lmLivroEmEdicao = null;
+
+async function lmUploadNovaImagemCapa(arquivoImagem) {
+  if (!arquivoImagem) return null;
+
+  const extensaoArquivo = arquivoImagem.name.split('.').pop();
+  const nomeArquivo = `capa-editada-${Date.now()}.${extensaoArquivo}`;
+  const caminhoArquivo = `livros/${nomeArquivo}`;
+
+  const { error } = await supabaseClient.storage
+    .from(SUPABASE_BUCKET)
+    .upload(caminhoArquivo, arquivoImagem);
+
+  if (error) {
+    console.error('Erro Supabase Storage:', error);
+    throw new Error(error.message || 'Erro ao enviar nova imagem.');
+  }
+
+  const { data } = supabaseClient.storage
+    .from(SUPABASE_BUCKET)
+    .getPublicUrl(caminhoArquivo);
+
+  return data.publicUrl;
+}
+
 async function lmEditarLivro(livro) {
+  lmLivroEmEdicao = livro;
+
   const autoresDisponiveis = await lmCarregarAutoresDisponiveis();
 
-  if (autoresDisponiveis.length === 0) {
-    alert('Nenhum autor disponível para vincular ao livro.');
-    return;
-  }
+  document.getElementById('lmEditarLivroId').value = livro.id;
+  document.getElementById('lmEditarTitulo').value = livro.titulo || '';
+  document.getElementById('lmEditarEditora').value = livro.editora || '';
+  document.getElementById('lmEditarAnoPublicacao').value = livro.anoPublicacao || '';
+  document.getElementById('lmEditarGenero').value = livro.genero || '';
+  document.getElementById('lmEditarDescricao').value = livro.descricao || '';
 
-  const listaAutores = autoresDisponiveis
-    .map(function (autor) {
-      return `${autor.id} - ${autor.nome}`;
-    })
-    .join('\n');
+  const campoAutor = document.getElementById('lmEditarAutor');
+  campoAutor.innerHTML = '<option value="">Selecione um autor</option>';
 
-  const titulo = prompt('Título do livro:', livro.titulo || '');
-  if (titulo === null) return;
+  autoresDisponiveis.forEach((autor) => {
+    const option = document.createElement('option');
+    option.value = autor.id;
+    option.textContent = autor.nome;
 
-  const editora = prompt('Editora:', livro.editora || '');
-  if (editora === null) return;
-
-  const anoPublicacao = prompt('Ano de publicação:', livro.anoPublicacao || '');
-  if (anoPublicacao === null) return;
-
-  const genero = prompt('Gênero:', livro.genero || '');
-  if (genero === null) return;
-
-  const descricao = prompt('Descrição:', livro.descricao || '');
-  if (descricao === null) return;
-
-  const imagemCapa = prompt('URL da imagem de capa:', livro.imagemCapa || '');
-  if (imagemCapa === null) return;
-
-  const autorAtualId = livro.autores && livro.autores.length > 0 ? livro.autores[0].id : '';
-
-  const novoAutorId = prompt(
-    `Digite o ID do novo autor:\n\n${listaAutores}`,
-    autorAtualId
-  );
-
-  if (novoAutorId === null) return;
-
-  const autorExiste = autoresDisponiveis.some(function (autor) {
-    return Number(autor.id) === Number(novoAutorId);
-  });
-
-  if (!autorExiste) {
-    alert('Autor inválido. Informe um ID existente.');
-    return;
-  }
-
-  try {
-    const resposta = await fetch(`http://localhost:8080/livros/${livro.id}/admin`, {
-      method: 'PUT',
-      headers: lmObterHeadersJson(),
-      body: JSON.stringify({
-        titulo,
-        editora,
-        anoPublicacao,
-        genero,
-        descricao,
-        imagemCapa
-      })
-    });
-
-    const dados = await resposta.json();
-
-    if (!resposta.ok) {
-      throw new Error(dados.error || 'Erro ao editar livro.');
+    if (livro.autores && livro.autores[0] && Number(livro.autores[0].id) === Number(autor.id)) {
+      option.selected = true;
     }
 
-    await lmAtualizarAutoresDoLivro(livro.id, livro.autores || [], novoAutorId);
+    campoAutor.appendChild(option);
+  });
 
-    alert('Livro e autor atualizados com sucesso.');
-    lmCarregarLivros();
-  } catch (erro) {
-    console.error('Erro ao editar livro:', erro);
-    alert(erro.message || 'Não foi possível editar o livro.');
-  }
+  document.getElementById('lmModalEditarLivro').classList.add('lmModalOverlayAtivo');
 }
 
 async function lmExcluirLivro(idLivro) {
@@ -504,6 +482,68 @@ if (lmBotaoSair) {
     window.location.href = 'loginLeitor.html';
   });
 }
+
+const lmFormularioEditarLivro = document.getElementById('lmFormularioEditarLivro');
+const lmModalEditarLivro = document.getElementById('lmModalEditarLivro');
+const lmFecharModalEditarLivro = document.getElementById('lmFecharModalEditarLivro');
+
+lmFecharModalEditarLivro.addEventListener('click', function () {
+  lmModalEditarLivro.classList.remove('lmModalOverlayAtivo');
+});
+
+lmFormularioEditarLivro.addEventListener('submit', async function (evento) {
+  evento.preventDefault();
+
+  if (!lmLivroEmEdicao) return;
+
+  const livroId = document.getElementById('lmEditarLivroId').value;
+  const titulo = document.getElementById('lmEditarTitulo').value.trim();
+  const editora = document.getElementById('lmEditarEditora').value.trim();
+  const anoPublicacao = document.getElementById('lmEditarAnoPublicacao').value;
+  const genero = document.getElementById('lmEditarGenero').value.trim();
+  const descricao = document.getElementById('lmEditarDescricao').value.trim();
+  const novoAutorId = document.getElementById('lmEditarAutor').value;
+  const novaImagemArquivo = document.getElementById('lmEditarImagemCapa').files[0];
+
+  try {
+    const novaImagemUrl = await lmUploadNovaImagemCapa(novaImagemArquivo);
+
+    const resposta = await fetch(`http://localhost:8080/livros/${livroId}/admin`, {
+      method: 'PUT',
+      headers: lmObterHeadersJson(),
+      body: JSON.stringify({
+        titulo,
+        editora,
+        anoPublicacao,
+        genero,
+        descricao,
+        imagemCapa: novaImagemUrl || lmLivroEmEdicao.imagemCapa
+      })
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || 'Erro ao editar livro.');
+    }
+
+    await lmAtualizarAutoresDoLivro(
+      livroId,
+      lmLivroEmEdicao.autores || [],
+      novoAutorId
+    );
+
+    alert('Livro atualizado com sucesso!');
+    lmModalEditarLivro.classList.remove('lmModalOverlayAtivo');
+    lmFormularioEditarLivro.reset();
+    lmLivroEmEdicao = null;
+
+    lmCarregarLivros();
+  } catch (erro) {
+    console.error('Erro ao editar livro:', erro);
+    alert(erro.message || 'Não foi possível editar o livro.');
+  }
+});
 
 lmCampoBuscaLivros.addEventListener('input', lmFiltrarLivros);
 lmCarregarLivros();
