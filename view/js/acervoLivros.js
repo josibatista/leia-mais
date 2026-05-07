@@ -3,6 +3,8 @@ const SUPABASE_URL = 'https://htregzpvwyhrrqdzqtrd.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_F5w-U17IUYOQoZySjx0RQQ_UdYMH0MP';
 const SUPABASE_BUCKET = 'capa-livros';
 
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 const lmSaudacaoUsuario = document.getElementById('lmSaudacaoUsuario');
 
 const lmUsuario = JSON.parse(localStorage.getItem('usuario')) || {};

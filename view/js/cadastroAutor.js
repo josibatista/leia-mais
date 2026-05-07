@@ -7,7 +7,6 @@ const usuario = JSON.parse(localStorage.getItem('usuario'));
 if (!token || !usuario || usuario.tipo !== 'administrador') {
   alert('Acesso permitido apenas para administradores.');
   window.location.href = 'loginAdm.html';
-  return;
 }
 
 const blFormularioCadastroAutor = document.getElementById('blFormularioCadastroAutor');
