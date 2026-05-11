@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function preencherTela() {
-    document.getElementById("blSaudacao").textContent = `Olá, ${usuario.nome}!`;
     document.getElementById("blNomePerfil").textContent = usuario.nome;
     document.getElementById("blUsuarioPerfil").textContent = usuario.username;
     document.getElementById("blEmailPerfil").textContent = usuario.email;
