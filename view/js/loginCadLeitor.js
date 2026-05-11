@@ -55,9 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("usuario", JSON.stringify(dados.usuario));
 
         if (dados.usuario && dados.usuario.tipo === "administrador") {
-          window.location.href = "perfilAdmin.html";
+          window.location.href = "acervoLivros.html";
         } else {
-          window.location.href = "perfilLeitor.html";
+          window.location.href = "acervoLivros.html";
         }
       } catch (erro) {
         console.error("Erro no login:", erro);
