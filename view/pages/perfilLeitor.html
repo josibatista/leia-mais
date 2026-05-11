@@ -9,64 +9,30 @@
       href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
   </head>
 
-  <body class="blCorpoDashboard">
+  <body class="lmAcervoBody">
     <!-- Barra Lateral -->
-    <aside class="blMenuLateral blMenuLateralLeitor">
-      <div class="blLogoDashboard">
-        <img src="../assets/logo.png" alt="Logo" />
-        <span>Leia+</span>
-      </div>
+    <div id="blMenuContainer"></div>
 
-      <nav class="blMenuNavegacao">
-        <a href="#" class="blMenuItem"><span id="blSaudacao">Olá!</span></a>
-        <a href="#" class="blMenuItem ativo"
-          >Perfil <i class="fa-solid fa-chevron-right"></i
-        ></a>
-        <a href="#" class="blMenuItem"
-          >Catálogo de Trilhas <i class="fa-solid fa-chevron-right"></i
-        ></a>
+    <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
 
-        <a href="acervoLivros.html" class="blMenuItem blMenuMarca">
-          <img
-            src="../assets/logoLeiaClaro.png"
-            alt="Acervo Leia Mulheres"
-            class="blMenuLogoLeiaMulheres" />
-          <i class="fa-solid fa-chevron-right"></i
-        ></a>
-
-        <a href="#" class="blMenuItem"
-          >Comunidade <i class="fa-solid fa-chevron-right"></i
-        ></a>
-        <a href="configuracoes.html" class="blMenuItem"
-          >Configurações <i class="fa-solid fa-chevron-right"></i
-        ></a>
-      </nav>
-
-      <div class="blMenuRodape">
-        <a href="loginLeitor.html" class="blBotaoSair"
-          ><i class="fa-solid fa-power-off"></i> Sair</a
-        >
-        <i class="fa-solid fa-circle-half-stroke blIconeTema"></i>
-      </div>
-    </aside>
+<header class="lmCabecalho">
+  <div class="lmCabecalhoSuperior">
+    <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+      &#9776;
+    </button>
+  </div>
+</header>
 
     <!-- Conteúdo Principal -->
-    <main class="blConteudoPrincipal blConteudoLeitor">
-      <header class="blCabecalhoSuperior blMobileApenas">
-        <i class="fa-solid fa-bars blIconeMenu"></i>
-        <img src="../assets/logo.png" alt="Logo" class="blLogoMini" />
-        <i class="fa-solid fa-arrow-up-from-bracket blIconeCompartilhar"></i>
-      </header>
-
-      <div class="blContainerVoltar blMobileApenas">
-        <i class="fa-solid fa-arrow-left blIconeVoltar"></i>
-      </div>
+   <main class="blConteudoPrincipal blConteudoLeitor">
 
       <!-- USUÁRIO (DINÂMICO) -->
       <section class="blSecaoUsuario">
@@ -141,6 +107,8 @@
       </section>
     </main>
 
+    <script src="../js/menuLeitor.js"></script>
     <script src="../js/perfilLeitor.js"></script>
+
   </body>
 </html>
