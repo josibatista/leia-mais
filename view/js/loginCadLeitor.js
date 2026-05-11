@@ -54,8 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("token", dados.token);
         localStorage.setItem("usuario", JSON.stringify(dados.usuario));
 
-        alert("Login realizado com sucesso!");
-
         if (dados.usuario && dados.usuario.tipo === "administrador") {
           window.location.href = "perfilAdmin.html";
         } else {

@@ -105,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("token", dados.token);
         localStorage.setItem("usuario", JSON.stringify(dados.usuario));
 
-        alert("Login realizado com sucesso!");
         window.location.href = "acervoLivros.html";
       } catch (erro) {
         console.error("Erro no login:", erro);
