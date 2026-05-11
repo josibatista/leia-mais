@@ -1,138 +1,146 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Leia Mais - Perfil Leitor</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
 
-<body class="blCorpoDashboard">
-
+  <body class="blCorpoDashboard">
     <!-- Barra Lateral -->
     <aside class="blMenuLateral blMenuLateralLeitor">
-        <div class="blLogoDashboard">
-            <img src="../assets/logo.png" alt="Logo">
-            <span>Leia+</span>
-        </div>
+      <div class="blLogoDashboard">
+        <img src="../assets/logo.png" alt="Logo" />
+        <span>Leia+</span>
+      </div>
 
-        <nav class="blMenuNavegacao">
-            <a href="#" class="blMenuItem"><span id="blSaudacao">Olá!</span></a>
-            <a href="#" class="blMenuItem ativo">Perfil <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="#" class="blMenuItem">Catálogo de Trilhas <i class="fa-solid fa-chevron-right"></i></a>
+      <nav class="blMenuNavegacao">
+        <a href="#" class="blMenuItem"><span id="blSaudacao">Olá!</span></a>
+        <a href="#" class="blMenuItem ativo"
+          >Perfil <i class="fa-solid fa-chevron-right"></i
+        ></a>
+        <a href="#" class="blMenuItem"
+          >Catálogo de Trilhas <i class="fa-solid fa-chevron-right"></i
+        ></a>
 
-            <a href="acervoLivros.html" class="blMenuItem blMenuMarca">
-                <img src="../assets/logoLeiaClaro.png" alt="Acervo Leia Mulheres" class="blMenuLogoLeiaMulheres">
-            <i class="fa-solid fa-chevron-right"></i></a>
-            
-            <a href="#" class="blMenuItem">Comunidade <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="configuracoes.html" class="blMenuItem">Configurações <i class="fa-solid fa-chevron-right"></i></a>   
-        </nav>
+        <a href="acervoLivros.html" class="blMenuItem blMenuMarca">
+          <img
+            src="../assets/logoLeiaClaro.png"
+            alt="Acervo Leia Mulheres"
+            class="blMenuLogoLeiaMulheres" />
+          <i class="fa-solid fa-chevron-right"></i
+        ></a>
 
-        <div class="blMenuRodape">
-            <a href="loginLeitor.html" class="blBotaoSair"><i class="fa-solid fa-power-off"></i> Sair</a>
-            <i class="fa-solid fa-circle-half-stroke blIconeTema"></i>
-        </div>
+        <a href="#" class="blMenuItem"
+          >Comunidade <i class="fa-solid fa-chevron-right"></i
+        ></a>
+        <a href="configuracoes.html" class="blMenuItem"
+          >Configurações <i class="fa-solid fa-chevron-right"></i
+        ></a>
+      </nav>
+
+      <div class="blMenuRodape">
+        <a href="loginLeitor.html" class="blBotaoSair"
+          ><i class="fa-solid fa-power-off"></i> Sair</a
+        >
+        <i class="fa-solid fa-circle-half-stroke blIconeTema"></i>
+      </div>
     </aside>
 
     <!-- Conteúdo Principal -->
     <main class="blConteudoPrincipal blConteudoLeitor">
-       
-        <header class="blCabecalhoSuperior blMobileApenas">
-            <i class="fa-solid fa-bars blIconeMenu"></i>
-            <img src="../assets/logo.png" alt="Logo" class="blLogoMini">
-            <i class="fa-solid fa-arrow-up-from-bracket blIconeCompartilhar"></i>
-        </header>
+      <header class="blCabecalhoSuperior blMobileApenas">
+        <i class="fa-solid fa-bars blIconeMenu"></i>
+        <img src="../assets/logo.png" alt="Logo" class="blLogoMini" />
+        <i class="fa-solid fa-arrow-up-from-bracket blIconeCompartilhar"></i>
+      </header>
 
-        <div class="blContainerVoltar blMobileApenas">
-            <i class="fa-solid fa-arrow-left blIconeVoltar"></i>
+      <div class="blContainerVoltar blMobileApenas">
+        <i class="fa-solid fa-arrow-left blIconeVoltar"></i>
+      </div>
+
+      <!-- USUÁRIO (DINÂMICO) -->
+      <section class="blSecaoUsuario">
+        <div class="blAvatarContainer">
+          <div class="blAvatarCirculo" id="blLetraPerfil"></div>
+          <div class="blCoroaIcone"><i class="fa-solid fa-crown"></i></div>
         </div>
 
-        <!-- USUÁRIO (DINÂMICO) -->
-        <section class="blSecaoUsuario">
-            <div class="blAvatarContainer">
-                <div class="blAvatarCirculo" id="blLetraPerfil"></div>
-                <div class="blCoroaIcone"><i class="fa-solid fa-crown"></i></div>
-            </div>
-            
-            <div class="blLinhaInfo">
-                <span class="blRotulo">Nome:</span>
-                <span class="blValor" id="blNomePerfil"></span>
-                <i class="fa-regular fa-pen-to-square blIconeEditar" data-campo="nome"></i>
-            </div>
+        <div class="blInfoPerfil">
+          <div class="blLinhaPrincipal">
+            <span class="blRotuloGrande" id="blNomePerfil"></span>
+          </div>
 
-            <div class="blLinhaInfo">
-                <span class="blRotulo">Usuário:</span>
-                <span class="blValor" id="blUsuarioPerfil"></span>
-                <i class="fa-regular fa-pen-to-square blIconeEditar" data-campo="username"></i>
-            </div>
+          <div class="blLinhaSecundaria">
+            <span class="blRotuloPequeno" id="blUsuarioPerfil"></span>
+          </div>
+        </div>
+      </section>
 
-            <div class="blLinhaInfo">
-                <span class="blRotulo">Senha:</span>
-                <span class="blValor" id="blSenhaPerfil">*******</span>
-                <i class="fa-regular fa-pen-to-square blIconeEditar" data-campo="senha"></i>
-            </div>
-        </section>
+      <!-- ESTATÍSTICAS (SEM MOCK) -->
+      <section class="blGradeEstatisticas">
+        <div class="blCardEstatistica">
+          <i class="fa-solid fa-book blIconeCard"></i>
+          <span class="blNumeroEstatistica"></span>
+          <span class="blTextoEstatistica">Livros Lidos</span>
+        </div>
+        <div class="blCardEstatistica">
+          <i class="fa-solid fa-fire blIconeCard"></i>
+          <span class="blNumeroEstatistica"></span>
+          <span class="blTextoEstatistica">Dias Seguidos</span>
+        </div>
+        <div class="blCardEstatistica">
+          <i class="fa-solid fa-book-open blIconeCard"></i>
+          <span class="blNumeroEstatistica"></span>
+          <span class="blTextoEstatistica">Páginas Lidas</span>
+        </div>
+      </section>
 
-        <!-- ESTATÍSTICAS (SEM MOCK) -->
-        <section class="blGradeEstatisticas">
-            <div class="blCardEstatistica">
-                <i class="fa-solid fa-book blIconeCard"></i>
-                <span class="blNumeroEstatistica"></span>
-                <span class="blTextoEstatistica">Livros Lidos</span>
-            </div>
-            <div class="blCardEstatistica">
-                <i class="fa-solid fa-fire blIconeCard"></i>
-                <span class="blNumeroEstatistica"></span>
-                <span class="blTextoEstatistica">Dias Seguidos</span>
-            </div>
-            <div class="blCardEstatistica">
-                <i class="fa-solid fa-book-open blIconeCard"></i>
-                <span class="blNumeroEstatistica"></span>
-                <span class="blTextoEstatistica">Páginas Lidas</span>
-            </div>
-        </section>
+      <!-- METAS (SEM MOCK) -->
+      <section class="blSecaoMetas">
+        <div class="blMetaTitulo">
+          Metas do mês: <span class="blMetaDestaque"></span>
+        </div>
+        <div class="blBarraProgressoContainer">
+          <div class="blBarraProgresso"></div>
+          <span class="blProgressoTexto"></span>
+        </div>
+      </section>
 
-        <!-- METAS (SEM MOCK) -->
-        <section class="blSecaoMetas">
-            <div class="blMetaTitulo">
-                Metas do mês: <span class="blMetaDestaque"></span>
-            </div>
-            <div class="blBarraProgressoContainer">
-                <div class="blBarraProgresso"></div>
-                <span class="blProgressoTexto"></span>
-            </div>
-        </section>
+      <!-- TRILHAS (SEM MOCK) -->
+      <section class="blSecaoLista">
+        <div class="blListaCabecalho">
+          <h3>Trilhas</h3>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </section>
 
-        <!-- TRILHAS (SEM MOCK) -->
-        <section class="blSecaoLista">
-            <div class="blListaCabecalho">
-                <h3>Trilhas</h3>
-                <i class="fa-solid fa-chevron-right"></i>
+      <!-- LIVROS (SEM MOCK) -->
+      <section class="blSecaoLista">
+        <div class="blListaCabecalho">
+          <div class="blLivrosTitulos">
+            <h3>Livros</h3>
+            <div class="blMenuLivros">
+              <button class="blFiltroLivro ativo">Lendo</button>
+              <button class="blFiltroLivro">Para Ler</button>
+              <button class="blFiltroLivro">Lidos</button>
             </div>
-        </section>
-
-        <!-- LIVROS (SEM MOCK) -->
-        <section class="blSecaoLista">
-            <div class="blListaCabecalho">
-                <div class="blLivrosTitulos">
-                    <h3>Livros</h3>
-                    <div class="blMenuLivros">
-                        <button class="blFiltroLivro ativo">Lendo</button>
-                        <button class="blFiltroLivro">Para Ler</button>
-                        <button class="blFiltroLivro">Lidos</button>
-                    </div>
-                </div>
-                <i class="fa-solid fa-chevron-right"></i>
-            </div>
-            <div class="blCarrosselLivros"></div>
-        </section>
-
+          </div>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+        <div class="blCarrosselLivros"></div>
+      </section>
     </main>
-    
+
     <script src="../js/perfilLeitor.js"></script>
-</body>
+  </body>
 </html>

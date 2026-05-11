@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("blSaudacao").textContent = `Olá, ${usuario.nome}`;
     document.getElementById("blNomePerfil").textContent = usuario.nome || "—";
     document.getElementById("blUsuarioPerfil").textContent = usuario.username || "—";
-    document.getElementById("blSenhaPerfil").textContent = "********";
 
     const letra = usuario.nome ? usuario.nome.charAt(0).toUpperCase() : "?";
     document.getElementById("blLetraPerfil").textContent = letra;
@@ -50,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await carregarUsuarioAtualizado();
 
-  const botoesEditar = document.querySelectorAll(".blIconeEditar");
+/*  const botoesEditar = document.querySelectorAll(".blIconeEditar");
 
   botoesEditar.forEach((botao) => {
     botao.addEventListener("click", async () => {
@@ -106,7 +105,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert("Erro ao atualizar.");
       }
     });
-  });
+  }); */
 
   const botaoSair = document.querySelector(".blBotaoSair");
 
