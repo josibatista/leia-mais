@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const API_URL = "http://localhost:8080";
 
-  const inputSenha = document.getElementById('blSenha');
+  const inputSenha = document.getElementById('blSenhaAdm');
   const olhoSenha = document.getElementById('blOlhoSenha');
 
   olhoSenha.addEventListener('click', () => {
