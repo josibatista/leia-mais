@@ -7,6 +7,7 @@
     <title>Leia Mais - Nova Senha</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="blBody">
@@ -26,9 +27,10 @@
                     <input type="text" id="codigo" required placeholder="Digite o código recebido">
                 </div>
 
-                <div class="blGrupoInput">
+                <div class="blGrupoInput blInputSenha">
                     <label for="novaSenha">Nova senha</label>
-                    <input type="password" id="novaSenha" required placeholder="Digite sua nova senha" minlength="8">
+                    <input type="password" id="blSenha" required placeholder="Digite sua nova senha" minlength="8">
+                    <i class="fa-solid fa-eye" id="blOlhoSenha"></i>
                 </div>
 
                 <p class="blTextoApoioSenha">Mínimo 8 caracteres, com letra, número e símbolo.</p>

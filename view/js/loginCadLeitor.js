@@ -1,6 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
   const API_URL = "http://localhost:8080";
 
+  const inputSenha = document.getElementById("blSenha");
+  const olhoSenha = document.getElementById("blOlhoSenha");
+
+  olhoSenha.addEventListener("click", () => {
+    if (inputSenha.type === "password") {
+      inputSenha.type = "text";
+
+      olhoSenha.classList.remove("fa-eye");
+      olhoSenha.classList.add("fa-eye-slash");
+    } else {
+      inputSenha.type = "password";
+
+      olhoSenha.classList.remove("fa-eye-slash");
+      olhoSenha.classList.add("fa-eye");
+    }
+  });
+
   const formLogin = document.getElementById("blFormLoginLeitor");
   const formCadastro = document.getElementById("blFormCadastroLeitor");
 
