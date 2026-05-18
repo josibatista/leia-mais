@@ -329,13 +329,15 @@ function lmFiltrarLivros() {
 
   const livrosFiltrados = lmLivrosCarregados.filter(function (livro) {
     const titulo = lmNormalizarTexto(livro.titulo);
+    const nomeAutor = lmNormalizarTexto(lmObterNomeAutor(livro));
     const editora = lmNormalizarTexto(livro.editora);
     const genero = lmNormalizarTexto(livro.genero);
 
     return (
       titulo.includes(termoBusca) ||
       editora.includes(termoBusca) ||
-      genero.includes(termoBusca)
+      genero.includes(termoBusca) ||
+      nomeAutor.includes(termoBusca)
     );
   });
 
