@@ -12,6 +12,7 @@ const lmModalFechar = document.getElementById('lmModalFechar');
 const lmModalTitulo = document.getElementById('lmModalTitulo');
 const lmModalAutor = document.getElementById('lmModalAutor');
 const lmModalGenero = document.getElementById('lmModalGenero');
+const lmModalEditora = document.getElementById('lmModalEditora');
 const lmModalDescricao = document.getElementById('lmModalDescricao');
 const lmModalAvaliacao = document.getElementById('lmModalAvaliacao');
 const lmGradeLivros = document.getElementById('lmGradeLivros');
@@ -66,6 +67,7 @@ function lmAbrirModalLivro(livro) {
   lmModalTitulo.textContent = livro.titulo || 'Título não informado';
   lmModalAutor.textContent = lmObterNomeAutor(livro);
   lmModalGenero.textContent = livro.genero || 'Gênero não informado';
+  lmModalEditora.textContent = livro.editora || 'Editora não informada';
   lmModalDescricao.textContent = livro.descricao || 'Descrição não informada.';
   lmModalAvaliacao.textContent = lmFormatarAvaliacao(livro.mediaNota);
 
