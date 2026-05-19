@@ -1,23 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
   const API_URL = "http://localhost:8080";
 
-  const inputSenha = document.getElementById('blSenhaAdm');
-  const olhoSenha = document.getElementById('blOlhoSenha');
+  const inputSenha = document.getElementById("blSenhaAdm");
+  const olhoSenha = document.getElementById("blOlhoSenha");
 
-  olhoSenha.addEventListener('click', () => {
+  if (inputSenha && olhoSenha) {
+    olhoSenha.addEventListener("click", () => {
+      if (inputSenha.type === "password") {
+        inputSenha.type = "text";
 
-    if(inputSenha.type === 'password'){
-      inputSenha.type = 'text';
+        olhoSenha.classList.remove("fa-eye");
+        olhoSenha.classList.add("fa-eye-slash");
+      } else {
+        inputSenha.type = "password";
 
-      olhoSenha.classList.remove('fa-eye');
-      olhoSenha.classList.add('fa-eye-slash');
-    } else {
-      inputSenha.type = 'password';
-      
-      olhoSenha.classList.remove('fa-eye-slash');
-      olhoSenha.classList.add('fa-eye');
-    }
-  })
+        olhoSenha.classList.remove("fa-eye-slash");
+        olhoSenha.classList.add("fa-eye");
+      }
+    });
+  }
 
   const formCadastro = document.getElementById("blFormCadastroAdm");
   const formLogin = document.getElementById("blFormLoginAdm");
@@ -97,8 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        if (!dados.usuario || dados.usuario.tipo !== "administrador") {
-          alert("Acesso permitido apenas para administradores.");
+        if (dados.usuario?.tipo !== "administrador") {
+          exibirAlerta("Este acesso é exclusivo para administradores.");
+          localStorage.removeItem("token");
+          localStorage.removeItem("usuario");
           return;
         }
 
@@ -111,5 +114,25 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Não foi possível conectar ao servidor.");
       }
     });
+  }
+
+  function exibirAlerta(mensagem, titulo = "Atenção") {
+    const overlay = document.getElementById("lmAlertaOverlay");
+    const tituloAlerta = document.getElementById("lmAlertaTitulo");
+    const mensagemAlerta = document.getElementById("lmAlertaMensagem");
+    const botaoAlerta = document.getElementById("lmAlertaBotao");
+
+    if (!overlay || !tituloAlerta || !mensagemAlerta || !botaoAlerta) {
+      alert(mensagem);
+      return;
+    }
+
+    tituloAlerta.textContent = titulo;
+    mensagemAlerta.textContent = mensagem;
+    overlay.classList.add("ativo");
+
+    botaoAlerta.onclick = () => {
+      overlay.classList.remove("ativo");
+    };
   }
 });
