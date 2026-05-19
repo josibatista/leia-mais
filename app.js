@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const db = require('./config/db_sequelize');
+const mongo_db = require('./config/db_mongoose');
 const routes = require('./routes/route'); 
 
 const app = express();
@@ -18,10 +19,14 @@ const PORT = process.env.PORT || 8080;
 
 db.sequelize.authenticate()
     .then(() => {
-        console.log('Banco de dados conectado.');
+        console.log('Banco de dados Supabase conectado.');
         return db.sequelize.sync({ alter: false });
     })
     .then(() => {
+        return mongo_db.connection;
+    })
+    .then(() => {
+        console.log('Banco de Dados MongoDB conectado.');
         app.listen(PORT, () => {
             console.log(`Servidor rodando em http://localhost:${PORT}`);
         });
