@@ -715,6 +715,87 @@ body.lmCadastroBody {
   resize: vertical;
 }
 
+.lmCadastroAutoresLinha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lmCadastroBotaoAdicionarAutor {
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background-color: #5a3422;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lmCadastroBotaoAdicionarAutor:hover {
+  background-color: #3f261c;
+}
+
+.lmCadastroListaAutores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.lmCadastroAutorTag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f0e4dc;
+  color: #5a3422;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.lmCadastroAutorRemover {
+  background: none;
+  border: none;
+  color: #5a3422;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.lmCadastroAcoesAutor {
+  margin-top: 10px;
+}
+
+.lmCadastroLinkAutor {
+  border: none;
+  background: none;
+  color: #7a4f43;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0;
+}
+
+.lmCadastroLinkAutor:hover {
+  text-decoration: underline;
+}
+
+.lmCadastroBody .lmCadastroCampoSelecao {
+  width: 100%;
+  border: 1px solid var(--lmCadastroBordaSuave);
+  border-radius: 0.8rem;
+  background-color: #fffdfa;
+  color: var(--lmCadastroMarromEscuro);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  padding: 0.9rem 1rem;
+  outline: none;
+}
+
 .lmCadastroBody .lmCadastroAcoesFormulario {
   display: flex;
   flex-direction: column;
