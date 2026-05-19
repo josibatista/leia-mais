@@ -8,6 +8,18 @@ const API_URL = 'http://localhost:8080';
 
 const token = localStorage.getItem('token');
 const usuario = JSON.parse(localStorage.getItem('usuario'));
+const lmAutoresSelecionados = [];
+
+const lmApiLivrosUrl = `${API_URL}/livros/admin`;
+const lmApiAutoresUrl = `${API_URL}/autores/disponiveis`;
+
+const lmFormularioLivro = document.getElementById('lmCadastroFormularioLivro');
+const lmCampoAutor = document.getElementById('idAutor');
+const lmBotaoAdicionarAutor = document.getElementById('lmAdicionarAutor');
+const lmListaAutoresSelecionados = document.getElementById('lmListaAutoresSelecionados');
+const lmCadastrarNovoAutor = document.getElementById('lmCadastrarNovoAutor');
+const lmCadastroMensagem = document.getElementById('lmCadastroMensagem');
+const lmCadastroBotaoVoltar = document.getElementById('lmCadastroBotaoVoltar');
 
 if (!token || !usuario || usuario.tipo !== 'administrador') {
   alert('Acesso permitido apenas para administradores.');
@@ -15,14 +27,6 @@ if (!token || !usuario || usuario.tipo !== 'administrador') {
 } else {
   lmCarregarAutores();
 }
-
-const lmApiLivrosUrl = `${API_URL}/livros/admin`;
-const lmApiAutoresUrl = `${API_URL}/autores/disponiveis`;
-
-const lmFormularioLivro = document.getElementById('lmCadastroFormularioLivro');
-const lmCampoAutor = document.getElementById('idAutor');
-const lmCadastroMensagem = document.getElementById('lmCadastroMensagem');
-const lmCadastroBotaoVoltar = document.getElementById('lmCadastroBotaoVoltar');
 
 function lmExibirMensagem(texto, tipo) {
   lmCadastroMensagem.textContent = texto;
@@ -34,7 +38,82 @@ function lmExibirMensagem(texto, tipo) {
 }
 
 function lmObterNomeAutor(autor) {
-  return autor.nome || 'Autor sem nome';
+  return autor.nome || 'Autora sem nome';
+}
+
+if (lmCadastrarNovoAutor) {
+  lmCadastrarNovoAutor.addEventListener('click', function () {
+    window.location.href = 'cadastroAutor.html';
+  });
+}
+
+if (lmBotaoAdicionarAutor) {
+  lmBotaoAdicionarAutor.addEventListener('click', function () {
+    const autorId = lmCampoAutor.value;
+    const autorNome = lmCampoAutor.options[lmCampoAutor.selectedIndex].text;
+
+    if (!autorId) {
+      lmExibirMensagem('Selecione uma autora para adicionar.', 'Erro');
+      return;
+    }
+
+    const autorJaExiste = lmAutoresSelecionados.some(function (autor) {
+      return Number(autor.id) === Number(autorId);
+    });
+
+    if (autorJaExiste) {
+      lmExibirMensagem('Esta autora já foi adicionada.', 'Erro');
+      return;
+    }
+
+    lmAutoresSelecionados.push({
+      id: Number(autorId),
+      nome: autorNome
+    });
+
+    lmCampoAutor.value = '';
+    lmExibirMensagem('', '');
+    lmRenderizarAutoresSelecionados();
+  });
+}
+
+function lmRenderizarAutoresSelecionados() {
+  lmListaAutoresSelecionados.innerHTML = '';
+
+  lmAutoresSelecionados.forEach(function (autor) {
+    const tagAutor = document.createElement('div');
+    tagAutor.className = 'lmCadastroAutorTag';
+
+    tagAutor.innerHTML = `
+      <span>${autor.nome}</span>
+      <button
+        type="button"
+        class="lmCadastroAutorRemover"
+        data-id="${autor.id}"
+        aria-label="Remover autor"
+      >
+        ×
+      </button>
+    `;
+
+    lmListaAutoresSelecionados.appendChild(tagAutor);
+  });
+
+  document.querySelectorAll('.lmCadastroAutorRemover').forEach(function (botao) {
+    botao.addEventListener('click', function () {
+      const autorId = Number(botao.dataset.id);
+
+      const indiceAutor = lmAutoresSelecionados.findIndex(function (autor) {
+        return Number(autor.id) === autorId;
+      });
+
+      if (indiceAutor !== -1) {
+        lmAutoresSelecionados.splice(indiceAutor, 1);
+      }
+
+      lmRenderizarAutoresSelecionados();
+    });
+  });
 }
 
 async function lmCarregarAutores() {
@@ -48,28 +127,26 @@ async function lmCarregarAutores() {
     const dados = await resposta.json();
     const autores = dados.autores || [];
 
-    lmCampoAutor.innerHTML = '<option value="">Selecione um autor</option>';
+    lmCampoAutor.innerHTML = '<option value="">Selecione uma autora</option>';
     lmCampoAutor.disabled = false;
 
     if (!Array.isArray(autores) || autores.length === 0) {
-      lmCampoAutor.innerHTML = '<option value="">Nenhum autor cadastrado</option>';
+      lmCampoAutor.innerHTML = '<option value="">Nenhuma autora cadastrada</option>';
       lmCampoAutor.disabled = true;
       return;
     }
 
     autores.forEach(function (autor) {
       const optionAutor = document.createElement('option');
-
       optionAutor.value = autor.id;
       optionAutor.textContent = lmObterNomeAutor(autor);
-
       lmCampoAutor.appendChild(optionAutor);
     });
   } catch (erro) {
-    lmCampoAutor.innerHTML = '<option value="">Erro ao carregar autores</option>';
+    lmCampoAutor.innerHTML = '<option value="">Erro ao carregar autoras</option>';
     lmCampoAutor.disabled = true;
 
-    lmExibirMensagem('Não foi possível carregar a lista de autores.', 'Erro');
+    lmExibirMensagem('Não foi possível carregar a lista de autoras.', 'Erro');
     console.error(erro);
   }
 }
@@ -107,19 +184,24 @@ lmFormularioLivro.addEventListener('submit', async function (evento) {
   const titulo = document.getElementById('titulo').value.trim();
   const editora = document.getElementById('editora').value.trim();
   const paginas = document.getElementById('paginas').value.trim();
-  const autorId = lmCampoAutor.value;
   const anoPublicacao = document.getElementById('anoPublicacao').value;
   const genero = document.getElementById('genero').value.trim();
   const descricao = document.getElementById('descricao').value.trim();
   const imagemCapaArquivo = document.getElementById('imagemCapa').files[0];
 
-  if (!titulo || !editora || !paginas || !autorId || !anoPublicacao || !genero) {
+  if (!titulo || !editora || !paginas || !anoPublicacao || !genero) {
     lmExibirMensagem('Preencha todos os campos obrigatórios.', 'Erro');
+    return;
+  }
+
+  if (lmAutoresSelecionados.length === 0) {
+    lmExibirMensagem('Adicione pelo menos um autor ao livro.', 'Erro');
     return;
   }
 
   try {
     const imagemCapaUrl = await lmUploadImagemCapa(imagemCapaArquivo);
+
     const respostaLivro = await fetch(lmApiLivrosUrl, {
       method: 'POST',
       headers: {
@@ -152,17 +234,22 @@ lmFormularioLivro.addEventListener('submit', async function (evento) {
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
-        autoresIds: [Number(autorId)]
+        autoresIds: lmAutoresSelecionados.map(function (autor) {
+          return Number(autor.id);
+        })
       })
     });
 
     const dadosVinculo = await respostaVinculo.json();
 
     if (!respostaVinculo.ok) {
-      throw new Error(dadosVinculo.error || 'Livro cadastrado, mas não foi possível vincular o autor.');
+      throw new Error(dadosVinculo.error || 'Livro cadastrado, mas não foi possível vincular os autores.');
     }
 
     lmFormularioLivro.reset();
+    lmAutoresSelecionados.length = 0;
+    lmRenderizarAutoresSelecionados();
+
     lmExibirMensagem('Livro cadastrado com sucesso.', 'Sucesso');
   } catch (erro) {
     lmExibirMensagem(erro.message || 'Não foi possível cadastrar o livro.', 'Erro');
@@ -173,5 +260,3 @@ lmFormularioLivro.addEventListener('submit', async function (evento) {
 lmCadastroBotaoVoltar.addEventListener('click', function () {
   window.history.back();
 });
-
-lmCarregarAutores();

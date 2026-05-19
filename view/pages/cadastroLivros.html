@@ -29,7 +29,7 @@
       <img
         src="/view/assets/logoLeiaClaro.png"
         alt="Logo Leia Mulheres"
-        class="lmCadastroTituloProjetoImagem"
+        class="lmCadastroTituloProjetoImagem lmLogoTema"
         id="lmCadastroTituloProjetoImagem"
       />
       <p class="lmCadastroSubtitulo">
@@ -86,16 +86,42 @@
         </div>
 
         <div class="lmCadastroGrupoCampo">
-          <label for="idAutor" class="lmCadastroRotuloCampo">Autor</label>
-          <select
-            id="idAutor"
-            name="idAutor"
-            class="lmCadastroCampoSelecao"
-            required
-          >
-            <option value="">Carregando autores...</option>
-          </select>
-        </div>
+        <label for="idAutor" class="lmCadastroRotuloCampo">
+          Autores
+        </label>
+
+          <div class="lmCadastroAutoresLinha">
+            <select
+              id="idAutor"
+              class="lmCadastroCampoSelecao"
+            >
+              <option value="">Selecione uma autora</option>
+            </select>
+            <button
+              type="button"
+              class="lmCadastroBotaoAdicionarAutor"
+              id="lmAdicionarAutor"
+              aria-label="Adicionar autora"
+            >
+              +
+            </button>
+          </div>
+
+          <div class="lmCadastroAcoesAutor">
+            <button
+              type="button"
+              class="lmCadastroLinkAutor"
+              id="lmCadastrarNovoAutor"
+            >
+              Cadastrar nova autora
+            </button>
+          </div>
+
+          <div
+            class="lmCadastroListaAutores"
+            id="lmListaAutoresSelecionados"
+          ></div>
+      </div>
 
         <div class="lmCadastroGrupoLinha">
           <div class="lmCadastroGrupoCampo">
@@ -157,7 +183,7 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/menuAdm.js"></script>
+  <script src="../js/menu.js"></script>
   <script src="/view/js/crudLivros.js"></script>
 </body>
 </html>
