@@ -2,6 +2,17 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarMenu();
 });
 
+function obterCaminhoMenu() {
+  const estaNaRaiz =
+    window.location.pathname.endsWith("/index.html") ||
+    window.location.pathname === "/" ||
+    !window.location.pathname.includes("/view/pages/");
+
+  return estaNaRaiz
+    ? "view/components/menu.html"
+    : "../components/menu.html";
+}
+
 async function carregarMenu() {
   const menuContainer = document.getElementById("blMenuContainer");
 
@@ -11,7 +22,7 @@ async function carregarMenu() {
   }
 
   try {
-    const resposta = await fetch("../components/menu.html");
+    const resposta = await fetch(obterCaminhoMenu());
 
     if (!resposta.ok) {
       throw new Error("Erro ao carregar o menu.");
@@ -123,8 +134,8 @@ function configurarBotaoTema() {
       document.body.classList.contains("lmTemaEscuro");
 
     const logoTema = temaEscuroAtivo
-      ? "../assets/logoLeiaEscuro.png"
-      : "../assets/logoLeiaClaro.png";
+      ? "/view/assets/logoLeiaEscuro.png"
+      : "/view/assets/logoLeiaClaro.png";
 
     if (logoMenu) {
       logoMenu.src = logoTema;
