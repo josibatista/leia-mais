@@ -476,5 +476,17 @@ lmFormularioEditarLivro.addEventListener('submit', async function (evento) {
   }
 });
 
+const lmBotaoAdicionarLivro =
+  document.getElementById("lmBotaoAdicionarLivro");
+
+if (
+  !lmUsuario ||
+  lmUsuario.tipo !== "administrador"
+) {
+  if (lmBotaoAdicionarLivro) {
+    lmBotaoAdicionarLivro.style.display = "none";
+  }
+}
+
 lmCampoBuscaLivros.addEventListener('input', lmFiltrarLivros);
 lmCarregarLivros();
