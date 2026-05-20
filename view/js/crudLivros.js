@@ -4,14 +4,12 @@ const SUPABASE_BUCKET = 'capa-livros';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const API_URL = 'http://localhost:8080';
-
 const token = localStorage.getItem('token');
 const usuario = JSON.parse(localStorage.getItem('usuario'));
 const lmAutoresSelecionados = [];
 
-const lmApiLivrosUrl = `${API_URL}/livros/admin`;
-const lmApiAutoresUrl = `${API_URL}/autores/disponiveis`;
+const lmApiLivrosUrl = `/livros/admin`;
+const lmApiAutoresUrl = `/autores/disponiveis`;
 
 const lmFormularioLivro = document.getElementById('lmCadastroFormularioLivro');
 const lmCampoAutor = document.getElementById('idAutor');
@@ -227,7 +225,7 @@ lmFormularioLivro.addEventListener('submit', async function (evento) {
 
     const livroId = dadosLivro.livro.id;
 
-    const respostaVinculo = await fetch(`${API_URL}/livros/${livroId}/autores/admin`, {
+    const respostaVinculo = await fetch(`/livros/${livroId}/autores/admin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

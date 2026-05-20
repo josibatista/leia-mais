@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const API_URL = "http://localhost:8080";
 
   const token = localStorage.getItem("token");
   let usuario = JSON.parse(localStorage.getItem("usuario"));
@@ -12,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function carregarUsuarioAtualizado() {
     try {
-      const resposta = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
+      const resposta = await fetch(`/usuarios/${usuario.id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

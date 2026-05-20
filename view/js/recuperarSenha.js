@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_URL = "http://localhost:8080";
 
   const inputSenha = document.getElementById('blSenha');
   const olhoSenha = document.getElementById('blOlhoSenha');
@@ -33,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const resposta = await fetch(`${API_URL}/esqueci-senha`, {
+        const resposta = await fetch(`/esqueci-senha`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -102,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const res = await fetch(`${API_URL}/redefinir-senha`, {
+        const res = await fetch(`/redefinir-senha`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

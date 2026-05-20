@@ -3,14 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function obterCaminhoMenu() {
-  const estaNaRaiz =
-    window.location.pathname.endsWith("/view/index.html") ||
-    window.location.pathname === "/" ||
-    !window.location.pathname.includes("/view/pages/");
-
-  return estaNaRaiz
-    ? "view/components/menu.html"
-    : "../components/menu.html";
+    return "/components/menu.html";
 }
 
 async function carregarMenu() {
@@ -134,8 +127,8 @@ function configurarBotaoTema() {
       document.body.classList.contains("lmTemaEscuro");
 
     const logoTema = temaEscuroAtivo
-      ? "/view/assets/logoLeiaEscuro.png"
-      : "/view/assets/logoLeiaClaro.png";
+      ? "/assets/logoLeiaEscuro.png"
+      : "/assets/logoLeiaClaro.png";
 
     if (logoMenu) {
       logoMenu.src = logoTema;

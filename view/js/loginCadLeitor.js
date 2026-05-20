@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_URL = "http://localhost:8080";
 
   const inputSenha = document.getElementById("blSenhaLeitor");
   const olhoSenha = document.getElementById("blOlhoSenha");
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const payloadLogin = { login, senha };
 
       try {
-        const resposta = await fetch(`${API_URL}/login`, {
+        const resposta = await fetch(`/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -106,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const resposta = await fetch(`${API_URL}/usuarios`, {
+        const resposta = await fetch(`/usuarios`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

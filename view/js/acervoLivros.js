@@ -1,4 +1,4 @@
-const lmApiLivrosUrl = 'http://localhost:8080/livros';
+const lmApiLivrosUrl = '/livros';
 const SUPABASE_URL = 'https://htregzpvwyhrrqdzqtrd.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_F5w-U17IUYOQoZySjx0RQQ_UdYMH0MP';
 const SUPABASE_BUCKET = 'capa-livros';
