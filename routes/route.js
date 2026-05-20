@@ -27,13 +27,13 @@ router.delete('/livros/:id', autenticarToken, checkAdmin, livroController.delete
 */
 
 //Rotas - Autor
-router.post('/autores/admin', autorController.postAutor);
+router.post('/autores/admin', autenticarToken, checkAdmin, autorController.postAutor);
 
 // autores disponíveis para o select
 router.get('/autores/disponiveis', livroAutorController.getAutoresDisponiveis);
 
-router.put('/autores/:id/admin', autorController.putAutor);
-router.delete('/autores/:id/admin', autorController.deleteAutor);
+router.put('/autores/:id/admin', autenticarToken, checkAdmin, autorController.putAutor);
+router.delete('/autores/:id/admin', autenticarToken, checkAdmin, autorController.deleteAutor);
 
 router.get('/autores', autorController.getAutores);
 router.get('/autores/:id', autorController.getAutorById);
@@ -45,10 +45,10 @@ router.get('/livros/:id/autores', livroAutorController.getAutoresDoLivro);
 router.get('/autores/:id/livros', livroAutorController.getLivrosDoAutor);
 
 // vincular autores ao livro
-router.post('/livros/:id/autores/admin', livroAutorController.vincularAutores);
+router.post('/livros/:id/autores/admin', autenticarToken, checkAdmin, livroAutorController.vincularAutores);
 
 // desvincular autor específico do livro
-router.delete('/livros/:id/autores/:autorId/admin', livroAutorController.desvincularAutor);
+router.delete('/livros/:id/autores/:autorId/admin', autenticarToken, checkAdmin, livroAutorController.desvincularAutor);
 const autenticacaoController = require('../controllers/autenticacaoController');
 const usuarioController = require('../controllers/usuarioController');
 
@@ -57,7 +57,9 @@ router.post('/login', autenticacaoController.login);
 
 //rotas de usuário
 //rota para criar usuário (público)
-router.post('/usuarios', usuarioController.postUsuario);
+router.post('/usuarios', usuarioController.postUsuarioLeitor);
+//rota para criar usuário administrador (apenas para administradores)
+router.post('/usuarios/admin', autenticarToken, checkAdmin, usuarioController.postUsuarioAdministrador);
 //rota para buscar todos os usuários (apenas para administradores)
 router.get('/usuarios', autenticarToken,checkAdmin, usuarioController.getUsuarios);
 //rota para buscar usuário por id (apenas para administradores ou para o próprio usuário)

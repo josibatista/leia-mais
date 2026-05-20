@@ -1505,6 +1505,112 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
   color: #ffffff;
 }
 
+/*Usuários*/
+
+.lmUsuariosBody .lmMenuLateral {
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -260px;
+  z-index: 1000;
+  transition: left 0.3s ease;
+}
+
+.lmUsuariosBody .lmMenuLateral.ativo {
+  left: 0;
+}
+
+.lmUsuariosBody .lmMenuOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+.lmUsuariosBody .lmMenuOverlay.ativo {
+  display: block;
+}
+
+.lmUsuariosBody .lmCadastroCabecalho {
+  position: relative;
+  overflow: hidden;
+}
+
+.lmUsuariosBody .lmCabecalhoLogoImagem {
+  width: 58px;
+  height: auto;
+  display: block;
+  margin: 0 auto 12px;
+}
+
+.lmUsuariosBody .lmCadastroTituloProjetoImagem {
+  width: 320px;
+  max-width: 80%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.lmUsuariosConteudoPrincipal {
+  width: 100%;
+  padding: 36px 24px 100px;
+}
+
+.lmUsuariosSecao {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.lmUsuariosCabecalho {
+  margin-bottom: 24px;
+}
+
+.lmUsuariosCabecalho h2 {
+  margin: 0 0 6px;
+  color: #2b1f1a;
+  font-size: 28px;
+}
+
+.lmUsuariosCabecalho p {
+  margin: 0;
+  color: #5f5149;
+}
+
+.lmUsuariosLista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lmUsuarioCard {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #d8c7b8;
+  border-radius: 14px;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lmBotaoFlutuanteAdmin {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: none;
+  background-color: #7b4b3a;
+  color: #fff;
+  font-size: 34px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  z-index: 50;
+}
+
 /*RESPONSIVIDADE - ACERVO*/
 
 @media (min-width: 640px) {

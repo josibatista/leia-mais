@@ -23,6 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const formLogin = document.getElementById("blFormLoginAdm");
 
   if (formCadastro) {
+    const token = localStorage.getItem("token");
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuario"));
+
+    if (!token || !usuarioLogado || usuarioLogado.tipo !== "administrador") {
+      alert("Acesso permitido apenas para administradores.");
+      window.location.href = "loginAdm.html";
+      return;
+    }
+
     formCadastro.addEventListener("submit", async (evento) => {
       evento.preventDefault();
 
@@ -41,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify({
             nome,
@@ -59,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         alert("Administrador cadastrado com sucesso!");
-        window.location.href = "loginAdm.html";
+        window.location.href = "usuarios.html";
       } catch (erro) {
         console.error("Erro no cadastro:", erro);
         alert("Não foi possível conectar ao servidor.");
