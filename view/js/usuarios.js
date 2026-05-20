@@ -1,5 +1,3 @@
-const API_URL = 'http://localhost:8080';
-
 document.addEventListener('DOMContentLoaded', () => {
   protegerRotaAdmin();
   configurarMenu();
