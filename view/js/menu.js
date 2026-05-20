@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function obterCaminhoMenu() {
   const estaNaRaiz =
-    window.location.pathname.endsWith("/index.html") ||
+    window.location.pathname.endsWith("/view/index.html") ||
     window.location.pathname === "/" ||
     !window.location.pathname.includes("/view/pages/");
 
