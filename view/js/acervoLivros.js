@@ -90,7 +90,7 @@ function lmObterHeadersJson() {
 
 async function lmCarregarAutoresDisponiveis() {
   try {
-    const resposta = await fetch('http://localhost:8080/autores/disponiveis');
+    const resposta = await fetch('/autores/disponiveis');
 
     if (!resposta.ok) {
       throw new Error('Erro ao carregar autores disponíveis.');
@@ -107,13 +107,13 @@ async function lmCarregarAutoresDisponiveis() {
 
 async function lmAtualizarAutoresDoLivro(livroId, autoresAtuais, novoAutorId) {
   for (const autor of autoresAtuais) {
-    await fetch(`http://localhost:8080/livros/${livroId}/autores/${autor.id}/admin`, {
+    await fetch(`/livros/${livroId}/autores/${autor.id}/admin`, {
       method: 'DELETE',
       headers: lmObterHeadersJson()
     });
   }
 
-  const respostaVinculo = await fetch(`http://localhost:8080/livros/${livroId}/autores/admin`, {
+  const respostaVinculo = await fetch(`/livros/${livroId}/autores/admin`, {
     method: 'POST',
     headers: lmObterHeadersJson(),
     body: JSON.stringify({
@@ -189,7 +189,7 @@ async function lmExcluirLivro(idLivro) {
   if (!confirmar) return;
 
   try {
-    const resposta = await fetch(`http://localhost:8080/livros/${idLivro}/admin`, {
+    const resposta = await fetch(`/livros/${idLivro}/admin`, {
       method: 'DELETE',
       headers: lmObterHeadersJson()
     });
@@ -345,7 +345,7 @@ function lmFiltrarLivros() {
 }
 
 function lmCarregarAutoresDoLivro(livroId) {
-  return fetch(`http://localhost:8080/livros/${livroId}/autores`)
+  return fetch(`/livros/${livroId}/autores`)
     .then(res => {
       if (!res.ok) return [];
       return res.json();
@@ -439,7 +439,7 @@ lmFormularioEditarLivro.addEventListener('submit', async function (evento) {
   try {
     const novaImagemUrl = await lmUploadNovaImagemCapa(novaImagemArquivo);
 
-    const resposta = await fetch(`http://localhost:8080/livros/${livroId}/admin`, {
+    const resposta = await fetch(`/livros/${livroId}/admin`, {
       method: 'PUT',
       headers: lmObterHeadersJson(),
       body: JSON.stringify({
