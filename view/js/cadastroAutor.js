@@ -1,5 +1,4 @@
-const API_URL = 'http://localhost:8080';
-const lmApiAutoresUrl = `${API_URL}/autores/admin`;
+const lmApiAutoresUrl = `/autores/admin`;
 
 const token = localStorage.getItem('token');
 const usuario = JSON.parse(localStorage.getItem('usuario'));

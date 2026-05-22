@@ -109,6 +109,43 @@
   gap: 0.5rem;
 }
 
+.lmMenuMarcaTopo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lmMenuLogoAdmin {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.lmMenuNomeAdmin {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #3f261c;
+  line-height: 1;
+}
+
+.lmMenuLogin {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #3f261c;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.lmIconeLogin {
+  width: 22px;
+  height: 22px;
+}
+
+.lmMenuLogin:hover {
+  color: #7a4f43;
+}
+
 .lmBotaoTema {
   border: none;
   background: transparent;
@@ -139,6 +176,304 @@
 .lmMenuOverlayAtivo {
   opacity: 1;
   visibility: visible;
+}
+
+/* HOME - INDEX */
+
+body.lmHomeBody {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--lmBege);
+  color: var(--lmMarromEscuro);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.lmHomeCabecalho {
+  border-bottom: 1px solid var(--lmBordaSuave);
+}
+
+.lmHomeTopo {
+  height: 72px;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--lmBordaSuave);
+}
+
+.lmHomeLogoPequena {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.lmHomeLoginLink {
+  color: var(--lmMarromEscuro);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.lmHomeHero {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.lmHomeEtiqueta,
+.lmHomeSecaoEtiqueta {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  color: var(--lmMarromClaro);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.lmHomeHero h1 {
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  line-height: 1.05;
+  margin-bottom: 1.2rem;
+}
+
+.lmHomeHero p {
+  max-width: 620px;
+  color: var(--lmMarromClaro);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.lmHomeAcoes {
+  margin-top: 1.8rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.lmHomeBotaoPrimario,
+.lmHomeBotaoSecundario {
+  padding: 0.9rem 1.4rem;
+  border-radius: 0.8rem;
+  text-decoration: none;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.lmHomeBotaoPrimario {
+  background-color: var(--lmMarromClaro);
+  color: var(--lmBranco);
+}
+
+.lmHomeBotaoPrimario:hover {
+  background-color: var(--lmMarromEscuro);
+}
+
+.lmHomeBotaoSecundario {
+  color: var(--lmMarromEscuro);
+  border: 1px solid var(--lmBordaSuave);
+  background-color: #fffdfa;
+}
+
+.lmHomeBotaoSecundario:hover {
+  background-color: #efe4d8;
+}
+
+.lmHomeHeroVisual {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lmHomeCardVisual {
+  padding: 1.5rem;
+  border-radius: 1.2rem;
+  background-color: var(--lmBranco);
+  border: 1px solid var(--lmBordaSuave);
+  box-shadow: 0 12px 30px var(--lmSombra);
+}
+
+.lmHomeCardVisualMaior {
+  min-height: 180px;
+}
+
+.lmHomeCardVisual span {
+  color: var(--lmMarromClaro);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.lmHomeCardVisual strong {
+  display: block;
+  margin-top: 0.7rem;
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+.lmHomePrincipal {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.lmHomeSecao {
+  margin-bottom: 4rem;
+}
+
+.lmHomeSecaoCabecalho {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.lmHomeSecaoCabecalho h2,
+.lmHomeChamadaFinal h2 {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+}
+
+.lmHomeGridExperiencias,
+.lmHomeGridInfo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.lmHomeExperienciaCard,
+.lmHomeInfoCard {
+  background-color: var(--lmBranco);
+  border: 1px solid var(--lmBordaSuave);
+  border-radius: 1.2rem;
+  padding: 1.6rem;
+  box-shadow: 0 8px 24px var(--lmSombra);
+}
+
+.lmHomeExperienciaCard h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.lmHomeExperienciaCard p,
+.lmHomeInfoCard p,
+.lmHomeChamadaFinal p {
+  color: var(--lmMarromClaro);
+  line-height: 1.7;
+}
+
+.lmHomeExperienciaCard a {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--lmMarromEscuro);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.lmHomeGridInfo {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.lmHomeInfoCard h3 {
+  font-size: 2rem;
+  color: var(--lmMarromClaro);
+  margin-bottom: 0.5rem;
+}
+
+.lmHomeChamadaFinal {
+  text-align: center;
+  background-color: var(--lmBranco);
+  border: 1px solid var(--lmBordaSuave);
+  border-radius: 1.5rem;
+  padding: 3rem 1.5rem;
+  box-shadow: 0 10px 28px var(--lmSombra);
+}
+
+.lmHomeChamadaFinal .lmHomeAcoes {
+  justify-content: center;
+}
+
+.lmMenuMarcaAdmin {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  text-decoration: none;
+  color: inherit;
+}
+
+/* HOME - TEMA ESCURO 
+
+body.lmHomeBody.lmTemaEscuro {
+  background-color: #1f1f1f;
+  color: #f5f5f5;
+}
+
+body.lmHomeBody.lmTemaEscuro .lmHomeCabecalho,
+body.lmHomeBody.lmTemaEscuro .lmHomeTopo {
+  background-color: #1f1f1f;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.lmHomeBody.lmTemaEscuro .lmHomeLoginLink,
+body.lmHomeBody.lmTemaEscuro .lmCabecalhoBotao,
+body.lmHomeBody.lmTemaEscuro .lmHomeHero h1,
+body.lmHomeBody.lmTemaEscuro .lmHomeSecaoCabecalho h2,
+body.lmHomeBody.lmTemaEscuro .lmHomeChamadaFinal h2 {
+  color: #f5f5f5;
+}
+
+body.lmHomeBody.lmTemaEscuro .lmHomeHero p,
+body.lmHomeBody.lmTemaEscuro .lmHomeExperienciaCard p,
+body.lmHomeBody.lmTemaEscuro .lmHomeInfoCard p,
+body.lmHomeBody.lmTemaEscuro .lmHomeChamadaFinal p {
+  color: #d6d6d6;
+}
+
+body.lmHomeBody.lmTemaEscuro .lmHomeCardVisual,
+body.lmHomeBody.lmTemaEscuro .lmHomeExperienciaCard,
+body.lmHomeBody.lmTemaEscuro .lmHomeInfoCard,
+body.lmHomeBody.lmTemaEscuro .lmHomeChamadaFinal {
+  background-color: #2b2b2b;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.lmHomeBody.lmTemaEscuro .lmHomeBotaoSecundario {
+  background-color: #242424;
+  color: #f5f5f5;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.lmHomeBody.lmTemaEscuro .lmHomeMenuLateral,
+body.lmHomeBody.lmTemaEscuro .lmMenuLateral {
+  background-color: #242424;
+}
+
+body.lmHomeBody.lmTemaEscuro .lmMenuItem,
+body.lmHomeBody.lmTemaEscuro .lmMenuSair,
+body.lmHomeBody.lmTemaEscuro .lmMenuLogin,
+body.lmHomeBody.lmTemaEscuro .lmBotaoTema,
+body.lmHomeBody.lmTemaEscuro .lmMenuFecharBotao,
+body.lmHomeBody.lmTemaEscuro .lmMenuNomeAdmin {
+  color: #f5f5f5;
+}
+*/
+
+/* RESPONSIVIDADE HOME */
+
+@media (max-width: 768px) {
+  .lmHomeHero {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.2rem;
+  }
+
+  .lmHomeGridExperiencias,
+  .lmHomeGridInfo {
+    grid-template-columns: 1fr;
+  }
+
+  .lmHomeTopo {
+    padding: 0 1rem;
+  }
 }
 
 /*ACERVO DE LIVROS*/
@@ -431,7 +766,10 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
 }
 
 .lmAcervoBody .lmMenuLateralCabecalho {
-  justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
 }
 
 .lmAcervoBody .lmMenuFecharBotao {
@@ -551,6 +889,42 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
 .lmAcervoBody .lmIconeAdminLivro {
   width: 17px;
   height: 17px;
+}
+
+.lmBotaoAdicionarLivro {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+
+  width: 64px;
+  height: 64px;
+
+  border-radius: 50%;
+
+  background-color: #7a5640;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2.4rem;
+  font-weight: 400;
+
+  text-decoration: none;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+
+  z-index: 999;
+}
+
+.lmBotaoAdicionarLivro:hover {
+  background-color: #5a3422;
+  transform: scale(1.08);
 }
 
 /*CADASTRO DE LIVROS */
@@ -713,6 +1087,75 @@ body.lmCadastroBody {
 .lmCadastroBody .lmCadastroCampoTextoArea {
   min-height: 160px;
   resize: vertical;
+}
+
+.lmCadastroAutoresLinha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lmCadastroBotaoAdicionarAutor {
+  width: 48px;
+  min-width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background-color: #5a3422;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lmCadastroBotaoAdicionarAutor:hover {
+  background-color: #3f261c;
+}
+
+.lmCadastroListaAutores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.lmCadastroAutorTag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f0e4dc;
+  color: #5a3422;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.lmCadastroAutorRemover {
+  background: none;
+  border: none;
+  color: #5a3422;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.lmCadastroAcoesAutor {
+  margin-top: 10px;
+}
+
+.lmCadastroLinkAutor {
+  border: none;
+  background: none;
+  color: #7a4f43;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0;
+}
+
+.lmCadastroLinkAutor:hover {
+  text-decoration: underline;
 }
 
 .lmCadastroBody .lmCadastroAcoesFormulario {
@@ -904,6 +1347,18 @@ body.lmAcervoBody.lmTemaEscuro .lmBotaoAdminLivro:hover {
   background-color: #242424;
 }
 
+body.lmAcervoBody.lmTemaEscuro .lmMenuLogin {
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmMenuLogin:hover {
+  color: #ffffff;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmMenuNomeAdmin {
+  color: #f5f5f5;
+}
+
 /*TEMA ESCURO - CADASTRO*/
 
 body.lmCadastroBody.lmTemaEscuro,
@@ -1048,6 +1503,112 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
 
 .lmTemaEscuro #lmFormularioEditarLivro label {
   color: #ffffff;
+}
+
+/*Usuários*/
+
+.lmUsuariosBody .lmMenuLateral {
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: -260px;
+  z-index: 1000;
+  transition: left 0.3s ease;
+}
+
+.lmUsuariosBody .lmMenuLateral.ativo {
+  left: 0;
+}
+
+.lmUsuariosBody .lmMenuOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+.lmUsuariosBody .lmMenuOverlay.ativo {
+  display: block;
+}
+
+.lmUsuariosBody .lmCadastroCabecalho {
+  position: relative;
+  overflow: hidden;
+}
+
+.lmUsuariosBody .lmCabecalhoLogoImagem {
+  width: 58px;
+  height: auto;
+  display: block;
+  margin: 0 auto 12px;
+}
+
+.lmUsuariosBody .lmCadastroTituloProjetoImagem {
+  width: 320px;
+  max-width: 80%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.lmUsuariosConteudoPrincipal {
+  width: 100%;
+  padding: 36px 24px 100px;
+}
+
+.lmUsuariosSecao {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.lmUsuariosCabecalho {
+  margin-bottom: 24px;
+}
+
+.lmUsuariosCabecalho h2 {
+  margin: 0 0 6px;
+  color: #2b1f1a;
+  font-size: 28px;
+}
+
+.lmUsuariosCabecalho p {
+  margin: 0;
+  color: #5f5149;
+}
+
+.lmUsuariosLista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lmUsuarioCard {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #d8c7b8;
+  border-radius: 14px;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lmBotaoFlutuanteAdmin {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: none;
+  background-color: #7b4b3a;
+  color: #fff;
+  font-size: 34px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  z-index: 50;
 }
 
 /*RESPONSIVIDADE - ACERVO*/
@@ -1645,6 +2206,58 @@ input:focus {
 #blMudarParaAdmin, #blMudarParaLeitor {
     font-size: 16px;
     font-weight: 600;
+}
+
+.lmAlertaOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+
+.lmAlertaOverlay.ativo {
+  display: flex;
+}
+
+.lmAlertaBox {
+  width: min(90%, 420px);
+  background: #f5ede4;
+  color: #3e2a1f;
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  border: 1px solid rgba(107, 79, 58, 0.2);
+}
+
+.lmAlertaBox h3 {
+  font-size: 1.35rem;
+  margin-bottom: 0.8rem;
+}
+
+.lmAlertaBox p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.lmAlertaBotao {
+  border: none;
+  background: #6b4f3a;
+  color: #ffffff;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lmAlertaBotao:hover {
+  background: #3e2a1f;
 }
 
 /* Estilos da Tela de Recuperação de Senha */

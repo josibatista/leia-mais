@@ -1,28 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const API_URL = "http://localhost:8080";
 
-  const inputSenha = document.getElementById('blSenhaAdm');
-  const olhoSenha = document.getElementById('blOlhoSenha');
+  const inputSenha = document.getElementById("blSenhaAdm");
+  const olhoSenha = document.getElementById("blOlhoSenha");
 
-  olhoSenha.addEventListener('click', () => {
+  if (inputSenha && olhoSenha) {
+    olhoSenha.addEventListener("click", () => {
+      if (inputSenha.type === "password") {
+        inputSenha.type = "text";
 
-    if(inputSenha.type === 'password'){
-      inputSenha.type = 'text';
+        olhoSenha.classList.remove("fa-eye");
+        olhoSenha.classList.add("fa-eye-slash");
+      } else {
+        inputSenha.type = "password";
 
-      olhoSenha.classList.remove('fa-eye');
-      olhoSenha.classList.add('fa-eye-slash');
-    } else {
-      inputSenha.type = 'password';
-      
-      olhoSenha.classList.remove('fa-eye-slash');
-      olhoSenha.classList.add('fa-eye');
-    }
-  })
+        olhoSenha.classList.remove("fa-eye-slash");
+        olhoSenha.classList.add("fa-eye");
+      }
+    });
+  }
 
   const formCadastro = document.getElementById("blFormCadastroAdm");
   const formLogin = document.getElementById("blFormLoginAdm");
 
   if (formCadastro) {
+    const token = localStorage.getItem("token");
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuario"));
+
+    if (!token || !usuarioLogado || usuarioLogado.tipo !== "administrador") {
+      alert("Acesso permitido apenas para administradores.");
+      window.location.href = "loginAdm.html";
+      return;
+    }
+
     formCadastro.addEventListener("submit", async (evento) => {
       evento.preventDefault();
 
@@ -37,10 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const resposta = await fetch(`${API_URL}/usuarios`, {
+        const resposta = await fetch(`/usuarios`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
           },
           body: JSON.stringify({
             nome,
@@ -59,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         alert("Administrador cadastrado com sucesso!");
-        window.location.href = "loginAdm.html";
+        window.location.href = "usuarios.html";
       } catch (erro) {
         console.error("Erro no cadastro:", erro);
         alert("Não foi possível conectar ao servidor.");
@@ -82,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const payloadLogin = { login, senha };
 
       try {
-        const resposta = await fetch(`${API_URL}/login`, {
+        const resposta = await fetch(`/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -97,8 +107,10 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
 
-        if (!dados.usuario || dados.usuario.tipo !== "administrador") {
-          alert("Acesso permitido apenas para administradores.");
+        if (dados.usuario?.tipo !== "administrador") {
+          exibirAlerta("Este acesso é exclusivo para administradores.");
+          localStorage.removeItem("token");
+          localStorage.removeItem("usuario");
           return;
         }
 
@@ -111,5 +123,25 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Não foi possível conectar ao servidor.");
       }
     });
+  }
+
+  function exibirAlerta(mensagem, titulo = "Atenção") {
+    const overlay = document.getElementById("lmAlertaOverlay");
+    const tituloAlerta = document.getElementById("lmAlertaTitulo");
+    const mensagemAlerta = document.getElementById("lmAlertaMensagem");
+    const botaoAlerta = document.getElementById("lmAlertaBotao");
+
+    if (!overlay || !tituloAlerta || !mensagemAlerta || !botaoAlerta) {
+      alert(mensagem);
+      return;
+    }
+
+    tituloAlerta.textContent = titulo;
+    mensagemAlerta.textContent = mensagem;
+    overlay.classList.add("ativo");
+
+    botaoAlerta.onclick = () => {
+      overlay.classList.remove("ativo");
+    };
   }
 });

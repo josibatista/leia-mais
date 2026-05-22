@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usuários | Leia Mulheres</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/view/css/style.css" />
+</head>
+
+<body class="lmCadastroBody lmUsuariosBody">
+
+  <aside class="lmMenuLateral" id="lmMenuLateral">
+    <div class="lmMenuLateralCabecalho lmMenuLateralLogoAdmin">
+      <div class="lmMenuMarcaAdmin">
+        <img src="/view/assets/logoLeiaMais.png" alt="Logo Leia Mais" class="lmMenuLogoAdmin" />
+        <span class="lmMenuNomeAdmin">Leia+</span>
+      </div>
+
+      <button class="lmMenuFecharBotao" id="lmMenuFecharBotao" aria-label="Fechar menu">
+        &times;
+      </button>
+    </div>
+
+    <nav class="lmMenuNavegacao">
+      <a href="perfilLeitor.html" class="lmMenuItem"><span>Perfil</span><span>&gt;</span></a>
+      <a href="dashboard.html" class="lmMenuItem"><span>Dashboard</span><span>&gt;</span></a>
+      <a href="usuarios.html" class="lmMenuItem"><span>Usuários</span><span>&gt;</span></a>
+      <a href="acervoLivros.html" class="lmMenuItem"><span>Livros</span><span>&gt;</span></a>
+      <a href="autores.html" class="lmMenuItem"><span>Autores</span><span>&gt;</span></a>
+      <a href="trilhas.html" class="lmMenuItem"><span>Trilhas</span><span>&gt;</span></a>
+    </nav>
+
+    <div class="lmMenuRodape">
+      <a href="#" class="lmMenuSair">
+        <span>Sair</span>
+      </a>
+
+      <button class="lmBotaoTema" id="lmBotaoTema" aria-label="Alternar tema">
+        ☀
+      </button>
+    </div>
+  </aside>
+
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCadastroCabecalho">
+    <div class="lmCadastroCabecalhoTopo">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+    </div>
+
+    <div class="lmCadastroCabecalhoCentro">
+      <img src="/view/assets/logoLeiaMais.png" alt="Logo Leia Mais" class="lmCabecalhoLogoImagem" />
+
+      <img
+        src="/view/assets/logoLeiaClaro.png"
+        alt="Logo Leia Mulheres"
+        class="lmCadastroTituloProjetoImagem"
+        id="lmCadastroTituloProjetoImagem"
+      />
+
+      <p class="lmCadastroSubtitulo">
+        Área administrativa para gerenciamento de usuários.
+      </p>
+    </div>
+  </header>
+
+  <main class="lmUsuariosConteudoPrincipal">
+    <section class="lmUsuariosSecao">
+        <div class="lmUsuariosCabecalho">
+        <h2>Usuários</h2>
+        <p>Lista de usuários cadastrados no sistema.</p>
+        </div>
+
+        <div class="lmUsuariosLista" id="lmUsuariosLista">
+        <p class="lmUsuariosMensagem">Carregando usuários...</p>
+        </div>
+    </section>
+
+    <button class="lmBotaoFlutuanteAdmin" id="lmBotaoAdicionarAdmin" title="Cadastrar administrador">
+        +
+    </button>
+  </main>
+
+  <script src="/view/js/usuarios.js"></script>
+</body>
+
+</html>

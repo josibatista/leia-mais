@@ -28,7 +28,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.TEXT,
             allowNull: false,
             validate: {
-                isIn: [['administrador', 'usuario']]
+                isIn: [['administrador', 'leitor']]
             }
         },
         iconePerfil: {
