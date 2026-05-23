@@ -91,12 +91,21 @@
         </label>
 
           <div class="lmCadastroAutoresLinha">
-            <select
-              id="idAutor"
-              class="lmCadastroCampoSelecao"
-            >
-              <option value="">Selecione uma autora</option>
-            </select>
+            <div class="lmCadastroAutocomplete">
+              <input
+                type="text"
+                id="idAutor"
+                class="lmCadastroCampoTexto"
+                placeholder="Digite ou selecione uma autora"
+                autocomplete="off"
+              />
+
+              <div
+                class="lmCadastroAutocompleteLista"
+                id="lmListaAutoresDisponiveis"
+              ></div>
+            </div>
+
             <button
               type="button"
               class="lmCadastroBotaoAdicionarAutor"

@@ -14,11 +14,13 @@ const lmApiAutoresUrl = `/autores/disponiveis`;
 const lmFormularioLivro = document.getElementById('lmCadastroFormularioLivro');
 const lmCampoAutor = document.getElementById('idAutor');
 const lmBotaoAdicionarAutor = document.getElementById('lmAdicionarAutor');
+const lmListaAutoresDisponiveis = document.getElementById('lmListaAutoresDisponiveis');
 const lmListaAutoresSelecionados = document.getElementById('lmListaAutoresSelecionados');
 const lmCadastrarNovoAutor = document.getElementById('lmCadastrarNovoAutor');
 const lmCadastroMensagem = document.getElementById('lmCadastroMensagem');
 const lmCadastroBotaoCancelar = document.getElementById('lmCadastroBotaoCancelar');
 const lmCadastroBotaoVoltar = document.getElementById('lmCadastroBotaoVoltar');
+const lmAutoresDisponiveis = [];
 
 if (!token || !usuario || usuario.tipo !== 'administrador') {
   alert('Acesso permitido apenas para administradores.');
@@ -48,16 +50,16 @@ if (lmCadastrarNovoAutor) {
 
 if (lmBotaoAdicionarAutor) {
   lmBotaoAdicionarAutor.addEventListener('click', function () {
-    const autorId = lmCampoAutor.value;
-    const autorNome = lmCampoAutor.options[lmCampoAutor.selectedIndex].text;
+    const autorId = Number(lmCampoAutor.dataset.id);
+    const autorNome = lmCampoAutor.value.trim();
 
-    if (!autorId) {
-      lmExibirMensagem('Selecione uma autora para adicionar.', 'Erro');
+    if (!autorId || !autorNome) {
+      lmExibirMensagem('Selecione uma autora válida da lista.', 'Erro');
       return;
     }
 
     const autorJaExiste = lmAutoresSelecionados.some(function (autor) {
-      return Number(autor.id) === Number(autorId);
+      return Number(autor.id) === autorId;
     });
 
     if (autorJaExiste) {
@@ -66,11 +68,14 @@ if (lmBotaoAdicionarAutor) {
     }
 
     lmAutoresSelecionados.push({
-      id: Number(autorId),
+      id: autorId,
       nome: autorNome
     });
 
     lmCampoAutor.value = '';
+    lmCampoAutor.dataset.id = '';
+    lmListaAutoresDisponiveis.classList.remove('ativo');
+
     lmExibirMensagem('', '');
     lmRenderizarAutoresSelecionados();
   });
@@ -126,27 +131,58 @@ async function lmCarregarAutores() {
     const dados = await resposta.json();
     const autores = dados.autores || [];
 
-    lmCampoAutor.innerHTML = '<option value="">Selecione uma autora</option>';
-    lmCampoAutor.disabled = false;
+    lmAutoresDisponiveis.length = 0;
+    lmListaAutoresDisponiveis.innerHTML = '';
 
     if (!Array.isArray(autores) || autores.length === 0) {
-      lmCampoAutor.innerHTML = '<option value="">Nenhuma autora cadastrada</option>';
+      lmCampoAutor.placeholder = 'Nenhuma autora cadastrada';
       lmCampoAutor.disabled = true;
       return;
     }
 
     autores.forEach(function (autor) {
-      const optionAutor = document.createElement('option');
-      optionAutor.value = autor.id;
-      optionAutor.textContent = lmObterNomeAutor(autor);
-      lmCampoAutor.appendChild(optionAutor);
+      lmAutoresDisponiveis.push({
+        id: autor.id,
+        nome: lmObterNomeAutor(autor)
+      });
     });
-  } catch (erro) {
-    lmCampoAutor.innerHTML = '<option value="">Erro ao carregar autoras</option>';
-    lmCampoAutor.disabled = true;
 
+  } catch (erro) {
+    lmCampoAutor.placeholder = 'Erro ao carregar autoras';
+    lmCampoAutor.disabled = true;
     lmExibirMensagem('Não foi possível carregar a lista de autoras.', 'Erro');
     console.error(erro);
+  }
+}
+
+function lmRenderizarSugestoesAutores(filtro = '') {
+  lmListaAutoresDisponiveis.innerHTML = '';
+
+  const filtroNormalizado = filtro.toLowerCase();
+
+  const autoresFiltrados = lmAutoresDisponiveis.filter(function (autor) {
+    return autor.nome.toLowerCase().includes(filtroNormalizado);
+  });
+
+  autoresFiltrados.forEach(function (autor) {
+    const itemAutor = document.createElement('div');
+    itemAutor.className = 'lmCadastroAutocompleteItem';
+    itemAutor.textContent = autor.nome;
+    itemAutor.dataset.id = autor.id;
+
+    itemAutor.addEventListener('click', function () {
+      lmCampoAutor.value = autor.nome;
+      lmCampoAutor.dataset.id = autor.id;
+      lmListaAutoresDisponiveis.classList.remove('ativo');
+    });
+
+    lmListaAutoresDisponiveis.appendChild(itemAutor);
+  });
+
+  if (autoresFiltrados.length > 0) {
+    lmListaAutoresDisponiveis.classList.add('ativo');
+  } else {
+    lmListaAutoresDisponiveis.classList.remove('ativo');
   }
 }
 
@@ -174,6 +210,21 @@ async function lmUploadImagemCapa(arquivoImagem) {
 
   return data.publicUrl;
 }
+
+lmCampoAutor.addEventListener('input', function () {
+  lmCampoAutor.dataset.id = '';
+  lmRenderizarSugestoesAutores(lmCampoAutor.value);
+});
+
+lmCampoAutor.addEventListener('focus', function () {
+  lmRenderizarSugestoesAutores(lmCampoAutor.value);
+});
+
+document.addEventListener('click', function (evento) {
+  if (!evento.target.closest('.lmCadastroAutocomplete')) {
+    lmListaAutoresDisponiveis.classList.remove('ativo');
+  }
+});
 
 lmFormularioLivro.addEventListener('submit', async function (evento) {
   evento.preventDefault();
