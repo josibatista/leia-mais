@@ -24,13 +24,15 @@ db.LivroAutor = require('../models/livroAutor')(sequelize, Sequelize)
 db.Livro.belongsToMany(
   db.Autor, { 
     through: db.LivroAutor, 
-    foreignKey: 'livroId' 
+    foreignKey: 'livroId',
+    as: 'autores'
   }
 );
 db.Autor.belongsToMany(
   db.Livro, {
      through: db.LivroAutor,
-     foreignKey: 'autorId' 
+     foreignKey: 'autorId' ,
+      as: 'livros'
   }
 );
 // Models

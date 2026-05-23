@@ -148,7 +148,14 @@ module.exports = {
     },
     async getLivros(req, res) {
         try {
-            const livros = await db.Livro.findAll();
+            const livros = await db.Livro.findAll({
+                include: [{
+                    model: db.Autor,
+                    as: 'autores',             
+                    attributes: ['id', 'nome'],
+                    through: { attributes: [] }
+                }]
+            });
 
             if (livros.length === 0) {
                 return res.status(404).json({ error: 'Nenhum livro cadastrado' });
@@ -164,7 +171,14 @@ module.exports = {
         try {
             const id = req.params.id;
 
-            const livro = await db.Livro.findByPk(id);
+            const livro = await db.Livro.findByPk(id, {
+                include: [{
+                    model: db.Autor,
+                    as: 'autores',
+                    attributes: ['id', 'nome'],
+                    through: { attributes: [] }
+                }]
+            });
 
             if (!livro) {
                 return res.status(404).json({ error: 'Livro não encontrado' });
