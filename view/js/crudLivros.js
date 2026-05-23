@@ -17,6 +17,7 @@ const lmBotaoAdicionarAutor = document.getElementById('lmAdicionarAutor');
 const lmListaAutoresSelecionados = document.getElementById('lmListaAutoresSelecionados');
 const lmCadastrarNovoAutor = document.getElementById('lmCadastrarNovoAutor');
 const lmCadastroMensagem = document.getElementById('lmCadastroMensagem');
+const lmCadastroBotaoCancelar = document.getElementById('lmCadastroBotaoCancelar');
 const lmCadastroBotaoVoltar = document.getElementById('lmCadastroBotaoVoltar');
 
 if (!token || !usuario || usuario.tipo !== 'administrador') {
@@ -254,6 +255,18 @@ lmFormularioLivro.addEventListener('submit', async function (evento) {
     console.error(erro);
   }
 });
+
+if (lmCadastroBotaoCancelar) {
+  lmCadastroBotaoCancelar.addEventListener('click', function () {
+    lmFormularioLivro.reset();
+
+    lmAutoresSelecionados.length = 0;
+    lmListaAutoresSelecionados.innerHTML = '';
+    lmCampoAutor.value = '';
+
+    lmExibirMensagem('', '');
+  });
+}
 
 lmCadastroBotaoVoltar.addEventListener('click', function () {
   window.history.back();
