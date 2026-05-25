@@ -19,7 +19,9 @@ db.sequelize = sequelize;
 
 db.Livro = require('../models/livro')(sequelize, Sequelize);
 db.Autor = require('../models/autor')(sequelize, Sequelize);
-db.LivroAutor = require('../models/livroAutor')(sequelize, Sequelize)
+db.LivroAutor = require('../models/livroAutor')(sequelize, Sequelize);
+db.UsuarioLivro = require('../models/usuarioLivro')(sequelize, Sequelize);
+db.Usuario = require('../models/usuario')(sequelize, Sequelize);
 
 db.Livro.belongsToMany(
   db.Autor, { 
@@ -35,7 +37,20 @@ db.Autor.belongsToMany(
       as: 'livros'
   }
 );
-// Models
-db.Usuario = require('../models/usuario')(sequelize, Sequelize);
+
+db.Usuario.belongsToMany(
+    db.Livro, {
+        through: db.UsuarioLivro,
+        foreignKey: 'usuarioId',
+        as: 'livros'
+    }
+);
+db.Livro.belongsToMany(
+    db.Usuario, {
+        through: db.UsuarioLivro,
+        foreignKey: 'livroId',
+        as: 'usuarios'
+    }
+);
 
 module.exports = db;
