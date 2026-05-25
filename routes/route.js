@@ -56,6 +56,17 @@ router.delete('/livros/:id/autores/:autorId/admin', autenticarToken, checkAdmin,
 //rota de login
 router.post('/login', autenticacaoController.login);
 
+//rota para
+router.post('/usuarios/:id/livros', autenticarToken, usuarioLivroController.postUsuarioLivro);
+//rota para atualizar status, páginas lidas ou nota do livro do usuário
+router.put('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.putUsuarioLivro);
+//rota para remover livro da lista do usuário
+router.delete('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.deleteUsuarioLivro);
+//rota para buscar livros do usuário
+router.get('/usuarios/:id/livros', autenticarToken, usuarioLivroController.getUsuarioLivro);
+//rota para visualizar detalhes do livro do usuário (status, páginas lidas e nota)
+router.get('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.getUsuarioLivroById);
+
 //rotas de usuário
 //rota para criar usuário (público)
 router.post('/usuarios', usuarioController.postUsuarioLeitor);
@@ -73,15 +84,5 @@ router.delete('/usuarios/:id', autenticarToken, usuarioController.deleteUsuario)
 router.post('/esqueci-senha', usuarioController.enviarCodigo);
 router.put('/redefinir-senha', usuarioController.redefinirSenha);
 
-//rota para
-router.post('/usuarios/:id/livros', autenticarToken, usuarioLivroController.postUsuarioLivro);
-//rota para atualizar status, páginas lidas ou nota do livro do usuário
-router.put('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.putUsuarioLivro);
-//rota para remover livro da lista do usuário
-router.delete('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.deleteUsuarioLivro);
-//rota para buscar livros do usuário
-router.get('/usuarios/:id/livros', autenticarToken, usuarioLivroController.getUsuarioLivro);
-//rota para visualizar detalhes do livro do usuário (status, páginas lidas e nota)
-router.get('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.getUsuarioLivroById);
 
 module.exports = router;

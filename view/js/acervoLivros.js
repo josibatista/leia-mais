@@ -1,12 +1,12 @@
 const lmApiLivrosUrl = '/livros';
-const lmApiLivrosSalvosUrl = '/usuarios/livros-salvos';
+
+const lmUsuario = JSON.parse(localStorage.getItem('usuario')) || {};
+const lmApiLivrosSalvosUrl = `/usuarios/${lmUsuario.id}/livros`;
 const SUPABASE_URL = 'https://htregzpvwyhrrqdzqtrd.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_F5w-U17IUYOQoZySjx0RQQ_UdYMH0MP';
 const SUPABASE_BUCKET = 'capa-livros';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-const lmUsuario = JSON.parse(localStorage.getItem('usuario')) || {};
 
 const lmModalOverlay = document.getElementById('lmModalOverlay');
 const lmModalFechar = document.getElementById('lmModalFechar');
@@ -23,6 +23,7 @@ const lmBuscaHeader = document.getElementById('lmBuscaHeader');
 const lmCampoBuscaLivros = document.getElementById('lmCampoBuscaLivros');
 
 let lmLivrosCarregados = [];
+let lmLivrosSalvosIds = [];
 
 lmBotaoAbrirBusca.addEventListener('click', function () {
   lmBuscaHeader.classList.toggle('ativo');
@@ -221,6 +222,7 @@ async function lmSalvarLivroUsuario(livroId, status) {
       method: 'POST',
       headers: lmObterHeadersJson(),
       body: JSON.stringify({
+        usuarioId: Number(lmUsuario.id),
         livroId: Number(livroId),
         status
       })
@@ -256,7 +258,7 @@ function lmCriarPopoverSalvarLivro(livro) {
   titulo.textContent = 'Salvar como:';
 
   const opcoes = [
-    { texto: 'Para ler', status: 'para_ler' },
+    { texto: 'Para ler', status: 'para ler' },
     { texto: 'Lendo', status: 'lendo' },
     { texto: 'Lido', status: 'lido' }
   ];
@@ -279,19 +281,49 @@ function lmCriarPopoverSalvarLivro(livro) {
   return popover;
 }
 
+async function lmCarregarLivrosSalvosUsuario() {
+  if (!lmUsuario.id || !lmUsuarioEhLeitor()) return;
+
+  try {
+    const resposta = await fetch(lmApiLivrosSalvosUrl, {
+      headers: lmObterHeadersJson()
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || 'Erro ao carregar livros salvos.');
+    }
+
+    const livros = dados.livros || [];
+    lmLivrosSalvosIds = livros.map((livro) => Number(livro.id));
+  } catch (erro) {
+    console.error('Erro ao carregar livros salvos:', erro);
+  }
+}
+
+function lmResolverCapaLivro(imagemCapa) {
+  const capa = String(imagemCapa || '').trim();
+
+  if (!capa || capa === 'null' || capa === 'undefined') {
+    return '/assets/capaPadrao.jpg';
+  }
+
+  return capa;
+}
+
 function lmCriarCardLivro(livro) {
   const cardLivro = document.createElement('article');
   cardLivro.classList.add('lmCardLivro');
 
-  const imagemLivro = document.createElement('div');
+  const imagemLivro = document.createElement('img');
   imagemLivro.classList.add('lmCardImagem');
+  imagemLivro.src = lmResolverCapaLivro(livro.imagemCapa);
+  imagemLivro.alt = livro.titulo || 'Capa do livro';
 
-  if (livro.imagemCapa) {
-    imagemLivro.style.backgroundImage = `url('${livro.imagemCapa}')`;
-  } else {
-    imagemLivro.classList.add('lmCardImagemSemCapa');
-    imagemLivro.textContent = 'Sem capa';
-  }
+  imagemLivro.onerror = function () {
+    imagemLivro.src = '/assets/capaPadrao.jpg';
+  };
 
   const conteudoCard = document.createElement('div');
   conteudoCard.classList.add('lmCardConteudo');
@@ -312,9 +344,6 @@ function lmCriarCardLivro(livro) {
   botaoSaibaMais.addEventListener('click', function () {
     lmAbrirModalLivro(livro);
   });
-
-  conteudoCard.appendChild(tituloLivro);
-  conteudoCard.appendChild(nomeAutor);
   
   conteudoCard.appendChild(tituloLivro);
   conteudoCard.appendChild(nomeAutor);
@@ -333,6 +362,9 @@ function lmCriarCardLivro(livro) {
     botaoSalvarLivro.classList.add('lmBotaoSalvarLivro');
     botaoSalvarLivro.setAttribute('aria-label', 'Salvar livro');
     botaoSalvarLivro.dataset.livroSalvarId = livro.id;
+    if (lmLivrosSalvosIds.includes(Number(livro.id))) {
+      botaoSalvarLivro.classList.add('salvo');
+    }
 
     botaoSalvarLivro.innerHTML = `
       <svg class="lmIconeSalvarLivro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -598,4 +630,9 @@ document.addEventListener('click', function () {
 });
 
 lmCampoBuscaLivros.addEventListener('input', lmFiltrarLivros);
-lmCarregarLivros();
+async function lmInicializarAcervo() {
+  await lmCarregarLivrosSalvosUsuario();
+  await lmCarregarLivros();
+}
+
+lmInicializarAcervo();

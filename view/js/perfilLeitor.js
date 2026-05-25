@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
   let usuario = JSON.parse(localStorage.getItem("usuario"));
 
-  const API_LIVROS_SALVOS = "/usuarios/livros-salvos";
+  const API_LIVROS_SALVOS = `/usuarios/${usuario.id}/livros`;
 
   let livrosSalvos = [];
-  let statusAtual = "lendo";
+  let statusAtual = "todos";
 
   if (!token || !usuario) {
     alert("Faça login novamente.");
@@ -32,6 +32,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     return item.livro || item.Livro || item;
   }
 
+  function obterVinculo(item) {
+    return item.UsuarioLivro || item.usuarioLivro || item.livros_usuario || item;
+  }
+
+  function obterStatus(item) {
+    return obterVinculo(item).status;
+  }
+
+  function obterPaginasLidas(item) {
+    return Number(obterVinculo(item).paginasLidas || 0);
+  }
+
   function calcularDiasLeitura() {
     const datas = livrosSalvos
       .map((item) => item.updatedAt || item.dataAtualizacao || item.createdAt)
@@ -42,18 +54,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function preencherEstatisticas() {
-    const livrosLidos = livrosSalvos.filter((item) => item.status === "lido");
+    const livrosLidos = livrosSalvos.filter((item) => obterStatus(item) === "lido");
 
     const qtdLivrosLidos = livrosLidos.length;
 
     const qtdPaginasLidas = livrosSalvos.reduce((total, item) => {
-      return total + Number(item.paginasLidas || 0);
+      return total + obterPaginasLidas(item);
     }, 0);
 
     document.getElementById("blQtdLivrosLidos").textContent = qtdLivrosLidos;
     document.getElementById("blQtdDiasLeitura").textContent = calcularDiasLeitura();
     document.getElementById("blQtdPaginasLidas").textContent = qtdPaginasLidas;
   }
+
+  function resolverUrlImagem(caminhoImagem) {
+  const caminho = String(caminhoImagem || "").trim();
+
+  if (!caminho || caminho === "null" || caminho === "undefined") {
+    return "/assets/capaPadrao.jpg";
+  }
+
+  return caminho;
+}
 
   function criarCardLivro(item) {
     const livro = obterLivro(item);
@@ -62,8 +84,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     card.classList.add("blCardLivroPerfil");
 
     const imagem = document.createElement("img");
-    imagem.src = livro.imagemCapa || "/assets/capaPadrao.png";
+
+    const caminhoImagem = livro.imagemCapa;
+
+    imagem.src = resolverUrlImagem(caminhoImagem);
     imagem.alt = livro.titulo || "Capa do livro";
+
+    imagem.onerror = function () {
+      imagem.src = "/assets/capaPadrao.jpg";
+    };
 
     const titulo = document.createElement("p");
     titulo.textContent = livro.titulo || "Título não informado";
@@ -78,7 +107,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const carrossel = document.querySelector(".blCarrosselLivros");
     carrossel.innerHTML = "";
 
-    const livrosFiltrados = livrosSalvos.filter((item) => item.status === statusAtual);
+    const livrosFiltrados =
+    statusAtual === "todos"
+      ? livrosSalvos
+      : livrosSalvos.filter((item) => obterStatus(item) === statusAtual);
     const preview = livrosFiltrados.slice(0, 5);
 
     if (preview.length === 0) {
@@ -122,7 +154,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error(dados.error || "Erro ao carregar livros salvos.");
     }
 
-    livrosSalvos = Array.isArray(dados) ? dados : dados.livrosSalvos || [];
+    livrosSalvos = Array.isArray(dados) ? dados : dados.livros || [];
 
     preencherEstatisticas();
     renderizarLivros();

@@ -167,7 +167,7 @@ module.exports = {
                 include: [{
                     model: db.Livro,
                     as: 'livros',
-                    attributes: ['id', 'titulo'],
+                    attributes: ['id', 'titulo', 'imagemCapa', 'genero', 'editora', 'descricao'],
                     through: { attributes: ['status', 'paginasLidas', 'nota'] } 
                 }]
             });
