@@ -1,4 +1,5 @@
 const lmApiLivrosUrl = '/livros';
+const lmApiLivrosSalvosUrl = '/usuarios/livros-salvos';
 const SUPABASE_URL = 'https://htregzpvwyhrrqdzqtrd.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_F5w-U17IUYOQoZySjx0RQQ_UdYMH0MP';
 const SUPABASE_BUCKET = 'capa-livros';
@@ -208,6 +209,76 @@ async function lmExcluirLivro(idLivro) {
   }
 }
 
+function lmFecharTodosPopoversSalvar() {
+  document.querySelectorAll('.lmPopoverSalvarLivro.ativo').forEach(function (popover) {
+    popover.classList.remove('ativo');
+  });
+}
+
+async function lmSalvarLivroUsuario(livroId, status) {
+  try {
+    const resposta = await fetch(lmApiLivrosSalvosUrl, {
+      method: 'POST',
+      headers: lmObterHeadersJson(),
+      body: JSON.stringify({
+        livroId: Number(livroId),
+        status
+      })
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || 'Não foi possível salvar o livro.');
+    }
+
+    alert('Livro salvo com sucesso!');
+
+    const botaoSalvar = document.querySelector(`[data-livro-salvar-id="${livroId}"]`);
+
+    if (botaoSalvar) {
+      botaoSalvar.classList.add('salvo');
+    }
+
+    lmFecharTodosPopoversSalvar();
+  } catch (erro) {
+    console.error('Erro ao salvar livro:', erro);
+    alert(erro.message || 'Não foi possível salvar o livro.');
+  }
+}
+
+function lmCriarPopoverSalvarLivro(livro) {
+  const popover = document.createElement('div');
+  popover.classList.add('lmPopoverSalvarLivro');
+
+  const titulo = document.createElement('p');
+  titulo.classList.add('lmPopoverSalvarTitulo');
+  titulo.textContent = 'Salvar como:';
+
+  const opcoes = [
+    { texto: 'Para ler', status: 'para_ler' },
+    { texto: 'Lendo', status: 'lendo' },
+    { texto: 'Lido', status: 'lido' }
+  ];
+
+  popover.appendChild(titulo);
+
+  opcoes.forEach(function (opcao) {
+    const botaoOpcao = document.createElement('button');
+    botaoOpcao.type = 'button';
+    botaoOpcao.classList.add('lmPopoverSalvarOpcao');
+    botaoOpcao.textContent = opcao.texto;
+
+    botaoOpcao.addEventListener('click', function () {
+      lmSalvarLivroUsuario(livro.id, opcao.status);
+    });
+
+    popover.appendChild(botaoOpcao);
+  });
+
+  return popover;
+}
+
 function lmCriarCardLivro(livro) {
   const cardLivro = document.createElement('article');
   cardLivro.classList.add('lmCardLivro');
@@ -244,7 +315,58 @@ function lmCriarCardLivro(livro) {
 
   conteudoCard.appendChild(tituloLivro);
   conteudoCard.appendChild(nomeAutor);
-  conteudoCard.appendChild(botaoSaibaMais);
+  
+  conteudoCard.appendChild(tituloLivro);
+  conteudoCard.appendChild(nomeAutor);
+
+  const areaAcoesLivro = document.createElement('div');
+  areaAcoesLivro.classList.add('lmAreaAcoesLivro');
+
+  areaAcoesLivro.appendChild(botaoSaibaMais);
+
+  if (lmUsuarioEhLeitor()) {
+    const areaSalvarLivro = document.createElement('div');
+    areaSalvarLivro.classList.add('lmAreaSalvarLivro');
+
+    const botaoSalvarLivro = document.createElement('button');
+    botaoSalvarLivro.type = 'button';
+    botaoSalvarLivro.classList.add('lmBotaoSalvarLivro');
+    botaoSalvarLivro.setAttribute('aria-label', 'Salvar livro');
+    botaoSalvarLivro.dataset.livroSalvarId = livro.id;
+
+    botaoSalvarLivro.innerHTML = `
+      <svg class="lmIconeSalvarLivro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+      </svg>
+    `;
+
+    const popoverSalvar = lmCriarPopoverSalvarLivro(livro);
+
+    botaoSalvarLivro.addEventListener('click', function (evento) {
+      evento.preventDefault();
+      evento.stopPropagation();
+
+      const popoverEstaAtivo = popoverSalvar.classList.contains('ativo');
+
+      lmFecharTodosPopoversSalvar();
+
+      if (!popoverEstaAtivo) {
+        popoverSalvar.classList.add('ativo');
+      }
+    });
+
+    popoverSalvar.addEventListener('click', function (evento) {
+      evento.stopPropagation();
+    });
+
+    areaSalvarLivro.appendChild(botaoSalvarLivro);
+    areaSalvarLivro.appendChild(popoverSalvar);
+
+    areaAcoesLivro.appendChild(areaSalvarLivro);
+  }
+
+  conteudoCard.appendChild(areaAcoesLivro);
 
   if (lmUsuarioEhAdmin()) {
     const acoesAdmin = document.createElement('div');
@@ -391,6 +513,10 @@ function lmUsuarioEhAdmin() {
   return lmUsuario.tipo === 'administrador';
 }
 
+function lmUsuarioEhLeitor() {
+  return lmUsuario.tipo === 'leitor';
+}
+
 const lmBotaoSair = document.querySelector('.lmMenuSair');
 
 const lmFormularioEditarLivro = document.getElementById('lmFormularioEditarLivro');
@@ -466,6 +592,10 @@ if (
     lmBotaoAdicionarLivro.style.display = "none";
   }
 }
+
+document.addEventListener('click', function () {
+  lmFecharTodosPopoversSalvar();
+});
 
 lmCampoBuscaLivros.addEventListener('input', lmFiltrarLivros);
 lmCarregarLivros();
