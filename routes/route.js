@@ -4,6 +4,7 @@ const router = express.Router();
 const livroController = require('../controllers/livroController');
 const autorController = require('../controllers/autorController');
 const livroAutorController = require('../controllers/livroAutorController');
+const obraController = require('../controllers/obraController');
 const autenticarToken = require('../middleware/autenticarToken');
 const checkAdmin = require('../middleware/checkAdmin');
 
@@ -49,6 +50,10 @@ router.post('/livros/:id/autores/admin', autenticarToken, checkAdmin, livroAutor
 
 // desvincular autor específico do livro
 router.delete('/livros/:id/autores/:autorId/admin', autenticarToken, checkAdmin, livroAutorController.desvincularAutor);
+
+// Rotas - Obra
+router.post('/obras', autenticarToken, checkAdmin, obraController.postObra);
+
 const autenticacaoController = require('../controllers/autenticacaoController');
 const usuarioController = require('../controllers/usuarioController');
 

@@ -7,12 +7,35 @@ const Obra = new mongoose.Schema({
     },
     tipo: {
         type: String,
-        required: true
+        required: true,
+        enum: [
+            'Antologia',
+            'Artigo',
+            'Autobiografia',
+            'Biografia',
+            'Carta',
+            'Coletânea',
+            'Conto',
+            'Crônica',
+            'Diário',
+            'Ensaio',
+            'Literatura infantil',
+            'Literatura juvenil',
+            'Livro',
+            'Memórias',
+            'Novela',
+            'Peça teatral',
+            'Poema',
+            'Poesia',
+            'Quadrinho / HQ',
+            'Resenha',
+            'Outro'
+        ]
     },
-    autor: {
-        type: String,
+    autores: [{
+        type: Number,
         required: true
-    },
+    }],
     descricao: {
         type: String,
         required: false
@@ -22,4 +45,4 @@ const Obra = new mongoose.Schema({
         required: false
     }
 });
-module.exports = mongoose.model("Obra", Obra);
+module.exports = mongoose.model("Obra", Obra, "Obra");
