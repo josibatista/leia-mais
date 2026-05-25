@@ -73,6 +73,9 @@ router.delete('/usuarios/:id', autenticarToken, usuarioController.deleteUsuario)
 router.post('/esqueci-senha', usuarioController.enviarCodigo);
 router.put('/redefinir-senha', usuarioController.redefinirSenha);
 
+//rota para
 router.post('/usuarios/:id/livros', autenticarToken, usuarioLivroController.postUsuarioLivro);
+//rota para atualizar status, páginas lidas ou nota do livro do usuário
+router.put('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.putUsuarioLivro);
 
 module.exports = router;
