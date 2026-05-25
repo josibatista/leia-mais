@@ -56,7 +56,8 @@ router.post('/obras', autenticarToken, checkAdmin, obraController.postObra);
 router.put('/obras/:id', autenticarToken, checkAdmin, obraController.putObra);
 router.delete('/obras/:id', autenticarToken, checkAdmin, obraController.deleteObra);
 
-router.get('/obras' , obraController.getObras);
+router.get('/obras', obraController.getObras);
+router.get('/obras/:id' , obraController.getObrasById);
 
 const autenticacaoController = require('../controllers/autenticacaoController');
 const usuarioController = require('../controllers/usuarioController');

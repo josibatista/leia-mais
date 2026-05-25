@@ -202,5 +202,21 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao consultar obras' });
         }
+    },
+    async getObrasById(req, res) {
+        try {
+            const id = req.params.id;
+
+            const obra = await mongo.Obra.findById(id)
+
+            if (!obra) {
+                return res.status(404).json({ error: 'Obra não encontrada' });
+            }
+
+            res.status(200).json(obra);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao consultar obra'})
+        }
     }
 }
