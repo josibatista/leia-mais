@@ -77,5 +77,9 @@ router.put('/redefinir-senha', usuarioController.redefinirSenha);
 router.post('/usuarios/:id/livros', autenticarToken, usuarioLivroController.postUsuarioLivro);
 //rota para atualizar status, páginas lidas ou nota do livro do usuário
 router.put('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.putUsuarioLivro);
+//rota para remover livro da lista do usuário
+router.delete('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.deleteUsuarioLivro);
+//rota para buscar livros do usuário
+router.get('/usuarios/:id/livros', autenticarToken, usuarioLivroController.getLivrosDoUsuario);
 
 module.exports = router;

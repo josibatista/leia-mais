@@ -126,5 +126,60 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao atualizar informações do livro do usuário' });
         }
+    },
+    //remover livro da lista do usuário
+    async deleteUsuarioLivro(req, res) {
+        try {
+            const { usuarioId, livroId } = req.params;
+
+            //checar se o usuário autenticado é o mesmo do usuárioId ou se é admin
+            if (String(req.usuario.id) !== String(usuarioId) && req.usuario.tipo !== 'administrador') {
+                return res.status(403).json({ error: 'Acesso negado. Você só pode remover livros da sua própria lista' });
+            }
+
+            const vinculo = await db.UsuarioLivro.findOne({
+                where: { usuarioId, livroId }
+            });
+
+            if (!vinculo) {
+                return res.status(404).json({ error: 'Vínculo entre usuário e livro não encontrado' });
+            }
+
+            await vinculo.destroy();
+
+            res.status(200).json({ message: 'Livro removido da lista do usuário com sucesso' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao remover livro da lista do usuário' });
+        }
+    },
+    //buscar livros do usuário
+    async getLivrosDoUsuario(req, res) {
+        try {
+            const { id } = req.params;
+
+            //checar se o usuário autenticado é o mesmo do id ou se é admin
+            if (String(req.usuario.id) !== String(id) && req.usuario.tipo !== 'administrador') {
+                return res.status(403).json({ error: 'Acesso negado. Você só pode acessar sua própria lista de livros' });
+            }
+
+            const usuario = await db.Usuario.findByPk(id, {
+                include: [{
+                    model: db.Livro,
+                    as: 'livros',
+                    attributes: ['id', 'titulo'],
+                    through: { attributes: ['status', 'paginasLidas', 'nota'] } 
+                }]
+            });
+
+            if (!usuario) {
+                return res.status(404).json({ error: 'Usuário não encontrado' });
+            }
+
+            res.status(200).json({ livros: usuario.livros });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao buscar livros do usuário' });
+        }
     }
 }
