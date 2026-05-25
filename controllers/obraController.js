@@ -169,5 +169,38 @@ module.exports = {
             console.error(error);
             return res.status(500).json({ error: 'Erro ao atualizar obra' });
         }
+    },
+    async deleteObra(req, res) {
+        try {
+            const id = req.params.id;
+
+            const obra = await mongo.Obra.findByIdAndDelete(id);
+        
+            if (!obra) {
+                return res.status(404).json({ error: 'Obra não encontada' });
+            }
+
+            res.status(200).json({
+                message: 'Obra deletada com sucesso',
+                obraId: id
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao deletar obra' });
+        }
+    },
+    async getObras(req, res) {
+        try {
+            const obras = await mongo.Obra.find();
+
+            if (obras.length === 0) {
+                return res.status(404).json({ error: 'Nenhuma obra cadastrada' });
+            }
+
+            res.status(200).json(obras);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao consultar obras' });
+        }
     }
 }
