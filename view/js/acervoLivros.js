@@ -344,16 +344,6 @@ function lmFiltrarLivros() {
   lmRenderizarLivros(livrosFiltrados);
 }
 
-function lmCarregarAutoresDoLivro(livroId) {
-  return fetch(`/livros/${livroId}/autores`)
-    .then(res => {
-      if (!res.ok) return [];
-      return res.json();
-    })
-    .then(data => data.autores || [])
-    .catch(() => []);
-}
-
 async function lmCarregarLivros() {
   try {
     const resposta = await fetch(lmApiLivrosUrl);
@@ -364,18 +354,7 @@ async function lmCarregarLivros() {
 
     const livros = await resposta.json();
 
-    const livrosComAutores = await Promise.all(
-      livros.map(async (livro) => {
-        const autores = await lmCarregarAutoresDoLivro(livro.id);
-
-        return {
-          ...livro,
-          autores
-        };
-      })
-    );
-
-    lmLivrosCarregados = livrosComAutores;
+    lmLivrosCarregados = livros;
     lmRenderizarLivros(lmLivrosCarregados);
 
   } catch (erro) {

@@ -8,43 +8,42 @@ if (!token || !usuario || usuario.tipo !== 'administrador') {
   window.location.href = 'loginAdm.html';
 }
 
-const blFormularioCadastroAutor = document.getElementById('blFormularioCadastroAutor');
-const blNomeAutor = document.getElementById('blNomeAutor');
-const blBiografiaAutor = document.getElementById('blBiografiaAutor');
+const lmCadastroFormularioAutor = document.getElementById('lmCadastroFormularioAutor');
+const nomeAutor = document.getElementById('nomeAutor');
+const biografiaAutor = document.getElementById('biografiaAutor');
+const lmCadastroMensagem = document.getElementById('lmCadastroMensagem');
+const lmCadastroBotaoVoltar = document.getElementById('lmCadastroBotaoVoltar');
 
-function blExibirMensagem(texto, tipo = 'info') {
-  let mensagem = document.getElementById('blMensagemCadastroAutor');
-
-  if (!mensagem) {
-    mensagem = document.createElement('p');
-    mensagem.id = 'blMensagemCadastroAutor';
-    mensagem.className = 'blMensagemCadastroAutor';
-    blFormularioCadastroAutor.appendChild(mensagem);
-  }
-
-  mensagem.textContent = texto;
-  mensagem.className = `blMensagemCadastroAutor ${tipo}`;
+function lmExibirMensagem(texto, tipo = 'info') {
+  lmCadastroMensagem.textContent = texto;
+  lmCadastroMensagem.className = `lmCadastroMensagem ${tipo}`;
 }
 
-blFormularioCadastroAutor.addEventListener('submit', async function (evento) {
+if (lmCadastroBotaoVoltar) {
+  lmCadastroBotaoVoltar.addEventListener('click', () => {
+    window.location.href = 'cadastroLivros.html';
+  });
+}
+
+lmCadastroFormularioAutor.addEventListener('submit', async (evento) => {
   evento.preventDefault();
 
-  const nome = blNomeAutor.value.trim();
-  const biografia = blBiografiaAutor.value.trim();
+  const nome = nomeAutor.value.trim();
+  const biografia = biografiaAutor.value.trim();
 
   if (!nome) {
-    blExibirMensagem('Preencha nome do autor.', 'erro');
+    lmExibirMensagem('Preencha o nome da autora.', 'erro');
     return;
   }
 
   try {
-    blExibirMensagem('Cadastrando autor...', 'info');
+    lmExibirMensagem('Cadastrando autora...', 'info');
 
     const resposta = await fetch(lmApiAutoresUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
         nome,
@@ -55,13 +54,13 @@ blFormularioCadastroAutor.addEventListener('submit', async function (evento) {
     const dados = await resposta.json();
 
     if (!resposta.ok) {
-      throw new Error(dados.error || 'Erro ao cadastrar autor.');
+      throw new Error(dados.error || 'Erro ao cadastrar autora.');
     }
 
-    blFormularioCadastroAutor.reset();
-    blExibirMensagem('Autor cadastrado com sucesso.', 'sucesso');
+    lmCadastroFormularioAutor.reset();
+    lmExibirMensagem('Autora cadastrada com sucesso.', 'sucesso');
   } catch (erro) {
-    console.error('Erro ao cadastrar autor:', erro);
-    blExibirMensagem(erro.message || 'Não foi possível cadastrar o autor.', 'erro');
+    console.error('Erro ao cadastrar autora:', erro);
+    lmExibirMensagem(erro.message || 'Não foi possível cadastrar a autora.', 'erro');
   }
 });
