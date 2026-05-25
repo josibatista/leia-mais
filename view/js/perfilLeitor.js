@@ -41,7 +41,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function obterPaginasLidas(item) {
-    return Number(obterVinculo(item).paginasLidas || 0);
+    const livro = obterLivro(item);
+    const vinculo = obterVinculo(item);
+    const status = obterStatus(item);
+
+    if (status === "lido") {
+      return Number(livro.paginas || 0);
+    }
+
+    if (status === "lendo") {
+      return Number(vinculo.paginasLidas || 0);
+    }
+
+    return 0;
   }
 
   function calcularDiasLeitura() {
