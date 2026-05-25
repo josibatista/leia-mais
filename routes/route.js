@@ -4,6 +4,9 @@ const router = express.Router();
 const livroController = require('../controllers/livroController');
 const autorController = require('../controllers/autorController');
 const livroAutorController = require('../controllers/livroAutorController');
+const usuarioController = require('../controllers/usuarioController');
+const usuarioLivroController = require('../controllers/usuarioLivroController');
+const autenticacaoController = require('../controllers/autenticacaoController');
 const autenticarToken = require('../middleware/autenticarToken');
 const checkAdmin = require('../middleware/checkAdmin');
 
@@ -49,8 +52,6 @@ router.post('/livros/:id/autores/admin', autenticarToken, checkAdmin, livroAutor
 
 // desvincular autor específico do livro
 router.delete('/livros/:id/autores/:autorId/admin', autenticarToken, checkAdmin, livroAutorController.desvincularAutor);
-const autenticacaoController = require('../controllers/autenticacaoController');
-const usuarioController = require('../controllers/usuarioController');
 
 //rota de login
 router.post('/login', autenticacaoController.login);
@@ -71,5 +72,14 @@ router.delete('/usuarios/:id', autenticarToken, usuarioController.deleteUsuario)
 //rotas para recuperação de senha (envio de código e redefinição de senha)
 router.post('/esqueci-senha', usuarioController.enviarCodigo);
 router.put('/redefinir-senha', usuarioController.redefinirSenha);
+
+//rota para
+router.post('/usuarios/:id/livros', autenticarToken, usuarioLivroController.postUsuarioLivro);
+//rota para atualizar status, páginas lidas ou nota do livro do usuário
+router.put('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.putUsuarioLivro);
+//rota para remover livro da lista do usuário
+router.delete('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.deleteUsuarioLivro);
+//rota para buscar livros do usuário
+router.get('/usuarios/:id/livros', autenticarToken, usuarioLivroController.getLivrosDoUsuario);
 
 module.exports = router;
