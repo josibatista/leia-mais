@@ -80,6 +80,8 @@ router.put('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivro
 //rota para remover livro da lista do usuário
 router.delete('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.deleteUsuarioLivro);
 //rota para buscar livros do usuário
-router.get('/usuarios/:id/livros', autenticarToken, usuarioLivroController.getLivrosDoUsuario);
+router.get('/usuarios/:id/livros', autenticarToken, usuarioLivroController.getUsuarioLivro);
+//rota para visualizar detalhes do livro do usuário (status, páginas lidas e nota)
+router.get('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.getUsuarioLivroById);
 
 module.exports = router;

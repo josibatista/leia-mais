@@ -53,4 +53,7 @@ db.Livro.belongsToMany(
     }
 );
 
+db.UsuarioLivro.belongsTo(db.Usuario, { foreignKey: 'usuarioId', as: 'usuario' });
+db.UsuarioLivro.belongsTo(db.Livro, { foreignKey: 'livroId', as: 'livro' });
+
 module.exports = db;

@@ -154,7 +154,7 @@ module.exports = {
         }
     },
     //buscar livros do usuário
-    async getLivrosDoUsuario(req, res) {
+    async getUsuarioLivro(req, res) {
         try {
             const { id } = req.params;
 
@@ -180,6 +180,40 @@ module.exports = {
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao buscar livros do usuário' });
+        }
+    },
+    //visualizar detalhes do livro do usuário (status, páginas lidas e nota)
+    async getUsuarioLivroById(req, res) {
+        try {
+            const { usuarioId, livroId } = req.params;
+
+            //checar se o usuário autenticado é o mesmo do usuarioId ou se é admin
+            if (String(req.usuario.id) !== String(usuarioId) && req.usuario.tipo !== 'administrador') {
+                return res.status(403).json({ error: 'Acesso negado. Você só pode acessar livros da sua própria lista' });
+            }
+
+            const vinculo = await db.UsuarioLivro.findOne({
+                where: { usuarioId, livroId },
+                include: [
+                    { model: db.Usuario, as: 'usuario', attributes: ['id', 'nome'] },
+                    { model: db.Livro, as: 'livro', attributes: ['id', 'titulo'] }
+                ]
+            });
+
+            if (!vinculo) {
+                return res.status(404).json({ error: 'Vínculo entre usuário e livro não encontrado' });
+            }
+
+            res.status(200).json({
+                usuario: vinculo.usuario,
+                livro: vinculo.livro,
+                status: vinculo.status,
+                paginasLidas: vinculo.paginasLidas,
+                nota: vinculo.nota
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao buscar detalhes do livro do usuário' });
         }
     }
 }
