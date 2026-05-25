@@ -1,77 +1,100 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leia Mais - Cadastro Autor</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Autores | Leia Mulheres</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 
-<body class="blCorpoDashboard">
+<body class="lmCadastroBody">
 
-    <!-- Barra Lateral (Padrão Admin) -->
-    <aside class="blMenuLateral">
-        <div class="blLogoDashboard">
-            <img src="/assets/logo.png" alt="Logo">
-            <span>Leia+</span>
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCadastroCabecalho">
+    <div class="lmCadastroCabecalhoTopo">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+    </div>
+
+    <div class="lmCadastroCabecalhoCentro">
+      <img src="/assets/logoLeiaMais.png" alt="Logo Leia Mais" class="lmCabecalhoLogoImagem" />
+
+      <img
+        src="/assets/logoLeiaClaro.png"
+        alt="Logo Leia Mulheres"
+        class="lmCadastroTituloProjetoImagem lmLogoTema"
+        id="lmCadastroTituloProjetoImagem"
+      />
+
+      <p class="lmCadastroSubtitulo">
+        Área administrativa para cadastro de autoras do acervo.
+      </p>
+    </div>
+  </header>
+
+  <main class="lmCadastroConteudoPrincipal">
+    <section class="lmCadastroSecaoFormulario">
+      <div class="lmCadastroSecaoCabecalho">
+        <h2 class="lmCadastroTituloSecao">Cadastro de Autoras</h2>
+        <p class="lmCadastroTextoSecao">
+          Preencha os campos abaixo para registrar uma nova autora no acervo.
+        </p>
+      </div>
+
+      <form class="lmCadastroFormularioLivro" id="lmCadastroFormularioAutor">
+        <div class="lmCadastroGrupoCampo">
+          <label for="nomeAutor" class="lmCadastroRotuloCampo">Nome da autora</label>
+          <input
+            type="text"
+            id="nomeAutor"
+            name="nome"
+            class="lmCadastroCampoTexto"
+            placeholder="Digite o nome completo da autora"
+            required
+          />
         </div>
 
-        <nav class="blMenuNavegacao">
-            <a href="#" class="blMenuItem">Perfil <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="#" class="blMenuItem">Dashboard <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="#" class="blMenuItem">Usuários <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="cadastroLivros.html" class="blMenuItem">Livros <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="#" class="blMenuItem ativo">Autores <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="#" class="blMenuItem">Trilhas <i class="fa-solid fa-chevron-right"></i></a>
-            <a href="configuracoes.html" class="blMenuItem">Configurações <i class="fa-solid fa-chevron-right"></i></a>   
-        </nav>
-
-        <div class="blMenuRodape">
-            <a href="loginAdm.html" class="blBotaoSair"><i class="fa-solid fa-power-off"></i> Sair</a>
-            <i class="fa-solid fa-circle-half-stroke blIconeTema"></i>
+        <div class="lmCadastroGrupoCampo">
+          <label for="biografiaAutor" class="lmCadastroRotuloCampo">Biografia</label>
+          <textarea
+            id="biografiaAutor"
+            name="biografia"
+            class="lmCadastroCampoTextoArea"
+            placeholder="Digite uma breve biografia da autora"
+          ></textarea>
         </div>
-    </aside>
 
-    <!-- Conteúdo Principal -->
-    <main class="blConteudoPrincipal">
+        <p class="lmCadastroMensagem" id="lmCadastroMensagem" aria-live="polite"></p>
 
-        <!-- Cabeçalho Mobile (Oculto no Desktop) -->
-        <header class="blCabecalhoSuperior blMobileApenas">
-            <i class="fa-solid fa-bars blIconeMenu"></i>
-            <img src="/assets/logo.png" alt="Logo" class="blLogoMini">
-            <i></i>
-        </header>
+        <div class="lmCadastroAcoesFormulario">
+          <button type="button" class="lmCadastroBotaoSecundario" id="lmCadastroBotaoVoltar">
+            Voltar
+          </button>
 
-        <header class="blCabecalhoPagina">
-            <h1 class="blTituloPagina">Cadastrar autor</h1>
-            <p class="blTextoApoio">Adicione um novo autor ao acervo do sistema preenchendo as informações abaixo.</p>
-        </header>
+          <button type="reset" class="lmCadastroBotaoSecundario">
+            Cancelar
+          </button>
 
-        <section class="blContainerFormulario">
-            <form id="blFormularioCadastroAutor" class="blFormularioPadrao">
-                <!-- Campo: Nome do Autor -->
-                <div class="blGrupoInput">
-                    <label for="blNomeAutor">Nome do autor</label>
-                    <input type="text" id="blNomeAutor" name="nome" placeholder="Digite o nome completo do autor" required>
-                </div>
+          <button type="submit" class="lmCadastroBotaoPrimario">
+            Cadastrar
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
 
-                <!-- Campo: Biografia -->
-                <div class="blGrupoInput">
-                    <label for="blBiografiaAutor">Biografia</label>
-                    <textarea id="blBiografiaAutor" name="biografia" rows="6" placeholder="Escreva uma breve biografia do autor..."></textarea>
-                </div>
-
-                <!-- Ações do Formulário -->
-                <div class="blAcoesFormulario">
-                    <button type="submit" class="blBotaoPrimario">Cadastrar autor</button>
-                    <a href="#" class="blBotaoSecundario">Cancelar</a>
-                </div>
-            </form>
-        </section>
-    </main>
-    <script src="/js/cadastroAutor.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="/js/cadastroAutor.js"></script>
 </body>
 </html>

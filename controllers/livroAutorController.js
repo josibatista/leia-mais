@@ -50,10 +50,14 @@ module.exports = {
 
             // addAutors gerado automaticamente pelo belongsToMany
             // não duplica se já existir o vínculo
-            await livro.addAutors(autores);
+            await livro.addAutores(autores);
 
             const livroAtualizado = await db.Livro.findByPk(id, {
-                include: [{ model: db.Autor, attributes: ['id', 'nome'] }]
+                include: [{ 
+                    model: db.Autor, 
+                    as: 'autores',              
+                    attributes: ['id', 'nome'] 
+                }]
             });
 
             res.status(200).json({
@@ -74,8 +78,9 @@ module.exports = {
             const livro = await db.Livro.findByPk(id, {
                 include: [{
                     model: db.Autor,
+                    as: 'autores',              
                     attributes: ['id', 'nome', 'biografia'],
-                    through: { attributes: [] } // oculta campos da tabela pivot
+                    through: { attributes: [] }
                 }]
             });
 
@@ -83,14 +88,14 @@ module.exports = {
                 return res.status(404).json({ error: 'Livro não encontrado' });
             }
 
-            if (livro.Autors.length === 0) {
+            if (livro.autores.length === 0) {
                 return res.status(200).json({ 
                     message: 'Nenhum autor vinculado a este livro',
                     autores: []
                 });
             }
 
-            res.status(200).json({ autores: livro.Autors });
+            res.status(200).json({ autores: livro.autores });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao consultar autores do livro' });
@@ -104,6 +109,7 @@ module.exports = {
             const autor = await db.Autor.findByPk(id, {
                 include: [{
                     model: db.Livro,
+                    as: 'livros',
                     attributes: ['id', 'titulo', 'editora', 'anoPublicacao', 'genero'],
                     through: { attributes: [] } // oculta campos da tabela pivot
                 }]
@@ -113,14 +119,14 @@ module.exports = {
                 return res.status(404).json({ error: 'Autor não encontrado' });
             }
 
-            if (autor.Livros.length === 0) {
+            if (autor.livros.length === 0) {
                 return res.status(200).json({
                     message: 'Nenhum livro vinculado a este autor',
                     livros: []
                 });
             }
 
-            res.status(200).json({ livros: autor.Livros });
+            res.status(200).json({ livros: autor.livros });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao consultar livros do autor' });
@@ -150,7 +156,7 @@ module.exports = {
                 return res.status(404).json({ error: 'Vínculo não encontrado' });
             }
 
-            await livro.removeAutor(autor);
+            await livro.removeAutores(autor);
 
             res.status(200).json({ message: 'Autor desvinculado com sucesso' });
         } catch (error) {
