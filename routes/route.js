@@ -53,6 +53,8 @@ router.delete('/livros/:id/autores/:autorId/admin', autenticarToken, checkAdmin,
 
 // Rotas - Obra
 router.post('/obras', autenticarToken, checkAdmin, obraController.postObra);
+router.put('/obras/:id', autenticarToken, checkAdmin, obraController.putObra);
+
 
 const autenticacaoController = require('../controllers/autenticacaoController');
 const usuarioController = require('../controllers/usuarioController');

@@ -39,10 +39,6 @@ const Obra = new mongoose.Schema({
     descricao: {
         type: String,
         required: false
-    },
-    link: {
-        type: String,
-        required: false
     }
 });
 module.exports = mongoose.model("Obra", Obra, "Obra");

@@ -6,11 +6,10 @@ module.exports = {
 
     async postObra(req, res) {
         try {
-            let { titulo, tipo, autores, descricao, link } = req.body;
+            let { titulo, tipo, autores, descricao } = req.body;
 
             titulo = titulo?.trim();
             descricao = descricao?.trim();
-            link = link?.trim();
 
             if (!titulo) {
                 return res.status(422).json({error: 'O campo título é obrigatório' });
@@ -54,8 +53,7 @@ module.exports = {
                 titulo,
                 tipo,
                 autores: autoresIds,
-                descricao,
-                link,
+                descricao
             });
 
             return res.status(201).json({
@@ -65,6 +63,111 @@ module.exports = {
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao criar obra' });
+        }
+    },
+    async putObra(req, res) {
+        try {
+            const id = req.params.id;
+            let { titulo, tipo, autores, descricao } = req.body;
+
+            titulo = titulo?.trim();
+            descricao = descricao?.trim();
+
+            const obra = await mongo.Obra.findById(id);
+            if (!obra) {
+                return res.status(404).json({ error: 'Obra não encontrada' });
+            }
+
+            if (titulo === '') {
+                return res.status(422).json({ error: 'O campo título não pode ser vazio' });
+            }
+
+            if (titulo) {
+                const tituloObraExistente = await mongo.Obra.findOne({
+                    _id: { $ne: id },
+                    titulo: {
+                        $regex: new RegExp(`^${titulo}$`, 'i')
+                    }
+                });
+
+                if (tituloObraExistente) {
+                    return res.status(400).json({ error: 'Título já cadastrado' });
+                }
+            }
+
+            let autoresIds = obra.autores;
+
+            if (autores) {
+                if (!Array.isArray(autores) || autores.length === 0) {
+                    return res.status(400).json({ error: 'Pelo menos um autor é obrigatório.' });
+                }
+
+                autoresIds = await Promise.all(
+                    autores.map(async (autor) => {
+                        const nome = typeof autor === 'string'
+                            ? autor.trim()
+                            : autor.nome?.trim();
+
+                        if (!nome) throw new Error('Nome do autor inválido.');
+
+                        let autorExistente = await db.Autor.findOne({
+                            where: { nome: { [Op.iLike]: nome } }
+                        });
+
+                        if (!autorExistente) {
+                            autorExistente = await db.Autor.create({ nome });
+                        }
+
+                        return autorExistente.id;
+                    })
+                );
+                autoresIds = [...new Set(autoresIds.map(id => id.toString()))];
+            }
+
+            const normalizarArray = (arr) => {
+                return [...new Set(arr.map(id => id.toString().trim()))].sort();
+            };
+
+            const autoresIguais = (novos, atuais) => {
+                if (!autores) return true; 
+
+                const a = normalizarArray(novos);
+                const b = normalizarArray(atuais);
+
+                if (a.length !== b.length) return false;
+
+                return a.every((val, i) => val === b[i]);
+            };
+
+            const mudouTitulo = titulo && titulo !== obra.titulo;
+            const mudouTipo = tipo && tipo !== obra.tipo;
+            const mudouDescricao = descricao && descricao !== obra.descricao;
+            const mudouAutores = autores && !autoresIguais(autoresIds, obra.autores);
+
+            if (!mudouTitulo && !mudouTipo && !mudouDescricao && !mudouAutores) {
+                return res.status(400).json({
+                    error: 'Nenhuma alteração foi realizada'
+                });
+            }
+
+            const obraAtualizada = await mongo.Obra.findByIdAndUpdate(
+                id,
+                {
+                    ...(titulo && { titulo }),
+                    ...(tipo && { tipo }),
+                    ...(descricao && { descricao }),
+                    autores: autoresIds
+                },
+                { new: true }
+            );
+
+            res.status(200).json({
+                message: 'Obra atualizada com sucesso',
+                obra: obraAtualizada
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Erro ao atualizar obra' });
         }
     }
 }
