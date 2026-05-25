@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", async () => {
-
   const token = localStorage.getItem("token");
   let usuario = JSON.parse(localStorage.getItem("usuario"));
+
+  const API_LIVROS_SALVOS = "/usuarios/livros-salvos";
+
+  let livrosSalvos = [];
+  let statusAtual = "lendo";
 
   if (!token || !usuario) {
     alert("Faça login novamente.");
@@ -9,35 +13,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  async function carregarUsuarioAtualizado() {
-    try {
-      const resposta = await fetch(`/usuarios/${usuario.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
-      const dados = await resposta.json();
-
-      if (!resposta.ok) {
-        throw new Error(dados.error || "Erro ao carregar usuário.");
-      }
-
-      // Atualiza localStorage
-      localStorage.setItem("usuario", JSON.stringify(dados));
-      usuario = dados;
-
-      preencherDados();
-    } catch (erro) {
-      console.error("Erro ao buscar usuário:", erro);
-      alert("Sessão inválida. Faça login novamente.");
-      localStorage.removeItem("token");
-      localStorage.removeItem("usuario");
-      window.location.href = "loginLeitor.html";
-    }
+  function obterHeadersJson() {
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
+    };
   }
 
-  function preencherDados() {
+  function preencherDadosUsuario() {
     document.getElementById("blNomePerfil").textContent = usuario.nome || "—";
     document.getElementById("blUsuarioPerfil").textContent = usuario.username || "—";
 
@@ -45,76 +28,155 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("blLetraPerfil").textContent = letra;
   }
 
-  await carregarUsuarioAtualizado();
+  function obterLivro(item) {
+    return item.livro || item.Livro || item;
+  }
 
-/*  const botoesEditar = document.querySelectorAll(".blIconeEditar");
+  function calcularDiasLeitura() {
+    const datas = livrosSalvos
+      .map((item) => item.updatedAt || item.dataAtualizacao || item.createdAt)
+      .filter(Boolean)
+      .map((data) => new Date(data).toISOString().split("T")[0]);
 
-  botoesEditar.forEach((botao) => {
-    botao.addEventListener("click", async () => {
-      const campo = botao.dataset.campo;
+    return new Set(datas).size;
+  }
 
-      if (!campo) {
-        alert("Campo não identificado.");
-        return;
-      }
+  function preencherEstatisticas() {
+    const livrosLidos = livrosSalvos.filter((item) => item.status === "lido");
 
-      let novoValor = prompt(`Digite o novo valor para ${campo}:`);
-      if (!novoValor) return;
+    const qtdLivrosLidos = livrosLidos.length;
 
-      novoValor = novoValor.trim();
-      if (campo === "senha") {
-        if (
-          novoValor.length < 8 ||
-          !/[a-zA-Z]/.test(novoValor) ||
-          !/\d/.test(novoValor) ||
-          !/[!@#$%^&*(),.?":{}|<>]/.test(novoValor)
-        ) {
-          alert("A senha deve ter no mínimo 8 caracteres, uma letra, um número e um caractere especial.");
-          return;
-        }
-      }
+    const qtdPaginasLidas = livrosSalvos.reduce((total, item) => {
+      return total + Number(item.paginasLidas || 0);
+    }, 0);
 
-      try {
-        const resposta = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ [campo]: novoValor }),
-        });
+    document.getElementById("blQtdLivrosLidos").textContent = qtdLivrosLidos;
+    document.getElementById("blQtdDiasLeitura").textContent = calcularDiasLeitura();
+    document.getElementById("blQtdPaginasLidas").textContent = qtdPaginasLidas;
+  }
 
-        const dados = await resposta.json();
+  function criarCardLivro(item) {
+    const livro = obterLivro(item);
 
-        if (!resposta.ok) {
-          alert(dados.error || "Erro ao atualizar.");
-          return;
-        }
+    const card = document.createElement("article");
+    card.classList.add("blCardLivroPerfil");
 
-        // Atualiza usuário local
-        localStorage.setItem("usuario", JSON.stringify(dados));
-        usuario = dados;
+    const imagem = document.createElement("img");
+    imagem.src = livro.imagemCapa || "/assets/capaPadrao.png";
+    imagem.alt = livro.titulo || "Capa do livro";
 
-        preencherDados();
+    const titulo = document.createElement("p");
+    titulo.textContent = livro.titulo || "Título não informado";
 
-        alert("Atualizado com sucesso!");
-      } catch (erro) {
-        console.error(erro);
-        alert("Erro ao atualizar.");
-      }
+    card.appendChild(imagem);
+    card.appendChild(titulo);
+
+    return card;
+  }
+
+  function renderizarLivros() {
+    const carrossel = document.querySelector(".blCarrosselLivros");
+    carrossel.innerHTML = "";
+
+    const livrosFiltrados = livrosSalvos.filter((item) => item.status === statusAtual);
+    const preview = livrosFiltrados.slice(0, 5);
+
+    if (preview.length === 0) {
+      const mensagem = document.createElement("p");
+      mensagem.classList.add("blMensagemEstado");
+      mensagem.textContent = "Nenhum livro encontrado nesta categoria.";
+      carrossel.appendChild(mensagem);
+      return;
+    }
+
+    preview.forEach((item) => {
+      carrossel.appendChild(criarCardLivro(item));
     });
-  }); */
+  }
 
-  const botaoSair = document.querySelector(".blBotaoSair");
-
-  if (botaoSair) {
-    botaoSair.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      localStorage.removeItem("token");
-      localStorage.removeItem("usuario");
-
-      window.location.href = "loginLeitor.html";
+  async function carregarUsuarioAtualizado() {
+    const resposta = await fetch(`/usuarios/${usuario.id}`, {
+      headers: obterHeadersJson()
     });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || "Erro ao carregar usuário.");
+    }
+
+    localStorage.setItem("usuario", JSON.stringify(dados));
+    usuario = dados;
+
+    preencherDadosUsuario();
+  }
+
+  async function carregarLivrosSalvos() {
+    const resposta = await fetch(API_LIVROS_SALVOS, {
+      headers: obterHeadersJson()
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || "Erro ao carregar livros salvos.");
+    }
+
+    livrosSalvos = Array.isArray(dados) ? dados : dados.livrosSalvos || [];
+
+    preencherEstatisticas();
+    renderizarLivros();
+  }
+
+  function configurarFiltros() {
+    const botoesFiltro = document.querySelectorAll(".blFiltroLivro");
+
+    botoesFiltro.forEach((botao) => {
+      botao.addEventListener("click", () => {
+        botoesFiltro.forEach((item) => item.classList.remove("ativo"));
+
+        botao.classList.add("ativo");
+        statusAtual = botao.dataset.status;
+
+        renderizarLivros();
+      });
+    });
+  }
+
+  function configurarSetaLivros() {
+    const botaoAbrirLivrosSalvos = document.getElementById("blAbrirLivrosSalvos");
+
+    if (botaoAbrirLivrosSalvos) {
+      botaoAbrirLivrosSalvos.addEventListener("click", () => {
+        window.location.href = "livrosSalvos.html";
+      });
+    }
+  }
+
+  function configurarLogout() {
+    const botaoSair = document.querySelector(".blBotaoSair");
+
+    if (botaoSair) {
+      botaoSair.addEventListener("click", (evento) => {
+        evento.preventDefault();
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("usuario");
+
+        window.location.href = "loginLeitor.html";
+      });
+    }
+  }
+
+  try {
+    await carregarUsuarioAtualizado();
+    await carregarLivrosSalvos();
+
+    configurarFiltros();
+    configurarSetaLivros();
+    configurarLogout();
+  } catch (erro) {
+    console.error("Erro no perfil:", erro);
+    alert(erro.message || "Erro ao carregar perfil.");
   }
 });

@@ -34,7 +34,6 @@
     <!-- Conteúdo Principal -->
    <main class="blConteudoPrincipal blConteudoLeitor">
 
-      <!-- USUÁRIO (DINÂMICO) -->
       <section class="blSecaoUsuario">
         <div class="blAvatarContainer">
           <div class="blAvatarCirculo" id="blLetraPerfil"></div>
@@ -52,26 +51,24 @@
         </div>
       </section>
 
-      <!-- ESTATÍSTICAS (SEM MOCK) -->
       <section class="blGradeEstatisticas">
         <div class="blCardEstatistica">
           <i class="fa-solid fa-book blIconeCard"></i>
-          <span class="blNumeroEstatistica"></span>
+          <span class="blNumeroEstatistica"id="blQtdLivrosLidos">0</span>
           <span class="blTextoEstatistica">Livros Lidos</span>
         </div>
         <div class="blCardEstatistica">
           <i class="fa-solid fa-fire blIconeCard"></i>
-          <span class="blNumeroEstatistica"></span>
+          <span class="blNumeroEstatistica"id="blQtdDiasLeitura">0</span>
           <span class="blTextoEstatistica">Dias De Leitura</span>
         </div>
         <div class="blCardEstatistica">
           <i class="fa-solid fa-book-open blIconeCard"></i>
-          <span class="blNumeroEstatistica"></span>
+          <span class="blNumeroEstatistica"id="blQtdPaginasLidas">0</span>
           <span class="blTextoEstatistica">Páginas Lidas</span>
         </div>
       </section>
 
-      <!-- METAS (SEM MOCK) -->
       <section class="blSecaoMetas">
         <div class="blMetaTitulo">
           Metas do mês: <span class="blMetaDestaque"></span>
@@ -82,7 +79,6 @@
         </div>
       </section>
 
-      <!-- TRILHAS (SEM MOCK) -->
       <section class="blSecaoLista">
         <div class="blListaCabecalho">
           <h3>Trilhas</h3>
@@ -90,18 +86,17 @@
         </div>
       </section>
 
-      <!-- LIVROS (SEM MOCK) -->
       <section class="blSecaoLista">
         <div class="blListaCabecalho">
           <div class="blLivrosTitulos">
             <h3>Livros</h3>
             <div class="blMenuLivros">
-              <button class="blFiltroLivro ativo">Lendo</button>
-              <button class="blFiltroLivro">Para Ler</button>
-              <button class="blFiltroLivro">Lidos</button>
+              <button class="blFiltroLivro ativo" data-status="lendo">Lendo</button>
+              <button class="blFiltroLivro" data-status="para_ler">Para Ler</button>
+              <button class="blFiltroLivro" data-status="lido">Lidos</button>
             </div>
           </div>
-          <i class="fa-solid fa-chevron-right"></i>
+          <i class="fa-solid fa-chevron-right" id="blAbrirLivrosSalvos"></i>
         </div>
         <div class="blCarrosselLivros"></div>
       </section>
