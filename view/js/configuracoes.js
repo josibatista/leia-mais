@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const API_URL = "http://localhost:8080";
 
   let token = localStorage.getItem("token");
   let usuario = JSON.parse(localStorage.getItem("usuario"));
@@ -12,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function carregarUsuario() {
     try {
-      const res = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
+      const res = await fetch(`/usuarios/${usuario.id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -68,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       try {
-        const res = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
+        const res = await fetch(`/usuarios/${usuario.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -103,7 +102,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!confirmar) return;
 
     try {
-      const res = await fetch(`${API_URL}/usuarios/${usuario.id}`, {
+      const res = await fetch(`/usuarios/${usuario.id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

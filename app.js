@@ -2,6 +2,7 @@ console.log('Iniciando servidor...');
 
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const db = require('./config/db_sequelize');
 const mongo_db = require('./config/db_mongoose');
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'view')));
 
 app.use(routes);
 
