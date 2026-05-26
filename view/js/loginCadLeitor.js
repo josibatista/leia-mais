@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("token", dados.token);
         localStorage.setItem("usuario", JSON.stringify(dados.usuario));
 
-        window.location.href = "acervoLivros.html";
+        window.location.href = "paginaPrincipalLeitor.html";
       } catch (erro) {
         console.error("Erro no login:", erro);
         alert("Não foi possível conectar ao servidor.");
