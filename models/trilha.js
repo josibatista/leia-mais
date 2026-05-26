@@ -5,8 +5,15 @@ const Trilha = new mongoose.Schema({
         type: String,
         required: true
     },
+    descricao: {
+        type: String,
+        required: false
+    },
     nivelDificuldade: {
         type: Number,
+        enum: {
+            values: [1, 2, 3, 4, 5]
+        },
         required: true
     },
     xp: {
@@ -15,7 +22,7 @@ const Trilha = new mongoose.Schema({
     },
     liberada: {
         type: Boolean,
-        required: true
+        required: false
     }
 });
 module.exports = mongoose.model("Trilha", Trilha, "Trilha");

@@ -12,7 +12,7 @@ module.exports = {
             descricao = descricao?.trim();
 
             if (!titulo) {
-                return res.status(422).json({error: 'O campo título é obrigatório' });
+                return res.status(422).json({ error: 'O campo título é obrigatório' });
             }
 
             const tituloObraExistente = await mongo.Obra.findOne({
