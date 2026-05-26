@@ -2790,6 +2790,19 @@ input:focus {
   background-color: rgba(123, 90, 66, 0.12);
 }
 
+.lsBotaoEstrela {
+  border: none;
+  background: transparent;
+  color: #d89a00;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.lsBotaoEstrela:hover {
+  transform: scale(1.08);
+}
+
 /* Responsividade e Ajustes Mobile */
 .blMobileApenas {
     display:none;
