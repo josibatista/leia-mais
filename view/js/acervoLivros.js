@@ -90,6 +90,67 @@ function lmObterHeadersJson() {
   return headers;
 }
 
+function lmAbrirModalMensagem({
+  titulo = 'Atenção',
+  mensagem,
+  mostrarCancelar = false,
+  mostrarBotaoLista = false,
+  aoConfirmar = null
+}) {
+  const modal = document.getElementById('lmModalMensagemAcervo');
+  const tituloModal = document.getElementById('lmModalMensagemTitulo');
+  const textoModal = document.getElementById('lmModalMensagemTexto');
+  const botaoConfirmar = document.getElementById('lmBotaoConfirmarMensagem');
+  const botaoCancelar = document.getElementById('lmBotaoCancelarMensagem');
+  const botaoIrLista = document.getElementById('lmBotaoIrLista');
+
+  tituloModal.textContent = titulo;
+  textoModal.textContent = mensagem;
+
+  botaoCancelar.style.display = mostrarCancelar ? 'inline-flex' : 'none';
+  botaoIrLista.style.display = mostrarBotaoLista ? 'inline-flex' : 'none';
+
+  const novoBotaoConfirmar = botaoConfirmar.cloneNode(true);
+  botaoConfirmar.parentNode.replaceChild(novoBotaoConfirmar, botaoConfirmar);
+
+  const novoBotaoIrLista = botaoIrLista.cloneNode(true);
+  botaoIrLista.parentNode.replaceChild(novoBotaoIrLista, botaoIrLista);
+
+  novoBotaoIrLista.addEventListener('click', function () {
+    window.location.href = '/pages/livrosSalvos.html';
+  });
+
+  novoBotaoConfirmar.addEventListener('click', async function () {
+    modal.classList.remove('lmModalOverlayAtivo');
+
+    if (typeof aoConfirmar === 'function') {
+      await aoConfirmar();
+    }
+  });
+
+  modal.classList.add('lmModalOverlayAtivo');
+}
+
+function lmConfigurarModalMensagemAcervo() {
+  const modal = document.getElementById('lmModalMensagemAcervo');
+  const botaoFechar = document.getElementById('lmFecharModalMensagemAcervo');
+  const botaoCancelar = document.getElementById('lmBotaoCancelarMensagem');
+
+  botaoFechar.addEventListener('click', function () {
+    modal.classList.remove('lmModalOverlayAtivo');
+  });
+
+  botaoCancelar.addEventListener('click', function () {
+    modal.classList.remove('lmModalOverlayAtivo');
+  });
+
+  modal.addEventListener('click', function (evento) {
+    if (evento.target === modal) {
+      modal.classList.remove('lmModalOverlayAtivo');
+    }
+  });
+}
+
 async function lmCarregarAutoresDisponiveis() {
   try {
     const resposta = await fetch('/autores/disponiveis');
@@ -234,7 +295,9 @@ async function lmSalvarLivroUsuario(livroId, status) {
       throw new Error(dados.error || 'Não foi possível salvar o livro.');
     }
 
-    alert('Livro salvo com sucesso!');
+    if (!lmLivrosSalvosIds.includes(Number(livroId))) {
+      lmLivrosSalvosIds.push(Number(livroId));
+    }
 
     const botaoSalvar = document.querySelector(`[data-livro-salvar-id="${livroId}"]`);
 
@@ -243,9 +306,54 @@ async function lmSalvarLivroUsuario(livroId, status) {
     }
 
     lmFecharTodosPopoversSalvar();
+
+    lmAbrirModalMensagem({
+      titulo: 'Livro salvo',
+      mensagem: 'Livro salvo com sucesso!',
+      mostrarBotaoLista: true
+    });
   } catch (erro) {
     console.error('Erro ao salvar livro:', erro);
-    alert(erro.message || 'Não foi possível salvar o livro.');
+
+    lmAbrirModalMensagem({
+      titulo: 'Atenção',
+      mensagem: erro.message || 'Não foi possível salvar o livro.'
+    });
+  }
+}
+
+async function lmRemoverLivroSalvoUsuario(livroId) {
+  try {
+    const resposta = await fetch(`/usuarios/${lmUsuario.id}/livros/${livroId}`, {
+      method: 'DELETE',
+      headers: lmObterHeadersJson()
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || 'Não foi possível remover o livro dos salvos.');
+    }
+
+    lmLivrosSalvosIds = lmLivrosSalvosIds.filter((id) => Number(id) !== Number(livroId));
+
+    const botaoSalvar = document.querySelector(`[data-livro-salvar-id="${livroId}"]`);
+
+    if (botaoSalvar) {
+      botaoSalvar.classList.remove('salvo');
+    }
+
+    lmAbrirModalMensagem({
+      titulo: 'Livro removido',
+      mensagem: 'Livro removido dos salvos com sucesso.'
+    });
+  } catch (erro) {
+    console.error('Erro ao remover livro salvo:', erro);
+
+    lmAbrirModalMensagem({
+      titulo: 'Atenção',
+      mensagem: erro.message || 'Não foi possível remover o livro dos salvos.'
+    });
   }
 }
 
@@ -378,6 +486,23 @@ function lmCriarCardLivro(livro) {
     botaoSalvarLivro.addEventListener('click', function (evento) {
       evento.preventDefault();
       evento.stopPropagation();
+
+      const livroJaSalvo = lmLivrosSalvosIds.includes(Number(livro.id));
+
+      if (livroJaSalvo) {
+        lmFecharTodosPopoversSalvar();
+
+        lmAbrirModalMensagem({
+          titulo: 'Remover livro',
+          mensagem: 'Deseja remover este livro dos seus salvos?',
+          mostrarCancelar: true,
+          aoConfirmar: async function () {
+            await lmRemoverLivroSalvoUsuario(livro.id);
+          }
+        });
+
+        return;
+      }
 
       const popoverEstaAtivo = popoverSalvar.classList.contains('ativo');
 
@@ -635,4 +760,5 @@ async function lmInicializarAcervo() {
   await lmCarregarLivros();
 }
 
+lmConfigurarModalMensagemAcervo();
 lmInicializarAcervo();
