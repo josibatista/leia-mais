@@ -1,4 +1,34 @@
 const db = require('../config/db_sequelize');
+const { Op } = require('sequelize');
+
+// função auxiliar para calcular e atualizar a média de nota do livro
+async function atualizarMediaNotaLivro(livroId) {
+    const avaliacoes = await db.UsuarioLivro.findAll({
+        where: {
+            livroId,
+            nota: {
+                [Op.not]: null
+            }
+        }
+    });
+
+    const somaNotas = avaliacoes.reduce((total, item) => {
+        return total + Number(item.nota);
+    }, 0);
+
+    const mediaNota = avaliacoes.length > 0
+        ? somaNotas / avaliacoes.length
+        : null;
+
+    const livro = await db.Livro.findByPk(livroId);
+
+    if (livro) {
+        livro.mediaNota = mediaNota;
+        await livro.save();
+    }
+
+    return mediaNota;
+}
 
 module.exports = {
     //criar associação entre usuário e livro
@@ -44,7 +74,7 @@ module.exports = {
                 include: [{
                     model: db.Livro,
                     as: 'livros',
-                    attributes: ['id', 'titulo'],
+                    attributes: ['id', 'titulo', 'imagemCapa', 'genero', 'editora', 'descricao', 'paginas', 'mediaNota'],
                     through: { attributes: ['status', 'paginasLidas', 'nota'] } 
                 }]
             });
@@ -109,11 +139,13 @@ module.exports = {
 
             await vinculo.save();
 
+            await atualizarMediaNotaLivro(livroId);
+
             const usuarioAtualizado = await db.Usuario.findByPk(usuarioId, {
                 include: [{
                     model: db.Livro,
                     as: 'livros',
-                    attributes: ['id', 'titulo'],
+                    attributes: ['id', 'titulo', 'imagemCapa', 'genero', 'editora', 'descricao', 'paginas', 'mediaNota'],
                     through: { attributes: ['status', 'paginasLidas', 'nota'] } 
                 }]
             });
@@ -167,7 +199,7 @@ module.exports = {
                 include: [{
                     model: db.Livro,
                     as: 'livros',
-                    attributes: ['id', 'titulo', 'imagemCapa', 'genero', 'editora', 'descricao', 'paginas'],
+                    attributes: ['id', 'titulo', 'imagemCapa', 'genero', 'editora', 'descricao', 'paginas', 'mediaNota'],
                     through: { attributes: ['status', 'paginasLidas', 'nota'] } 
                 }]
             });
