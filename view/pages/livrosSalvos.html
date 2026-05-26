@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leia Mais - Livros Salvos</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body class="lmAcervoBody">
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCabecalho">
+    <div class="lmCabecalhoSuperior">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+
+      <button class="lmCabecalhoBotao" id="lmBotaoVoltarPerfil" aria-label="Voltar para perfil">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="blConteudoPrincipal blConteudoLeitor">
+    <section class="blSecaoLista">
+      <div class="blListaCabecalho">
+        <div class="blLivrosTitulos">
+          <h3>Livros Salvos</h3>
+
+          <div class="blMenuLivros">
+            <button class="blFiltroLivro ativo" data-status="todos">Todos</button>
+            <button class="blFiltroLivro" data-status="lendo">Lendo</button>
+            <button class="blFiltroLivro" data-status="para ler">Para Ler</button>
+            <button class="blFiltroLivro" data-status="lido">Lidos</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="blGradeLivrosSalvos" id="blGradeLivrosSalvos"></div>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/livrosSalvos.js"></script>
+</body>
+</html>
