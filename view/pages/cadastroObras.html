@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/view/css/style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body class="lmCadastroBody">
     <div id="blMenuContainer"></div>
@@ -29,7 +29,7 @@
 
       <div class="lmCadastroCabecalhoCentro">
         <img
-          src="/view/assets/logoLeiaMais.png"
+          src="../assets/logoLeiaMais.png"
           alt="Logo Leia Mais"
           class="lmCabecalhoLogoImagem"
         />
@@ -69,30 +69,35 @@
           </div>
 
           <div class="lmCadastroGrupoCampo">
-            <label for="tipo" class="lmCadastroRotuloCampo">Tipo da Obra</label>
-            <select id="idTipo" class="lmCadastroCampoSelecao" required>
+            <label for="idTipo" class="lmCadastroRotuloCampo">Tipo da Obra</label>
+            <select
+              id="idTipo"
+              name="tipo"
+              class="lmCadastroCampoSelecao"
+              required
+            >
               <option value="">Selecione o tipo de obra</option>
-              <option value="livro">Livro</option>
-              <option value="conto">Conto</option>
-              <option value="cronica">Crônica</option>
-              <option value="poema">Poema</option>
-              <option value="poesia">Poesia</option>
-              <option value="antologia">Antologia</option>
-              <option value="coletanea">Coletânea</option>
-              <option value="ensaio">Ensaio</option>
-              <option value="biografia">Biografia</option>
-              <option value="autobiografia">Autobiografia</option>
-              <option value="memorias">Memórias</option>
-              <option value="diario">Diário</option>
-              <option value="carta">Carta</option>
-              <option value="peca_teatral">Peça teatral</option>
-              <option value="quadrinho">Quadrinho / HQ</option>
-              <option value="novela">Novela</option>
-              <option value="artigo">Artigo</option>
-              <option value="resenha">Resenha</option>
-              <option value="literatura_infantil">Literatura infantil</option>
-              <option value="literatura_juvenil">Literatura juvenil</option>
-              <option value="outro">Outro</option>
+              <option value="Livro">Livro</option>
+              <option value="Conto">Conto</option>
+              <option value="Crônica">Crônica</option>
+              <option value="Poema">Poema</option>
+              <option value="Poesia">Poesia</option>
+              <option value="Antologia">Antologia</option>
+              <option value="Coletânea">Coletânea</option>
+              <option value="Ensaio">Ensaio</option>
+              <option value="Biografia">Biografia</option>
+              <option value="Autobiografia">Autobiografia</option>
+              <option value="Memórias">Memórias</option>
+              <option value="Diário">Diário</option>
+              <option value="Carta">Carta</option>
+              <option value="Peça teatral">Peça teatral</option>
+              <option value="Quadrinho / HQ">Quadrinho / HQ</option>
+              <option value="Novela">Novela</option>
+              <option value="Artigo">Artigo</option>
+              <option value="Resenha">Resenha</option>
+              <option value="Literatura infantil">Literatura infantil</option>
+              <option value="Literatura juvenil">Literatura juvenil</option>
+              <option value="Outro">Outro</option>
             </select>
           </div>
 
@@ -141,17 +146,6 @@
             ></textarea>
           </div>
 
-          <div class="lmCadastroGrupoCampo">
-            <label for="link" class="lmCadastroRotuloCampo">Link</label>
-            <input
-              type="text"
-              id="link"
-              name="link"
-              class="lmCadastroCampoTexto"
-              placeholder="Digite o link"
-            />
-          </div>
-
           <p
             class="lmCadastroMensagem"
             id="lmCadastroMensagem"
@@ -177,8 +171,7 @@
       </section>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/menu.js"></script>
-    <script src="/view/js/crudObras.js"></script>
+    <script src="../js/crudObras.js"></script>
   </body>
 </html>
