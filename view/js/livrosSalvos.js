@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let livrosSalvos = [];
   let livroSelecionadoParaPaginas = null;
+  let livroSelecionadoParaStatus = null;
   let statusAtual = "todos";
 
   if (!token || !usuario) {
@@ -42,8 +43,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   function formatarStatus(status) {
     const statusFormatado = {
       "para ler": "Para ler",
-      "lendo": "Lendo",
-      "lido": "Lido"
+      lendo: "Lendo",
+      lido: "Lido"
     };
 
     return statusFormatado[status] || "Sem status";
@@ -65,16 +66,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   function formatarAvaliacao(nota) {
     const notaNumerica = Number(nota);
 
-    if (!nota && nota !== 0) {
-      return "Sem avaliação";
-    }
-
-    if (Number.isNaN(notaNumerica)) {
-      return "Sem avaliação";
-    }
+    if (!nota && nota !== 0) return "Sem avaliação";
+    if (Number.isNaN(notaNumerica)) return "Sem avaliação";
 
     const estrelas = Math.max(0, Math.min(5, Math.round(notaNumerica)));
     return "★".repeat(estrelas) + "☆".repeat(5 - estrelas);
+  }
+
+  function abrirModalStatus(livro) {
+    livroSelecionadoParaStatus = livro;
+
+    const modal = document.getElementById("modalStatusLivro");
+    const radios = document.querySelectorAll('input[name="novoStatusLivro"]');
+
+    radios.forEach((radio) => {
+      radio.checked = radio.value === obterStatus(livro);
+    });
+
+    modal.classList.remove("hidden");
+  }
+
+  function fecharModalStatus() {
+    document.getElementById("modalStatusLivro").classList.add("hidden");
+    livroSelecionadoParaStatus = null;
   }
 
   function abrirModalLivroSalvo(livro) {
@@ -84,8 +98,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("lsModalLivroTitulo").textContent =
       livro.titulo || "Título não informado";
 
-    document.getElementById("lsModalLivroAutor").textContent =
-      obterNomeAutor(livro);
+    document.getElementById("lsModalLivroAutor").textContent = obterNomeAutor(livro);
 
     document.getElementById("lsModalLivroGenero").textContent =
       livro.genero || "Gênero não informado";
@@ -118,9 +131,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         estrela.addEventListener("click", async () => {
           await atualizarLivroSalvo(livro.id, { nota });
-          await carregarLivrosSalvos();
 
-          const livroAtualizado = livrosSalvos.find((item) => Number(item.id) === Number(livro.id));
+          const livroAtualizado = livrosSalvos.find(
+            (item) => Number(item.id) === Number(livro.id)
+          );
 
           if (livroAtualizado) {
             abrirModalLivroSalvo(livroAtualizado);
@@ -142,6 +156,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     livroSelecionadoParaPaginas = livro;
 
     const vinculo = obterVinculo(livro);
+
     document.getElementById("lsInputPaginasLidas").value =
       vinculo.paginasLidas || 0;
 
@@ -152,48 +167,48 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function atualizarLivroSalvo(livroId, dadosAtualizacao) {
     try {
-        const resposta = await fetch(`/usuarios/${usuario.id}/livros/${livroId}`, {
+      const resposta = await fetch(`/usuarios/${usuario.id}/livros/${livroId}`, {
         method: "PUT",
         headers: obterHeadersJson(),
         body: JSON.stringify(dadosAtualizacao)
-        });
+      });
 
-        const dados = await resposta.json();
+      const dados = await resposta.json();
 
-        if (!resposta.ok) {
+      if (!resposta.ok) {
         throw new Error(dados.error || "Erro ao atualizar livro salvo.");
-        }
+      }
 
-        await carregarLivrosSalvos();
+      await carregarLivrosSalvos();
     } catch (erro) {
-        console.error("Erro ao atualizar livro salvo:", erro);
-        alert(erro.message || "Erro ao atualizar livro salvo.");
+      console.error("Erro ao atualizar livro salvo:", erro);
+      alert(erro.message || "Erro ao atualizar livro salvo.");
     }
-    }
+  }
 
-    async function excluirLivroSalvo(livroId) {
+  async function excluirLivroSalvo(livroId) {
     const confirmar = confirm("Deseja remover este livro dos seus salvos?");
 
     if (!confirmar) return;
 
     try {
-        const resposta = await fetch(`/usuarios/${usuario.id}/livros/${livroId}`, {
+      const resposta = await fetch(`/usuarios/${usuario.id}/livros/${livroId}`, {
         method: "DELETE",
         headers: obterHeadersJson()
-        });
+      });
 
-        const dados = await resposta.json();
+      const dados = await resposta.json();
 
-        if (!resposta.ok) {
+      if (!resposta.ok) {
         throw new Error(dados.error || "Erro ao remover livro salvo.");
-        }
+      }
 
-        await carregarLivrosSalvos();
+      await carregarLivrosSalvos();
     } catch (erro) {
-        console.error("Erro ao remover livro salvo:", erro);
-        alert(erro.message || "Erro ao remover livro salvo.");
+      console.error("Erro ao remover livro salvo:", erro);
+      alert(erro.message || "Erro ao remover livro salvo.");
     }
-    }
+  }
 
   function criarCardLivroSalvo(livro) {
     const card = document.createElement("article");
@@ -232,51 +247,48 @@ document.addEventListener("DOMContentLoaded", async () => {
     const botaoAlterarStatus = document.createElement("button");
     botaoAlterarStatus.type = "button";
     botaoAlterarStatus.textContent = "Alterar status";
+    botaoAlterarStatus.addEventListener("click", (evento) => {
+      evento.stopPropagation();
+      popoverAcoes.classList.remove("ativo");
+      abrirModalStatus(livro);
+    });
 
     const botaoExcluir = document.createElement("button");
     botaoExcluir.type = "button";
     botaoExcluir.textContent = "Excluir livro";
+    botaoExcluir.addEventListener("click", (evento) => {
+      evento.stopPropagation();
+      excluirLivroSalvo(livro.id);
+    });
 
     popoverAcoes.appendChild(botaoAlterarStatus);
 
     if (obterStatus(livro) === "lendo") {
-    const botaoEditarPaginas = document.createElement("button");
-    botaoEditarPaginas.type = "button";
-    botaoEditarPaginas.textContent = "Alterar páginas lidas";
+      const botaoEditarPaginas = document.createElement("button");
+      botaoEditarPaginas.type = "button";
+      botaoEditarPaginas.textContent = "Alterar páginas lidas";
 
-    botaoEditarPaginas.addEventListener("click", () => {
-      abrirModalPaginas(livro);
-    });
+      botaoEditarPaginas.addEventListener("click", (evento) => {
+        evento.stopPropagation();
+        popoverAcoes.classList.remove("ativo");
+        abrirModalPaginas(livro);
+      });
 
-    popoverAcoes.appendChild(botaoEditarPaginas);
+      popoverAcoes.appendChild(botaoEditarPaginas);
     }
 
     popoverAcoes.appendChild(botaoExcluir);
 
     menuAcoes.addEventListener("click", (evento) => {
-    evento.stopPropagation();
+      evento.stopPropagation();
 
-    document.querySelectorAll(".blPopoverLivroSalvo.ativo").forEach((popover) => {
+      document.querySelectorAll(".blPopoverLivroSalvo.ativo").forEach((popover) => {
         if (popover !== popoverAcoes) {
-        popover.classList.remove("ativo");
+          popover.classList.remove("ativo");
         }
-    });
+      });
 
-    popoverAcoes.classList.toggle("ativo");
-    });
-
-    botaoAlterarStatus.addEventListener("click", () => {
-    const novoStatus = prompt("Digite o novo status: para ler, lendo ou lido");
-
-    if (!novoStatus) return;
-
-    atualizarLivroSalvo(livro.id, {
-        status: novoStatus.trim().toLowerCase()
-    });
-    });
-
-    botaoExcluir.addEventListener("click", () => {
-    excluirLivroSalvo(livro.id);
+      popoverAcoes.classList.toggle("ativo");
     });
 
     const areaBotoes = document.createElement("div");
@@ -290,8 +302,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     card.appendChild(imagem);
     card.appendChild(titulo);
     card.appendChild(areaBotoes);
-        return card;
-    }
+
+    return card;
+  }
 
   function renderizarLivrosSalvos() {
     const grade = document.getElementById("blGradeLivrosSalvos");
@@ -356,8 +369,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.addEventListener("click", () => {
     document.querySelectorAll(".blPopoverLivroSalvo.ativo").forEach((popover) => {
-        popover.classList.remove("ativo");
+      popover.classList.remove("ativo");
     });
+  });
+
+  document.getElementById("btnCancelarStatus").addEventListener("click", () => {
+    fecharModalStatus();
+  });
+
+  document.getElementById("btnConfirmarStatus").addEventListener("click", async () => {
+    if (!livroSelecionadoParaStatus) return;
+
+    const statusSelecionado = document.querySelector(
+      'input[name="novoStatusLivro"]:checked'
+    );
+
+    if (!statusSelecionado) {
+      alert("Selecione um status.");
+      return;
+    }
+
+    await atualizarLivroSalvo(livroSelecionadoParaStatus.id, {
+      status: statusSelecionado.value
+    });
+
+    fecharModalStatus();
   });
 
   document.getElementById("lsModalLivroFechar").addEventListener("click", () => {
@@ -375,7 +411,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("lsSalvarPaginasLidas").addEventListener("click", async () => {
     if (!livroSelecionadoParaPaginas) return;
 
-    const paginasLidas = Number(document.getElementById("lsInputPaginasLidas").value);
+    const paginasLidas = Number(
+      document.getElementById("lsInputPaginasLidas").value
+    );
 
     if (Number.isNaN(paginasLidas) || paginasLidas < 0) {
       alert("Informe uma quantidade válida de páginas.");

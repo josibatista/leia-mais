@@ -2803,6 +2803,94 @@ input:focus {
   transform: scale(1.08);
 }
 
+.modalStatusOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 44, 57, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modalStatusOverlay.hidden {
+  display: none;
+}
+
+.modalStatusBox {
+  background: #fff;
+  width: 90%;
+  max-width: 320px;
+  padding: 22px 24px;
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+
+.modalStatusBox h3 {
+  margin: 0 0 6px;
+  color: #2a2c39;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.modalStatusBox p {
+  margin: 0 0 14px;
+  color: #666;
+  font-size: 14px;
+}
+
+.modalStatusBox label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  margin-bottom: 8px;
+  border: 1px solid #ececf1;
+  border-radius: 9px;
+  color: #444;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.modalStatusBox label:hover {
+  background: #f8f8f8;
+  border-color: #d4d6df;
+}
+
+.modalStatusBox input[type="radio"] {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: #3b2418;
+}
+
+.modalStatusAcoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.modalStatusAcoes button {
+  border: none;
+  padding: 9px 15px;
+  border-radius: 9px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#btnCancelarStatus {
+  background: #f1f1f1;
+  color: #444;
+}
+
+#btnConfirmarStatus {
+  background: #3b2418;
+  color: #fff;
+  font-weight: 600;
+}
+
 /* Responsividade e Ajustes Mobile */
 .blMobileApenas {
     display:none;

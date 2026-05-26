@@ -105,6 +105,33 @@
     </div>
   </div>
 
+  <div id="modalStatusLivro" class="modalStatusOverlay hidden">
+    <div class="modalStatusBox">
+      <h3>Alterar status</h3>
+      <p>Selecione o novo status do livro:</p>
+
+      <label>
+        <input type="radio" name="novoStatusLivro" value="para ler">
+        Para ler
+      </label>
+
+      <label>
+        <input type="radio" name="novoStatusLivro" value="lendo">
+        Lendo
+      </label>
+
+      <label>
+        <input type="radio" name="novoStatusLivro" value="lido">
+        Lido
+      </label>
+
+      <div class="modalStatusAcoes">
+        <button id="btnCancelarStatus" type="button">Cancelar</button>
+        <button id="btnConfirmarStatus" type="button">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
   <script src="/js/menu.js"></script>
   <script src="/js/livrosSalvos.js"></script>
 </body>
