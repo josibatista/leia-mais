@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const codigosRecuperacao = {};
 
 module.exports = {
+    
     async postUsuarioLeitor (req, res) {
         try {
             let { nome, email, username, senha, iconePerfil} = req.body;

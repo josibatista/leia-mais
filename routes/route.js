@@ -61,10 +61,14 @@ router.get('/obras', obraController.getObras);
 router.get('/obras/:id' , obraController.getObrasById);
 
 // Rotas - Trilha
-router.post('/trilhas', autenticarToken, checkAdmin, trilhaController.postTrilha);
+//router.post('/trilhas', autenticarToken, checkAdmin, trilhaController.postTrilha);
+router.post('/trilhas', trilhaController.postTrilha);
 router.put('/trilhas/:id', autenticarToken, checkAdmin, trilhaController.putTrilha);
 router.delete('/trilhas/:trilhaId/obras/:obraId', trilhaController.deleteObraTrilha);
 router.delete('/trilhas/:id', trilhaController.deleteTrilha);
+
+router.get('/trilhas', trilhaController.getTrilhas);
+router.get('/trilhas/:id', trilhaController.getTrilhasById);
 
 const autenticacaoController = require('../controllers/autenticacaoController');
 const usuarioController = require('../controllers/usuarioController');

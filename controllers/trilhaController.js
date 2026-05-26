@@ -1,6 +1,7 @@
 const mongo = require('../config/db_mongoose');
 
 module.exports = {
+
     async postTrilha(req, res) {
         try {
             let { tema, descricao, nivelDificuldade, xp, liberada, obras } = req.body;
@@ -18,6 +19,22 @@ module.exports = {
 
             if (!xp) {
                 return res.status(422).json({ error: 'O campo xp é obrigatório' });
+            }
+
+            if (obras && obras.length > 0) {
+                const ids = obras.filter(o => o.obraId).map(o => o.obraId.toString());
+                const duplicadas = ids.filter((id, index) => ids.indexOf(id) !== index);
+
+                if (duplicadas.length > 0) {
+                    return res.status(400).json({ error: 'Obras duplicadas na trilha' });
+                }
+
+                const titulos = obras.filter(o => !o.obraId).map(o => o.titulo?.trim());
+                const titulosDuplicados = titulos.filter((t, i) => titulos.indexOf(t) !== i);
+
+                if (titulosDuplicados.length > 0) {
+                    return res.status(400).json({ error: 'Obras com título duplicado na trilha' });
+                }
             }
 
             const trilha = await mongo.Trilha.create({
@@ -44,7 +61,6 @@ module.exports = {
             };
 
             if (obras && obras.length > 0) {
-
                 const obrasRelacionadas = [];
 
                 for (const item of obras) {
@@ -54,15 +70,6 @@ module.exports = {
                         trilhaId: trilha._id,
                         obraId,
                         ordem: item.ordem
-                    });
-                }
-
-                const ids = obrasRelacionadas.map(r => r.obraId.toString());
-                const obrasDuplicadas = ids.filter((id, index) => ids.indexOf(id) !== index);
-
-                if (obrasDuplicadas.length > 0) {
-                    return res.status(400).json({
-                        error: 'Obras duplicadas na trilha'
                     });
                 }
 
@@ -79,6 +86,7 @@ module.exports = {
             return res.status(500).json({ error: 'Erro ao criar trilha' });
         }
     },
+
     async putTrilha(req, res) {
         try {
             const id = req.params.id;
@@ -110,8 +118,7 @@ module.exports = {
             const mudouNivel = nivelDificuldade !== undefined && nivelDificuldade !== trilha.nivelDificuldade;
             const mudouXp = xp !== undefined && xp !== trilha.xp;
 
-            const temMudancaTrilha =
-                mudouTema || mudouDescricao || mudouNivel || mudouXp;
+            const temMudancaTrilha = mudouTema || mudouDescricao || mudouNivel || mudouXp;
 
             const obrasAtuais = await mongo.TrilhaObra.find({ trilhaId: id });
 
@@ -127,9 +134,23 @@ module.exports = {
                 JSON.stringify(obrasAtuaisIds) !== JSON.stringify(novasObrasIds);
 
             if (!temMudancaTrilha && !obrasMudaram) {
-                return res.status(400).json({
-                    error: 'Nenhuma alteração foi realizada'
-                });
+                return res.status(400).json({ error: 'Nenhuma alteração foi realizada' });
+            }
+
+            if (Array.isArray(obras)) {
+                const ids = obras.filter(o => o.obraId).map(o => o.obraId.toString());
+                const duplicadas = ids.filter((id, i) => ids.indexOf(id) !== i);
+
+                if (duplicadas.length > 0) {
+                    return res.status(400).json({ error: 'Obras duplicadas na trilha' });
+                }
+
+                const titulos = obras.filter(o => !o.obraId).map(o => o.titulo?.trim());
+                const titulosDuplicados = titulos.filter((t, i) => titulos.indexOf(t) !== i);
+
+                if (titulosDuplicados.length > 0) {
+                    return res.status(400).json({ error: 'Obras com título duplicado na trilha' });
+                }
             }
 
             const trilhaAtualizada = await mongo.Trilha.findByIdAndUpdate(
@@ -158,18 +179,6 @@ module.exports = {
             };
 
             if (Array.isArray(obras)) {
-
-                const ids = obras.map(o => o.obraId || o.titulo);
-                const duplicadas = ids.filter((id, i) => ids.indexOf(id) !== i);
-
-                if (duplicadas.length > 0) {
-                    return res.status(400).json({
-                        error: 'Obras duplicadas na trilha'
-                    });
-                }
-
-                await mongo.TrilhaObra.deleteMany({ trilhaId: id });
-
                 const relacoes = [];
 
                 for (const item of obras) {
@@ -182,6 +191,7 @@ module.exports = {
                     });
                 }
 
+                await mongo.TrilhaObra.deleteMany({ trilhaId: id });
                 await mongo.TrilhaObra.insertMany(relacoes);
             }
 
@@ -241,5 +251,36 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao deletar trilha' });
         }
+    },
+    async getTrilhas(req, res) {
+        try {
+            const trilhas = await mongo.Trilha.find();
+
+            if (trilhas.length === 0) {
+                return res.status(404).json({ error: 'Nenhuma trilha cadastrada' });
+            }
+
+            res.status(200).json(trilhas);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao consultar trilhas' });
+        }
+    },
+    async getTrilhasById(req, res) {
+        try {
+            const id = req.params.id;
+
+            const trilha = await mongo.Trilha.findById(id)
+
+            if (!trilha) {
+                return res.status(404).json({ error: 'Trilha não encontrada' });
+            }
+
+            res.status(200).json(trilha);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao consultar trilha' })
+        }
     }
 };
+// Implementar: Trilha *liberada* ou não

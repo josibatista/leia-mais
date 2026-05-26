@@ -3,7 +3,7 @@ const db = require('../config/db_sequelize');
 const mongo = require('../config/db_mongoose');
 
 module.exports = {
-
+    
     async postObra(req, res) {
         try {
             let { titulo, tipo, autores, descricao } = req.body;
@@ -216,7 +216,7 @@ module.exports = {
             res.status(200).json(obra);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: 'Erro ao consultar obra'})
+            res.status(500).json({ error: 'Erro ao consultar obra' })
         }
     }
 }
