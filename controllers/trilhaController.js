@@ -79,7 +79,7 @@ module.exports = {
             return res.status(500).json({ error: 'Erro ao criar trilha' });
         }
     },
-    async putTrilha(req, res){
+    async putTrilha(req, res) {
         try {
             const id = req.params.id;
             let { tema, descricao, nivelDificuldade, xp, liberada, obras } = req.body;
@@ -88,6 +88,7 @@ module.exports = {
             descricao = descricao?.trim();
 
             const trilha = await mongo.Trilha.findById(id);
+
             if (!trilha) {
                 return res.status(404).json({ error: 'Trilha não encontrada' });
             }
@@ -105,15 +106,12 @@ module.exports = {
             }
 
             const mudouTema = tema !== undefined && tema !== trilha.tema;
-
             const mudouDescricao = descricao !== undefined && descricao !== trilha.descricao;
-
             const mudouNivel = nivelDificuldade !== undefined && nivelDificuldade !== trilha.nivelDificuldade;
-
             const mudouXp = xp !== undefined && xp !== trilha.xp;
 
-            const temMudancaTrilha = mudouTema || mudouDescricao || mudouNivel || mudouXp;
-
+            const temMudancaTrilha =
+                mudouTema || mudouDescricao || mudouNivel || mudouXp;
 
             const obrasAtuais = await mongo.TrilhaObra.find({ trilhaId: id });
 
@@ -122,14 +120,11 @@ module.exports = {
                 .sort();
 
             const novasObrasIds = Array.isArray(obras)
-                ? obras
-                    .map(o => o.obraId)
-                    .filter(Boolean)
-                    .sort()
+                ? obras.map(o => o.obraId).filter(Boolean).sort()
                 : [];
 
-            const obrasMudaram = JSON.stringify(obrasAtuaisIds) !== JSON.stringify(novasObrasIds);
-
+            const obrasMudaram =
+                JSON.stringify(obrasAtuaisIds) !== JSON.stringify(novasObrasIds);
 
             if (!temMudancaTrilha && !obrasMudaram) {
                 return res.status(400).json({
@@ -140,8 +135,8 @@ module.exports = {
             const trilhaAtualizada = await mongo.Trilha.findByIdAndUpdate(
                 id,
                 {
-                    ...(mudouTema && { tema: tema.trim() }),
-                    ...(mudouDescricao && { descricao: descricao.trim() }),
+                    ...(mudouTema && { tema }),
+                    ...(mudouDescricao && { descricao }),
                     ...(mudouNivel && { nivelDificuldade }),
                     ...(mudouXp && { xp })
                 },
@@ -149,9 +144,7 @@ module.exports = {
             );
 
             const getOrCreateObra = async (obraInput) => {
-                if (obraInput.obraId) {
-                    return obraInput.obraId;
-                }
+                if (obraInput.obraId) return obraInput.obraId;
 
                 const obra = await mongo.Obra.create({
                     titulo: obraInput.titulo,
@@ -164,53 +157,35 @@ module.exports = {
                 return obra._id;
             };
 
-            if (obras) {
-
-                await mongo.TrilhaObra.deleteMany({
-                    trilhaId: id
-                });
-
-                const obrasRelacionadas = [];
+            if (Array.isArray(obras)) {
 
                 const ids = obras.map(o => o.obraId || o.titulo);
-                const obrasDuplicadas = ids.filter((id, index) => ids.indexOf(id) !== index);
+                const duplicadas = ids.filter((id, i) => ids.indexOf(id) !== i);
 
-                if (obrasDuplicadas.length > 0) {
+                if (duplicadas.length > 0) {
                     return res.status(400).json({
                         error: 'Obras duplicadas na trilha'
                     });
                 }
 
-                const getOrCreateObra = async (obraInput) => {
-                    if (obraInput.obraId) {
-                        return obraInput.obraId;
-                    }
+                await mongo.TrilhaObra.deleteMany({ trilhaId: id });
 
-                    const obra = await mongo.Obra.create({
-                        titulo: obraInput.titulo,
-                        tipo: obraInput.tipo,
-                        autores: obraInput.autores,
-                        descricao: obraInput.descricao,
-                        link: obraInput.link
-                    });
-
-                    return obra._id;
-                };
+                const relacoes = [];
 
                 for (const item of obras) {
                     const obraId = await getOrCreateObra(item);
 
-                    obrasRelacionadas.push({
+                    relacoes.push({
                         trilhaId: id,
                         obraId,
                         ordem: item.ordem
                     });
                 }
 
-                await mongo.TrilhaObra.insertMany(obrasRelacionadas);
+                await mongo.TrilhaObra.insertMany(relacoes);
             }
 
-            return res.status(201).json({
+            return res.status(200).json({
                 message: 'Trilha atualizada com sucesso',
                 trilha: trilhaAtualizada
             });
@@ -220,4 +195,51 @@ module.exports = {
             return res.status(500).json({ error: 'Erro ao atualizar trilha' });
         }
     },
+    async deleteObraTrilha(req, res) {
+        try {
+            const { trilhaId, obraId } = req.params;
+
+            const trilhaObra = await mongo.TrilhaObra.deleteOne({
+                trilhaId,
+                obraId
+            });
+
+            if (trilhaObra.deletedCount === 0) {
+                return res.status(404).json({ error: 'Relação não encontrada' });
+            }
+
+            res.status(200).json({ 
+                message: 'Obra removida da trilha'
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao remover obra' });
+        }
+    },
+    async deleteTrilha(req, res) {
+        try {
+            const { id } = req.params;
+            const trilha = await mongo.Trilha.findById(id);
+
+            if (!trilha) {
+                return res.status(404).json({ error: 'Trilha não encontrada' });
+            }
+
+            await mongo.TrilhaObra.deleteMany({ 
+                trilhaId: id 
+            });
+
+            await mongo.Trilha.deleteOne({
+                _id: id 
+            });
+
+            res.status(200).json({
+                message: 'Trilha deletada com sucesso',
+                trilhaId: id
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao deletar trilha' });
+        }
+    }
 };
