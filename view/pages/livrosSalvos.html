@@ -45,6 +45,66 @@
     </section>
   </main>
 
+  <div class="lmModalOverlay" id="lsModalLivroOverlay">
+    <div class="lmModalConteudo">
+      <button class="lmModalFechar" id="lsModalLivroFechar" type="button">&times;</button>
+
+      <h2 class="lmModalTitulo" id="lsModalLivroTitulo"></h2>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Autor:</span>
+        <span id="lsModalLivroAutor"></span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Gênero:</span>
+        <span id="lsModalLivroGenero"></span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Editora:</span>
+        <span id="lsModalLivroEditora"></span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Páginas:</span>
+        <span id="lsModalLivroPaginas"></span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Avaliação geral:</span>
+        <span class="lmModalAvaliacao" id="lsModalLivroAvaliacaoGeral"></span>
+      </div>
+
+      <div class="lmModalLinha" id="lsAreaMinhaAvaliacao">
+        <span class="lmModalRotulo">Sua avaliação:</span>
+        <span class="lmModalAvaliacao" id="lsModalMinhaAvaliacao"></span>
+      </div>
+
+      <div class="lmModalBlocoDescricao">
+        <span class="lmModalRotulo">Descrição:</span>
+        <p id="lsModalLivroDescricao"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lmModalOverlay" id="lsModalPaginasOverlay">
+    <div class="lmModalConteudo">
+      <button class="lmModalFechar" id="lsModalPaginasFechar" type="button">&times;</button>
+
+      <h2 class="lmModalTitulo">Alterar páginas lidas</h2>
+
+      <div class="lmCadastroGrupoCampo">
+        <label for="lsInputPaginasLidas">Quantidade de páginas lidas</label>
+        <input type="number" id="lsInputPaginasLidas" min="0">
+      </div>
+
+      <button type="button" class="lmBotaoSaibaMais" id="lsSalvarPaginasLidas">
+        Salvar
+      </button>
+    </div>
+  </div>
+
   <script src="/js/menu.js"></script>
   <script src="/js/livrosSalvos.js"></script>
 </body>

@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const usuario = JSON.parse(localStorage.getItem("usuario"));
 
   let livrosSalvos = [];
+  let livroSelecionadoParaPaginas = null;
   let statusAtual = "todos";
 
   if (!token || !usuario) {
@@ -46,6 +47,107 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     return statusFormatado[status] || "Sem status";
+  }
+
+  function obterNomeAutor(livro) {
+    if (livro.nomeAutor) return livro.nomeAutor;
+
+    if (Array.isArray(livro.autores) && livro.autores.length > 0) {
+      return livro.autores
+        .map((autor) => autor.nome || autor.nomeAutor)
+        .filter(Boolean)
+        .join(", ");
+    }
+
+    return "Autor não informado";
+  }
+
+  function formatarAvaliacao(nota) {
+    const notaNumerica = Number(nota);
+
+    if (!nota && nota !== 0) {
+      return "Sem avaliação";
+    }
+
+    if (Number.isNaN(notaNumerica)) {
+      return "Sem avaliação";
+    }
+
+    const estrelas = Math.max(0, Math.min(5, Math.round(notaNumerica)));
+    return "★".repeat(estrelas) + "☆".repeat(5 - estrelas);
+  }
+
+  function abrirModalLivroSalvo(livro) {
+    const vinculo = obterVinculo(livro);
+    const status = obterStatus(livro);
+
+    document.getElementById("lsModalLivroTitulo").textContent =
+      livro.titulo || "Título não informado";
+
+    document.getElementById("lsModalLivroAutor").textContent =
+      obterNomeAutor(livro);
+
+    document.getElementById("lsModalLivroGenero").textContent =
+      livro.genero || "Gênero não informado";
+
+    document.getElementById("lsModalLivroEditora").textContent =
+      livro.editora || "Editora não informada";
+
+    document.getElementById("lsModalLivroPaginas").textContent =
+      livro.paginas ? `${livro.paginas} páginas` : "Não informado";
+
+    document.getElementById("lsModalLivroAvaliacaoGeral").textContent =
+      formatarAvaliacao(livro.mediaNota);
+
+    document.getElementById("lsModalLivroDescricao").textContent =
+      livro.descricao || "Descrição não informada.";
+
+    const areaMinhaAvaliacao = document.getElementById("lsAreaMinhaAvaliacao");
+    const minhaAvaliacao = document.getElementById("lsModalMinhaAvaliacao");
+
+    minhaAvaliacao.innerHTML = "";
+
+    if (status === "lido") {
+      areaMinhaAvaliacao.style.display = "flex";
+
+      for (let nota = 1; nota <= 5; nota++) {
+        const estrela = document.createElement("button");
+        estrela.type = "button";
+        estrela.classList.add("lsBotaoEstrela");
+        estrela.textContent = nota <= Number(vinculo.nota || 0) ? "★" : "☆";
+
+        estrela.addEventListener("click", async () => {
+          await atualizarLivroSalvo(livro.id, { nota });
+          await carregarLivrosSalvos();
+
+          const livroAtualizado = livrosSalvos.find((item) => Number(item.id) === Number(livro.id));
+
+          if (livroAtualizado) {
+            abrirModalLivroSalvo(livroAtualizado);
+          }
+        });
+
+        minhaAvaliacao.appendChild(estrela);
+      }
+    } else {
+      areaMinhaAvaliacao.style.display = "none";
+    }
+
+    document
+      .getElementById("lsModalLivroOverlay")
+      .classList.add("lmModalOverlayAtivo");
+  }
+
+  function abrirModalPaginas(livro) {
+    livroSelecionadoParaPaginas = livro;
+
+    const vinculo = obterVinculo(livro);
+    document.getElementById("lsInputPaginasLidas").value =
+      vinculo.paginasLidas || 0;
+
+    document
+      .getElementById("lsModalPaginasOverlay")
+      .classList.add("lmModalOverlayAtivo");
   }
 
   async function atualizarLivroSalvo(livroId, dadosAtualizacao) {
@@ -115,6 +217,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     botaoSaibaMais.classList.add("lmBotaoSaibaMais");
     botaoSaibaMais.type = "button";
     botaoSaibaMais.textContent = "Saiba Mais";
+    botaoSaibaMais.addEventListener("click", () => {
+      abrirModalLivroSalvo(livro);
+    });
 
     const menuAcoes = document.createElement("button");
     menuAcoes.classList.add("blBotaoMenuLivroSalvo");
@@ -140,13 +245,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     botaoEditarPaginas.textContent = "Alterar páginas lidas";
 
     botaoEditarPaginas.addEventListener("click", () => {
-        const paginas = prompt("Informe a quantidade de páginas lidas:");
-
-        if (paginas === null) return;
-
-        atualizarLivroSalvo(livro.id, {
-        paginasLidas: Number(paginas)
-        });
+      abrirModalPaginas(livro);
     });
 
     popoverAcoes.appendChild(botaoEditarPaginas);
@@ -259,6 +358,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.querySelectorAll(".blPopoverLivroSalvo.ativo").forEach((popover) => {
         popover.classList.remove("ativo");
     });
+  });
+
+  document.getElementById("lsModalLivroFechar").addEventListener("click", () => {
+    document
+      .getElementById("lsModalLivroOverlay")
+      .classList.remove("lmModalOverlayAtivo");
+  });
+
+  document.getElementById("lsModalPaginasFechar").addEventListener("click", () => {
+    document
+      .getElementById("lsModalPaginasOverlay")
+      .classList.remove("lmModalOverlayAtivo");
+  });
+
+  document.getElementById("lsSalvarPaginasLidas").addEventListener("click", async () => {
+    if (!livroSelecionadoParaPaginas) return;
+
+    const paginasLidas = Number(document.getElementById("lsInputPaginasLidas").value);
+
+    if (Number.isNaN(paginasLidas) || paginasLidas < 0) {
+      alert("Informe uma quantidade válida de páginas.");
+      return;
+    }
+
+    await atualizarLivroSalvo(livroSelecionadoParaPaginas.id, {
+      paginasLidas
+    });
+
+    document
+      .getElementById("lsModalPaginasOverlay")
+      .classList.remove("lmModalOverlayAtivo");
+
+    livroSelecionadoParaPaginas = null;
   });
 
   try {
