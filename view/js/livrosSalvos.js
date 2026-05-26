@@ -387,7 +387,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (botaoVoltar) {
       botaoVoltar.addEventListener("click", () => {
-        window.location.href = "perfilLeitor.html";
+        window.location.href = window.history.length > 1 ? document.referrer : "paginaPrincipalLeitor.html";
       });
     }
   }
