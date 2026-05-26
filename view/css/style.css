@@ -476,6 +476,206 @@ body.lmHomeBody.lmTemaEscuro .lmMenuNomeAdmin {
   }
 }
 
+/* Página Principal Leitor */
+
+.ppCabecalho .lmCabecalhoSuperior {
+  position: relative;
+}
+
+.ppLogoCentral {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ppConteudo {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 26px 24px 48px;
+}
+
+.ppSecao {
+  margin-bottom: 34px;
+}
+
+.ppSecaoCabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ppSecaoCabecalho h3 {
+  font-size: 1.2rem;
+  color: var(--lmMarromEscuro);
+}
+
+.ppBotaoSeta {
+  border: none;
+  background: transparent;
+  color: var(--lmMarromEscuro);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.ppCarrossel {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.ppCarrossel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.ppCarrossel::-webkit-scrollbar-thumb {
+  background-color: var(--lmMarromClaro);
+  border-radius: 999px;
+}
+
+.ppCardLeitura {
+  min-width: 310px;
+  max-width: 310px;
+  background-color: rgba(199, 109, 94, 0.18);
+  border: 1px solid rgba(199, 109, 94, 0.35);
+  border-radius: 14px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.ppCardLeitura img {
+  width: 82px;
+  height: 118px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #f2e8de;
+}
+
+.ppCardLeituraInfo {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.ppCardLeituraInfo h4 {
+  grid-column: 1 / 3;
+  font-size: 0.9rem;
+  color: var(--lmMarromEscuro);
+  line-height: 1.3;
+  min-height: 38px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ppBarraProgresso {
+  width: 100%;
+  height: 12px;
+  border: 1px solid var(--lmMarromClaro);
+  border-radius: 999px;
+  overflow: hidden;
+  background-color: #fffdfa;
+}
+
+.ppBarraProgresso div {
+  height: 100%;
+  background-color: var(--corDestaque);
+}
+
+.ppCardLeituraInfo span {
+  color: var(--corDestaque);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.ppBotaoContinuar {
+  grid-column: 1 / 3;
+  justify-self: start;
+  background-color: var(--lmMarromClaro);
+  color: #fff;
+  padding: 6px 18px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ppCardAcervo {
+  min-width: 150px;
+  max-width: 150px;
+}
+
+.ppCardAcervo img {
+  width: 150px;
+  height: 225px;
+  object-fit: cover;
+  border-radius: 6px;
+  background-color: #f2e8de;
+  display: block;
+}
+
+.ppCardAcervo p {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--lmMarromEscuro);
+  line-height: 1.25;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ppMensagemVazia {
+  color: var(--lmMarromClaro);
+  font-size: 0.92rem;
+}
+
+/* Responsividade Página Principal */
+
+@media (max-width: 640px) {
+  .ppConteudo {
+    padding: 18px 16px 40px;
+  }
+
+  .ppSecao {
+    margin-bottom: 28px;
+  }
+
+  .ppCardLeitura {
+    min-width: 250px;
+    max-width: 250px;
+    grid-template-columns: 70px 1fr;
+  }
+
+  .ppCardLeitura img {
+    width: 70px;
+    height: 104px;
+  }
+
+  .ppCardAcervo {
+    min-width: 118px;
+    max-width: 118px;
+  }
+
+  .ppCardAcervo img {
+    width: 118px;
+    height: 178px;
+  }
+}
+
 /*ACERVO DE LIVROS*/
 
 /* ===== BUSCA HEADER ===== */
