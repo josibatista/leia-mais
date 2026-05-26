@@ -56,15 +56,24 @@ module.exports = {
                 descricao
             });
 
+            const autoresNomes = await db.Autor.findAll({
+                where: { id: autoresIds },
+                attributes: ['id', 'nome']
+            });
+
             return res.status(201).json({
                 message: 'Obra criada com sucesso',
-                obra
+                obra: {
+                    ...obra.toObject(),
+                    autores: autoresNomes.map(a => ({ id: a.id, nome: a.nome }))
+                }
             });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao criar obra' });
         }
     },
+
     async putObra(req, res) {
         try {
             const id = req.params.id;
@@ -161,9 +170,17 @@ module.exports = {
                 { new: true }
             );
 
+            const autoresNomes = await db.Autor.findAll({
+                where: { id: autoresIds.map(id => id.toString()) },
+                attributes: ['id', 'nome']
+            });
+
             res.status(200).json({
                 message: 'Obra atualizada com sucesso',
-                obra: obraAtualizada
+                obra: {
+                    ...obraAtualizada.toObject(),
+                    autores: autoresNomes.map(a => ({ id: a.id, nome: a.nome }))
+                }
             });
         } catch (error) {
             console.error(error);
