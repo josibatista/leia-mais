@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leia Mais - Página Inicial</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body class="lmAcervoBody">
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCabecalho ppCabecalho">
+    <div class="lmCabecalhoSuperior">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+
+      <img src="/assets/logoLeiaMais.png" alt="Logo Leia Mais" class="ppLogoCentral" />
+
+      <button class="lmCabecalhoBotao" id="ppBotaoAbrirBusca" aria-label="Buscar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+
+    <div class="lmBuscaHeader" id="ppBuscaHeader">
+      <input type="text" id="ppCampoBusca" placeholder="Buscar livros no acervo" />
+    </div>
+  </header>
+
+  <main class="ppConteudo">
+    <section class="ppSecao">
+      <div class="ppSecaoCabecalho">
+        <h3>Trilhas Recentes</h3>
+        <button type="button" class="ppBotaoSeta" aria-label="Ver trilhas">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="ppMensagemVazia">
+        Sem trilhas disponíveis.
+      </div>
+    </section>
+
+    <section class="ppSecao">
+      <div class="ppSecaoCabecalho">
+        <h3>Leituras Recentes</h3>
+        <button type="button" class="ppBotaoSeta" id="ppAbrirLivrosSalvos" aria-label="Ver livros salvos">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="ppCarrossel" id="ppLeiturasRecentes"></div>
+    </section>
+
+    <section class="ppSecao">
+        <div class="ppSecaoCabecalho">
+            <h3>Acervo Leia Mulheres</h3>
+
+            <button
+                type="button"
+                class="ppBotaoSeta"
+                id="ppAbrirAcervo"
+                aria-label="Abrir acervo"
+            >
+            <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="ppCarrossel" id="ppAcervoLivros"></div>
+    </section>
+  </main>
+
+  <script src="/js/menu.js"></script>
+  <script src="/js/paginaPrincipalLeitor.js"></script>
+</body>
+</html>
