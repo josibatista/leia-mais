@@ -186,28 +186,53 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  async function excluirLivroSalvo(livroId) {
-    const confirmar = confirm("Deseja remover este livro dos seus salvos?");
+  function abrirModalConfirmacao({ titulo = "Atenção", mensagem, aoConfirmar }) {
+    const modal = document.getElementById("lsModalConfirmacao");
+    const tituloModal = document.getElementById("lsModalConfirmacaoTitulo");
+    const textoModal = document.getElementById("lsModalConfirmacaoTexto");
+    const botaoConfirmar = document.getElementById("lsConfirmarAcao");
 
-    if (!confirmar) return;
+    tituloModal.textContent = titulo;
+    textoModal.textContent = mensagem;
 
-    try {
-      const resposta = await fetch(`/usuarios/${usuario.id}/livros/${livroId}`, {
-        method: "DELETE",
-        headers: obterHeadersJson()
-      });
+    const novoBotaoConfirmar = botaoConfirmar.cloneNode(true);
+    botaoConfirmar.parentNode.replaceChild(novoBotaoConfirmar, botaoConfirmar);
 
-      const dados = await resposta.json();
+    novoBotaoConfirmar.addEventListener("click", async () => {
+      modal.classList.remove("lmModalOverlayAtivo");
 
-      if (!resposta.ok) {
-        throw new Error(dados.error || "Erro ao remover livro salvo.");
+      if (typeof aoConfirmar === "function") {
+        await aoConfirmar();
       }
+    });
 
-      await carregarLivrosSalvos();
-    } catch (erro) {
-      console.error("Erro ao remover livro salvo:", erro);
-      alert(erro.message || "Erro ao remover livro salvo.");
-    }
+    modal.classList.add("lmModalOverlayAtivo");
+  }
+  
+  async function excluirLivroSalvo(livroId) {
+    abrirModalConfirmacao({
+      titulo: "Remover livro",
+      mensagem: "Deseja remover este livro dos seus salvos?",
+      aoConfirmar: async () => {
+        try {
+          const resposta = await fetch(`/usuarios/${usuario.id}/livros/${livroId}`, {
+            method: "DELETE",
+            headers: obterHeadersJson()
+          });
+
+          const dados = await resposta.json();
+
+          if (!resposta.ok) {
+            throw new Error(dados.error || "Erro ao remover livro salvo.");
+          }
+
+          await carregarLivrosSalvos();
+        } catch (erro) {
+          console.error("Erro ao remover livro salvo:", erro);
+          alert(erro.message || "Erro ao remover livro salvo.");
+        }
+      }
+    });
   }
 
   function criarCardLivroSalvo(livro) {
@@ -429,6 +454,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       .classList.remove("lmModalOverlayAtivo");
 
     livroSelecionadoParaPaginas = null;
+  });
+
+  document.getElementById("lsFecharModalConfirmacao").addEventListener("click", () => {
+    document.getElementById("lsModalConfirmacao").classList.remove("lmModalOverlayAtivo");
+  });
+
+  document.getElementById("lsCancelarConfirmacao").addEventListener("click", () => {
+    document.getElementById("lsModalConfirmacao").classList.remove("lmModalOverlayAtivo");
+  });
+
+  document.getElementById("lsModalConfirmacao").addEventListener("click", (evento) => {
+    if (evento.target.id === "lsModalConfirmacao") {
+      evento.target.classList.remove("lmModalOverlayAtivo");
+    }
   });
 
   try {
