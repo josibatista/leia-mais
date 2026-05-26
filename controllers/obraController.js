@@ -214,7 +214,28 @@ module.exports = {
                 return res.status(404).json({ error: 'Nenhuma obra cadastrada' });
             }
 
-            res.status(200).json(obras);
+            const todosAutoresIds = [...new Set(
+                obras.flatMap(obra => obra.autores.map(id => id.toString()))
+            )];
+
+            const autores = await db.Autor.findAll({
+                where: { id: todosAutoresIds },
+                attributes: ['id', 'nome']
+            });
+
+            const autoresMap = Object.fromEntries(
+                autores.map(a => [a.id.toString(), a.nome])
+            );
+
+            const obrasComAutores = obras.map(obra => ({
+                ...obra.toObject(),
+                autores: obra.autores.map(id => ({
+                    id: id.toString(),
+                    nome: autoresMap[id.toString()] ?? null
+                }))
+            }));
+
+            res.status(200).json({ obras: obrasComAutores });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao consultar obras' });
@@ -223,17 +244,33 @@ module.exports = {
     async getObrasById(req, res) {
         try {
             const id = req.params.id;
-
-            const obra = await mongo.Obra.findById(id)
+            const obra = await mongo.Obra.findById(id);
 
             if (!obra) {
                 return res.status(404).json({ error: 'Obra não encontrada' });
             }
 
-            res.status(200).json(obra);
+            const autores = await db.Autor.findAll({
+                where: { id: obra.autores.map(id => id.toString()) },
+                attributes: ['id', 'nome']
+            });
+
+            const autoresMap = Object.fromEntries(
+                autores.map(a => [a.id.toString(), a.nome])
+            );
+
+            res.status(200).json({
+                obra: {
+                    ...obra.toObject(),
+                    autores: obra.autores.map(id => ({
+                        id: id.toString(),
+                        nome: autoresMap[id.toString()] ?? null
+                    }))
+                }
+            });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: 'Erro ao consultar obra' })
+            res.status(500).json({ error: 'Erro ao consultar obra' });
         }
     }
 }
