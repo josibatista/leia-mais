@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   protegerRotaAdmin();
-  configurarMenu();
   configurarBotaoAdicionarAdmin();
   carregarUsuarios();
 });
+
+const API_URL = '/usuarios';
 
 function protegerRotaAdmin() {
   const token = localStorage.getItem('token');
@@ -29,7 +30,7 @@ async function carregarUsuarios() {
   const token = localStorage.getItem('token');
 
   try {
-    const resposta = await fetch(`${API_URL}/usuarios`, {
+    const resposta = await fetch(`${API_URL}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -73,30 +74,4 @@ async function carregarUsuarios() {
     console.error(erro);
     listaUsuarios.innerHTML = '<p class="lmCadastroMensagem">Erro ao carregar usuários.</p>';
   }
-}
-
-function configurarMenu() {
-  const menuLateral = document.getElementById('lmMenuLateral');
-  const menuOverlay = document.getElementById('lmMenuOverlay');
-  const botaoAbrirMenu = document.getElementById('lmMenuAbrirBotao');
-  const botaoFecharMenu = document.getElementById('lmMenuFecharBotao');
-
-  if (!menuLateral || !menuOverlay || !botaoAbrirMenu || !botaoFecharMenu) {
-    return;
-  }
-
-  botaoAbrirMenu.addEventListener('click', () => {
-    menuLateral.classList.add('ativo');
-    menuOverlay.classList.add('ativo');
-  });
-
-  botaoFecharMenu.addEventListener('click', () => {
-    menuLateral.classList.remove('ativo');
-    menuOverlay.classList.remove('ativo');
-  });
-
-  menuOverlay.addEventListener('click', () => {
-    menuLateral.classList.remove('ativo');
-    menuOverlay.classList.remove('ativo');
-  });
 }

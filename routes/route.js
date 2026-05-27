@@ -6,6 +6,9 @@ const autorController = require('../controllers/autorController');
 const livroAutorController = require('../controllers/livroAutorController');
 const obraController = require('../controllers/obraController');
 const trilhaController = require('../controllers/trilhaController');
+const usuarioController = require('../controllers/usuarioController');
+const usuarioLivroController = require('../controllers/usuarioLivroController');
+const autenticacaoController = require('../controllers/autenticacaoController');
 const autenticarToken = require('../middleware/autenticarToken');
 const checkAdmin = require('../middleware/checkAdmin');
 
@@ -75,6 +78,17 @@ const usuarioController = require('../controllers/usuarioController');
 //rota de login
 router.post('/login', autenticacaoController.login);
 
+//rota para
+router.post('/usuarios/:id/livros', autenticarToken, usuarioLivroController.postUsuarioLivro);
+//rota para atualizar status, páginas lidas ou nota do livro do usuário
+router.put('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.putUsuarioLivro);
+//rota para remover livro da lista do usuário
+router.delete('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.deleteUsuarioLivro);
+//rota para buscar livros do usuário
+router.get('/usuarios/:id/livros', autenticarToken, usuarioLivroController.getUsuarioLivro);
+//rota para visualizar detalhes do livro do usuário (status, páginas lidas e nota)
+router.get('/usuarios/:usuarioId/livros/:livroId', autenticarToken, usuarioLivroController.getUsuarioLivroById);
+
 //rotas de usuário
 //rota para criar usuário (público)
 router.post('/usuarios', usuarioController.postUsuarioLeitor);
@@ -91,5 +105,6 @@ router.delete('/usuarios/:id', autenticarToken, usuarioController.deleteUsuario)
 //rotas para recuperação de senha (envio de código e redefinição de senha)
 router.post('/esqueci-senha', usuarioController.enviarCodigo);
 router.put('/redefinir-senha', usuarioController.redefinirSenha);
+
 
 module.exports = router;
