@@ -187,7 +187,7 @@ module.exports = {
             res.status(200).json(livro);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: 'Erro ao consultar livros' });
+            res.status(500).json({ error: 'Erro ao consultar livro' });
         }
     }
 };

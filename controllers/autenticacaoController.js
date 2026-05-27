@@ -5,6 +5,7 @@ const secretKey = process.env.JWT_SECRET;
 const { Op } = require('sequelize');
 
 module.exports = {
+    
     async login(req, res) {
         try {
             let { login, senha } = req.body;

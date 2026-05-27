@@ -4,6 +4,8 @@ const router = express.Router();
 const livroController = require('../controllers/livroController');
 const autorController = require('../controllers/autorController');
 const livroAutorController = require('../controllers/livroAutorController');
+const obraController = require('../controllers/obraController');
+const trilhaController = require('../controllers/trilhaController');
 const usuarioController = require('../controllers/usuarioController');
 const usuarioLivroController = require('../controllers/usuarioLivroController');
 const autenticacaoController = require('../controllers/autenticacaoController');
@@ -52,6 +54,26 @@ router.post('/livros/:id/autores/admin', autenticarToken, checkAdmin, livroAutor
 
 // desvincular autor específico do livro
 router.delete('/livros/:id/autores/:autorId/admin', autenticarToken, checkAdmin, livroAutorController.desvincularAutor);
+
+// Rotas - Obra
+router.post('/obras', autenticarToken, checkAdmin, obraController.postObra);
+router.put('/obras/:id', autenticarToken, checkAdmin, obraController.putObra);
+router.delete('/obras/:id', autenticarToken, checkAdmin, obraController.deleteObra);
+
+router.get('/obras', obraController.getObras);
+router.get('/obras/:id' , obraController.getObrasById);
+
+// Rotas - Trilha
+router.post('/trilhas', autenticarToken, checkAdmin, trilhaController.postTrilha);
+router.put('/trilhas/:id', autenticarToken, checkAdmin, trilhaController.putTrilha);
+router.delete('/trilhas/:trilhaId/obras/:obraId', trilhaController.deleteObraTrilha);
+router.delete('/trilhas/:id', trilhaController.deleteTrilha);
+
+router.get('/trilhas', trilhaController.getTrilhas);
+router.get('/trilhas/:id', trilhaController.getTrilhasById);
+
+const autenticacaoController = require('../controllers/autenticacaoController');
+const usuarioController = require('../controllers/usuarioController');
 
 //rota de login
 router.post('/login', autenticacaoController.login);

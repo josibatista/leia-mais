@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Obras | Leia Mulheres</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon_io/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon_io/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon_io/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body class="lmCadastroBody">
+    <div id="blMenuContainer"></div>
+    <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+    <header class="lmCadastroCabecalho">
+      <div class="lmCadastroCabecalhoTopo">
+        <button
+          class="lmCabecalhoBotao"
+          id="lmMenuAbrirBotao"
+          aria-label="Abrir menu"
+        >
+          &#9776;
+        </button>
+      </div>
+
+      <div class="lmCadastroCabecalhoCentro">
+        <img
+          src="../assets/logoLeiaMais.png"
+          alt="Logo Leia Mais"
+          class="lmCabecalhoLogoImagem"
+        />
+        <p class="lmCadastroSubtitulo">
+          Área administrativa para cadastro de obras.
+        </p>
+      </div>
+    </header>
+
+    <main class="lmCadastroConteudoPrincipal">
+      <section class="lmCadastroSecaoFormulario">
+        <div class="lmCadastroSecaoCabecalho">
+          <h2 class="lmCadastroTituloSecao">Cadastro de Obras</h2>
+          <p class="lmCadastroTextoSecao">
+            Preencha os campos abaixo para registrar uma nova obra no acervo.
+            <!--Deixo aqui como acervo mesmo que as obras em teoria não sejam do Leia mulheres? Ou troco por alguma outra palavra tipo "Cadastrar uma nova obra no sistema"?-->
+          </p>
+        </div>
+
+        <form
+          class="lmCadastroFormularioObras"
+          id="lmCadastroFormularioObras"
+          enctype="multipart/form-data"
+        >
+          <div class="lmCadastroGrupoCampo">
+            <label for="titulo" class="lmCadastroRotuloCampo"
+              >Nome da obra</label
+            >
+            <input
+              type="text"
+              id="titulo"
+              name="titulo"
+              class="lmCadastroCampoTexto"
+              placeholder="Digite o título da obra"
+              required
+            />
+          </div>
+
+          <div class="lmCadastroGrupoCampo">
+            <label for="idTipo" class="lmCadastroRotuloCampo"
+              >Tipo da Obra</label
+            >
+            <select
+              id="idTipo"
+              name="tipo"
+              class="lmCadastroCampoSelecao"
+              required
+            >
+              <option value="">Selecione o tipo de obra</option>
+              <option value="Livro">Livro</option>
+              <option value="Conto">Conto</option>
+              <option value="Crônica">Crônica</option>
+              <option value="Poema">Poema</option>
+              <option value="Poesia">Poesia</option>
+              <option value="Antologia">Antologia</option>
+              <option value="Coletânea">Coletânea</option>
+              <option value="Ensaio">Ensaio</option>
+              <option value="Biografia">Biografia</option>
+              <option value="Autobiografia">Autobiografia</option>
+              <option value="Memórias">Memórias</option>
+              <option value="Diário">Diário</option>
+              <option value="Carta">Carta</option>
+              <option value="Peça teatral">Peça teatral</option>
+              <option value="Quadrinho / HQ">Quadrinho / HQ</option>
+              <option value="Novela">Novela</option>
+              <option value="Artigo">Artigo</option>
+              <option value="Resenha">Resenha</option>
+              <option value="Literatura infantil">Literatura infantil</option>
+              <option value="Literatura juvenil">Literatura juvenil</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="lmCadastroGrupoCampo">
+            <label for="idAutor" class="lmCadastroRotuloCampo"> Autores </label>
+
+            <div class="lmCadastroAutoresLinha">
+              <select id="idAutor" class="lmCadastroCampoSelecao">
+                <option value="">Selecione uma autora</option>
+              </select>
+              <button
+                type="button"
+                class="lmCadastroBotaoAdicionarAutor"
+                id="lmAdicionarAutor"
+                aria-label="Adicionar autora"
+              >
+                +
+              </button>
+            </div>
+
+            <div class="lmCadastroAcoesAutor">
+              <button
+                type="button"
+                class="lmCadastroLinkAutor"
+                id="lmCadastrarNovoAutor"
+              >
+                Cadastrar nova autora
+              </button>
+            </div>
+
+            <div
+              class="lmCadastroListaAutores"
+              id="lmListaAutoresSelecionados"
+            ></div>
+          </div>
+
+          <div class="lmCadastroGrupoCampo">
+            <label for="descricao" class="lmCadastroRotuloCampo"
+              >Descrição</label
+            >
+            <textarea
+              id="descricao"
+              name="descricao"
+              class="lmCadastroCampoTextoArea"
+              placeholder="Digite a descrição do livro"
+            ></textarea>
+          </div>
+
+          <p
+            class="lmCadastroMensagem"
+            id="lmCadastroMensagem"
+            aria-live="polite"
+          ></p>
+
+          <div class="lmCadastroAcoesFormulario">
+            <button
+              type="button"
+              class="lmCadastroBotaoSecundario"
+              id="lmCadastroBotaoVoltar"
+            >
+              Voltar
+            </button>
+            <button type="reset" class="lmCadastroBotaoSecundario">
+              Cancelar
+            </button>
+            <button type="submit" class="lmCadastroBotaoPrimario">
+              Cadastrar
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="../js/menu.js"></script>
+    <script src="../js/crudObras.js"></script>
+  </body>
+</html>
