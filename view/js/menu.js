@@ -78,6 +78,10 @@ function configurarVisibilidadeMenu() {
   });
 
   document.querySelectorAll(".lmMenuLogado").forEach((item) => {
+    if (item.classList.contains("lmMenuLeitor")) {
+      return;
+    }
+
     item.style.display = estaLogado ? "flex" : "none";
   });
 
