@@ -146,6 +146,14 @@
   color: #7a4f43;
 }
 
+.lmUsuariosBody .lmMenuLateral.lmMenuLateralAberto {
+  left: 0;
+}
+
+.lmUsuariosBody .lmMenuOverlay.lmMenuOverlayAtivo {
+  display: block;
+}
+
 .lmBotaoTema {
   border: none;
   background: transparent;
