@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listagem de Obras | Leia Mulheres</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body class="lmCadastroBody">
+    <div id="blMenuContainer"></div>
+    <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+    <header class="lmCadastroCabecalho">
+      <div class="lmCadastroCabecalhoTopo">
+        <button
+          class="lmCabecalhoBotao"
+          id="lmMenuAbrirBotao"
+          aria-label="Abrir menu"
+        >
+          &#9776;
+        </button>
+      </div>
+
+      <div class="lmCadastroCabecalhoCentro">
+        <img
+          src="/assets/logoLeiaMais.png"
+          alt="Logo Leia Mais"
+          class="lmCabecalhoLogoImagem"
+        />
+
+        <p class="lmCadastroSubtitulo">
+          Área administrativa para gerenciamento das obras cadastradas.
+        </p>
+      </div>
+    </header>
+
+    <main class="lmUsuariosConteudoPrincipal">
+      <section class="lmUsuariosSecao">
+        <div class="lmUsuariosCabecalho">
+          <h2>Obras</h2>
+          <p>Lista de obras cadastradas no sistema.</p>
+        </div>
+
+        <div class="lmUsuariosLista" id="blObrasLista">
+          <p class="lmUsuariosMensagem">Carregando obras...</p>
+        </div>
+      </section>
+
+      <div class="lmModalOverlay" id="blModalEditarObra">
+        <div class="lmModalConteudo">
+          <button
+            class="lmModalFechar"
+            id="blFecharModalEditarObra"
+            type="button"
+          >
+            &times;
+          </button>
+
+          <h2 class="lmModalTitulo">Editar Obra</h2>
+
+          <form id="blFormularioEditarObra">
+            <input type="hidden" id="blEditarObraId" />
+
+            <div class="lmCadastroGrupoCampo">
+              <label for="blEditarTituloObra">Título</label>
+              <input type="text" id="blEditarTituloObra" required />
+            </div>
+
+            <div class="lmCadastroGrupoCampo">
+              <label for="blEditarTipoObra">Tipo da obra</label>
+              <select id="blEditarTipoObra" required>
+                <option value="">Selecione o tipo de obra</option>
+                <option value="Antologia">Antologia</option>
+                <option value="Artigo">Artigo</option>
+                <option value="Autobiografia">Autobiografia</option>
+                <option value="Biografia">Biografia</option>
+                <option value="Carta">Carta</option>
+                <option value="Coletânea">Coletânea</option>
+                <option value="Conto">Conto</option>
+                <option value="Crônica">Crônica</option>
+                <option value="Diário">Diário</option>
+                <option value="Ensaio">Ensaio</option>
+                <option value="Literatura infantil">Literatura infantil</option>
+                <option value="Literatura juvenil">Literatura juvenil</option>
+                <option value="Livro">Livro</option>
+                <option value="Memórias">Memórias</option>
+                <option value="Novela">Novela</option>
+                <option value="Peça teatral">Peça teatral</option>
+                <option value="Poema">Poema</option>
+                <option value="Poesia">Poesia</option>
+                <option value="Quadrinho / HQ">Quadrinho / HQ</option>
+                <option value="Resenha">Resenha</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+
+            <div class="lmCadastroGrupoCampo">
+              <label for="blEditarAutorObra">Autora</label>
+              <select id="blEditarAutorObra" required></select>
+            </div>
+
+            <div class="lmCadastroGrupoCampo">
+              <label for="blEditarDescricaoObra">Descrição</label>
+              <textarea id="blEditarDescricaoObra"></textarea>
+            </div>
+
+            <button type="submit" class="lmBotaoSaibaMais">
+              Salvar alterações
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <button
+        class="lmBotaoFlutuanteAdmin"
+        id="blBotaoAdicionarObra"
+        title="Cadastrar obra"
+      >
+        +
+      </button>
+    </main>
+
+    <script src="../js/menu.js"></script>
+    <script src="../js/listagemObras.js"></script>
+  </body>
+</html>

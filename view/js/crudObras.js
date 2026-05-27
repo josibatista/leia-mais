@@ -4,6 +4,7 @@ const usuario = JSON.parse(localStorage.getItem("usuario"));
 const lmApiObrasUrl = "/obras";
 const lmApiAutoresUrl = "/autores/disponiveis";
 
+
 const lmAutoresSelecionados = [];
 
 const lmFormularioObra = document.getElementById("lmCadastroFormularioObras");
