@@ -28,6 +28,7 @@
 
 /* Compartilhados*/
 
+/*MANTER-CSS: Tudo certo com essa aqui; Configura a logo nos cabeçalhos*/
 .lmCabecalhoLogoImagem {
   width: 60px;
   height: 60px;
@@ -36,6 +37,8 @@
   display: block;
 }
 
+/*MANTER-CSS: Essa classe formata os botões do menu sanduíche e de busca no cabeçalho. Por mim pode manter*/
+/*REVISAR-CSS: Esse botão está sendo formatado para a mesma coisa mais abaixo, as duas formatações deixam ele com a mesma cor (que também está com uma variável repetida). Ver possibilidade de unificar as duas ou até colocar a formatação direto aqui na classe principal.*/
 .lmCabecalhoBotao {
   border: none;
   background: transparent;
@@ -43,6 +46,8 @@
   cursor: pointer;
 }
 
+/*REVISAR-CSS: Acho importante revisar os js em que essa classe aparece (que na verdade não chamam a classe e sim o id de mesmo nome. Digo isso pq na minha cabeça apenas menu.js deveria recerenciá-la, mas to com muito sono e não tenho certeza*/
+/*JS-CSS: O id de mesmo nome é chaamdo em autores.js, listagemObras.js e menu.js*/
 .lmMenuLateral {
   position: fixed;
   top: 0;
@@ -56,22 +61,30 @@
   flex-direction: column;
 }
 
+/*MANTER-CSS: É adicionado pelo menu.js quando abre o menu, por mim pode manter*/
+/*JS-CSS: Aparece em menu.js, se mudar aqui, lembrar de mudar lá*/
 .lmMenuLateralAberto {
   left: 0;
 }
 
+/*MANTER-CSS: Formata o cabeçalho do menu*/
 .lmMenuLateralCabecalho {
   display: flex;
   align-items: center;
   padding: 1rem;
 }
 
+/*MANTER-CSS: Logo do Leia Mulheres no menu*/
+/*JS-CSS: O menu.js chama quando o tema é trocado, se mudar aqui lembrar de mudar lá*/
 .lmMenuLogoLeiaMulheres {
   width: 150px;
   height: auto;
   display: block;
 }
 
+/*MANTER-CSS: Tudo certo com esse aqui*/
+/*REVISAR-CSS: Mais pra baixo tem 2 classes que estão formatando a mesma cor*/
+/*JS-CSS: Aparece em acervoLivros.js, crudLivros.js e crudObras.js, se mudar o nome aqui lembrar de mudar lá também*/
 .lmMenuFecharBotao {
   background: transparent;
   border: none;
@@ -79,6 +92,7 @@
   cursor: pointer;
 }
 
+/*MANTER-CSS: Formata os itens do menu lateral*/
 .lmMenuNavegacao {
   display: flex;
   flex-direction: column;
@@ -115,12 +129,14 @@
   gap: 10px;
 }
 
+/*REVISAR-CSS: Tudo certo, só acho que tem que mudar o nome*/
 .lmMenuLogoAdmin {
   width: 42px;
   height: 42px;
   object-fit: contain;
 }
 
+/*MANTER/REVISAR-CSS: Formata o "Leia+" do lado da logo. Acho importante mudar o nome*/
 .lmMenuNomeAdmin {
   font-size: 2.4rem;
   font-weight: 700;
@@ -154,6 +170,8 @@
   display: block;
 }
 
+/*MANTER-CSS: Tudo certo com essa classe*/
+/*JS-CSS: Usada em menu.js, se mudar o nome aqui lembrar de mudar lá também*/
 .lmBotaoTema {
   border: none;
   background: transparent;
@@ -166,6 +184,8 @@
   padding: 0;
 }
 
+/*MANTER-CSS: Ícones do menu, nadaver tirar*/
+/*JS-CSS: .lmIconeTema é usada também em menu.js, se mudar aqui lembrar de mudar lá*/
 .lmIconeTema,
 .lmIconeSair {
   width: 20px;
@@ -400,6 +420,7 @@ body.lmHomeBody {
   justify-content: center;
 }
 
+/*REVISAR-CSS: Classe do link que redireciona pro index no menu. Tudo certo com a classe em si, só acho bom escolher outro nome.*/
 .lmMenuMarcaAdmin {
   display: flex;
   align-items: center;
@@ -409,6 +430,8 @@ body.lmHomeBody {
   color: inherit;
 }
 
+
+/* Não sei pq ta comentado, não lembro se fui eu ou não kkkk CHECAR SE É POSSÍVEL APAGAR*/
 /* HOME - TEMA ESCURO
 
 body.lmHomeBody.lmTemaEscuro {
@@ -484,8 +507,9 @@ body.lmHomeBody.lmTemaEscuro .lmMenuNomeAdmin {
   }
 }
 
+/*REMOVE-CSS: Página principal leitor ta inteiro repetido um depois do outro kkkkk*/
 /* Página Principal Leitor */
-
+/*UNIFICAR-CSS: o .lmCabecalhoSuperior ta igual ao .lmCadastroCabecalhoTopo*/
 .ppCabecalho .lmCabecalhoSuperior {
   position: relative;
 }
@@ -887,7 +911,7 @@ body.lmHomeBody.lmTemaEscuro .lmMenuNomeAdmin {
 /*ACERVO DE LIVROS*/
 
 /* ===== BUSCA HEADER ===== */
-
+/*MANTER/REVISAR-CSS: Cuida dos botões de busca, deixei revisar pois a classe tem header no nome mesmo não sendo usada apenas no botão de busca da header.*/
 .lmBuscaHeader {
   width: 100%;
   max-width: 600px;
@@ -918,6 +942,7 @@ body.lmTemaEscuro .lmBuscaHeader input {
   color: #f5f5f5;
 }
 
+/*REVISAR-CSS: Essa é uma das classes mais importantes e precisa ser revisada e limpa. Apesar de seu nome fazer referência ao acervo, ela foi chamada diversas vezes por outras classes, por isso o nome precisa mudar. Além disso ela aparece 99 vezes no css, isso pq ela frequentemente foi usada como classe mãe para formatar outras classes, é urgente a necessidade de ver se ela é necessária para formatar essas outras classes ou se isso está apenas dificultando o uso.*/
 body.lmAcervoBody {
   font-family: "Poppins", sans-serif;
   background-color: var(--lmBege);
@@ -933,12 +958,14 @@ body.lmAcervoBody {
   margin: 0 auto 0.75rem;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .lmBuscaAcervo {
   width: 100%;
   max-width: 520px;
   margin: 0 auto 1.5rem;
 }
 
+/*REVISAR-CSS: Suspeito que essa classe na verdade é um id agora e por isso essas configurações se tornaram obsoletas, mas não tenho certeza então tem que revisar isso*/
 .lmCampoBuscaLivros {
   width: 100%;
   border: 1px solid var(--lmBordaSuave);
@@ -965,11 +992,15 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   color: #cccccc;
 }
 
+/*REVISAR-CSS: Apesar de estar sendo usada em outras páginas além do acervo, essas outras páginas acabaram precisando colocar .lmAcervoBody como classe do body para que essa formatação funcione. Ver possibilidade de ou tirar classe mãe aqui do css ou de mudar o nome do lmAcervoBody para um mais genérico.*/
+/*UNIFICAR-CSS: Ta fazendo a mesma coisa que .lmCadastroCabecalho*/
 .lmAcervoBody .lmCabecalho {
   width: 100%;
   border-bottom: 1px solid var(--lmBordaSuave);
 }
 
+/*REVISAR-CSS: Acho que pode manter a configuração mas tem que dar uma olhada se a classe mãe referenciada aqui vai mater com esse nome, mesmo problema da de cima.*/
+/*UNIFICAR-CSS: o .lmCadastroCabecalhoSuperior ta igual ao .lmCabecalhoTopo*/
 .lmAcervoBody .lmCabecalhoSuperior {
   display: flex;
   align-items: center;
@@ -978,10 +1009,12 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   border-bottom: 1px solid var(--lmBordaSuave);
 }
 
+/*UNIFICAR-CSS: Essa formatação ta duplicada. A mesma cor está sendo aplicada duas vezes por conta das classes mãe*/
 .lmAcervoBody .lmCabecalhoBotao {
   color: var(--lmMarromEscuro);
 }
 
+/*MANTER-CSS: Formata o ícone de busca, por mim pode deixar*/
 .lmAcervoBody .lmIconeBusca {
   width: 20px;
   height: 20px;
@@ -1012,6 +1045,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   transform: rotate(180deg);
 }
 
+/*REMOVER-CSS: Essa classe não está sendo usada*/
 .lmAcervoBody .lmCabecalhoDominio {
   font-size: 0.75rem;
   color: var(--lmBranco);
@@ -1020,6 +1054,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   border-radius: 999px;
 }
 
+/*REVISAR-CSS: Verificar se é necessário o uso da classe mãe aqui, como está sendo usada apenas no acervo não sei se precisa.*/
+/*UNIFICAR-CSS: Ta fazendo praticamente a mesma coisa que .lmCadastroCabecalhoCentro*/
 .lmAcervoBody .lmCabecalhoCentro {
   text-align: center;
   padding: 1.5rem 1rem 1rem;
@@ -1027,6 +1063,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   margin: 0 auto;
 }
 
+/*REMOVER-CSS: Essa classe não está sendo usada*/
 .lmAcervoBody .lmCabecalhoLogo {
   width: 58px;
   height: 58px;
@@ -1050,16 +1087,19 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   margin: 0 auto 0.75rem;
 }
 
+/*MANTER-CSS: Classe do main em acervoLivros, por mim da pra manter*/
 .lmAcervoBody .lmConteudoPrincipal {
   width: 100%;
   padding: 1.5rem 1rem 2rem;
 }
 
+/*MANTER-CSS: Classe da section do acervo, por mim pode manter*/
 .lmAcervoBody .lmSecaoAcervo {
   max-width: 1180px;
   margin: 0 auto;
 }
 
+/*MANTER-CSS: Classe da div que formata o título do catálogo, por mim pode manter*/
 .lmAcervoBody .lmSecaoTopo {
   display: flex;
   flex-direction: column;
@@ -1068,6 +1108,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   gap: 0.25rem;
 }
 
+/*REMOVER-CSS: Não está mais em  uso*/
 .lmAcervoBody .lmSetaSecao {
   background: transparent;
   border: none;
@@ -1081,6 +1122,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   text-align: center;
 }
 
+/*MANTER-CSS: Classe que envolve os livros em acervoLivros, por mim pode manter*/
+/*JS-CSS: Na mesma linha da classe em acervoLivros tem um ID de nome igual, esse id aparece em acervoLivros.js, se mudar ele lembrar de mudar lá também*/
 .lmAcervoBody .lmGradeLivros {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1088,6 +1131,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   width: 100%;
 }
 
+/*MANTER-CSS: Formata o card usado para os livros em acervoLivros, por mim mantém*/
+/*JS-CSS: Também aparece em acervoLivros.js, se mudar aqui lembrar de mudar lá*/
 .lmAcervoBody .lmCardLivro {
   background-color: var(--lmBranco);
   border: 1px solid var(--lmBordaSuave);
@@ -1099,6 +1144,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   min-height: 100%;
 }
 
+/*MANTER-CSS: Formata a imagem no card de livro no acervo, por mim mantém*/
+/*JS-CSS: Aparece também em acervoLivros.js, se mudar aqui lembrar de mudar lá*/
 .lmAcervoBody .lmCardImagem {
   width: 100%;
   aspect-ratio: 3 / 4;
@@ -1108,6 +1155,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   background-color: #f3ece5;
 }
 
+/*REMOVER-CSS: Nenhum desses está sendo usado mais*/
 .lmAcervoBody .lmImagemLivroUm {
   background: linear-gradient(135deg, #0d2c47, #264d73);
 }
@@ -1132,6 +1180,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   background: linear-gradient(135deg, #f15050, #ffb562);
 }
 
+/*MANTER-CSS: Formata o card de livro no acervo, por mim mantem*/
+/*JS-CSS: Aparece em acervoLivros.js, se mudar aqui lembrar de mudar lá*/
 .lmAcervoBody .lmCardConteudo {
   padding: 0.85rem;
   display: flex;
@@ -1140,17 +1190,21 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   flex: 1;
 }
 
+/*Considerações sobre .lmCardTitulo mais abaixo*/
 .lmAcervoBody .lmCardTitulo {
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.4;
 }
 
+/*Considerações sobre .lmCardAutor mais abaixo*/
 .lmAcervoBody .lmCardAutor {
   font-size: 0.85rem;
   color: var(--lmMarromClaro);
 }
 
+/*MANTER-CSS: Formata o titulo no card dos livros no acervo, por mim mantém*/
+/*JS-CSS: também aparece em acervoLivros.js, se mudar aqui lembrar de mudar lá também*/
 .lmCardTitulo {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1164,6 +1218,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   max-height: 44px;
 }
 
+/*MANTER-CSS: Formata o nome do autor no card de livros do acervo, por mim da pra deixar*/
+/*JS-CSS: Aparece em acervoLivros.js, se mudar aqui lembrar de mudar lá*/
 .lmCardAutor {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1177,6 +1233,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   max-height: 40px;
 }
 
+/*UNIFICAR-CSS: Parecida com blBotaoEditar, blBotaoPrimario; Está repetindo o mesmo código duas vezes por conta da classe mãe utilizada neste daqui*/
+/*JS-CSS: Aparece em acervoLivros.js e livrosSalvos.js, se mudar aqui lembrar de mudar lá */
 .lmAcervoBody .lmBotaoSaibaMais {
   margin-top: auto;
   border: none;
@@ -1207,6 +1265,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   padding: 16px 18px;
 }
 
+/*UNIFICAR-CSS: Essa formatação ta duplicada. A mesma cor está sendo aplicada duas vezes por conta das classes mãe*/
 .lmAcervoBody .lmMenuFecharBotao {
   color: var(--lmMarromEscuro);
 }
@@ -1216,6 +1275,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   border-top: 1px solid var(--lmBordaSuave);
 }
 
+/*MANTER-CSS: Plano B do item Leia Mulheres no menu*/
 .lmAcervoBody .lmMenuMarca .lmMarcaTexto {
   font-family: "Great Vibes", cursive;
   font-size: 2rem;
@@ -1281,12 +1341,14 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   padding-right: 2rem;
 }
 
+/*REVISAR-CSS: .lmModalLinha formata a linha do modal de Saiba Mais, coloquei revisar pq acho importante mudar o nome*/
 .lmAcervoBody .lmModalLinha,
 .lmAcervoBody .lmModalBlocoDescricao {
   margin-bottom: 0.85rem;
   line-height: 1.6;
 }
 
+/*REVISAR: Esse formata o nome dos campos no modal do saiba mais. Coloquei revisar pq talvez dê pra padronizar e juntar com outros rótulos? Não sei*/
 .lmAcervoBody .lmModalRotulo {
   font-weight: 600;
   color: var(--lmMarromClaro);
@@ -1297,6 +1359,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   letter-spacing: 0.08rem;
 }
 
+/*MANTER-CSS: Usado para fazer aparecer as ações que o admin pode tomar na página do acervo, por mim pode manter*/
+/*JS-CSS: Aparece em acervoLivros.js, se mudar aqui lembrar de mudar lá*/
 .lmAcervoBody .lmCardAcoesAdmin {
   display: flex;
   justify-content: flex-end;
@@ -1304,6 +1368,9 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   margin-top: 0.5rem;
 }
 
+/*REVISAR-CSS: o .lmBotaoAdmin Livro tem configurações diferentes dependendo da classe mãe (.lmAutorAcoes, .lmAcervoBody), 
+ver possibilidade de padronizar*/
+/*JS-CSS: Aparece em acervoLivros.js e autores.js, se mudar aqui lembrar de mudar lá*/
 .lmAcervoBody .lmBotaoAdminLivro {
   width: 34px;
   height: 34px;
@@ -1321,6 +1388,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   background-color: var(--lmBege);
 }
 
+/*MANTER-CSS: Formata os ícones svg de excluir e editar*/
+/*JS-CSS: Aparece em autores.js, listagemObras.js e acervoLivros.js, se mudar aqui lembrar de mudar lá*/
 .lmAcervoBody .lmIconeAdminLivro {
   width: 17px;
   height: 17px;
@@ -1502,7 +1571,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
 }
 
 /*CADASTRO DE LIVROS */
-
+/*REVISAR-CSS: Essa é uma das classes mais importantes e precisa ser revisada e limpa. Apesar de seu nome fazer referência ao cadastro, ela foi chamada diversas vezes por outras classes, por isso o nome precisa mudar. Além disso ela aparece 89 vezes no css, isso pq ela frequentemente foi usada como classe mãe para formatar outras classes, é urgente a necessidade de ver se ela é necessária para formatar essas outras classes ou se isso está apenas dificultando o uso.*/
 body.lmCadastroBody {
   font-family: "Poppins", sans-serif;
   background-color: var(--lmCadastroBege);
@@ -1511,11 +1580,13 @@ body.lmCadastroBody {
   overflow-x: hidden;
 }
 
+/*UNIFICAR-CSS: Ta fazendo a mesma coisa que .lmCabecalho*/
 .lmCadastroBody .lmCadastroCabecalho {
   border-bottom: 1px solid var(--lmCadastroBordaSuave);
   background-color: var(--lmCadastroBege);
 }
 
+/*Os comentários sobre .lmCadastroCabecalhoTopo estão mais abaixo*/
 .lmCadastroBody .lmCadastroCabecalhoTopo {
   display: flex;
   justify-content: flex-start;
@@ -1524,10 +1595,12 @@ body.lmCadastroBody {
   border-bottom: 1px solid var(--lmCadastroBordaSuave);
 }
 
+/*UNIFICAR-CSS: Essa formatação ta duplicada. A mesma cor está sendo aplicada duas vezes por conta das classes mãe*/
 .lmCadastroBody .lmCabecalhoBotao {
   color: var(--lmCadastroMarromEscuro);
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .lmCadastroBody .lmCadastroDominio {
   font-size: 0.75rem;
   color: var(--lmCadastroBranco);
@@ -1536,6 +1609,7 @@ body.lmCadastroBody {
   border-radius: 999px;
 }
 
+/*UNIFICAR-CSS: Ta fazendo praticamente a mesma coisa que .lmCabecalhoCentro*/
 .lmCadastroBody .lmCadastroCabecalhoCentro {
   text-align: center;
   padding: 1.5rem 1rem 1.25rem;
@@ -1548,6 +1622,7 @@ body.lmCadastroBody {
   margin: 0 auto 0.75rem;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .lmCadastroBody .lmCadastroLogo {
   width: 58px;
   height: 58px;
@@ -1580,6 +1655,7 @@ body.lmCadastroBody {
   justify-content: center;
 }
 
+/*MANTER-CSS: Tudo certo com .lmCadastroSecaoFormulario pra mim*/
 .lmCadastroBody .lmCadastroSecaoFormulario {
   width: 100%;
   max-width: 680px;
@@ -1590,6 +1666,7 @@ body.lmCadastroBody {
   box-shadow: 0 8px 24px var(--lmCadastroSombra);
 }
 
+/*REMOVER-CSS: .lmCadastroSecaoObservacao não está mais em uso*/
 .lmCadastroBody .lmCadastroSecaoObservacao {
   padding: 1.25rem;
   background-color: var(--lmCadastroBranco);
@@ -1598,6 +1675,7 @@ body.lmCadastroBody {
   box-shadow: 0 8px 24px var(--lmCadastroSombra);
 }
 
+/*MANTER-CSS: Apesar de estar configurando apenas uma coisa acho que da pra mante, só acho bom pensar em um nome mais específico? Didático? Não sei kkkkk*/
 .lmCadastroBody .lmCadastroSecaoCabecalho {
   margin-bottom: 1.25rem;
 }
@@ -1612,30 +1690,36 @@ body.lmCadastroBody {
   line-height: 1.6;
 }
 
+/*REVISAR/MANTER-CSS: Classe dos forms de Livro e Autor, importante mudar o nome*/
+/*JS-CSS: Aparece em crudLivros, se mudar aqui lembrar de mudar lá*/
 .lmCadastroBody .lmCadastroFormularioLivro {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
+/*REVISAR/MANTER-CSS: Div dos campos dos formulários de cadastro e edição, importante mudar o nome*/
 .lmCadastroBody .lmCadastroGrupoCampo {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
 }
 
+/*MANTER-CSS: .lmCadastroBody faz com que os campos de datar e gênero fiquem na mesma linha no cadastroLivros*/
 .lmCadastroBody .lmCadastroGrupoLinha {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
 }
 
+/*REVISAR/MANTER: Rótulo dos campos em cadastro e edição, importante mudar nome pra englobar os dois*/
 .lmCadastroBody .lmCadastroRotuloCampo {
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--lmCadastroMarromClaro);
 }
 
+/*REVISAR/UNIFICAR: Todos esses campos estão sendo formatados do mesmo jeito (cadastroCampoTexto e cadastroCampoTextoArea vão acabar sendo alterados depois, mas acho que talvez seja possível fazer isso usando uma classe mãe ou id junto, não sei), sei que são tipos diferentes de input mas como não estão sendo formatados de maneira diferente nem sendo chamados em algum js acho que da pra unificar de alguma forma. Talvez seja possível padronizar com os inputs da tela de login e cadastro dos usuários, mas nesse caso acho que teria que padronizar também a tela em si, adicionando um card no fundo dos campos de digitação (que agora estão apenas flutuando no ar), o que daria mais trabalho por isso acho que por agora isso seria desejável e não essencial*/
 .lmCadastroBody .lmCadastroCampoTexto,
 .lmCadastroBody .lmCadastroCampoSelecao,
 .lmCadastroBody .lmCadastroCampoTextoArea,
@@ -1669,6 +1753,7 @@ body.lmCadastroBody {
   gap: 10px;
 }
 
+/*MANTER-CSS: Essa classe formata o botao quadrado de adicionar autor, acho que da pra manter*/
 .lmCadastroBotaoAdicionarAutor {
   width: 48px;
   min-width: 48px;
@@ -1767,6 +1852,7 @@ body.lmCadastroBody {
   text-decoration: underline;
 }
 
+/*MANTER-CSS: É a div que engloba os botões de ações nas telas de cadastro e alterar, por mim pode deixar*/
 .lmCadastroBody .lmCadastroAcoesFormulario {
   display: flex;
   flex-direction: column;
@@ -1774,7 +1860,11 @@ body.lmCadastroBody {
   margin-top: 0.5rem;
 }
 
+/*REVISAR-CSS: Ver se tem necessidade de referenciar uma classe mãe igual ta aqui.*/
+/*UNIFICAR-CSS: É um botão marrom igual outras classes que já formatam um botão igual (checar planilha pra ver a lista), seria bom unificar*/
+/*UNIFICAR-CSS: Mais pra baixo tem duas ocorrencias que formatam a mesma coisa mas com ids diferentes (um bl e outro lm), ver possibilidade de unificar*/
 .lmCadastroBody .lmCadastroBotaoPrimario,
+/*REVISAR-CSS: Ver se tem necessidade de referenciar uma classe mãe igual ta aqui.*/
 .lmCadastroBody .lmCadastroBotaoSecundario {
   border: none;
   border-radius: 0.8rem;
@@ -1809,6 +1899,7 @@ body.lmCadastroBody {
   margin-bottom: 0.85rem;
 }
 
+/*REMOVER-CSS: .lmCadastroListaObservacao não está mais em uso*/
 .lmCadastroBody .lmCadastroListaObservacao {
   padding-left: 1.2rem;
   line-height: 1.8;
@@ -1825,6 +1916,7 @@ body.lmCadastroBody {
   border-bottom: 1px solid var(--lmCadastroBordaSuave);
 }
 
+/*REVISAR-CSS: Tudo certo, só acho que tem que mudar o nome*/
 .lmCadastroBody .lmMenuLateralLogoAdmin {
   justify-content: space-between;
 }
@@ -1847,6 +1939,7 @@ body.lmCadastroBody {
   color: var(--lmCadastroMarromEscuro);
 }
 
+/*UNIFICAR-CSS: Essa formatação ta duplicada. A mesma cor está sendo aplicada duas vezes por conta das classes mãe*/
 .lmCadastroBody .lmMenuFecharBotao {
   color: var(--lmCadastroMarromEscuro);
 }
@@ -1871,7 +1964,8 @@ body.lmCadastroBody {
 }
 
 /* Tela Autores */
-
+/*UNIFICAR-CSS: Praticamente a mesma coisa que .lmCabecalhoSuperior*/
+/*REVISAR-CSS: Tem outro lugar formatando a mesma classe*/
 .lmCadastroCabecalhoTopo {
   display: flex;
   align-items: center;
@@ -1918,6 +2012,8 @@ body.lmCadastroBody {
   flex-shrink: 0;
 }
 
+/*REVISAR-CSS: o .lmBotaoAdmin Livro tem configurações diferentes dependendo da classe mãe (.lmAutorAcoes, .lmAcervoBody), ver possibilidade de padronizar*/
+/*JS-CSS: Aparece em acervoLivros.js e autores.js, se mudar aqui lembrar de mudar lá*/
 .lmAutorAcoes .lmBotaoAdminLivro {
   display: flex;
   align-items: center;
@@ -2288,6 +2384,7 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
   color: #2a2c39;
 }
 
+/*UNIFICAR-CSS: Essa formatação ta duplicada, separada apenas por um ID diferente (esse é lmFormularioEditarLivro e o outro é blFormularioEditarObra*/
 #lmFormularioEditarLivro .lmCadastroBotaoPrimario {
   margin-top: 1rem;
 }
@@ -2336,6 +2433,7 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
   overflow: hidden;
 }
 
+/*REVISAR-CSS: Eu acho que talvez seja uma diferença pequena demais pra ser significativa (a diferença é que aqui ela fica um pouco maior), mas se for manter tem que ver algumas coisas. 1 - Aqui ele ta usando .lmUsuariosBody para formatar, mas essa configuração também tá formatando o arquivo de autores, não apenas o de usuários (mas isso vai ser problema pra classe lmUsuariosBody não pra essa, só to comentando pra não esquecer. 2 - Se decidir manter essa variação precisa aplicá-la na tela de listagem de obras também, pra deixar padronizado que nas telas de listagem a logo vai ser um pouquinho maior.*/
 .lmUsuariosBody .lmCabecalhoLogoImagem {
   width: 58px;
   height: auto;
@@ -2495,6 +2593,7 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
     --corFundoInput: #E5DDD3;
 }
 
+/*UNIFICAR-CSS: Seria bom unificar todos os body (checar tabela pra ver todos)*/
 .blBody {
     font-family: 'Poppins', sans-serif;
     background-color: var(--corFundo);
@@ -2506,6 +2605,7 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
     padding: 20px;
 }
 
+/*MANTER-CSS: Container usado nas primeiras telas do time-a, acho que da pra deixar*/
 .blContainerPrincipal {
     width: 100%;
     max-width: 400px;
@@ -2516,10 +2616,12 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
 }
 
 /* Logo */
+/*MANTER-CSS: Essa classe foi usada como container nas primeiras telas feitas pelo time-a, pra não dar dor de cabeça acho que da rpa deixar quieto*/
 .blContainerLogo {
     margin-bottom: 25px;
 }
 
+/*MANTER-CSS: Essa classe é usada para formatar a logo nas primeiras telas do time-a, por mim da pra manter pra não dar dor de cabeça também*/
 .blLogoImagem {
     width: 120px;
     height: auto;
@@ -2527,6 +2629,7 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
 }
 
 /* Card de Login */
+/*MANTER-CSS: O nome ta péssimo, mas é o container da parte de login, por mim da pra manter*/
 .blCartaoLogin {
     width: 100%;
     display: flex;
@@ -2557,6 +2660,7 @@ form {
     width: 100%;
 }
 
+/*UNIFICAR-CSS: Formata os inputs das telas de cadastro, login e esqueceu senha. Ainda não achei mas sei que vai repetir*/
 .blGrupoInput {
     text-align: left;
     display: flex;
@@ -2570,6 +2674,7 @@ form {
     margin-left: 2px;
 }
 
+/*UNIFICAR-CSS: Já sei que vai repetir*/
 .blInputSenha {
     position: relative;
 }
@@ -2604,6 +2709,7 @@ input:focus {
     border-color: var(--corPrimaria);
 }
 
+/*MANTER-CSS: Formata o link de esqueci minha senha nos logins, por mim deixa*/
 .blEsqueceuSenha {
     text-align: right;
     margin-top: 4px;
@@ -2616,7 +2722,7 @@ input:focus {
     font-weight: 500;
 }
 
-/* Botão */
+/*UNIFICAR-CSS: Parecida com blBotaoEditar*/
 .blBotaoPrimario {
     background-color: var(--corSecundaria);
     color: #FFFFFF;
@@ -2638,6 +2744,7 @@ input:focus {
 }
 
 /* Layout Dashboard (Geral) */
+/*REMOVER-CSS: Não está mais em uso*/
 .blCorpoDashboard {
   left: 0;
     display: flex;
@@ -2645,6 +2752,7 @@ input:focus {
     padding: 0;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blMenuLateral {
     width: 260px;
     background-color: #f0E8DE;
@@ -2657,6 +2765,7 @@ input:focus {
     top: 0;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blLogoDashboard {
     display: flex;
     align-items: center;
@@ -2672,12 +2781,14 @@ input:focus {
     border-radius: 8px;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blMenuNavegacao {
     flex:1;
     display:flex;
     flex-direction:column;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blMenuItem {
     display: flex;
     justify-content: space-between;
@@ -2690,12 +2801,14 @@ input:focus {
     border-bottom: 1px solid rgba(62, 42, 31, 0.05);
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blMenuMarca {
     font-family:"Great Vibes", cursive;
     font-size: 2rem;
     line-height: 1;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blMenuLogoLeiaMulheres {
     width: 150px;
     height: auto;
@@ -2711,6 +2824,7 @@ input:focus {
     opacity: 0.5;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blMenuRodape {
     padding: 20px;
     display: flex;
@@ -2718,6 +2832,7 @@ input:focus {
     align-items: center;
 }
 
+/*REMOVER-CSS: Era usado na aba de configurações estática, não está sendo usado mais*/
 .blBotaoSair {
     text-decoration: none;
     color: var(--corPrimaria);
@@ -2727,11 +2842,13 @@ input:focus {
     gap: 8px;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blIconeTema {
     font-size: 20px;
     cursor: pointer;
 }
 
+/*MANTER-CSS: Nome da classe da main em algumas telas, acho que da pra manter por comodidade */
 .blConteudoPrincipal {
     flex: 1;
     padding: 40px;
@@ -2739,6 +2856,7 @@ input:focus {
 }
 
 /* Componentes da Tela do Perfil */
+/*MANTER-CSS: Classe da section que engloba a foto de perfil e os nomes (nome e usuário) em perfilLeitor*/
 .blSecaoUsuario {
     display: flex;
     align-items: center;
@@ -2746,10 +2864,12 @@ input:focus {
     margin-bottom: 30px;
 }
 
+/*MANTER-CSS: div container do avatar do usuário (foto + coroa), por mim da pra deixar*/
 .blAvatarContainer {
     position: relative;
 }
 
+/*MANTER-CSS: Formata o círculo da foto de perfil do usuário, por mim pode manter*/
 .blAvatarCirculo {
     width: 100px;
     height: 100px;
@@ -2763,6 +2883,7 @@ input:focus {
     color: var(--corDestaque);
 }
 
+/*MANTER-CSS: Coloca a coroinha na foto de perfil, não vejo*/
 .blCoroaIcone {
     position: absolute;
     top: -10px;
@@ -2771,6 +2892,7 @@ input:focus {
     transform: rotate(45deg);
 }
 
+/*MANTER-CSS: div que engloba o nome e o usuário no perfil Leitor, por mim da pra manter*/
 .blInfoPerfil {
     display: flex;
     flex-direction: column;
@@ -2778,23 +2900,27 @@ input:focus {
     gap: 6px;
 }
 
+/*MANTER-CSS: divs que formatam o nome e o usuário do leitor na tela de perfil dele. por mim da pra manter*/
 .blLinhaPrincipal, .blLinhaSecundaria {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
+/*MANTER-CSS: Mostra o nome grande no perfil, até pensei em unificar com alguma coisa mas acho que da pra deixar assim*/
 .blRotuloGrande {
     font-size: 32px;
     font-weight: 700;
     color: var(--corPrimaria);
 }
 
+/*MANTER-CSS: Mostra o nome de usuário no perfil, acho que da pra manter também*/
 .blRotuloPequeno {
   font-size: 16px;
   color:var(--corSecundaria);
 }
 
+/*MANTER-CSS: Nome da section das estatísticas em perfil leitor, por mim da pra manter*/
 .blGradeEstatisticas {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -2802,6 +2928,7 @@ input:focus {
     margin-bottom: 30px;
 }
 
+/*MANTER-CSS: Por mim tudo certo com esse*/
 .blCardEstatistica {
     border: 2px solid var(--corPrimaria);
     border-radius: 12px;
@@ -2812,6 +2939,7 @@ input:focus {
     gap: 5px;
 }
 
+/*MANTER-CSS: Formata os ícones das estatísticas no perfilLeitor, por mim pode manter*/
 .blIconeCard {
     font-size: 24px;
     margin-bottom: 5px;
@@ -2828,6 +2956,7 @@ input:focus {
     font-weight: 700;
 }
 
+/*MANTER-CSS: Classe do section de metas no perfil usuário, por mim da pra manter*/
 .blSecaoMetas {
     border: 2px solid var(--corPrimaria);
     border-radius: 12px;
@@ -2846,6 +2975,7 @@ input:focus {
     color: var(--corDestaque);
 }
 
+/*MANTER-CSS: Container da barra de progresso, acho que dá pra manter*/
 .blBarraProgressoContainer {
     position: relative;
     width: 100%;
@@ -2856,6 +2986,7 @@ input:focus {
     overflow: hidden;
 }
 
+/*MANTER-CSS: Pra mim tudo certo com essa*/
 .blBarraProgresso {
     height: 100%;
     background-color: var(--corDestaque);
@@ -2871,10 +3002,12 @@ input:focus {
     color: var(--corDestaque);
 }
 
+/*MANTER-CSS: Pelo que eu entendi é a classe das sections que envolvem formatação de lista de livros e trilhas, acho que da pra manter*/
 .blSecaoLista {
     margin-bottom: 30px;
 }
 
+/*MANTER-CSS: Se trata do retângulo onde fica o título e os filtros de livros salvos do usuário, por mim acho que da pra manter.*/
 .blListaCabecalho {
     display: flex;
     justify-content: space-between;
@@ -2887,6 +3020,7 @@ input:focus {
     font-weight: 700;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blItemTrilha {
     background-color: rgba(199, 109, 94, 0.15);
     border-radius: 12px;
@@ -2896,6 +3030,7 @@ input:focus {
     gap: 20px;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blTrilhaImagem {
     width: 80px;
     height: 80px;
@@ -2917,6 +3052,7 @@ input:focus {
     text-align: left;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blBarraProgressoTrilhaContainer {
     width: 100%;
     height: 15px;
@@ -2926,6 +3062,7 @@ input:focus {
     overflow: hidden;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blBarraProgressoTrilha {
     height: 100%;
     background-color: var(--corDestaque);
@@ -2937,6 +3074,8 @@ input:focus {
     color: var(--corDestaque);
 }
 
+/*REVISAR-CSS: Coloquei o revisar aqui pq lembro de você falando que só aparecia os primeiros 5 livros no perfil, daí não sei se essa classe ainda vai ser usada ou vai ser removida depois ou alterada, sei lá*/
+/*JS-CSS: Está sendo usada em perfilLeitor.js, se mudar aqui lembrar de mudar lá*/
 .blCarrosselLivros {
     display: flex;
     gap: 15px;
@@ -2953,6 +3092,7 @@ input:focus {
     border-radius: 10px;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blLivroCapa {
     width: 120px;
     height: 180px;
@@ -2961,12 +3101,15 @@ input:focus {
     flex-shrink: 0;
 }
 
+/*REVISAR/MANTER-CSS: Formata os botões de filtro dos livros, acho que pode manter mas só tem que mudar o nome*/
 .blMenuLivros {
     display: flex;
     gap: 8px;
     margin-top: 6px;
 }
 
+/*MANTER-CSS: Usado principalmente pra fazer os filtros dos livros funcionarem no js, por mim mantém*/
+/*JS-CSS: Aparece em livrosSalvos.js e perfilLeitor.js, se mudar aqui lembrar de mudar lá*/
 .blFiltroLivro {
     border: none;
     background-color: transparent;
@@ -3030,6 +3173,7 @@ input:focus {
 }
 
 /* Links de Rodapé do Login*/
+/*MANTER-CSS: Esse formata os textos no rodapé das telas de login e cadastro, por mim da pra manter*/
 .blLinksRodape {
     margin-top: 40px;
     display: flex;
@@ -3116,6 +3260,7 @@ input:focus {
 }
 
 /* Estilos da Tela de Configurações */
+/*UNIFICAR-CSS: Literalmente idêntico à blCabecalhoPagina (não está mais em uso)*/
 .blCabecalhoConfiguracoes {
     margin-bottom:30px;
     text-align: left;
@@ -3134,6 +3279,7 @@ input:focus {
     max-width: 800px;
 }
 
+/*MANTER-CSS: Nome da classe dos sections em configuraç~ies, acho que da pra manter pra evitar dor de cabeça*/
 .blSecaoConfiguracao {
     text-align: left;
 }
@@ -3147,6 +3293,7 @@ input:focus {
     margin-bottom: 15px;
 }
 
+/*MANTER-CSS: Classe da div que formata a lista de itens em cada seção das configurações, por mim da pra manter*/
 .blListaItensConfig {
     display: flex;
     flex-direction: column;
@@ -3155,6 +3302,7 @@ input:focus {
     overflow: hidden
 }
 
+/*MANTER-CSS: Formata cada bloco de item presente em configurações, por mim pode manter*/
 .blItemConfig {
     display: flex;
     justify-content: space-between;
@@ -3172,6 +3320,7 @@ input:focus {
     background-color: rgba(62, 42, 31, 0.05);
 }
 
+/*MANTER-CSS: É a classe que, na tela de  configurações, formata o título e a informação do usuário*/
 .blInfoItem {
     display: flex;
     flex-direction: column;
@@ -3183,12 +3332,15 @@ input:focus {
     color: var(--corPrimaria);
 }
 
+/*MANTER-CSS: Formata os valores da seção conta em configurações + versão do app lá embaixo*/
 .blValorItem {
     font-size: 14px;
     color: var(--corSecundaria);
     font-weight: 500;
 }
 
+/*UNIFICAR-CSS: Parecida com blBotaoPrimario*/
+/*JS-CSS: Está sendo usada em configuracoes.js, se mudar aqui lembrar de mudar lá também*/
 .blBotaoEditar {
     background-color: var(--corSecundaria);
     color: white;
@@ -3201,6 +3353,7 @@ input:focus {
     font-size: 14px;
 }
 
+/*UNIFICAR-CSS: Meio que acho que da pra unificar no sentido de colocar a formatação que ta embaixo dessa (formatando o i) aqui junto, já que ta fazendo a mesma coisa*/
 .blItemPerigo .blNomeItem {
     color: red;
 }
@@ -3209,6 +3362,7 @@ input:focus {
     color: red;
 }
 
+/*MANTER-CSS: Formata o menu drop-down em configurações, por mim pode manter*/
 .blSeletorConfig {
     background-color: var(--corFundoInput);
     border: 1px solid rgba(62, 42, 31, 0.2);
@@ -3223,6 +3377,7 @@ input:focus {
 }
 
 /* Formulários (Cadastro) do Admin) */
+/*REMOVER-CSS: Não está mais sendo usado*/
 .blCabecalhoPagina {
     margin-bottom: 30px;
     text-align: left;
@@ -3235,6 +3390,7 @@ input:focus {
     font-weight: 500;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blContainerFormulario {
     background-color: rgba(255, 255, 255, 0.3);
     padding: 30px;
@@ -3243,6 +3399,7 @@ input:focus {
     text-align: left;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blFormularioPadrao {
     display: flex;
     flex-direction: column;
@@ -3279,6 +3436,7 @@ input:focus {
     resize: vertical;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blAcoesFormulario {
     display: flex;
     flex-direction: column;
@@ -3287,6 +3445,7 @@ input:focus {
     margin-top: 10px;
 }
 
+/*REMOVER-CSS: não está mais sendo usado*/
 .blBotaoSecundario {
     padding: 12px 25px;
     background-color: transparent;
@@ -3300,6 +3459,7 @@ input:focus {
     cursor: pointer;
     transition: all 0.2s;
 }
+
 
 .blBotaoSecundario:hover {
     background-color: var(--corPrimaria);
@@ -3388,6 +3548,7 @@ input:focus {
   width: 100%;
 }
 
+/*REVISAR-CSS: Aqui acho que da pra manter (as configurações no caso, o nome acho que precisa mudar) pq ta mexendo no tamanho e disposição, então faz sentido mudar com base na classe mãe*/
 .blAreaBotoesLivroSalvo .lmBotaoSaibaMais {
   flex: 1;
   height: 42px;
@@ -3732,6 +3893,7 @@ input:focus {
 }
 
 /* Responsividade e Ajustes Mobile */
+/*REMOVER-CSS: Não está mais em uso*/
 .blMobileApenas {
     display:none;
 }
@@ -3740,12 +3902,16 @@ input:focus {
     .blMenuLateral {
         width: 80px;
     }
+
+    /*REMOVER-CSS: .blItemMenu não está mais em uso*/
     .blLogoDashboard span, .blItemMenu span, .blItemMenu i, .blBotaoSair {
         display: none;
     }
     .blItemMenu {
         justify-content: center;
     }
+
+    /*REMOVER-CSS: Não está mais em uso*/
     .blGradeEstatisticasAdmin, .blGradeAcoes {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -3764,6 +3930,7 @@ input:focus {
         font-size: 44px;
     }
 
+
     .blBotaoPrimario {
         width: auto;
         min-width: 160px;
@@ -3781,6 +3948,7 @@ input:focus {
         padding: 15px;
     }
 
+    /*REMOVER-CSS: Não está mais em uso*/
     .blCabecalhoSuperior {
         display: flex;
         justify-content: space-between;
@@ -3790,10 +3958,12 @@ input:focus {
         margin-bottom: 10px;
     }
 
+    /*REMOVER-CSS: Não está mais em uso*/
     .blLogoMini {
         height: 40px;
     }
 
+    /*REMOVER-CSS: Não está mais em uso*/
     .blContainerVoltar {
         padding: 10px 0;
         text-align: left;
@@ -3827,6 +3997,7 @@ input:focus {
         font-size: 11px;
     }
 
+    /*REMOVER-CSS: Não está mais em uso*/
     .blItemTrilha {
         gap: 10px;
         padding: 10px;
@@ -3851,6 +4022,7 @@ input:focus {
         font-size:28px;
     }
 
+    /*MANTER-CSS: Formata cada bloco de item presente em configurações. por mim pode manter*/
     .blItemConfig {
         padding: 12px 15px;
     }

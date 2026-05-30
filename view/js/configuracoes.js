@@ -125,6 +125,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  /* SOBROU DO MENU ANTIGO 
+  
   const botaoSair = document.querySelector(".blBotaoSair");
 
   if (botaoSair) {
@@ -133,7 +135,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       localStorage.clear();
       window.location.href = "loginLeitor.html";
     });
-  }
+  } */
 
   document.getElementById("blGithub").addEventListener("click", () => {
     window.open("https://github.com/josibatista/leia-mais", "_blank");

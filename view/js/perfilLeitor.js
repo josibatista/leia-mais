@@ -197,6 +197,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+  /* SOBROU DA CONFIGURAÇÃO ANTIGA
+  
   function configurarLogout() {
     const botaoSair = document.querySelector(".blBotaoSair");
 
@@ -210,7 +212,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.location.href = "loginLeitor.html";
       });
     }
-  }
+  } */
 
   try {
     await carregarUsuarioAtualizado();
