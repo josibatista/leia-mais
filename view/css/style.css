@@ -107,6 +107,7 @@
   font-size: 0.98rem;
 }
 
+/*MANTER-CSS: Rodapé do menu, não tem pq tirar*/
 .lmMenuRodape {
   margin-top: auto;
   padding: 1rem 1.2rem;
@@ -115,6 +116,9 @@
   justify-content: space-between;
 }
 
+/*MANTER-CSS: Classe do link do botão sair do menu, por mim pode manter*/
+/*JS-CSS: Aparece em acervoLivros.js*/
+/*REVISAR-CSS: Ver se é necessário mantê-lo em acervoLivros.js*/
 .lmMenuSair {
   text-decoration: none;
   font-weight: 500;
@@ -166,6 +170,10 @@
   left: 0;
 }
 
+/*MANTER-CSS: Classes do menu, tão funcionando bem então não tem pq mudar*/
+/*JS-CSS: .lmMenuOverlay aparece em autores.js, listagemObras.js e menu.js*/
+/*JS-CSS: .lmMenuOverlayAtivo aparece apenas em menu.js*/
+/*REVISAR-CSS: Acho que .lmMenuOverlay não precisa mais ser chamada em autores.js e listagemObras.js, já que o menu.js já faz o que está sendo feito nelas*/
 .lmUsuariosBody .lmMenuOverlay.lmMenuOverlayAtivo {
   display: block;
 }
@@ -429,7 +437,6 @@ body.lmHomeBody {
   text-decoration: none;
   color: inherit;
 }
-
 
 /* Não sei pq ta comentado, não lembro se fui eu ou não kkkk CHECAR SE É POSSÍVEL APAGAR*/
 /* HOME - TEMA ESCURO
@@ -951,6 +958,7 @@ body.lmAcervoBody {
   overflow-x: hidden;
 }
 
+/*MANTER-CSS: Logo do leia mulheres no acervo*/
 .lmAcervoBody .lmTituloProjetoImagem {
   width: min(320px, 80%);
   height: auto;
@@ -1021,6 +1029,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   color: var(--lmMarromEscuro);
 }
 
+/*MANTER-CSS: Descrição do acervo*/
+/*JS-CSS: Aparece em acervoLivros.js*/
 .lmAcervoBody .lmDescricaoContainer {
   max-height: 0;
   overflow: hidden;
@@ -1031,6 +1041,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   max-height: 300px;
 }
 
+/*MANTER-CSS: Formata o toggle*/
+/*JS-CSS: Aparece em acervoLivros.js*/
 .lmAcervoBody .lmToggleDescricao {
   margin-top: 0.5rem;
   background: transparent;
@@ -1069,9 +1081,14 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   height: 58px;
   margin: 0 auto 0.75rem;
   border-radius: 0.5rem;
-  background: linear-gradient(135deg, var(--lmMarromClaro), var(--lmMarromEscuro));
+  background: linear-gradient(
+    135deg,
+    var(--lmMarromClaro),
+    var(--lmMarromEscuro)
+  );
 }
 
+/*REMOVER-CSS: .lmTituloProjeto não está mais em uso*/
 .lmAcervoBody .lmTituloProjeto {
   font-family: "Great Vibes", cursive;
   font-size: 3rem;
@@ -1080,6 +1097,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   margin-bottom: 0.75rem;
 }
 
+/*MANTER-CSS: Parágrafo da descrição do projeto*/
 .lmAcervoBody .lmDescricaoProjeto {
   font-size: 0.95rem;
   line-height: 1.7;
@@ -1116,6 +1134,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   font-size: 1.25rem;
 }
 
+/*MANTER-CSS: Título "Catálogo de livros" no acervo*/
 .lmAcervoBody .lmTituloSecao {
   font-size: 1.35rem;
   font-weight: 600;
@@ -1211,7 +1230,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-   line-clamp: 2;
+  line-clamp: 2;
 
   line-height: 1.35;
   min-height: 44px;
@@ -1226,7 +1245,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-   line-clamp: 2;
+  line-clamp: 2;
 
   line-height: 1.35;
   min-height: 40px;
@@ -1275,7 +1294,8 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   border-top: 1px solid var(--lmBordaSuave);
 }
 
-/*MANTER-CSS: Plano B do item Leia Mulheres no menu*/
+/*MANTER-CSS: .lmMenuMarca Plano B do item Leia Mulheres no menu*/
+/*REMOVER-CSS: .lmMarcaTexto não está mais em uso*/
 .lmAcervoBody .lmMenuMarca .lmMarcaTexto {
   font-family: "Great Vibes", cursive;
   font-size: 2rem;
@@ -1295,6 +1315,9 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   background-color: var(--lmFundoOverlay);
 }
 
+/*MANTER-CSS: Formata os modais*/
+/*JS-CSS: É chamado em acervoLivros.js*/
+/*REVISAR-CSS: .lmModalOverlay está duplicado lá emabaixo*/
 .lmAcervoBody .lmModalOverlay {
   position: fixed;
   inset: 0;
@@ -1309,11 +1332,16 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   transition: 0.25s ease;
 }
 
+/*MANTER-CSS: Faz o modal aparecer*/
+/*JS-CSS: É chamado em acervoLivros.js, autores.js, listagemObras.js, livrosSalvos.js*/
+/*REVISAR-CSS: .lmModalOverlayAtivo está duplicado lá emabaixo*/
 .lmAcervoBody .lmModalOverlayAtivo {
   opacity: 1;
   visibility: visible;
 }
 
+/*MANTER-CSS: div do conteúdo de um modal*/
+/*REVISAR-CSS: .lmModalConteudo está duplicado lá emabaixo*/
 .lmAcervoBody .lmModalConteudo {
   position: relative;
   width: 100%;
@@ -1324,6 +1352,9 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.2);
 }
 
+/*MANTER-CSS: Botão de fechar*/
+/*REVISAR-CSS: .lmModalFechar está duplicado lá embaixo*/
+/*JS-CSS: Aparece em acervoLivros.js*/
 .lmAcervoBody .lmModalFechar {
   position: absolute;
   top: 0.75rem;
@@ -1335,6 +1366,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   cursor: pointer;
 }
 
+/*MANTER-CSS: Títulos dos modais*/
 .lmAcervoBody .lmModalTitulo {
   font-size: 1.4rem;
   margin-bottom: 1rem;
@@ -1342,6 +1374,7 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
 }
 
 /*REVISAR-CSS: .lmModalLinha formata a linha do modal de Saiba Mais, coloquei revisar pq acho importante mudar o nome*/
+/*MANTER-CSS: .lmModalBlocoDescricao formata a descrição do livro no modal*/
 .lmAcervoBody .lmModalLinha,
 .lmAcervoBody .lmModalBlocoDescricao {
   margin-bottom: 0.85rem;
@@ -1354,6 +1387,9 @@ body.lmTemaEscuro .lmCampoBuscaLivros::placeholder {
   color: var(--lmMarromClaro);
 }
 
+/*MANTER-CSS: Avaliação dos livros*/
+/*JS-CSS: É chamado em acervoLivros.js*/
+/*REVISAR-CSS: .lmModalAvaliacao está duplicado lá emabaixo*/
 .lmAcervoBody .lmModalAvaliacao {
   color: #d4a017;
   letter-spacing: 0.08rem;
@@ -1505,7 +1541,7 @@ ver possibilidade de padronizar*/
   border: none;
   background-color: transparent;
   color: #3a2418;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 0.78rem;
   text-align: left;
   cursor: pointer;
@@ -1615,6 +1651,7 @@ body.lmCadastroBody {
   padding: 1.5rem 1rem 1.25rem;
 }
 
+/*MANTER-CSS: imagem do leia mulheres em algumas telas de cadastro e listagem*/
 .lmCadastroTituloProjetoImagem {
   width: min(320px, 80%);
   height: auto;
@@ -1628,9 +1665,14 @@ body.lmCadastroBody {
   height: 58px;
   margin: 0 auto 0.75rem;
   border-radius: 0.5rem;
-  background: linear-gradient(135deg, var(--lmCadastroMarromClaro), var(--lmCadastroMarromEscuro));
+  background: linear-gradient(
+    135deg,
+    var(--lmCadastroMarromClaro),
+    var(--lmCadastroMarromEscuro)
+  );
 }
 
+/*REMOVER-CSS: .lmCadastroTituloProjeto não está mais em uso*/
 .lmCadastroBody .lmCadastroTituloProjeto {
   font-family: "Great Vibes", cursive;
   font-size: 3rem;
@@ -1639,6 +1681,7 @@ body.lmCadastroBody {
   margin-bottom: 0.5rem;
 }
 
+/*MANTER-CSS: Subtitulo usado em algumas telas de cadastro e listagem*/
 .lmCadastroBody .lmCadastroSubtitulo {
   font-size: 0.95rem;
   max-width: 650px;
@@ -1680,6 +1723,7 @@ body.lmCadastroBody {
   margin-bottom: 1.25rem;
 }
 
+/*MANTER-CSS: Títulos das secoes de cadastro nas telas de cadastro*/
 .lmCadastroBody .lmCadastroTituloSecao {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
@@ -1747,6 +1791,7 @@ body.lmCadastroBody {
   resize: vertical;
 }
 
+/*MANTER-CSS: Se refere a toda a linha de selecionar/adicionar autores que tem nas telas de cadastro de obras e livros*/
 .lmCadastroAutoresLinha {
   display: flex;
   align-items: center;
@@ -1772,6 +1817,7 @@ body.lmCadastroBody {
   background-color: #3f261c;
 }
 
+/*MANTER-CSS: div da lista dos autores que são selecionados em cadastro de Obras/Livro*/
 .lmCadastroListaAutores {
   display: flex;
   flex-wrap: wrap;
@@ -1814,6 +1860,7 @@ body.lmCadastroBody {
   background-color: #f3ebe4;
 }
 
+/*MANTER-CSS: Tag do autor*/
 .lmCadastroAutorTag {
   display: flex;
   align-items: center;
@@ -1826,6 +1873,7 @@ body.lmCadastroBody {
   font-weight: 500;
 }
 
+/*MANTER-CSS: Faz o botão de remover autora*/
 .lmCadastroAutorRemover {
   background: none;
   border: none;
@@ -1835,10 +1883,12 @@ body.lmCadastroBody {
   font-weight: bold;
 }
 
+/*MANTER-CSS: Div de cadastrar nova autora*/
 .lmCadastroAcoesAutor {
   margin-top: 10px;
 }
 
+/*MANTER-CSS: Link que manda do cadastro de livro/obra pro cadastro de autora*/
 .lmCadastroLinkAutor {
   border: none;
   background: none;
@@ -1894,6 +1944,7 @@ body.lmCadastroBody {
   background-color: #e5d5c4;
 }
 
+/*REMOVER-CSS: .lmCadastroTituloObservacao não está mais em uso*/
 .lmCadastroBody .lmCadastroTituloObservacao {
   font-size: 1.15rem;
   margin-bottom: 0.85rem;
@@ -1959,6 +2010,7 @@ body.lmCadastroBody {
   color: var(--lmCadastroMarromEscuro);
 }
 
+/*REVISAR-CSS: Esse bloco ta duplicado lá emabaixo*/
 .lmCadastroBody .lmMenuOverlay {
   background-color: rgba(0, 0, 0, 0.45);
 }
@@ -2368,7 +2420,7 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
   border-radius: 10px;
   background: #ffffff;
   color: #444444;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 0.95rem;
 }
 
@@ -2580,549 +2632,559 @@ body.lmCadastroBody.lmTemaEscuro .lmMenuItem {
 /*Time A*/
 /* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-    --corPrimaria: #3E2A1F;
-    --corSecundaria: #6B4F3A;
-    --corDestaque: #C76D5E;
-    --corFundo: #F5EFE6; 
-    --corFundoInput: #E5DDD3;
+  --corPrimaria: #3e2a1f;
+  --corSecundaria: #6b4f3a;
+  --corDestaque: #c76d5e;
+  --corFundo: #f5efe6;
+  --corFundoInput: #e5ddd3;
 }
 
 /*UNIFICAR-CSS: Seria bom unificar todos os body (checar tabela pra ver todos)*/
 .blBody {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--corFundo);
-    color: var(--corPrimaria);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--corFundo);
+  color: var(--corPrimaria);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 /*MANTER-CSS: Container usado nas primeiras telas do time-a, acho que da pra deixar*/
 .blContainerPrincipal {
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Logo */
 /*MANTER-CSS: Essa classe foi usada como container nas primeiras telas feitas pelo time-a, pra não dar dor de cabeça acho que da rpa deixar quieto*/
 .blContainerLogo {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 /*MANTER-CSS: Essa classe é usada para formatar a logo nas primeiras telas do time-a, por mim da pra manter pra não dar dor de cabeça também*/
 .blLogoImagem {
-    width: 120px;
-    height: auto;
-    border-radius: 15px;
+  width: 120px;
+  height: auto;
+  border-radius: 15px;
 }
 
 /* Card de Login */
 /*MANTER-CSS: O nome ta péssimo, mas é o container da parte de login, por mim da pra manter*/
 .blCartaoLogin {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 h1 {
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 5px;
-    letter-spacing: -1px;
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  letter-spacing: -1px;
 }
 
+/*MANTER-CSS: Subtitulo das telas de crud dos usuarios*/
+/*REVISAR-CSS: Acho importante mudar o nome para um mais claro*/
 .blSubtitulo {
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: -10px;
-    margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: -10px;
+  margin-bottom: 15px;
 }
 
 /* Formulário */
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 10px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+  width: 100%;
 }
 
 /*UNIFICAR-CSS: Formata os inputs das telas de cadastro, login e esqueceu senha. Ainda não achei mas sei que vai repetir*/
 .blGrupoInput {
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .blGrupoInput label {
-    font-weight: 600;
-    font-size: 18px;
-    margin-left: 2px;
+  font-weight: 600;
+  font-size: 18px;
+  margin-left: 2px;
 }
 
 /*UNIFICAR-CSS: Já sei que vai repetir*/
 .blInputSenha {
-    position: relative;
+  position: relative;
 }
 
 .blInputSenha input {
-    padding-right: 45px;
+  padding-right: 45px;
 }
 
 .blInputSenha i {
-    position: absolute;
-    right: 15px;
-    top: 7px;
-    cursor: pointer;
-    color: #777;
+  position: absolute;
+  right: 15px;
+  top: 7px;
+  cursor: pointer;
+  color: #777;
 }
 
 input {
-    width: 100%;
-    height: 48px;
-    background-color: var(--corFundoInput);
-    border: 1px solid rgba(62, 42, 31, 0.2);
-    border-radius: 8px;
-    padding: 0 15px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    color: var(--corPrimaria);
-    outline: none;
-    transition: border-color 0.3s;
+  width: 100%;
+  height: 48px;
+  background-color: var(--corFundoInput);
+  border: 1px solid rgba(62, 42, 31, 0.2);
+  border-radius: 8px;
+  padding: 0 15px;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  color: var(--corPrimaria);
+  outline: none;
+  transition: border-color 0.3s;
 }
 
 input:focus {
-    border-color: var(--corPrimaria);
+  border-color: var(--corPrimaria);
 }
 
 /*MANTER-CSS: Formata o link de esqueci minha senha nos logins, por mim deixa*/
 .blEsqueceuSenha {
-    text-align: right;
-    margin-top: 4px;
+  text-align: right;
+  margin-top: 4px;
 }
 
 .blEsqueceuSenha a {
-    font-size: 13px;
-    color: var(--corDestaque);
-    text-decoration: underline;
-    font-weight: 500;
+  font-size: 13px;
+  color: var(--corDestaque);
+  text-decoration: underline;
+  font-weight: 500;
 }
 
 /*UNIFICAR-CSS: Parecida com blBotaoEditar*/
 .blBotaoPrimario {
-    background-color: var(--corSecundaria);
-    color: #FFFFFF;
-    border: none;
-    border-radius: 6px;
-    height: 54px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: opacity 0.3s;
-    margin: 25px auto 10px;
-    padding: 0 45px;
-    width: fit-content;
+  background-color: var(--corSecundaria);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  height: 54px;
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  margin: 25px auto 10px;
+  padding: 0 45px;
+  width: fit-content;
 }
 
 .blBotaoPrimario:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 /* Layout Dashboard (Geral) */
 /*REMOVER-CSS: Não está mais em uso*/
 .blCorpoDashboard {
   left: 0;
-    display: flex;
-    align-items: stretch;
-    padding: 0;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blMenuLateral {
-    width: 260px;
-    background-color: #f0E8DE;
-    border-right: 1px solid rgba(62, 42, 31, 0.1);
-    display: flex;
-    flex-direction: column;
-    padding: 20px 0;
-    height: 100vh;
-    position: sticky;
-    top: 0;
+  width: 260px;
+  background-color: #f0e8de;
+  border-right: 1px solid rgba(62, 42, 31, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  height: 100vh;
+  position: sticky;
+  top: 0;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blLogoDashboard {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 20px 30px;
-    font-size: 32px;
-    font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 20px 30px;
+  font-size: 32px;
+  font-weight: 700;
 }
 
-.blLogoDashboard img{
-    width: 40px;
-    height: auto;
-    border-radius: 8px;
+.blLogoDashboard img {
+  width: 40px;
+  height: auto;
+  border-radius: 8px;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blMenuNavegacao {
-    flex:1;
-    display:flex;
-    flex-direction:column;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blMenuItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    text-decoration: none;
-    color: var(--corPrimaria);
-    font-weight: 600;
-    font-size: 18px;
-    border-bottom: 1px solid rgba(62, 42, 31, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: var(--corPrimaria);
+  font-weight: 600;
+  font-size: 18px;
+  border-bottom: 1px solid rgba(62, 42, 31, 0.05);
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blMenuMarca {
-    font-family:"Great Vibes", cursive;
-    font-size: 2rem;
-    line-height: 1;
+  font-family: "Great Vibes", cursive;
+  font-size: 2rem;
+  line-height: 1;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blMenuLogoLeiaMulheres {
-    width: 150px;
-    height: auto;
-    display: block;
+  width: 150px;
+  height: auto;
+  display: block;
 }
 
 .blMenuItem.ativo {
-    background-color: rgba(62, 42, 31, 0.05);
+  background-color: rgba(62, 42, 31, 0.05);
 }
 
 .blMenuItem i {
-    font-size: 14px;
-    opacity: 0.5;
+  font-size: 14px;
+  opacity: 0.5;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blMenuRodape {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /*REMOVER-CSS: Era usado na aba de configurações estática, não está sendo usado mais*/
 .blBotaoSair {
-    text-decoration: none;
-    color: var(--corPrimaria);
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  text-decoration: none;
+  color: var(--corPrimaria);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blIconeTema {
-    font-size: 20px;
-    cursor: pointer;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /*MANTER-CSS: Nome da classe da main em algumas telas, acho que da pra manter por comodidade */
 .blConteudoPrincipal {
-    flex: 1;
-    padding: 40px;
-    overflow-y: auto;
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
 }
 
 /* Componentes da Tela do Perfil */
 /*MANTER-CSS: Classe da section que engloba a foto de perfil e os nomes (nome e usuário) em perfilLeitor*/
 .blSecaoUsuario {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 30px;
 }
 
 /*MANTER-CSS: div container do avatar do usuário (foto + coroa), por mim da pra deixar*/
 .blAvatarContainer {
-    position: relative;
+  position: relative;
 }
 
 /*MANTER-CSS: Formata o círculo da foto de perfil do usuário, por mim pode manter*/
 .blAvatarCirculo {
-    width: 100px;
-    height: 100px;
-    border: 2px solid var(--corPrimaria);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 48px;
-    font-family: 'Great Vibes', cursive;
-    color: var(--corDestaque);
+  width: 100px;
+  height: 100px;
+  border: 2px solid var(--corPrimaria);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
+  font-family: "Great Vibes", cursive;
+  color: var(--corDestaque);
 }
 
 /*MANTER-CSS: Coloca a coroinha na foto de perfil, não vejo*/
 .blCoroaIcone {
-    position: absolute;
-    top: -10px;
-    right: -5px;
-    font-size: 24px;
-    transform: rotate(45deg);
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  font-size: 24px;
+  transform: rotate(45deg);
 }
 
 /*MANTER-CSS: div que engloba o nome e o usuário no perfil Leitor, por mim da pra manter*/
 .blInfoPerfil {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
 }
 
 /*MANTER-CSS: divs que formatam o nome e o usuário do leitor na tela de perfil dele. por mim da pra manter*/
-.blLinhaPrincipal, .blLinhaSecundaria {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.blLinhaPrincipal,
+.blLinhaSecundaria {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /*MANTER-CSS: Mostra o nome grande no perfil, até pensei em unificar com alguma coisa mas acho que da pra deixar assim*/
 .blRotuloGrande {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--corPrimaria);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--corPrimaria);
 }
 
 /*MANTER-CSS: Mostra o nome de usuário no perfil, acho que da pra manter também*/
 .blRotuloPequeno {
   font-size: 16px;
-  color:var(--corSecundaria);
+  color: var(--corSecundaria);
 }
 
 /*MANTER-CSS: Nome da section das estatísticas em perfil leitor, por mim da pra manter*/
 .blGradeEstatisticas {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
 /*MANTER-CSS: Por mim tudo certo com esse*/
 .blCardEstatistica {
-    border: 2px solid var(--corPrimaria);
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+  border: 2px solid var(--corPrimaria);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 }
 
 /*MANTER-CSS: Formata os ícones das estatísticas no perfilLeitor, por mim pode manter*/
 .blIconeCard {
-    font-size: 24px;
-    margin-bottom: 5px;
+  font-size: 24px;
+  margin-bottom: 5px;
 }
 
+/*MANTER-CSS: Formata os números das estatíscias*/
 .blNumeroEstatistica {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--corDestaque);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--corDestaque);
 }
 
+/*MANTER-CSS: É o texto das estatíticas na tela de perfil*/
 .blTextoEstatistica {
-    font-size: 14px;
-    font-weight: 700;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 /*MANTER-CSS: Classe do section de metas no perfil usuário, por mim da pra manter*/
 .blSecaoMetas {
-    border: 2px solid var(--corPrimaria);
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 30px;
+  border: 2px solid var(--corPrimaria);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
 }
 
+/*MANTER-CSS: Título "metas do mês"*/
 .blMetaTitulo {
-    font-weight: 700;
-    font-size: 20px;
-    margin-bottom: 15px;
-    text-align: left;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-align: left;
 }
 
+/*MANTER-CSS: Ta sendo usado pra formatar alguma coisa da meta, acho melhor não mexer com o que ta quieto kkkkk*/
 .blMetaDestaque {
-    color: var(--corDestaque);
+  color: var(--corDestaque);
 }
 
 /*MANTER-CSS: Container da barra de progresso, acho que dá pra manter*/
 .blBarraProgressoContainer {
-    position: relative;
-    width: 100%;
-    height: 30px;
-    background-color: #FFF;
-    border: 1px solid var(--corPrimaria);
-    border-radius: 15px;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 30px;
+  background-color: #fff;
+  border: 1px solid var(--corPrimaria);
+  border-radius: 15px;
+  overflow: hidden;
 }
 
 /*MANTER-CSS: Pra mim tudo certo com essa*/
 .blBarraProgresso {
-    height: 100%;
-    background-color: var(--corDestaque);
+  height: 100%;
+  background-color: var(--corDestaque);
 }
 
+/*REVISAR-CSS: Antes tinha um texto que aparecia na barra de progresso, agora não tem mais esse texto mas ainda tem essa classe e ela ainda está sendo chamada no html, acho que é bom ver se ainda faz sentido mantê-la*/
 .blProgressoTexto {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--corDestaque);
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--corDestaque);
 }
 
 /*MANTER-CSS: Pelo que eu entendi é a classe das sections que envolvem formatação de lista de livros e trilhas, acho que da pra manter*/
 .blSecaoLista {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 /*MANTER-CSS: Se trata do retângulo onde fica o título e os filtros de livros salvos do usuário, por mim acho que da pra manter.*/
 .blListaCabecalho {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .blListaCabecalho h3 {
-    font-size: 24px;
-    font-weight: 700;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blItemTrilha {
-    background-color: rgba(199, 109, 94, 0.15);
-    border-radius: 12px;
-    padding: 15px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  background-color: rgba(199, 109, 94, 0.15);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blTrilhaImagem {
-    width: 80px;
-    height: 80px;
-    border-radius: 10px;
-    object-fit: cover;
-    border: 1px solid var(--corPrimaria);
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--corPrimaria);
 }
 
 .blTrilhaInfo {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blTrilhaNome {
-    font-weight: 700;
-    font-size: 18px;
-    text-align: left;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: left;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blBarraProgressoTrilhaContainer {
-    width: 100%;
-    height: 15px;
-    background-color: #FFF;
-    border: 1px solid var(--corPrimaria);
-    border-radius: 10px;
-    overflow: hidden;
+  width: 100%;
+  height: 15px;
+  background-color: #fff;
+  border: 1px solid var(--corPrimaria);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blBarraProgressoTrilha {
-    height: 100%;
-    background-color: var(--corDestaque);
+  height: 100%;
+  background-color: var(--corDestaque);
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blTrilhaPorcentagem {
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--corDestaque);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--corDestaque);
 }
 
 /*REVISAR-CSS: Coloquei o revisar aqui pq lembro de você falando que só aparecia os primeiros 5 livros no perfil, daí não sei se essa classe ainda vai ser usada ou vai ser removida depois ou alterada, sei lá*/
 /*JS-CSS: Está sendo usada em perfilLeitor.js, se mudar aqui lembrar de mudar lá*/
 .blCarrosselLivros {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    padding-bottom: 10px;
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
 }
 
 .blCarrosselLivros::-webkit-scrollbar {
-    height: 6px;
+  height: 6px;
 }
 
 .blCarrosselLivros::-webkit-scrollbar-thumb {
-    background: var(--corSecundaria);
-    border-radius: 10px;
+  background: var(--corSecundaria);
+  border-radius: 10px;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blLivroCapa {
-    width: 120px;
-    height: 180px;
-    border-radius: 6px;
-    object-fit: cover;
-    flex-shrink: 0;
+  width: 120px;
+  height: 180px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 /*REVISAR/MANTER-CSS: Formata os botões de filtro dos livros, acho que pode manter mas só tem que mudar o nome*/
 .blMenuLivros {
-    display: flex;
-    gap: 8px;
-    margin-top: 6px;
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
 }
 
 /*MANTER-CSS: Usado principalmente pra fazer os filtros dos livros funcionarem no js, por mim mantém*/
 /*JS-CSS: Aparece em livrosSalvos.js e perfilLeitor.js, se mudar aqui lembrar de mudar lá*/
 .blFiltroLivro {
-    border: none;
-    background-color: transparent;
-    color: var(--corSecundaria);
-    font-size: 13px;
-    cursor: pointer;
-    padding: 4px 0;
+  border: none;
+  background-color: transparent;
+  color: var(--corSecundaria);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 0;
 }
 
 .blFiltroLivro.ativo {
-    color: var(--corPrimaria);
-    font-weight: 600;
-    border-bottom: 2px solid #C76D5E;
+  color: var(--corPrimaria);
+  font-weight: 600;
+  border-bottom: 2px solid #c76d5e;
 }
 
 .blCarrosselLivros {
@@ -3175,27 +3237,29 @@ input:focus {
 /* Links de Rodapé do Login*/
 /*MANTER-CSS: Esse formata os textos no rodapé das telas de login e cadastro, por mim da pra manter*/
 .blLinksRodape {
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .blLinksRodape p {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--corPrimaria);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--corPrimaria);
 }
 
+/*MANTER-CSS: Formata os links nas primeiras telas do time-a*/
 .blLinkDestaque {
-    color: var(--corDestaque);
-    text-decoration: underline;
-    font-weight: 600;
+  color: var(--corDestaque);
+  text-decoration: underline;
+  font-weight: 600;
 }
 
-#blMudarParaAdmin, #blMudarParaLeitor {
-    font-size: 16px;
-    font-weight: 600;
+#blMudarParaAdmin,
+#blMudarParaLeitor {
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .lmAlertaOverlay {
@@ -3251,219 +3315,225 @@ input:focus {
 }
 
 /* Estilos da Tela de Recuperação de Senha */
+/*MANTER-CSS: Textos das telas de recuperar senha*/
 .blDescricaoRecuperacao {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--corPrimaria);
-    margin-bottom: 10px;
-    line-height: 1.5;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--corPrimaria);
+  margin-bottom: 10px;
+  line-height: 1.5;
 }
 
 /* Estilos da Tela de Configurações */
 /*UNIFICAR-CSS: Literalmente idêntico à blCabecalhoPagina (não está mais em uso)*/
 .blCabecalhoConfiguracoes {
-    margin-bottom:30px;
-    text-align: left;
+  margin-bottom: 30px;
+  text-align: left;
 }
 
+/*MANTER-CSS: Título da tela de configurações.*/
+/*REVISAR-CSS: Acho importante mudar o nome para um mais claro*/
 .blTituloPagina {
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--corPrimaria);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--corPrimaria);
 }
 
 .blContainerConfiguracoes {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 800px;
 }
 
 /*MANTER-CSS: Nome da classe dos sections em configuraç~ies, acho que da pra manter pra evitar dor de cabeça*/
 .blSecaoConfiguracao {
-    text-align: left;
+  text-align: left;
 }
 
+/*MANTER-CSS: Título das seções na tela de configurações*/
+/*REVISAR-CSS: Acho importante mudar o nome para um mais claro*/
 .blTituloCategoria {
-    font-size: 22px;
-    font-weight: 700px;
-    color: var(--corPrimaria);
-    border-bottom: 2px solid var(--corPrimaria);
-    padding-bottom: 8px;
-    margin-bottom: 15px;
+  font-size: 22px;
+  font-weight: 700px;
+  color: var(--corPrimaria);
+  border-bottom: 2px solid var(--corPrimaria);
+  padding-bottom: 8px;
+  margin-bottom: 15px;
 }
 
 /*MANTER-CSS: Classe da div que formata a lista de itens em cada seção das configurações, por mim da pra manter*/
 .blListaItensConfig {
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 12px;
-    overflow: hidden
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 /*MANTER-CSS: Formata cada bloco de item presente em configurações, por mim pode manter*/
 .blItemConfig {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid rgba(62, 42, 31, 0.1);
-    transition: background-color 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(62, 42, 31, 0.1);
+  transition: background-color 0.2s;
 }
 
 .blItemConfig:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .blItemConfig:hover {
-    background-color: rgba(62, 42, 31, 0.05);
+  background-color: rgba(62, 42, 31, 0.05);
 }
 
 /*MANTER-CSS: É a classe que, na tela de  configurações, formata o título e a informação do usuário*/
 .blInfoItem {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
+/*MANTER-CSS: Nome dos itens na tela de configurações*/
 .blNomeItem {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--corPrimaria);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--corPrimaria);
 }
 
 /*MANTER-CSS: Formata os valores da seção conta em configurações + versão do app lá embaixo*/
 .blValorItem {
-    font-size: 14px;
-    color: var(--corSecundaria);
-    font-weight: 500;
+  font-size: 14px;
+  color: var(--corSecundaria);
+  font-weight: 500;
 }
 
 /*UNIFICAR-CSS: Parecida com blBotaoPrimario*/
 /*JS-CSS: Está sendo usada em configuracoes.js, se mudar aqui lembrar de mudar lá também*/
 .blBotaoEditar {
-    background-color: var(--corSecundaria);
-    color: white;
-    border: none;
-    padding: 6px 15px;
-    border-radius: 6px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 14px;
+  background-color: var(--corSecundaria);
+  color: white;
+  border: none;
+  padding: 6px 15px;
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 /*UNIFICAR-CSS: Meio que acho que da pra unificar no sentido de colocar a formatação que ta embaixo dessa (formatando o i) aqui junto, já que ta fazendo a mesma coisa*/
 .blItemPerigo .blNomeItem {
-    color: red;
+  color: red;
 }
 
 .blItemPerigo i {
-    color: red;
+  color: red;
 }
 
 /*MANTER-CSS: Formata o menu drop-down em configurações, por mim pode manter*/
 .blSeletorConfig {
-    background-color: var(--corFundoInput);
-    border: 1px solid rgba(62, 42, 31, 0.2);
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    color: var(--corPrimaria);
-    font-weight: 600;
-    outline: none;
-    cursor: pointer;
+  background-color: var(--corFundoInput);
+  border: 1px solid rgba(62, 42, 31, 0.2);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: var(--corPrimaria);
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
 }
 
 /* Formulários (Cadastro) do Admin) */
 /*REMOVER-CSS: Não está mais sendo usado*/
 .blCabecalhoPagina {
-    margin-bottom: 30px;
-    text-align: left;
+  margin-bottom: 30px;
+  text-align: left;
 }
 
+/*REMOVER-CSS: Não está mais em uso*/
 .blTextoApoio {
-    font-size: 16px;
-    color: var(--corSecundaria);
-    margin-top: 5px;
-    font-weight: 500;
+  font-size: 16px;
+  color: var(--corSecundaria);
+  margin-top: 5px;
+  font-weight: 500;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blContainerFormulario {
-    background-color: rgba(255, 255, 255, 0.3);
-    padding: 30px;
-    border-radius: 12px;
-    max-width: 700px;
-    text-align: left;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 700px;
+  text-align: left;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blFormularioPadrao {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .blFormularioPadrao label {
-    display: block;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--corPrimaria);
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--corPrimaria);
 }
 
-.blFormularioPadrao input, 
+.blFormularioPadrao input,
 .blFormularioPadrao textarea {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid rgba(62, 42, 31, 0.2);
-    border-radius: 8px;
-    background-color: var(--corFundoInput);
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    color: var(--corPrimaria);
-    outline: none;
-    transition: border-color 0.2s;
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid rgba(62, 42, 31, 0.2);
+  border-radius: 8px;
+  background-color: var(--corFundoInput);
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  color: var(--corPrimaria);
+  outline: none;
+  transition: border-color 0.2s;
 }
 
-.blFormularioPadrao input:focus, 
+.blFormularioPadrao input:focus,
 .blFormularioPadrao textarea:focus {
-    border-color: var(--corDestaque);
+  border-color: var(--corDestaque);
 }
 
 .blFormularioPadrao textarea {
-    resize: vertical;
+  resize: vertical;
 }
 
 /*REMOVER-CSS: Não está mais em uso*/
 .blAcoesFormulario {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
 }
 
 /*REMOVER-CSS: não está mais sendo usado*/
 .blBotaoSecundario {
-    padding: 12px 25px;
-    background-color: transparent;
-    color: var(--corPrimaria);
-    border: 2px solid var(--corPrimaria);
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 16px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
+  padding: 12px 25px;
+  background-color: transparent;
+  color: var(--corPrimaria);
+  border: 2px solid var(--corPrimaria);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-
 .blBotaoSecundario:hover {
-    background-color: var(--corPrimaria);
-    color: white;
+  background-color: var(--corPrimaria);
+  color: white;
 }
 
 /*Livros Salvos*/
@@ -3800,7 +3870,7 @@ input:focus {
 }
 
 .lmModalLinha,
- .lmModalBlocoDescricao {
+.lmModalBlocoDescricao {
   margin-bottom: 0.85rem;
   line-height: 1.6;
 }
@@ -3837,7 +3907,7 @@ input:focus {
   border-radius: 10px;
   background: #ffffff;
   color: #444444;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 0.95rem;
 }
 
@@ -3895,151 +3965,155 @@ input:focus {
 /* Responsividade e Ajustes Mobile */
 /*REMOVER-CSS: Não está mais em uso*/
 .blMobileApenas {
-    display:none;
+  display: none;
 }
 
 @media (max-width: 1024px) {
-    .blMenuLateral {
-        width: 80px;
-    }
+  .blMenuLateral {
+    width: 80px;
+  }
 
-    /*REMOVER-CSS: .blItemMenu não está mais em uso*/
-    .blLogoDashboard span, .blItemMenu span, .blItemMenu i, .blBotaoSair {
-        display: none;
-    }
-    .blItemMenu {
-        justify-content: center;
-    }
+  /*REMOVER-CSS: .blItemMenu não está mais em uso*/
+  .blLogoDashboard span,
+  .blItemMenu span,
+  .blItemMenu i,
+  .blBotaoSair {
+    display: none;
+  }
+  .blItemMenu {
+    justify-content: center;
+  }
 
-    /*REMOVER-CSS: Não está mais em uso*/
-    .blGradeEstatisticasAdmin, .blGradeAcoes {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .blLayoutInferior {
-        grid-template-columns: 1fr;
-    }
+  /*REMOVER-CSS: Não está mais em uso*/
+  .blGradeEstatisticasAdmin,
+  .blGradeAcoes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .blLayoutInferior {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
-    .blContainerPrincipal {
-        max-width: 100%;
-        padding: 0 10px;
-    }
-    
-    h1 {
-        font-size: 44px;
-    }
+  .blContainerPrincipal {
+    max-width: 100%;
+    padding: 0 10px;
+  }
 
+  h1 {
+    font-size: 44px;
+  }
 
-    .blBotaoPrimario {
-        width: auto;
-        min-width: 160px;
-    }
+  .blBotaoPrimario {
+    width: auto;
+    min-width: 160px;
+  }
 
-    .blMenuLateral {
-        display: none;
-    }
+  .blMenuLateral {
+    display: none;
+  }
 
-    .blMobileApenas {
-        display: flex;
-    }
+  .blMobileApenas {
+    display: flex;
+  }
 
-    .blConteudoPrincipal {
-        padding: 15px;
-    }
+  .blConteudoPrincipal {
+    padding: 15px;
+  }
 
-    /*REMOVER-CSS: Não está mais em uso*/
-    .blCabecalhoSuperior {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid rgba(62, 42, 31, 0.1);
-        margin-bottom: 10px;
-    }
+  /*REMOVER-CSS: Não está mais em uso*/
+  .blCabecalhoSuperior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(62, 42, 31, 0.1);
+    margin-bottom: 10px;
+  }
 
-    /*REMOVER-CSS: Não está mais em uso*/
-    .blLogoMini {
-        height: 40px;
-    }
+  /*REMOVER-CSS: Não está mais em uso*/
+  .blLogoMini {
+    height: 40px;
+  }
 
-    /*REMOVER-CSS: Não está mais em uso*/
-    .blContainerVoltar {
-        padding: 10px 0;
-        text-align: left;
-    }
+  /*REMOVER-CSS: Não está mais em uso*/
+  .blContainerVoltar {
+    padding: 10px 0;
+    text-align: left;
+  }
 
-    .blSecaoUsuario {
-        flex-direction: row;
-        gap: 15px;
-    }
+  .blSecaoUsuario {
+    flex-direction: row;
+    gap: 15px;
+  }
 
-    .blAvatarCirculo {
-        width: 80px;
-        height: 80px;
-        font-size: 36px;
-    }
+  .blAvatarCirculo {
+    width: 80px;
+    height: 80px;
+    font-size: 36px;
+  }
 
-    .blGradeEstatisticas {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-    }
+  .blGradeEstatisticas {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
 
-    .blCardEstatistica {
-        padding: 10px 5px;
-    }
+  .blCardEstatistica {
+    padding: 10px 5px;
+  }
 
-    .blNumeroEstatistica {
-        font-size: 24px;
-    }
+  .blNumeroEstatistica {
+    font-size: 24px;
+  }
 
-    .blTextoEstatistica {
-        font-size: 11px;
-    }
+  .blTextoEstatistica {
+    font-size: 11px;
+  }
 
-    /*REMOVER-CSS: Não está mais em uso*/
-    .blItemTrilha {
-        gap: 10px;
-        padding: 10px;
-    }
+  /*REMOVER-CSS: Não está mais em uso*/
+  .blItemTrilha {
+    gap: 10px;
+    padding: 10px;
+  }
 
-    .blTrilhaImagem {
-        width: 60px;
-        height: 60px;
-    }
+  .blTrilhaImagem {
+    width: 60px;
+    height: 60px;
+  }
 
-    .blTrilhaPorcentagem {
-        font-size: 14px;
-    }
+  .blTrilhaPorcentagem {
+    font-size: 14px;
+  }
 
-    .blLivroCapa {
-        width: 90px;
-        height: 135px;
-    }
+  .blLivroCapa {
+    width: 90px;
+    height: 135px;
+  }
 
-    /* Configurações */
-    .blTituloPagina {
-        font-size:28px;
-    }
+  /* Configurações */
+  .blTituloPagina {
+    font-size: 28px;
+  }
 
-    /*MANTER-CSS: Formata cada bloco de item presente em configurações. por mim pode manter*/
-    .blItemConfig {
-        padding: 12px 15px;
-    }
+  /*MANTER-CSS: Formata cada bloco de item presente em configurações. por mim pode manter*/
+  .blItemConfig {
+    padding: 12px 15px;
+  }
 
-    .blNomeItem {
-        font-size: 16px;
-    }
+  .blNomeItem {
+    font-size: 16px;
+  }
 
-    .blContainerFormulario {
-        padding: 20px;
-    }
+  .blContainerFormulario {
+    padding: 20px;
+  }
 
-     .blAcoesFormulario {
-        flex-direction: column;
-    }
-    
-    .blBotaoPrimario, .blBotaoSecundario {
-        width: 100%;
-    }
+  .blAcoesFormulario {
+    flex-direction: column;
+  }
+
+  .blBotaoPrimario,
+  .blBotaoSecundario {
+    width: 100%;
+  }
 }
