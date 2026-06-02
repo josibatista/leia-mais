@@ -1,17 +1,15 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("token");
-  let usuario = JSON.parse(localStorage.getItem("usuario"));
+  if (!protegerRotaLeitor()) {
+    return;
+  }
+
+  const token = obterToken();
+  let usuario = obterUsuarioLogado();
 
   const API_LIVROS_SALVOS = `/usuarios/${usuario.id}/livros`;
 
   let livrosSalvos = [];
   let statusAtual = "todos";
-
-  if (!token || !usuario) {
-    alert("Faça login novamente.");
-    window.location.href = "loginLeitor.html";
-    return;
-  }
 
   function obterHeadersJson() {
     return {
@@ -149,7 +147,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw new Error(dados.error || "Erro ao carregar usuário.");
     }
 
-    localStorage.setItem("usuario", JSON.stringify(dados));
+    salvarUsuarioNaSessao(dados);
     usuario = dados;
 
     preencherDadosUsuario();

@@ -28,9 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const login = document.getElementById("blInputLoginLeitor").value.trim();
       const senha = document.getElementById("blSenhaLeitor").value.trim();
+      const lembrar = document.getElementById("blLembrarLoginLeitor")?.checked;
 
       if (!login || !senha) {
-        alert("Preencha e-mail ou username e senha.");
+        exibirAlertaAcesso("Preencha e-mail ou username e senha.", {
+          titulo: "Atenção",
+        });
         return;
       }
 
@@ -48,46 +51,30 @@ document.addEventListener("DOMContentLoaded", () => {
         const dados = await resposta.json();
 
         if (!resposta.ok) {
-          alert(dados.error || dados.message || "Erro ao fazer login.");
+          exibirAlertaAcesso(dados.error || dados.message || "Erro ao fazer login.", {
+            titulo: "Atenção",
+          });
           return;
         }
 
         if (dados.usuario?.tipo === "administrador") {
-          exibirAlerta("Este acesso é exclusivo para leitores.");
-          localStorage.removeItem("token");
-          localStorage.removeItem("usuario");
+          limparSessao();
+          exibirAlertaAcesso("Este acesso é exclusivo para leitores.", {
+            titulo: "Atenção",
+          });
           return;
         }
 
-        localStorage.setItem("token", dados.token);
-        localStorage.setItem("usuario", JSON.stringify(dados.usuario));
+        salvarSessaoLogin(dados.token, dados.usuario, !!lembrar);
 
         window.location.href = "paginaPrincipalLeitor.html";
       } catch (erro) {
         console.error("Erro no login:", erro);
-        alert("Não foi possível conectar ao servidor.");
+        exibirAlertaAcesso("Não foi possível conectar ao servidor.", {
+          titulo: "Atenção",
+        });
       }
     });
-  }
-
-  function exibirAlerta(mensagem, titulo = "Atenção") {
-    const overlay = document.getElementById("lmAlertaOverlay");
-    const tituloAlerta = document.getElementById("lmAlertaTitulo");
-    const mensagemAlerta = document.getElementById("lmAlertaMensagem");
-    const botaoAlerta = document.getElementById("lmAlertaBotao");
-
-    if (!overlay || !tituloAlerta || !mensagemAlerta || !botaoAlerta) {
-      exibirAlerta("Este acesso é exclusivo para leitores.");
-      return;
-    }
-
-    tituloAlerta.textContent = titulo;
-    mensagemAlerta.textContent = mensagem;
-    overlay.classList.add("ativo");
-
-    botaoAlerta.onclick = () => {
-      overlay.classList.remove("ativo");
-    };
   }
 
   if (formCadastro) {
@@ -100,7 +87,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const username = document.getElementById("blUsuarioLeitor").value.trim();
 
       if (!nome || !email || !senha || !username) {
-        alert("Preencha nome, username, e-mail e senha.");
+        exibirAlertaAcesso("Preencha nome, username, e-mail e senha.", {
+          titulo: "Atenção",
+        });
         return;
       }
 
@@ -122,15 +111,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const dados = await resposta.json();
 
         if (!resposta.ok) {
-          alert(dados.error || dados.message || "Erro ao cadastrar.");
+          exibirAlertaAcesso(dados.error || dados.message || "Erro ao cadastrar.", {
+            titulo: "Atenção",
+          });
           return;
         }
 
-        alert("Cadastro realizado com sucesso!");
-        window.location.href = "loginLeitor.html";
+        exibirAlertaAcesso("Cadastro realizado com sucesso!", {
+          titulo: "Sucesso",
+          redirect: "loginLeitor.html",
+        });
       } catch (erro) {
         console.error("Erro no cadastro:", erro);
-        alert("Não foi possível conectar ao servidor.");
+        exibirAlertaAcesso("Não foi possível conectar ao servidor.", {
+          titulo: "Atenção",
+        });
       }
     });
   }

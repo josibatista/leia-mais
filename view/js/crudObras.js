@@ -1,28 +1,25 @@
-const token = localStorage.getItem("token");
-const usuario = JSON.parse(localStorage.getItem("usuario"));
-
 const lmApiObrasUrl = "/obras";
 const lmApiAutoresUrl = "/autores/disponiveis";
-
-
 const lmAutoresSelecionados = [];
 
-const lmFormularioObra = document.getElementById("lmCadastroFormularioObras");
-const lmCampoAutor = document.getElementById("idAutor");
-const lmBotaoAdicionarAutor = document.getElementById("lmAdicionarAutor");
-const lmListaAutoresSelecionados = document.getElementById(
-  "lmListaAutoresSelecionados",
-);
-const lmCadastrarNovoAutor = document.getElementById("lmCadastrarNovoAutor");
-const lmCadastroMensagem = document.getElementById("lmCadastroMensagem");
-const lmCadastroBotaoVoltar = document.getElementById("lmCadastroBotaoVoltar");
+document.addEventListener("DOMContentLoaded", () => {
+  if (!protegerRotaAdmin()) {
+    return;
+  }
 
-if (!token || !usuario || usuario.tipo !== "administrador") {
-  alert("Acesso permitido apenas para administradores.");
-  window.location.href = "loginAdm.html";
-} else {
+  const token = obterToken();
+
+  const lmFormularioObra = document.getElementById("lmCadastroFormularioObras");
+  const lmCampoAutor = document.getElementById("idAutor");
+  const lmBotaoAdicionarAutor = document.getElementById("lmAdicionarAutor");
+  const lmListaAutoresSelecionados = document.getElementById(
+    "lmListaAutoresSelecionados",
+  );
+  const lmCadastrarNovoAutor = document.getElementById("lmCadastrarNovoAutor");
+  const lmCadastroMensagem = document.getElementById("lmCadastroMensagem");
+  const lmCadastroBotaoVoltar = document.getElementById("lmCadastroBotaoVoltar");
+
   lmCarregarAutores();
-}
 
 function lmExibirMensagem(texto, tipo) {
   lmCadastroMensagem.textContent = texto;
@@ -211,8 +208,7 @@ lmFormularioObra.addEventListener("submit", async function (evento) {
   }
 });
 
-if (lmCadastroBotaoVoltar) {
-  lmCadastroBotaoVoltar.addEventListener("click", function () {
-    window.history.back();
-  });
-}
+  if (lmCadastroBotaoVoltar) {
+    lmCadastroBotaoVoltar.addEventListener("click", voltarPaginaAnterior);
+  }
+});

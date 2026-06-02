@@ -1,33 +1,75 @@
-document.addEventListener("DOMContentLoaded", () => {
+const CHAVE_USERNAME_RECUPERACAO = "usernameRecuperacao";
 
-  const inputSenha = document.getElementById('blSenha');
-  const olhoSenha = document.getElementById('blOlhoSenha');
+function exibirCodigoRecuperacao(codigo, username) {
+  garantirAlertaOverlay();
 
-  olhoSenha.addEventListener('click', () => {
+  const overlay = document.getElementById("lmAlertaOverlay");
+  const tituloAlerta = document.getElementById("lmAlertaTitulo");
+  const mensagemAlerta = document.getElementById("lmAlertaMensagem");
+  const botaoAlerta = document.getElementById("lmAlertaBotao");
 
-    if(inputSenha.type === 'password'){
-      inputSenha.type = 'text';
+  if (!overlay || !tituloAlerta || !mensagemAlerta || !botaoAlerta) {
+    return;
+  }
 
-      olhoSenha.classList.remove('fa-eye');
-      olhoSenha.classList.add('fa-eye-slash');
-    } else {
-      inputSenha.type = 'password';
-      
-      olhoSenha.classList.remove('fa-eye-slash');
-      olhoSenha.classList.add('fa-eye');
+  tituloAlerta.textContent = "Código de recuperação";
+  mensagemAlerta.textContent = `Código de recuperação: ${codigo}`;
+  botaoAlerta.textContent = "Continuar";
+  overlay.classList.add("ativo");
+
+  botaoAlerta.onclick = () => {
+    overlay.classList.remove("ativo");
+    botaoAlerta.textContent = "OK";
+    sessionStorage.setItem(CHAVE_USERNAME_RECUPERACAO, username);
+    localStorage.removeItem("emailRecuperacao");
+    window.location.href = "novaSenha.html";
+  };
+}
+
+function obterMensagemErroRecuperacao(resposta, dados) {
+  if (resposta.status === 404) {
+    return "Usuário não existe.";
+  }
+
+  if (resposta.status === 422) {
+    const erro = dados.error || "";
+    if (/email/i.test(erro)) {
+      return "Informe seu usuário.";
     }
-  })
+    return erro || "Informe seu usuário.";
+  }
+
+  return dados.error || "Erro ao validar usuário.";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const inputSenha = document.getElementById("blNovaSenha");
+  const olhoSenha = document.getElementById("blOlhoSenha");
+
+  if (inputSenha && olhoSenha) {
+    olhoSenha.addEventListener("click", () => {
+      if (inputSenha.type === "password") {
+        inputSenha.type = "text";
+        olhoSenha.classList.remove("fa-eye");
+        olhoSenha.classList.add("fa-eye-slash");
+      } else {
+        inputSenha.type = "password";
+        olhoSenha.classList.remove("fa-eye-slash");
+        olhoSenha.classList.add("fa-eye");
+      }
+    });
+  }
 
   const formRecuperar = document.getElementById("blFormuRecuperarSenha");
 
   if (formRecuperar) {
-    formRecuperar.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    formRecuperar.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
 
-      const email = document.getElementById("blEmailRecuperacao").value.trim();
+      const username = document.getElementById("blUsernameRecuperacao").value.trim();
 
-      if (!email) {
-        alert("Digite seu e-mail.");
+      if (!username) {
+        exibirAlertaAcesso("Informe seu usuário.", { titulo: "Atenção" });
         return;
       }
 
@@ -37,24 +79,29 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ username }),
         });
 
         const dados = await resposta.json();
 
         if (!resposta.ok) {
-          alert(dados.error || "Erro ao enviar código.");
+          exibirAlertaAcesso(obterMensagemErroRecuperacao(resposta, dados), {
+            titulo: "Atenção",
+          });
           return;
         }
 
-        alert("Código gerado com sucesso! (Ambiente de teste: verifique o terminal do servidor)");
+        if (!dados.codigo) {
+          exibirAlertaAcesso("Não foi possível gerar o código de recuperação.", {
+            titulo: "Atenção",
+          });
+          return;
+        }
 
-        localStorage.setItem("emailRecuperacao", email);
-        window.location.href = "novaSenha.html";
-
+        exibirCodigoRecuperacao(dados.codigo, username);
       } catch (erro) {
         console.error("Erro:", erro);
-        alert("Erro ao conectar com o servidor.");
+        exibirAlertaAcesso("Erro ao conectar com o servidor.", { titulo: "Atenção" });
       }
     });
   }
@@ -62,68 +109,74 @@ document.addEventListener("DOMContentLoaded", () => {
   const formNovaSenha = document.getElementById("blFormNovaSenha");
 
   if (formNovaSenha) {
-    formNovaSenha.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    formNovaSenha.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
 
-      const email = localStorage.getItem("emailRecuperacao");
-      const codigo = document.getElementById("codigo").value.trim();
-      const novaSenha = document.getElementById("novaSenha").value.trim();
+      const username = sessionStorage.getItem(CHAVE_USERNAME_RECUPERACAO);
+      const codigo = document.getElementById("blCodigoRecuperacao").value.trim();
+      const novaSenha = document.getElementById("blNovaSenha").value.trim();
 
-      if (!email) {
-        alert("Sessão expirada. Tente novamente.");
-        window.location.href = "recuperarSenha.html";
+      if (!username) {
+        exibirAlertaAcesso("Sessão expirada. Tente novamente.", {
+          titulo: "Atenção",
+          redirect: "recuperarSenha.html",
+        });
         return;
       }
 
       if (!codigo || !novaSenha) {
-        alert("Preencha código e nova senha.");
+        exibirAlertaAcesso("Preencha código e nova senha.", { titulo: "Atenção" });
         return;
       }
 
       if (novaSenha.length < 8) {
-        alert("A senha deve ter no mínimo 8 caracteres.");
+        exibirAlertaAcesso("A senha deve ter no mínimo 8 caracteres.", { titulo: "Atenção" });
         return;
       }
 
       if (!/[a-zA-Z]/.test(novaSenha)) {
-        alert("A senha deve conter pelo menos uma letra.");
+        exibirAlertaAcesso("A senha deve conter pelo menos uma letra.", { titulo: "Atenção" });
         return;
       }
 
       if (!/\d/.test(novaSenha)) {
-        alert("A senha deve conter pelo menos um número.");
+        exibirAlertaAcesso("A senha deve conter pelo menos um número.", { titulo: "Atenção" });
         return;
       }
 
       if (!/[!@#$%^&*(),.?\":{}|<>]/.test(novaSenha)) {
-        alert("A senha deve conter pelo menos um caractere especial.");
+        exibirAlertaAcesso("A senha deve conter pelo menos um caractere especial.", {
+          titulo: "Atenção",
+        });
         return;
       }
 
       try {
-        const res = await fetch(`/redefinir-senha`, {
+        const resposta = await fetch(`/redefinir-senha`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email, codigo, novaSenha }),
+          body: JSON.stringify({ username, codigo, novaSenha }),
         });
 
-        const data = await res.json();
+        const dados = await resposta.json();
 
-        if (!res.ok) {
-          alert(data.error || "Erro ao redefinir senha.");
+        if (!resposta.ok) {
+          exibirAlertaAcesso(dados.error || "Erro ao redefinir senha.", { titulo: "Atenção" });
           return;
         }
 
-        alert("Senha alterada com sucesso!");
-
+        sessionStorage.removeItem(CHAVE_USERNAME_RECUPERACAO);
         localStorage.removeItem("emailRecuperacao");
-        window.location.href = "loginLeitor.html";
 
+        exibirAlertaAcesso("Senha alterada com sucesso!", {
+          titulo: "Sucesso",
+          redirect: "loginLeitor.html",
+        });
       } catch (erro) {
         console.error("Erro:", erro);
-        alert("Erro ao conectar com o servidor.");
+        exibirAlertaAcesso("Erro ao conectar com o servidor.", { titulo: "Atenção" });
       }
     });
   }

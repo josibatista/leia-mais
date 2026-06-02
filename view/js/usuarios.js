@@ -1,19 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-  protegerRotaAdmin();
+  if (!protegerRotaAdmin()) {
+    return;
+  }
+
   configurarBotaoAdicionarAdmin();
   carregarUsuarios();
 });
 
 const API_URL = '/usuarios';
-
-function protegerRotaAdmin() {
-  const token = localStorage.getItem('token');
-  const usuario = JSON.parse(localStorage.getItem('usuario'));
-
-  if (!token || !usuario || usuario.tipo !== 'administrador') {
-    window.location.href = 'loginAdm.html';
-  }
-}
 
 function configurarBotaoAdicionarAdmin() {
   const botaoAdicionarAdmin = document.getElementById('lmBotaoAdicionarAdmin');
@@ -26,8 +20,8 @@ function configurarBotaoAdicionarAdmin() {
 }
 
 async function carregarUsuarios() {
-  const listaUsuarios = document.getElementById('lmUsuariosLista');
-  const token = localStorage.getItem('token');
+  const listaUsuarios = document.getElementById('lmListagemLista');
+  const token = obterToken();
 
   try {
     const resposta = await fetch(`${API_URL}`, {
@@ -51,7 +45,7 @@ async function carregarUsuarios() {
 
     usuarios.forEach(usuario => {
       const card = document.createElement('article');
-      card.classList.add('lmUsuarioCard');
+      card.classList.add('lmItemLista');
 
       const tipoUsuario = usuario.tipo === 'administrador' ? 'Administrador' : 'Leitor';
       const classeTipo = usuario.tipo === 'administrador' ? 'lmUsuarioAdmin' : 'lmUsuarioLeitor';

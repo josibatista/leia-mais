@@ -72,9 +72,6 @@ router.delete('/trilhas/:id', trilhaController.deleteTrilha);
 router.get('/trilhas', trilhaController.getTrilhas);
 router.get('/trilhas/:id', trilhaController.getTrilhasById);
 
-const autenticacaoController = require('../controllers/autenticacaoController');
-const usuarioController = require('../controllers/usuarioController');
-
 //rota de login
 router.post('/login', autenticacaoController.login);
 

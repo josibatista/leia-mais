@@ -27,7 +27,7 @@
         &#9776;
       </button>
 
-      <button class="lmCabecalhoBotao lmBotaoBuscaAutores" id="lmBotaoAbrirBusca" aria-label="Buscar autor">
+      <button class="lmCabecalhoBotao" id="lmBotaoAbrirBusca" aria-label="Buscar autor">
         <svg
           class="lmIconeBusca"
           xmlns="http://www.w3.org/2000/svg"
@@ -50,8 +50,8 @@
       <img
         src="/assets/logoLeiaClaro.png"
         alt="Logo Leia Mulheres"
-        class="lmCadastroTituloProjetoImagem lmLogoTema"
-        id="lmCadastroTituloProjetoImagem"
+        class="lmTituloProjetoImagem lmLogoTema"
+        id="lmTituloProjetoImagem"
       />
 
       <p class="lmCadastroSubtitulo">
@@ -68,21 +68,21 @@
     />
   </div>
 
-  <main class="lmUsuariosConteudoPrincipal">
-    <section class="lmUsuariosSecao">
-      <div class="lmUsuariosCabecalho">
+  <main class="lmListagemConteudo">
+    <section class="lmListagemSecao">
+      <div class="lmListagemCabecalho">
         <h2>Autores</h2>
         <p>Lista de autores cadastrados no sistema.</p>
       </div>
 
-      <div class="lmUsuariosLista" id="lmAutoresLista">
+      <div class="lmListagemLista" id="lmAutoresLista">
         <p class="lmUsuariosMensagem">Carregando autores...</p>
       </div>
     </section>
 
     <a
       href="cadastroAutor.html"
-      class="lmBotaoAdicionarLivro"
+      class="lmBotaoFlutuante"
       id="lmBotaoAdicionarAutor"
       aria-label="Adicionar autor"
       title="Adicionar autor"
@@ -102,27 +102,27 @@
       <form id="lmFormularioEditarAutor">
         <input type="hidden" id="lmEditarAutorId" />
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="lmEditarNomeAutor" class="lmCadastroRotuloCampo">Nome</label>
+        <div class="lmGrupoCampo">
+          <label for="lmEditarNomeAutor" class="lmRotuloCampo">Nome</label>
           <input
             type="text"
             id="lmEditarNomeAutor"
-            class="lmCadastroCampoTexto"
+            class="lmCampoTexto"
             required
           />
         </div>
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="lmEditarBiografiaAutor" class="lmCadastroRotuloCampo">Biografia</label>
+        <div class="lmGrupoCampo">
+          <label for="lmEditarBiografiaAutor" class="lmRotuloCampo">Biografia</label>
           <textarea
             id="lmEditarBiografiaAutor"
-            class="lmCadastroCampoTextoArea"
+            class="lmCampoTextoArea"
           ></textarea>
         </div>
 
         <p class="lmCadastroMensagem" id="lmMensagemEditarAutor"></p>
 
-        <div class="lmCadastroAcoesFormulario">
+        <div class="lmAcoesFormulario">
           <button type="button" class="lmCadastroBotaoSecundario" id="lmCancelarEdicaoAutor">
             Cancelar
           </button>
@@ -148,7 +148,7 @@
       </p>
 
       <div class="lmModalMensagemAcoes">
-        <button type="button" class="lmBotaoCancelarMensagem" id="lmCancelarExclusaoAutor">
+        <button type="button" class="lmBotaoCancelar" id="lmCancelarExclusaoAutor">
           Cancelar
         </button>
 
@@ -159,6 +159,7 @@
     </div>
   </div>
 
+  <script src="/js/auth.js"></script>
   <script src="/js/menu.js"></script>
   <script src="/js/autores.js"></script>
 </body>

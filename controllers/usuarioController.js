@@ -297,26 +297,26 @@ module.exports = {
     },
     async enviarCodigo(req, res) {
         try {
-            const { email } = req.body;
+            const { username } = req.body;
 
-            if (!email) {
-                return res.status(422).json({ error: 'E-mail obrigatório' });
+            if (!username) {
+                return res.status(422).json({ error: 'Informe seu usuário.' });
             }
 
-            const usuario = await db.Usuario.findOne({ where: { email } });
+            const usuario = await db.Usuario.findOne({ where: { username } });
 
             if (!usuario) {
-                return res.status(404).json({ error: 'Usuário não encontrado' });
+                return res.status(404).json({ error: 'Usuário não existe.' });
             }
 
             const codigo = Math.floor(100000 + Math.random() * 900000);
 
-            //salvar código em memória
-            codigosRecuperacao[email] = codigo;
+            codigosRecuperacao[username] = codigo;
 
-            console.log("Código:", codigo);
-
-            res.json({ msg: 'Código enviado no console' });
+            res.json({
+                msg: 'Código gerado com sucesso.',
+                codigo
+            });
 
         } catch (error) {
             res.status(500).json({ error: 'Erro ao enviar código' });
@@ -324,18 +324,15 @@ module.exports = {
     }, 
     async redefinirSenha(req, res) {
         try {
-            const { email, codigo, novaSenha } = req.body;
+            const { username, codigo, novaSenha } = req.body;
 
-            const usuario = await db.Usuario.findOne({ where: { email } });
+            const usuario = await db.Usuario.findOne({ where: { username } });
 
             if (!usuario) {
-                return res.status(404).json({ error: 'Usuário não encontrado' });
+                return res.status(404).json({ error: 'Usuário não existe.' });
             }
 
-            const codigoSalvo = codigosRecuperacao[email];
-
-            console.log("Código salvo:", codigoSalvo);
-            console.log("Código recebido:", codigo);
+            const codigoSalvo = codigosRecuperacao[username];
 
             if (String(codigoSalvo) !== String(codigo)) {
                 return res.status(403).json({ error: 'Código inválido' });
@@ -364,7 +361,7 @@ module.exports = {
             usuario.senha = hash;
             await usuario.save();
 
-            delete codigosRecuperacao[email];
+            delete codigosRecuperacao[username];
 
             res.json({ msg: 'Senha alterada com sucesso' });
 

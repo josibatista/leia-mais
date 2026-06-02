@@ -23,14 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const formLogin = document.getElementById("blFormLoginAdm");
 
   if (formCadastro) {
-    const token = localStorage.getItem("token");
-    const usuarioLogado = JSON.parse(localStorage.getItem("usuario"));
-
-    if (!token || !usuarioLogado || usuarioLogado.tipo !== "administrador") {
-      alert("Acesso permitido apenas para administradores.");
-      window.location.href = "loginAdm.html";
+    if (!protegerRotaAdmin()) {
       return;
     }
+
+    const token = obterToken();
 
     formCadastro.addEventListener("submit", async (evento) => {
       evento.preventDefault();
@@ -41,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const username = document.getElementById("blUsuarioAdm").value.trim();
 
       if (!nome || !email || !senha || !username) {
-        alert("Preencha todos os campos.");
+        exibirAlertaAcesso("Preencha todos os campos.", { titulo: "Atenção" });
         return;
       }
 
@@ -50,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             nome,
@@ -64,15 +61,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const dados = await resposta.json();
 
         if (!resposta.ok) {
-          alert(dados.error || "Erro ao cadastrar administrador.");
+          exibirAlertaAcesso(dados.error || "Erro ao cadastrar administrador.", {
+            titulo: "Atenção",
+          });
           return;
         }
 
-        alert("Administrador cadastrado com sucesso!");
-        window.location.href = "usuarios.html";
+        exibirAlertaAcesso("Administrador cadastrado com sucesso!", {
+          titulo: "Sucesso",
+          redirect: "usuarios.html",
+        });
       } catch (erro) {
         console.error("Erro no cadastro:", erro);
-        alert("Não foi possível conectar ao servidor.");
+        exibirAlertaAcesso("Não foi possível conectar ao servidor.", {
+          titulo: "Atenção",
+        });
       }
     });
   }
@@ -83,9 +86,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const login = document.getElementById("blInputLoginAdm").value.trim();
       const senha = document.getElementById("blSenhaAdm").value.trim();
+      const lembrar = document.getElementById("blLembrarLoginAdm")?.checked;
 
       if (!login || !senha) {
-        alert("Preencha e-mail/usuário e senha.");
+        exibirAlertaAcesso("Preencha e-mail/usuário e senha.", { titulo: "Atenção" });
         return;
       }
 
@@ -103,45 +107,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const dados = await resposta.json();
 
         if (!resposta.ok) {
-          alert(dados.error || dados.message || "Erro ao fazer login.");
+          exibirAlertaAcesso(dados.error || dados.message || "Erro ao fazer login.", {
+            titulo: "Atenção",
+          });
           return;
         }
 
         if (dados.usuario?.tipo !== "administrador") {
-          exibirAlerta("Este acesso é exclusivo para administradores.");
-          localStorage.removeItem("token");
-          localStorage.removeItem("usuario");
+          limparSessao();
+          exibirAlertaAcesso("Este acesso é exclusivo para administradores.", {
+            titulo: "Atenção",
+          });
           return;
         }
 
-        localStorage.setItem("token", dados.token);
-        localStorage.setItem("usuario", JSON.stringify(dados.usuario));
+        salvarSessaoLogin(dados.token, dados.usuario, !!lembrar);
 
         window.location.href = "acervoLivros.html";
       } catch (erro) {
         console.error("Erro no login:", erro);
-        alert("Não foi possível conectar ao servidor.");
+        exibirAlertaAcesso("Não foi possível conectar ao servidor.", {
+          titulo: "Atenção",
+        });
       }
     });
-  }
-
-  function exibirAlerta(mensagem, titulo = "Atenção") {
-    const overlay = document.getElementById("lmAlertaOverlay");
-    const tituloAlerta = document.getElementById("lmAlertaTitulo");
-    const mensagemAlerta = document.getElementById("lmAlertaMensagem");
-    const botaoAlerta = document.getElementById("lmAlertaBotao");
-
-    if (!overlay || !tituloAlerta || !mensagemAlerta || !botaoAlerta) {
-      alert(mensagem);
-      return;
-    }
-
-    tituloAlerta.textContent = titulo;
-    mensagemAlerta.textContent = mensagem;
-    overlay.classList.add("ativo");
-
-    botaoAlerta.onclick = () => {
-      overlay.classList.remove("ativo");
-    };
   }
 });

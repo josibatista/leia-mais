@@ -43,14 +43,14 @@
       </div>
     </header>
 
-    <main class="lmUsuariosConteudoPrincipal">
-      <section class="lmUsuariosSecao">
-        <div class="lmUsuariosCabecalho">
+    <main class="lmListagemConteudo">
+      <section class="lmListagemSecao">
+        <div class="lmListagemCabecalho">
           <h2>Obras</h2>
           <p>Lista de obras cadastradas no sistema.</p>
         </div>
 
-        <div class="lmUsuariosLista" id="blObrasLista">
+        <div class="lmListagemLista" id="blObrasLista">
           <p class="lmUsuariosMensagem">Carregando obras...</p>
         </div>
       </section>
@@ -70,14 +70,14 @@
           <form id="blFormularioEditarObra">
             <input type="hidden" id="blEditarObraId" />
 
-            <div class="lmCadastroGrupoCampo">
-              <label for="blEditarTituloObra">Título</label>
-              <input type="text" id="blEditarTituloObra" required />
+            <div class="lmGrupoCampo">
+              <label for="blEditarTituloObra" class="lmRotuloCampo">Título</label>
+              <input type="text" id="blEditarTituloObra" class="lmCampoTexto" required />
             </div>
 
-            <div class="lmCadastroGrupoCampo">
-              <label for="blEditarTipoObra">Tipo da obra</label>
-              <select id="blEditarTipoObra" required>
+            <div class="lmGrupoCampo">
+              <label for="blEditarTipoObra" class="lmRotuloCampo">Tipo da obra</label>
+              <select id="blEditarTipoObra" class="lmCampoSelecao" required>
                 <option value="">Selecione o tipo de obra</option>
                 <option value="Antologia">Antologia</option>
                 <option value="Artigo">Artigo</option>
@@ -103,14 +103,14 @@
               </select>
             </div>
 
-            <div class="lmCadastroGrupoCampo">
-              <label for="blEditarAutorObra">Autora</label>
-              <select id="blEditarAutorObra" required></select>
+            <div class="lmGrupoCampo">
+              <label for="blEditarAutorObra" class="lmRotuloCampo">Autora</label>
+              <select id="blEditarAutorObra" class="lmCampoSelecao" required></select>
             </div>
 
-            <div class="lmCadastroGrupoCampo">
-              <label for="blEditarDescricaoObra">Descrição</label>
-              <textarea id="blEditarDescricaoObra"></textarea>
+            <div class="lmGrupoCampo">
+              <label for="blEditarDescricaoObra" class="lmRotuloCampo">Descrição</label>
+              <textarea id="blEditarDescricaoObra" class="lmCampoTextoArea"></textarea>
             </div>
 
             <button type="submit" class="lmBotaoSaibaMais">
@@ -121,7 +121,7 @@
       </div>
 
       <button
-        class="lmBotaoFlutuanteAdmin"
+        class="lmBotaoFlutuante"
         id="blBotaoAdicionarObra"
         title="Cadastrar obra"
       >
@@ -129,6 +129,7 @@
       </button>
     </main>
 
+    <script src="../js/auth.js"></script>
     <script src="../js/menu.js"></script>
     <script src="../js/listagemObras.js"></script>
   </body>

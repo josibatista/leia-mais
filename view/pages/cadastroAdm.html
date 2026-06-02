@@ -8,53 +8,74 @@
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="/js/auth.js"></script>
 </head>
 
-<body class="blBody">
-    <div class="blContainerPrincipal">
+<body class="blBody blBodyComMenu">
+    <div id="blMenuContainer"></div>
+    <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
 
-        <div class="blContainerLogo">
-            <img src="/assets/logo.png" alt="Logo Leia Mais" class="blLogoImagem">
-        </div>
+    <header class="blCabecalhoMenuAuth">
+        <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" type="button" aria-label="Abrir menu">
+            &#9776;
+        </button>
+    </header>
 
-        <div id="blCadAdm" class="blCartaoCad">
-            <h1>Cadastro</h1>
-            <h2 class="blSubtitulo">Administrador</h2>
+    <main class="blAreaCentralAuth">
+        <div class="blContainerPrincipal">
 
-            <form id="blFormCadastroAdm">
-                <div class="blGrupoInput">
-                    <label for="blNomeAdm">Nome</label>
-                    <input type="text" id="blNomeAdm" name="nome" required>
-                </div>
-
-                <div class="blGrupoInput">
-                    <label for="blUsuarioAdm">Usuário</label>
-                    <input type="text" id="blUsuarioAdm" name="username" required>
-                </div>
-
-                <div class="blGrupoInput">
-                    <label for="blEmailAdm">E-mail</label>
-                    <input type="email" id="blEmailAdm" name="email" required>
-                </div>
-
-                <div class="blGrupoInput blInputSenha">
-                    <label for="blSenhaAdm">Senha</label>
-                    <input type="password" id="blSenhaAdm" name="senha" required>
-                    <i class="fa-solid fa-eye" id="blOlhoSenha"></i>
-                </div>
-
-                <button type="submit" class="blBotaoPrimario">Cadastrar</button>
-            </form>
-
-            <div class="blLinksRodape">
-                <a href="loginAdm.html" class="blLinkDestaque">
-                    Já tem conta? Entrar
-                </a>
+            <div class="blContainerLogo">
+                <img src="/assets/logo.png" alt="Logo Leia Mais" class="blLogoImagem">
             </div>
-        </div>
 
+            <div id="blCadAdm" class="blCartaoCad">
+                <h1>Cadastro</h1>
+                <h2 class="blSubtitulo">Administrador</h2>
+
+                <form id="blFormCadastroAdm">
+                    <div class="blGrupoInput">
+                        <label for="blNomeAdm">Nome</label>
+                        <input type="text" id="blNomeAdm" name="nome" required>
+                    </div>
+
+                    <div class="blGrupoInput">
+                        <label for="blUsuarioAdm">Usuário</label>
+                        <input type="text" id="blUsuarioAdm" name="username" required>
+                    </div>
+
+                    <div class="blGrupoInput">
+                        <label for="blEmailAdm">E-mail</label>
+                        <input type="email" id="blEmailAdm" name="email" required>
+                    </div>
+
+                    <div class="blGrupoInput blInputSenha">
+                        <label for="blSenhaAdm">Senha</label>
+                        <input type="password" id="blSenhaAdm" name="senha" required>
+                        <i class="fa-solid fa-eye" id="blOlhoSenha"></i>
+                    </div>
+
+                    <button type="submit" class="blBotaoPrimario">Cadastrar</button>
+                </form>
+
+                <div class="blLinksRodape">
+                    <a href="loginAdm.html" class="blLinkDestaque">
+                        Já tem conta? Entrar
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+        <div class="lmAlertaBox">
+            <h3 id="lmAlertaTitulo">Atenção</h3>
+            <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+            <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+        </div>
     </div>
 
+    <script src="/js/menu.js"></script>
     <script src="/js/loginCadAdm.js"></script>
 </body>
 </html>

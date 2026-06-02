@@ -136,39 +136,39 @@
       <form id="lmFormularioEditarLivro">
         <input type="hidden" id="lmEditarLivroId">
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="lmEditarTitulo">Título</label>
-          <input type="text" id="lmEditarTitulo" required>
+        <div class="lmGrupoCampo">
+          <label for="lmEditarTitulo" class="lmRotuloCampo">Título</label>
+          <input type="text" id="lmEditarTitulo" class="lmCampoTexto" required>
         </div>
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="lmEditarEditora">Editora</label>
-          <input type="text" id="lmEditarEditora" required>
+        <div class="lmGrupoCampo">
+          <label for="lmEditarEditora" class="lmRotuloCampo">Editora</label>
+          <input type="text" id="lmEditarEditora" class="lmCampoTexto" required>
         </div>
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="lmEditarAnoPublicacao">Ano de publicação</label>
-          <input type="number" id="lmEditarAnoPublicacao">
+        <div class="lmGrupoCampo">
+          <label for="lmEditarAnoPublicacao" class="lmRotuloCampo">Ano de publicação</label>
+          <input type="number" id="lmEditarAnoPublicacao" class="lmCampoTexto">
         </div>
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="lmEditarGenero">Gênero</label>
-          <input type="text" id="lmEditarGenero" required>
+        <div class="lmGrupoCampo">
+          <label for="lmEditarGenero" class="lmRotuloCampo">Gênero</label>
+          <input type="text" id="lmEditarGenero" class="lmCampoTexto" required>
         </div>
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="lmEditarDescricao">Descrição</label>
-          <textarea id="lmEditarDescricao"></textarea>
+        <div class="lmGrupoCampo">
+          <label for="lmEditarDescricao" class="lmRotuloCampo">Descrição</label>
+          <textarea id="lmEditarDescricao" class="lmCampoTextoArea"></textarea>
         </div>
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="lmEditarAutor">Autor</label>
-          <select id="lmEditarAutor" required></select>
+        <div class="lmGrupoCampo">
+          <label for="lmEditarAutor" class="lmRotuloCampo">Autor</label>
+          <select id="lmEditarAutor" class="lmCampoSelecao" required></select>
         </div>
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="lmEditarImagemCapa">Nova imagem de capa</label>
-          <input type="file" id="lmEditarImagemCapa" accept="image/*">
+        <div class="lmGrupoCampo">
+          <label for="lmEditarImagemCapa" class="lmRotuloCampo">Nova imagem de capa</label>
+          <input type="file" id="lmEditarImagemCapa" class="lmCampoArquivo" accept="image/*">
         </div>
 
         <button type="submit" class="lmBotaoSaibaMais">Salvar alterações</button>
@@ -178,8 +178,8 @@
 
   <a
     href="cadastroLivros.html"
-    class="lmBotaoAdicionarLivro"
-    id="lmBotaoAdicionarLivro"
+    class="lmBotaoFlutuante"
+    id="lmBotaoFlutuante"
     aria-label="Adicionar livro"
   >
     +
@@ -204,7 +204,7 @@
           Ir para lista
         </button>
 
-        <button type="button" class="lmBotaoCancelarMensagem" id="lmBotaoCancelarMensagem">
+        <button type="button" class="lmBotaoCancelar" id="lmBotaoCancelar">
           Cancelar
         </button>
       </div>
@@ -212,7 +212,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/js/menu.js"></script>  
+  <script src="/js/auth.js"></script>
+  <script src="/js/menu.js"></script>
   <script src="/js/acervoLivros.js"></script>
 </body>
 </html>

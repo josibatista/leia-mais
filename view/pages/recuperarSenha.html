@@ -7,6 +7,7 @@
     <title>Leia Mais - Recuperar Senha</title>
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/js/auth.js"></script>
 </head>
 
 <body class="blBody">
@@ -18,15 +19,15 @@
 
         <div id="blRecuperarSenha" class="blCartaoInterface">
             <h1>Recuperar Senha</h1>
-            <p class="blDescricaoRecuperacao">Insira o seu e-mail abaixo para receber as instruções de recuperação de senha.</p>
+            <p class="blDescricaoRecuperacao">Informe seu nome de usuário para receber o código de recuperação de senha.</p>
             
             <form id="blFormuRecuperarSenha">
                 <div class="blGrupoInput">
-                    <label for="blEmailRecuperacao">E-mail</label>
-                    <input type="email" id="blEmailRecuperacao" name="email" required>
+                    <label for="blUsernameRecuperacao">Usuário</label>
+                    <input type="text" id="blUsernameRecuperacao" name="username" required autocomplete="username">
                 </div>
 
-                <button type="submit" class="blBotaoPrimario">Enviar</button>
+                <button type="submit" class="blBotaoPrimario">Continuar</button>
             </form>
 
             <div class="blLinksRodape">
@@ -34,6 +35,15 @@
             </div>
         </div>
     </div>
+
+    <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+        <div class="lmAlertaBox">
+            <h3 id="lmAlertaTitulo">Atenção</h3>
+            <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+            <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+        </div>
+    </div>
+
     <script src="/js/recuperarSenha.js"></script>
 </body>
 </html>

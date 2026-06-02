@@ -4,8 +4,6 @@ const SUPABASE_BUCKET = 'capa-livros';
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const token = localStorage.getItem('token');
-const usuario = JSON.parse(localStorage.getItem('usuario'));
 const lmAutoresSelecionados = [];
 
 const lmApiLivrosUrl = `/livros/admin`;
@@ -22,12 +20,17 @@ const lmCadastroBotaoCancelar = document.getElementById('lmCadastroBotaoCancelar
 const lmCadastroBotaoVoltar = document.getElementById('lmCadastroBotaoVoltar');
 const lmAutoresDisponiveis = [];
 
-if (!token || !usuario || usuario.tipo !== 'administrador') {
-  alert('Acesso permitido apenas para administradores.');
-  window.location.href = 'loginAdm.html';
-} else {
+document.addEventListener('DOMContentLoaded', () => {
+  if (!protegerRotaAdmin()) {
+    return;
+  }
+
   lmCarregarAutores();
-}
+
+  if (lmCadastroBotaoVoltar) {
+    lmCadastroBotaoVoltar.addEventListener('click', voltarPaginaAnterior);
+  }
+});
 
 function lmExibirMensagem(texto, tipo) {
   lmCadastroMensagem.textContent = texto;
@@ -256,7 +259,7 @@ lmFormularioLivro.addEventListener('submit', async function (evento) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${obterToken()}`
       },
       body: JSON.stringify({
         titulo,
@@ -281,7 +284,7 @@ lmFormularioLivro.addEventListener('submit', async function (evento) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${obterToken()}`
       },
       body: JSON.stringify({
         autoresIds: lmAutoresSelecionados.map(function (autor) {
@@ -318,7 +321,3 @@ if (lmCadastroBotaoCancelar) {
     lmExibirMensagem('', '');
   });
 }
-
-lmCadastroBotaoVoltar.addEventListener('click', function () {
-  window.history.back();
-});

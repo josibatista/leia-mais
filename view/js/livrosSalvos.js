@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("token");
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const token = obterToken();
+  const usuario = obterUsuarioLogado();
 
   let livrosSalvos = [];
   let livroSelecionadoParaPaginas = null;
@@ -8,8 +8,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   let statusAtual = "todos";
 
   if (!token || !usuario) {
-    alert("Faça login novamente.");
-    window.location.href = "loginLeitor.html";
+    exibirAlertaAcesso("Faça login para continuar.", {
+      titulo: "Acesso negado",
+      redirect: "loginLeitor.html",
+    });
     return;
   }
 
@@ -386,9 +388,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const botaoVoltar = document.getElementById("lmBotaoVoltarPerfil");
 
     if (botaoVoltar) {
-      botaoVoltar.addEventListener("click", () => {
-        window.location.href = window.history.length > 1 ? document.referrer : "paginaPrincipalLeitor.html";
-      });
+      botaoVoltar.addEventListener("click", voltarPaginaAnterior);
     }
   }
 
