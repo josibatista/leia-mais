@@ -63,6 +63,6 @@ function generateToken(usuario) {
         email: usuario.email,
         tipo: usuario.tipo
     };
-    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+    const token = jwt.sign(payload, secretKey, { expiresIn: '180m' });
     return token;
 }

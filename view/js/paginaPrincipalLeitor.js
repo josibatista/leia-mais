@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const token = localStorage.getItem("token");
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  const token = obterToken();
+  const usuario = obterUsuarioLogado();
 
   const ppBotaoAbrirBusca = document.getElementById("ppBotaoAbrirBusca");
   const ppBuscaHeader = document.getElementById("ppBuscaHeader");
@@ -13,7 +13,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   let livrosAcervo = [];
 
   if (!token || !usuario) {
-    window.location.href = "loginLeitor.html";
+    exibirAlertaAcesso("Faça login para continuar.", {
+      titulo: "Acesso negado",
+      redirect: "loginLeitor.html",
+    });
     return;
   }
 

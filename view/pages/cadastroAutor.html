@@ -33,8 +33,8 @@
       <img
         src="/assets/logoLeiaClaro.png"
         alt="Logo Leia Mulheres"
-        class="lmCadastroTituloProjetoImagem lmLogoTema"
-        id="lmCadastroTituloProjetoImagem"
+        class="lmTituloProjetoImagem lmLogoTema"
+        id="lmTituloProjetoImagem"
       />
 
       <p class="lmCadastroSubtitulo">
@@ -53,31 +53,31 @@
       </div>
 
       <form class="lmCadastroFormularioLivro" id="lmCadastroFormularioAutor">
-        <div class="lmCadastroGrupoCampo">
-          <label for="nomeAutor" class="lmCadastroRotuloCampo">Nome da autora</label>
+        <div class="lmGrupoCampo">
+          <label for="nomeAutor" class="lmRotuloCampo">Nome da autora</label>
           <input
             type="text"
             id="nomeAutor"
             name="nome"
-            class="lmCadastroCampoTexto"
+            class="lmCampoTexto"
             placeholder="Digite o nome completo da autora"
             required
           />
         </div>
 
-        <div class="lmCadastroGrupoCampo">
-          <label for="biografiaAutor" class="lmCadastroRotuloCampo">Biografia</label>
+        <div class="lmGrupoCampo">
+          <label for="biografiaAutor" class="lmRotuloCampo">Biografia</label>
           <textarea
             id="biografiaAutor"
             name="biografia"
-            class="lmCadastroCampoTextoArea"
+            class="lmCampoTextoArea"
             placeholder="Digite uma breve biografia da autora"
           ></textarea>
         </div>
 
         <p class="lmCadastroMensagem" id="lmCadastroMensagem" aria-live="polite"></p>
 
-        <div class="lmCadastroAcoesFormulario">
+        <div class="lmAcoesFormulario">
           <button type="button" class="lmCadastroBotaoSecundario" id="lmCadastroBotaoVoltar">
             Voltar
           </button>
@@ -94,6 +94,15 @@
     </section>
   </main>
 
+  <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+    <div class="lmAlertaBox">
+      <h3 id="lmAlertaTitulo">Atenção</h3>
+      <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+      <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+    </div>
+  </div>
+
+  <script src="/js/auth.js"></script>
   <script src="/js/menu.js"></script>
   <script src="/js/cadastroAutor.js"></script>
 </body>

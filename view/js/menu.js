@@ -35,19 +35,6 @@ async function carregarMenu() {
   }
 }
 
-function obterUsuarioLogado() {
-  return JSON.parse(localStorage.getItem("usuario")) || null;
-}
-
-function usuarioEstaLogado() {
-  return !!localStorage.getItem("token") && !!obterUsuarioLogado();
-}
-
-function usuarioEhAdministrador() {
-  const usuario = obterUsuarioLogado();
-  return usuario?.tipo === "administrador";
-}
-
 function atualizarSaudacaoUsuario() {
   const saudacaoUsuario = document.getElementById("lmSaudacaoUsuario");
   const usuario = obterUsuarioLogado();
@@ -120,46 +107,14 @@ function configurarMenuLateral() {
 function configurarBotaoTema() {
   const botaoTema = document.getElementById("lmBotaoTema");
   const iconeTema = document.getElementById("lmIconeTema");
-  const logoMenu = document.getElementById("lmMenuLogoLeiaMulheres");
 
   if (!botaoTema || !iconeTema) return;
 
+  atualizarIconesTema(document.body.classList.contains("lmTemaEscuro"));
+
   botaoTema.onclick = () => {
-    document.body.classList.toggle("lmTemaEscuro");
-
-    const temaEscuroAtivo =
-      document.body.classList.contains("lmTemaEscuro");
-
-    const logoTema = temaEscuroAtivo
-      ? "/assets/logoLeiaEscuro.png"
-      : "/assets/logoLeiaClaro.png";
-
-    if (logoMenu) {
-      logoMenu.src = logoTema;
-    }
-
-    document.querySelectorAll(".lmLogoTema").forEach((logo) => {
-      logo.src = logoTema;
-    });
-
-    if (temaEscuroAtivo) {
-      iconeTema.innerHTML = `
-        <path d="M21 12.79A9 9 0 1 1 11.21 3
-        7 7 0 0 0 21 12.79z"></path>
-      `;
-    } else {
-      iconeTema.innerHTML = `
-        <circle cx="12" cy="12" r="4"></circle>
-        <line x1="12" y1="2" x2="12" y2="4"></line>
-        <line x1="12" y1="20" x2="12" y2="22"></line>
-        <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line>
-        <line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line>
-        <line x1="2" y1="12" x2="4" y2="12"></line>
-        <line x1="20" y1="12" x2="22" y2="12"></line>
-        <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line>
-        <line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line>
-      `;
-    }
+    alternarTema();
+    sincronizarSeletorTema(document.getElementById("blSeletorTema"));
   };
 }
 
@@ -171,8 +126,7 @@ function configurarLogout() {
     botaoSair.onclick = (evento) => {
       evento.preventDefault();
 
-      localStorage.removeItem("token");
-      localStorage.removeItem("usuario");
+      limparSessao();
 
       window.location.href = "loginLeitor.html";
     };
@@ -181,7 +135,7 @@ function configurarLogout() {
   if (botaoLogin) {
     botaoLogin.onclick = (evento) => {
       evento.preventDefault();
-      window.location.href = "loginLeitor.html";
+      window.location.href = "/pages/loginLeitor.html";
     };
   }
 }

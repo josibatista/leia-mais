@@ -1,6 +1,6 @@
 const lmApiLivrosUrl = '/livros';
 
-const lmUsuario = JSON.parse(localStorage.getItem('usuario')) || {};
+const lmUsuario = obterUsuarioLogado() || {};
 const lmApiLivrosSalvosUrl = `/usuarios/${lmUsuario.id}/livros`;
 const SUPABASE_URL = 'https://htregzpvwyhrrqdzqtrd.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_F5w-U17IUYOQoZySjx0RQQ_UdYMH0MP';
@@ -77,7 +77,7 @@ function lmAbrirModalLivro(livro) {
 }
 
 function lmObterHeadersJson() {
-  const token = localStorage.getItem('token');
+  const token = obterToken();
 
   const headers = {
     'Content-Type': 'application/json'
@@ -101,7 +101,7 @@ function lmAbrirModalMensagem({
   const tituloModal = document.getElementById('lmModalMensagemTitulo');
   const textoModal = document.getElementById('lmModalMensagemTexto');
   const botaoConfirmar = document.getElementById('lmBotaoConfirmarMensagem');
-  const botaoCancelar = document.getElementById('lmBotaoCancelarMensagem');
+  const botaoCancelar = document.getElementById('lmBotaoCancelar');
   const botaoIrLista = document.getElementById('lmBotaoIrLista');
 
   tituloModal.textContent = titulo;
@@ -134,7 +134,7 @@ function lmAbrirModalMensagem({
 function lmConfigurarModalMensagemAcervo() {
   const modal = document.getElementById('lmModalMensagemAcervo');
   const botaoFechar = document.getElementById('lmFecharModalMensagemAcervo');
-  const botaoCancelar = document.getElementById('lmBotaoCancelarMensagem');
+  const botaoCancelar = document.getElementById('lmBotaoCancelar');
 
   botaoFechar.addEventListener('click', function () {
     modal.classList.remove('lmModalOverlayAtivo');
@@ -530,7 +530,7 @@ function lmCriarCardLivro(livro) {
     acoesAdmin.classList.add('lmCardAcoesAdmin');
 
     const botaoEditarLivro = document.createElement('button');
-    botaoEditarLivro.classList.add('lmBotaoAdminLivro');
+    botaoEditarLivro.classList.add('lmBotaoAdminIcone');
     botaoEditarLivro.type = 'button';
     botaoEditarLivro.setAttribute('aria-label', 'Editar livro');
     botaoEditarLivro.dataset.idLivro = livro.id;
@@ -546,7 +546,7 @@ function lmCriarCardLivro(livro) {
     });
 
     const botaoExcluirLivro = document.createElement('button');
-    botaoExcluirLivro.classList.add('lmBotaoAdminLivro');
+    botaoExcluirLivro.classList.add('lmBotaoAdminIcone');
     botaoExcluirLivro.type = 'button';
     botaoExcluirLivro.setAttribute('aria-label', 'Excluir livro');
     botaoExcluirLivro.dataset.idLivro = livro.id;
@@ -738,15 +738,15 @@ lmFormularioEditarLivro.addEventListener('submit', async function (evento) {
   }
 });
 
-const lmBotaoAdicionarLivro =
-  document.getElementById("lmBotaoAdicionarLivro");
+const lmBotaoFlutuante =
+  document.getElementById("lmBotaoFlutuante");
 
 if (
   !lmUsuario ||
   lmUsuario.tipo !== "administrador"
 ) {
-  if (lmBotaoAdicionarLivro) {
-    lmBotaoAdicionarLivro.style.display = "none";
+  if (lmBotaoFlutuante) {
+    lmBotaoFlutuante.style.display = "none";
   }
 }
 

@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
-  lmProtegerRotaAdmin();
+  if (!protegerRotaAdmin()) {
+    return;
+  }
+
   lmConfigurarBuscaAutores();
   lmConfigurarModalEdicaoAutor();
   lmConfigurarModalExclusaoAutor();
   lmConfigurarBotaoAdicionarAutor();
   lmCarregarAutores();
-  lmConfigurarMenuAutores();
 });
 
 const lmApiAutoresUrl = '/autores';
@@ -13,15 +15,6 @@ const lmApiAutoresUrl = '/autores';
 let lmAutoresCarregados = [];
 let lmAutorEmEdicao = null;
 let lmAutorParaExcluir = null;
-
-function lmProtegerRotaAdmin() {
-  const token = localStorage.getItem('token');
-  const usuario = JSON.parse(localStorage.getItem('usuario'));
-
-  if (!token || !usuario || usuario.tipo !== 'administrador') {
-    window.location.href = 'loginAdm.html';
-  }
-}
 
 function lmConfigurarBotaoAdicionarAutor() {
   const botaoAdicionarAutor = document.getElementById('lmBotaoAdicionarAutor');
@@ -34,7 +27,7 @@ function lmConfigurarBotaoAdicionarAutor() {
 }
 
 function lmObterHeadersJson() {
-  const token = localStorage.getItem('token');
+  const token = obterToken();
 
   return {
     'Content-Type': 'application/json',
@@ -102,7 +95,7 @@ function lmCriarCardAutor(autor) {
   const card = document.createElement('article');
 
   card.classList.add(
-    'lmUsuarioCard',
+    'lmItemLista',
     'lmAutorCard'
   );
 
@@ -131,7 +124,7 @@ function lmCriarCardAutor(autor) {
   botaoEditar.type = 'button';
 
   botaoEditar.classList.add(
-    'lmBotaoAdminLivro'
+    'lmBotaoAdminIcone'
   );
 
   botaoEditar.setAttribute(
@@ -166,7 +159,7 @@ function lmCriarCardAutor(autor) {
   botaoExcluir.type = 'button';
 
   botaoExcluir.classList.add(
-    'lmBotaoAdminLivro'
+    'lmBotaoAdminIcone'
   );
 
   botaoExcluir.setAttribute(
@@ -479,41 +472,4 @@ async function lmExcluirAutor() {
       'Não foi possível excluir o autor.'
     );
   }
-}
-
-function lmConfigurarMenuAutores() {
-  const botaoAbrirMenu = document.getElementById('lmMenuAbrirBotao');
-  const menuOverlay = document.getElementById('lmMenuOverlay');
-
-  if (!botaoAbrirMenu || !menuOverlay) return;
-
-  botaoAbrirMenu.addEventListener('click', function () {
-    const menuLateral = document.getElementById('lmMenuLateral');
-    const botaoFecharMenu = document.getElementById('lmMenuFecharBotao');
-
-    if (!menuLateral) {
-      console.error('Menu lateral não encontrado. Verifique se o menu.js está carregando o menu dentro de blMenuContainer.');
-      return;
-    }
-
-    menuLateral.classList.add('ativo');
-    menuOverlay.classList.add('ativo');
-
-    if (botaoFecharMenu) {
-      botaoFecharMenu.addEventListener('click', function () {
-        menuLateral.classList.remove('ativo');
-        menuOverlay.classList.remove('ativo');
-      });
-    }
-  });
-
-  menuOverlay.addEventListener('click', function () {
-    const menuLateral = document.getElementById('lmMenuLateral');
-
-    if (menuLateral) {
-      menuLateral.classList.remove('ativo');
-    }
-
-    menuOverlay.classList.remove('ativo');
-  });
 }

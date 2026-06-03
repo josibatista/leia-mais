@@ -6,27 +6,16 @@ let blAutoresDisponiveis = [];
 let blObraEmEdicao = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
-  protegerRotaAdmin();
-  configurarMenu();
+  if (!protegerRotaAdmin()) {
+    return;
+  }
+
   configurarBotaoAdicionarObra();
   configurarModalEditarObra();
 
   await carregarAutoresDisponiveis();
   carregarObras();
 });
-
-function protegerRotaAdmin() {
-  const token = localStorage.getItem("token");
-  const usuario = JSON.parse(localStorage.getItem("usuario"));
-
-  if (!token || !usuario || usuario.tipo !== "administrador") {
-    window.location.href = "loginAdm.html";
-  }
-}
-
-function obterToken() {
-  return localStorage.getItem("token");
-}
 
 function obterHeadersJson() {
   return {
@@ -117,29 +106,31 @@ function criarCardObra(obra) {
   const tipoObra = obterTipoObra(obra);
 
   card.innerHTML = `
-        <div class="lmUsuarioCard">
+        <div class="lmItemLista">
             <div>
                 <h3>${tituloObra}</h3>
                 <p>${autoresObra}</p>
                 <span class="blObraTipo">${tipoObra}</span>
             </div>
 
-            <div class="blAcoesObra">
+            <div class="lmAutorAcoes">
                 <button
                     type="button"
-                    class="blBotaoEditarObra"
+                    class="lmBotaoAdminIcone"
+                    aria-label="Editar obra"
                     data-id="${idObra}"
                 >
                    <svg class="lmIconeAdminLivro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 20h9"></path>
                         <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
-                    </svg> 
+                    </svg>
                 </button>
 
                 <button
                     type="button"
-                    class="blBotaoExcluirObra"
+                    class="lmBotaoAdminIcone"
+                    aria-label="Excluir obra"
                     data-id="${idObra}"
                 >
                     <svg class="lmIconeAdminLivro" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
@@ -187,7 +178,9 @@ function obterAutoresObra(obra) {
 }
 
 function configurarBotoesEditarObra() {
-  const botoesEditar = document.querySelectorAll(".blBotaoEditarObra");
+  const botoesEditar = document.querySelectorAll(
+    '.blObraCard button[aria-label="Editar obra"]',
+  );
 
   botoesEditar.forEach((botao) => {
     botao.addEventListener("click", () => {
@@ -205,7 +198,9 @@ function configurarBotoesEditarObra() {
 }
 
 function configurarBotoesExcluirObra() {
-  const botoesExcluir = document.querySelectorAll(".blBotaoExcluirObra");
+  const botoesExcluir = document.querySelectorAll(
+    '.blObraCard button[aria-label="Excluir obra"]',
+  );
 
   botoesExcluir.forEach((botao) => {
     botao.addEventListener("click", async () => {
@@ -440,30 +435,4 @@ async function salvarEdicaoObra() {
     console.error("Erro ao editar obra:", erro);
     alert(erro.message || "Não foi possível editar a obra.");
   }
-}
-
-function configurarMenu() {
-  const menuLateral = document.getElementById("lmMenuLateral");
-  const menuOverlay = document.getElementById("lmMenuOverlay");
-  const botaoAbrirMenu = document.getElementById("lmMenuAbrirBotao");
-  const botaoFecharMenu = document.getElementById("lmMenuFecharBotao");
-
-  if (!menuLateral || !menuOverlay || !botaoAbrirMenu || !botaoFecharMenu) {
-    return;
-  }
-
-  botaoAbrirMenu.addEventListener("click", () => {
-    menuLateral.classList.add("ativo");
-    menuOverlay.classList.add("ativo");
-  });
-
-  botaoFecharMenu.addEventListener("click", () => {
-    menuLateral.classList.remove("ativo");
-    menuOverlay.classList.remove("ativo");
-  });
-
-  menuOverlay.addEventListener("click", () => {
-    menuLateral.classList.remove("ativo");
-    menuOverlay.classList.remove("ativo");
-  });
 }

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="/js/auth.js"></script>
 </head>
 
 <body class="blBody">
@@ -23,13 +24,13 @@
 
             <form id="blFormNovaSenha">
                 <div class="blGrupoInput">
-                    <label for="codigo">Código</label>
-                    <input type="text" id="codigo" required placeholder="Digite o código recebido">
+                    <label for="blCodigoRecuperacao">Código</label>
+                    <input type="text" id="blCodigoRecuperacao" required placeholder="Digite o código recebido">
                 </div>
 
                 <div class="blGrupoInput blInputSenha">
-                    <label for="novaSenha">Nova senha</label>
-                    <input type="password" id="blSenha" required placeholder="Digite sua nova senha" minlength="8">
+                    <label for="blNovaSenha">Nova senha</label>
+                    <input type="password" id="blNovaSenha" required placeholder="Digite sua nova senha" minlength="8">
                     <i class="fa-solid fa-eye" id="blOlhoSenha"></i>
                 </div>
 
@@ -47,6 +48,14 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+        <div class="lmAlertaBox">
+            <h3 id="lmAlertaTitulo">Atenção</h3>
+            <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+            <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+        </div>
     </div>
 
     <script src="/js/recuperarSenha.js"></script>

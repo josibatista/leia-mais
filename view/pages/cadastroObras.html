@@ -51,7 +51,7 @@
           <h2 class="lmCadastroTituloSecao">Cadastro de Obras</h2>
           <p class="lmCadastroTextoSecao">
             Preencha os campos abaixo para registrar uma nova obra no acervo.
-            <!--Deixo aqui como acervo mesmo que as obras em teoria não sejam do Leia mulheres? Ou troco por alguma outra palavra tipo "Cadastrar uma nova obra no sistema"?-->
+            <!--Deixo aqui como acervo mesmo que as obras em teoria não sejam do Leia mulheres? Ou troco por alguma outra palavra tipo "Cadastrar uma nova obra no sistema"? Eu já tive a minha resposta mas não deu tempo de mudar então vou deixar o comentário aqui por enquanto-->
           </p>
         </div>
 
@@ -60,28 +60,28 @@
           id="lmCadastroFormularioObras"
           enctype="multipart/form-data"
         >
-          <div class="lmCadastroGrupoCampo">
-            <label for="titulo" class="lmCadastroRotuloCampo"
+          <div class="lmGrupoCampo">
+            <label for="titulo" class="lmRotuloCampo"
               >Nome da obra</label
             >
             <input
               type="text"
               id="titulo"
               name="titulo"
-              class="lmCadastroCampoTexto"
+              class="lmCampoTexto"
               placeholder="Digite o título da obra"
               required
             />
           </div>
 
-          <div class="lmCadastroGrupoCampo">
-            <label for="idTipo" class="lmCadastroRotuloCampo"
+          <div class="lmGrupoCampo">
+            <label for="idTipo" class="lmRotuloCampo"
               >Tipo da Obra</label
             >
             <select
               id="idTipo"
               name="tipo"
-              class="lmCadastroCampoSelecao"
+              class="lmCampoSelecao"
               required
             >
               <option value="">Selecione o tipo de obra</option>
@@ -109,11 +109,11 @@
             </select>
           </div>
 
-          <div class="lmCadastroGrupoCampo">
-            <label for="idAutor" class="lmCadastroRotuloCampo"> Autores </label>
+          <div class="lmGrupoCampo">
+            <label for="idAutor" class="lmRotuloCampo"> Autores </label>
 
             <div class="lmCadastroAutoresLinha">
-              <select id="idAutor" class="lmCadastroCampoSelecao">
+              <select id="idAutor" class="lmCampoSelecao">
                 <option value="">Selecione uma autora</option>
               </select>
               <button
@@ -142,14 +142,14 @@
             ></div>
           </div>
 
-          <div class="lmCadastroGrupoCampo">
-            <label for="descricao" class="lmCadastroRotuloCampo"
+          <div class="lmGrupoCampo">
+            <label for="descricao" class="lmRotuloCampo"
               >Descrição</label
             >
             <textarea
               id="descricao"
               name="descricao"
-              class="lmCadastroCampoTextoArea"
+              class="lmCampoTextoArea"
               placeholder="Digite a descrição do livro"
             ></textarea>
           </div>
@@ -160,7 +160,7 @@
             aria-live="polite"
           ></p>
 
-          <div class="lmCadastroAcoesFormulario">
+          <div class="lmAcoesFormulario">
             <button
               type="button"
               class="lmCadastroBotaoSecundario"
@@ -179,6 +179,15 @@
       </section>
     </main>
 
+    <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+      <div class="lmAlertaBox">
+        <h3 id="lmAlertaTitulo">Atenção</h3>
+        <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+        <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+      </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
     <script src="../js/menu.js"></script>
     <script src="../js/crudObras.js"></script>
   </body>
