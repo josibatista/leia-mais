@@ -1440,6 +1440,67 @@ body.lmAcervoBody {
   border-color: var(--lmMarromClaro);
 }
 
+/*Adicionais do acervo de trilhas*/
+.blCardTrilha .lmCardConteudo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.blCardTrilha .lmCardTitulo {
+    margin: 0;
+}
+
+.blCardTrilha .lmCardAutor {
+    margin: 0;
+    min-height: auto;
+    max-height: none;
+    line-height: 1.2;
+    -webkit-line-clamp: unset;
+}
+
+.blCardTrilha .blStatusTrilha {
+    margin: 0;
+    min-height: auto;
+    max-height: none;
+    line-height: 1.2;
+}
+
+.blCardTrilha .lmAreaAcoesLivro {
+    margin-top: 8px;
+}
+
+.blCardTrilha .lmCardAcoesAdmin {
+    margin-top: 8px;
+}
+
+#lmModalEditarTrilha {
+  align-items: flex-start;
+  overflow-y: auto;
+  padding: 3rem 1rem;
+}
+
+#lmModalEditarTrilha .lmModalConteudo {
+  margin: 0 auto;
+  max-height: calc(100vh - 6rem);
+  overflow-y: auto;
+}
+
+#lmFormularioEditarTrilha .lmGrupoCampo {
+  margin-bottom: 1rem;
+}
+
+#lmFormularioEditarTrilha button[type="submit"] {
+  margin-top: 1rem;
+  width: 100%;
+  display: block;
+}
+
+#lmModalStatus {
+  margin-left: 4px;
+}
+
 /* Cadastro, autores e usuários */
 body.lmCadastroBody {
   font-family: "Poppins", sans-serif;
@@ -2579,7 +2640,10 @@ body.lmTemaEscuro .blFiltroLivro:hover {
 
 #lmFormularioEditarLivro input,
 #lmFormularioEditarLivro textarea,
-#lmFormularioEditarLivro select {
+#lmFormularioEditarLivro select,
+#lmFormularioEditarTrilha input,
+#lmFormularioEditarTrilha textarea,
+#lmFormularioEditarTrilha select {
   width: 100%;
   padding: 0.85rem 1rem;
   border: 1px solid #d4d6df;
@@ -2590,12 +2654,14 @@ body.lmTemaEscuro .blFiltroLivro:hover {
   font-size: 0.95rem;
 }
 
-#lmFormularioEditarLivro textarea {
+#lmFormularioEditarLivro textarea,
+#lmFormularioEditarTrilha textarea {
   resize: vertical;
   min-height: 120px;
 }
 
-#lmFormularioEditarLivro label {
+#lmFormularioEditarLivro label,
+#lmFormularioEditarTrilha label {
   display: block;
   margin-bottom: 0.4rem;
   font-weight: 500;
