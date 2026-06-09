@@ -75,47 +75,45 @@
           </div>
 
           <div class="lmGrupoCampo">
-            <label for="idTipo" class="lmRotuloCampo"
-              >Tipo da Obra</label
-            >
-            <select
-              id="idTipo"
-              name="tipo"
-              class="lmCampoSelecao"
-              required
-            >
-              <option value="">Selecione o tipo de obra</option>
-              <option value="Livro">Livro</option>
-              <option value="Conto">Conto</option>
-              <option value="Crônica">Crônica</option>
-              <option value="Poema">Poema</option>
-              <option value="Poesia">Poesia</option>
-              <option value="Antologia">Antologia</option>
-              <option value="Coletânea">Coletânea</option>
-              <option value="Ensaio">Ensaio</option>
-              <option value="Biografia">Biografia</option>
-              <option value="Autobiografia">Autobiografia</option>
-              <option value="Memórias">Memórias</option>
-              <option value="Diário">Diário</option>
-              <option value="Carta">Carta</option>
-              <option value="Peça teatral">Peça teatral</option>
-              <option value="Quadrinho / HQ">Quadrinho / HQ</option>
-              <option value="Novela">Novela</option>
-              <option value="Artigo">Artigo</option>
-              <option value="Resenha">Resenha</option>
-              <option value="Literatura infantil">Literatura infantil</option>
-              <option value="Literatura juvenil">Literatura juvenil</option>
-              <option value="Outro">Outro</option>
-            </select>
+            <label for="idTipo" class="lmRotuloCampo">Tipo da Obra</label>
+
+            <div class="lmCadastroAutocomplete">
+              <input
+                type="text"
+                id="idTipo"
+                name="tipo"
+                class="lmCampoTexto"
+                placeholder="Digite ou selecione o tipo da obra"
+                autocomplete="off"
+                required
+              />
+
+              <div
+                class="lmCadastroAutocompleteLista"
+                id="lmListaTiposDisponiveis"
+              ></div>
+            </div>
           </div>
 
           <div class="lmGrupoCampo">
-            <label for="idAutor" class="lmRotuloCampo"> Autores </label>
+            <label for="idAutor" class="lmRotuloCampo">Autores</label>
 
             <div class="lmCadastroAutoresLinha">
-              <select id="idAutor" class="lmCampoSelecao">
-                <option value="">Selecione uma autora</option>
-              </select>
+              <div class="lmCadastroAutocomplete">
+                <input
+                  type="text"
+                  id="idAutor"
+                  class="lmCampoTexto"
+                  placeholder="Digite ou selecione uma autora"
+                  autocomplete="off"
+                />
+
+                <div
+                  class="lmCadastroAutocompleteLista"
+                  id="lmListaAutoresDisponiveis"
+                ></div>
+              </div>
+
               <button
                 type="button"
                 class="lmCadastroBotaoAdicionarAutor"

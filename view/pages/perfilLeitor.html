@@ -81,16 +81,26 @@
 
       <section class="blSecaoLista">
         <div class="blListaCabecalho">
-          <h3>Trilhas</h3>
-          <i class="fa-solid fa-chevron-right"></i>
+          <div class="blLivrosTitulos">
+            <h3>Trilhas</h3>
+            <div class="blMenuLivros" id="blMenuFiltrosTrilhas">
+              <button class="blFiltroLivro ativo" data-status="todos" data-tipo="trilha">Trilhas</button>
+              <button class="blFiltroLivro" data-status="para ler" data-tipo="trilha">Para Ler</button>
+              <button class="blFiltroLivro" data-status="em andamento" data-tipo="trilha">Lendo</button>
+              <button class="blFiltroLivro" data-status="pausada" data-tipo="trilha">Pausadas</button>
+              <button class="blFiltroLivro" data-status="concluída" data-tipo="trilha">Concluídas</button>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right" id="blAbrirTrilhasSalvas"></i>
         </div>
+        <div class="blCarrosselLivros" id="blCarrosselTrilhas"></div>
       </section>
 
       <section class="blSecaoLista">
         <div class="blListaCabecalho">
           <div class="blLivrosTitulos">
             <h3>Livros</h3>
-            <div class="blMenuLivros">
+            <div class="blMenuLivros" id="blMenuFiltrosLivros">
               <button class="blFiltroLivro ativo" data-status="todos">Todos</button>
               <button class="blFiltroLivro" data-status="lendo">Lendo</button>
               <button class="blFiltroLivro" data-status="para ler">Para Ler</button>
@@ -99,7 +109,7 @@
           </div>
           <i class="fa-solid fa-chevron-right" id="blAbrirLivrosSalvos"></i>
         </div>
-        <div class="blCarrosselLivros"></div>
+        <div class="blCarrosselLivros" id="blCarrosselLivros"></div>
       </section>
     </main>
 
@@ -113,6 +123,7 @@
 
     <script src="/js/auth.js"></script>
     <script src="/js/menu.js"></script>
+    <script src="/js/trilhaFormularioItens.js"></script>
     <script src="/js/perfilLeitor.js"></script>
 
   </body>
