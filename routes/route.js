@@ -75,6 +75,7 @@ router.get('/trilhas/:id', trilhaController.getTrilhasById);
 // Rotas - TrilhaUsuario
 router.post('/usuarios/:id/trilhas', autenticarToken, trilhaUsuarioController.postTrilhaUsuario);
 router.put('/usuarios/:usuarioId/trilhas/:trilhaId', autenticarToken, trilhaUsuarioController.putTrilhaUsuario);
+router.get('/usuarios/:id/trilhas', autenticarToken, trilhaUsuarioController.getTrilhasUsuario);
 
 //rota de login
 router.post('/login', autenticacaoController.login);

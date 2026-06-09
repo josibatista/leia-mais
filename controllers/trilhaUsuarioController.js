@@ -95,6 +95,24 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao atualizar vínculo' });
         }
+    },
+
+    async getTrilhasUsuario(req, res) {
+        const usuarioId = Number(req.params.id);
+
+        try {
+            if (Number(req.usuario.id) !== usuarioId && req.usuario.tipo !== 'administrador') {
+                return res.status(403).json({ error: 'Acesso negado.' });
+            }
+
+            const vinculos = await mongo.TrilhaUsuario.find({ usuarioId })
+                .populate('trilhaId'); 
+
+            res.status(200).json({ trilhas: vinculos });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao buscar trilhas do usuário' });
+        }
     }
 
 };  
