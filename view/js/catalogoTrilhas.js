@@ -62,15 +62,23 @@ function lmObterIdTrilha(trilha) {
   return trilha._id || trilha.id;
 }
 
-function lmFormatarNivel(nivel) {
-    const niveis = {
-        1: 'Iniciante',
-        2: 'Intermediário',
-        3: 'Avançado'
-    };
+function lmObterIdTrilhaDeVinculo(vinculo) {
+  const trilhaRef = vinculo.trilhaId;
 
-  return niveis[nivel] || 'Nível não informado';
+  if (trilhaRef && typeof trilhaRef === "object") {
+    return String(trilhaRef._id || trilhaRef.id);
+  }
+
+  return String(trilhaRef);
 }
+
+function lmFormatarNivel(nivel) {
+  return tfFormatarNivelTrilha(nivel);
+}
+
+const lmObrasDisponiveisEdicao = [];
+const lmLivrosDisponiveisEdicao = [];
+let lmGerenciadorItensEdicao = null;
 
 function lmFormatarXp(xp) {
   if (!xp && xp !== 0) {
@@ -168,17 +176,43 @@ function lmAbrirModalTrilha(trilha) {
   lmModalOverlay.classList.add("lmModalOverlayAtivo");
 }
 
-function lmEditarTrilha(trilha) {
-  lmTrilhaEmEdicao = trilha;
+async function lmEditarTrilha(trilha) {
+  try {
+    const trilhaId = lmObterIdTrilha(trilha);
+    const resposta = await fetch(`/trilhas/${trilhaId}`);
+    const dados = await resposta.json();
 
-  document.getElementById("lmEditarTrilhaId").value = lmObterIdTrilha(trilha);
-  document.getElementById("lmEditarTema").value = trilha.tema || "";
-  document.getElementById("lmEditarDescricao").value = trilha.descricao || "";
-  document.getElementById("lmEditarNivelDificuldade").value =
-    trilha.nivelDificuldade || "";
-  document.getElementById("lmEditarXp").value = trilha.xp || "";
+    if (!resposta.ok) {
+      throw new Error(dados.error || "Não foi possível carregar os dados da trilha.");
+    }
 
-  lmModalEditarTrilha.classList.add("lmModalOverlayAtivo");
+    lmTrilhaEmEdicao = dados;
+
+    document.getElementById("lmEditarTrilhaId").value = trilhaId;
+    document.getElementById("lmEditarTema").value = dados.tema || "";
+    document.getElementById("lmEditarDescricao").value = dados.descricao || "";
+    tfPreencherSelectNivel(
+      document.getElementById("lmEditarNivelDificuldade"),
+      dados.nivelDificuldade,
+    );
+    document.getElementById("lmEditarXp").value = dados.xp ?? "";
+    document.getElementById("lmEditarLiberada").checked = Boolean(dados.liberada);
+
+    const itensTrilha = dados.itens || [
+      ...(dados.obras || []).map((obra) => ({ ...obra, itemTipo: "obra" })),
+      ...(dados.livros || []).map((livro) => ({ ...livro, itemTipo: "livro" })),
+    ].sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
+
+    lmGerenciadorItensEdicao.carregarItens(itensTrilha);
+
+    lmModalEditarTrilha.classList.add("lmModalOverlayAtivo");
+  } catch (erro) {
+    console.error("Erro ao abrir edição da trilha:", erro);
+    lmAbrirModalMensagem({
+      titulo: "Atenção",
+      mensagem: erro.message || "Não foi possível carregar a trilha para edição.",
+    });
+  }
 }
 
 async function lmExcluirTrilha(idTrilha) {
@@ -291,14 +325,11 @@ async function lmCarregarTrilhasSalvasUsuario() {
     }
 
     const trilhas = dados.trilhas || [];
-    lmTrilhasSalvasIds = trilhas.map(function (trilha) {
-      return String(lmObterIdTrilha(trilha));
+    lmTrilhasSalvasIds = trilhas.map(function (vinculo) {
+      return lmObterIdTrilhaDeVinculo(vinculo);
     });
   } catch (erro) {
-    console.warn(
-      "As rotas de trilhas salvas ainda não estão implementadas:",
-      erro,
-    );
+    console.error("Erro ao carregar trilhas salvas:", erro);
     lmTrilhasSalvasIds = [];
   }
 }
@@ -318,18 +349,35 @@ async function lmSalvarTrilhaUsuario(trilhaId) {
       method: "POST",
       headers: lmObterHeadersJson(),
       body: JSON.stringify({
-        usuarioId: Number(lmUsuario.id),
         trilhaId: String(trilhaId),
+        status: "para ler",
       }),
     });
 
-    if (resposta.status === 404) {
-      throw new Error(
-        "A funcionalidade de salvar trilhas ainda será integrada ao banco.",
-      );
-    }
-
     const dados = await resposta.json();
+
+    if (resposta.status === 400 && dados.error) {
+      if (dados.error.includes("já está")) {
+        if (!lmTrilhasSalvasIds.includes(String(trilhaId))) {
+          lmTrilhasSalvasIds.push(String(trilhaId));
+        }
+
+        const botaoSalvar = document.querySelector(
+          `[data-trilha-salvar-id="${trilhaId}"]`,
+        );
+
+        if (botaoSalvar) {
+          botaoSalvar.classList.add("salvo");
+        }
+
+        lmAbrirModalMensagem({
+          titulo: "Trilha já salva",
+          mensagem: dados.error,
+        });
+
+        return;
+      }
+    }
 
     if (!resposta.ok) {
       throw new Error(dados.error || "Não foi possível salvar a trilha.");
@@ -349,16 +397,14 @@ async function lmSalvarTrilhaUsuario(trilhaId) {
 
     lmAbrirModalMensagem({
       titulo: "Trilha salva",
-      mensagem: "Trilha salva com sucesso!",
+      mensagem: dados.message || "Trilha salva com sucesso!",
     });
   } catch (erro) {
-    console.warn("Salvar trilha ainda não está integrado:", erro);
+    console.error("Erro ao salvar trilha:", erro);
 
     lmAbrirModalMensagem({
-      titulo: "Funcionalidade em desenvolvimento",
-      mensagem:
-        erro.message ||
-        "A funcionalidade de salvar trilhas ainda será integrada ao banco.",
+      titulo: "Atenção",
+      mensagem: erro.message || "Não foi possível salvar a trilha.",
     });
   }
 }
@@ -372,12 +418,6 @@ async function lmRemoverTrilhaSalvaUsuario(trilhaId) {
         headers: lmObterHeadersJson(),
       },
     );
-
-    if (resposta.status === 404) {
-      throw new Error(
-        "A funcionalidade de remover trilhas salvas ainda será integrada ao banco.",
-      );
-    }
 
     const dados = await resposta.json();
 
@@ -404,13 +444,12 @@ async function lmRemoverTrilhaSalvaUsuario(trilhaId) {
       mensagem: "Trilha removida dos salvos com sucesso.",
     });
   } catch (erro) {
-    console.warn("Remover trilha ainda não está integrado:", erro);
+    console.error("Erro ao remover trilha salva:", erro);
 
     lmAbrirModalMensagem({
-      titulo: "Funcionalidade em desenvolvimento",
+      titulo: "Atenção",
       mensagem:
-        erro.message ||
-        "A funcionalidade de remover trilhas salvas ainda será integrada ao banco.",
+        erro.message || "Não foi possível remover a trilha dos salvos.",
     });
   }
 }
@@ -460,7 +499,7 @@ function lmCriarCardTrilha(trilha) {
   botaoSaibaMais.textContent = "Saiba Mais";
 
   botaoSaibaMais.addEventListener("click", function () {
-    lmAbrirModalTrilha(trilha);
+    window.location.href = `visualizarTrilha.html?id=${idTrilha}`;
   });
 
   const areaAcoesTrilha = document.createElement("div");
@@ -729,6 +768,16 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
     document.getElementById("lmEditarNivelDificuldade").value,
   );
   const xp = Number(document.getElementById("lmEditarXp").value);
+  const liberada = document.getElementById("lmEditarLiberada").checked;
+  const { obras, livros } = lmGerenciadorItensEdicao.montarPayload();
+
+  if (!lmGerenciadorItensEdicao.itens.length) {
+    lmAbrirModalMensagem({
+      titulo: "Atenção",
+      mensagem: "Adicione pelo menos uma obra ou livro à trilha.",
+    });
+    return;
+  }
 
   try {
     const resposta = await fetch(`/trilhas/${trilhaId}`, {
@@ -739,6 +788,9 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
         descricao,
         nivelDificuldade,
         xp,
+        liberada,
+        obras,
+        livros,
       }),
     });
 
@@ -756,6 +808,7 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
     lmModalEditarTrilha.classList.remove("lmModalOverlayAtivo");
     lmFormularioEditarTrilha.reset();
     lmTrilhaEmEdicao = null;
+    lmGerenciadorItensEdicao.limparItens();
 
     lmCarregarTrilhas();
   } catch (erro) {
@@ -767,6 +820,101 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
     });
   }
 });
+
+async function lmCarregarObrasEdicao() {
+  const resposta = await fetch("/obras");
+  const dados = await resposta.json();
+  const obras = dados.obras || [];
+
+  lmObrasDisponiveisEdicao.length = 0;
+  obras.forEach((obra) => {
+    lmObrasDisponiveisEdicao.push({
+      id: String(obra._id || obra.id),
+      titulo: obra.titulo || "Obra sem título",
+    });
+  });
+}
+
+async function lmCarregarLivrosEdicao() {
+  const resposta = await fetch("/livros");
+  const livros = await resposta.json();
+  const listaLivros = Array.isArray(livros) ? livros : livros.livros || [];
+
+  lmLivrosDisponiveisEdicao.length = 0;
+  listaLivros.forEach((livro) => {
+    lmLivrosDisponiveisEdicao.push({
+      id: String(livro.id),
+      titulo: livro.titulo || "Livro sem título",
+    });
+  });
+}
+
+function lmInicializarEdicaoTrilha() {
+  tfPreencherSelectNivel(document.getElementById("lmEditarNivelDificuldade"));
+
+  lmGerenciadorItensEdicao = tfCriarGerenciadorItens({
+    listaElemento: document.getElementById("lmEditarListaItensTrilha"),
+    exibirMensagem: (mensagem) => {
+      lmAbrirModalMensagem({ titulo: "Atenção", mensagem });
+    },
+  });
+
+  const campoObra = document.getElementById("lmEditarObra");
+  const campoLivro = document.getElementById("lmEditarLivro");
+  const listaObras = document.getElementById("lmEditarListaObras");
+  const listaLivros = document.getElementById("lmEditarListaLivros");
+
+  tfConfigurarAutocomplete({
+    campo: campoObra,
+    lista: listaObras,
+    itensDisponiveis: lmObrasDisponiveisEdicao,
+    obterRotulo: (item) => item.titulo,
+    obterId: (item) => item.id,
+  });
+
+  tfConfigurarAutocomplete({
+    campo: campoLivro,
+    lista: listaLivros,
+    itensDisponiveis: lmLivrosDisponiveisEdicao,
+    obterRotulo: (item) => item.titulo,
+    obterId: (item) => item.id,
+  });
+
+  document.getElementById("lmEditarAdicionarObra")?.addEventListener("click", () => {
+    const adicionou = lmGerenciadorItensEdicao.adicionarItem(
+      "obra",
+      campoObra.dataset.id,
+      campoObra.value.trim(),
+    );
+
+    if (adicionou) {
+      campoObra.value = "";
+      campoObra.dataset.id = "";
+      listaObras.classList.remove("ativo");
+    }
+  });
+
+  document.getElementById("lmEditarAdicionarLivro")?.addEventListener("click", () => {
+    const adicionou = lmGerenciadorItensEdicao.adicionarItem(
+      "livro",
+      campoLivro.dataset.id,
+      campoLivro.value.trim(),
+    );
+
+    if (adicionou) {
+      campoLivro.value = "";
+      campoLivro.dataset.id = "";
+      listaLivros.classList.remove("ativo");
+    }
+  });
+
+  document.addEventListener("click", (evento) => {
+    if (!evento.target.closest(".lmCadastroAutocomplete")) {
+      listaObras.classList.remove("ativo");
+      listaLivros.classList.remove("ativo");
+    }
+  });
+}
 
 const lmToggleDescricao = document.getElementById("lmToggleDescricao");
 const lmDescricaoContainer = document.getElementById("lmDescricaoContainer");
@@ -792,4 +940,7 @@ if (!lmUsuarioEhAdmin()) {
 }
 
 lmConfigurarModalMensagemAcervo();
+lmInicializarEdicaoTrilha();
+lmCarregarObrasEdicao();
+lmCarregarLivrosEdicao();
 lmInicializarAcervoTrilhas();

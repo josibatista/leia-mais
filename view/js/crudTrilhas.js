@@ -1,125 +1,120 @@
-const SUPABASE_URL = 'https://htregzpvwyhrrqdzqtrd.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_F5w-U17IUYOQoZySjx0RQQ_UdYMH0MP';
-const SUPABASE_BUCKET = 'capa-trilhas';
+const lmApiTrilhasUrl = "/trilhas";
+const lmApiObrasUrl = "/obras";
+const lmApiLivrosUrl = "/livros";
 
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const lmFormularioTrilha = document.getElementById("lmCadastroFormularioTrilha");
+const lmCampoObra = document.getElementById("idObra");
+const lmCampoLivro = document.getElementById("idLivro");
+const lmListaObrasDisponiveis = document.getElementById("lmListaObrasDisponiveis");
+const lmListaLivrosDisponiveis = document.getElementById("lmListaLivrosDisponiveis");
+const lmListaItensTrilha = document.getElementById("lmListaItensTrilha");
+const lmCadastroMensagem = document.getElementById("lmCadastroMensagem");
 
-const lmObrasSelecionadas = [];
-
-const lmApiTrilhasUrl = `/trilhas/admin`;
-const lmApiObrasUrl = `/obras/disponiveis`;
-
-const lmFormularioTrilha = document.getElementById('lmCadastroFormularioTrilha');
-const lmCampoObra = document.getElementById('idObra');
-const lmBotaoAdicionarObra = document.getElementById('lmAdicionarObra');
-const lmListaObrasDisponiveis = document.getElementById('lmListaObrasDisponiveis');
-const lmListaObrasSelecionadas = document.getElementById('lmListaObrasSelecionadas');
-const lmCadastrarNovaObra = document.getElementById('lmCadastrarNovaObra');
-const lmCadastroMensagem = document.getElementById('lmCadastroMensagem');
-const lmCadastroBotaoCancelar = document.getElementById('lmCadastroBotaoCancelar');
-const lmCadastroBotaoVoltar = document.getElementById('lmCadastroBotaoVoltar');
 const lmObrasDisponiveis = [];
+const lmLivrosDisponiveis = [];
 
-document.addEventListener('DOMContentLoaded', () => {
+let lmGerenciadorItens = null;
+
+document.addEventListener("DOMContentLoaded", () => {
   if (!protegerRotaAdmin()) {
     return;
   }
 
-  lmCarregarObras();
+  tfPreencherSelectNivel(document.getElementById("nivelDificuldade"));
 
-  if (lmCadastroBotaoVoltar) {
-    lmCadastroBotaoVoltar.addEventListener('click', voltarPaginaAnterior);
+  lmGerenciadorItens = tfCriarGerenciadorItens({
+    listaElemento: lmListaItensTrilha,
+    exibirMensagem: lmExibirMensagem,
+  });
+
+  lmCarregarObras();
+  lmCarregarLivros();
+  lmConfigurarAutocompletes();
+  lmConfigurarBotoes();
+
+  if (document.getElementById("lmCadastroBotaoVoltar")) {
+    document.getElementById("lmCadastroBotaoVoltar").addEventListener("click", voltarPaginaAnterior);
   }
 });
 
 function lmExibirMensagem(texto, tipo) {
   lmCadastroMensagem.textContent = texto;
-  lmCadastroMensagem.className = 'lmCadastroMensagem';
+  lmCadastroMensagem.className = "lmCadastroMensagem";
 
   if (tipo) {
     lmCadastroMensagem.classList.add(`lmCadastroMensagem${tipo}`);
   }
 }
 
-function lmObterTituloObra(obra) {
-  return obra.titulo || 'Obra sem título';
-}
-
-if (lmCadastrarNovaObra) {
-  lmCadastrarNovaObra.addEventListener('click', function () {
-    window.location.href = 'cadastroObras.html';
+function lmConfigurarBotoes() {
+  document.getElementById("lmCadastrarNovaObra")?.addEventListener("click", () => {
+    window.location.href = "cadastroObras.html";
   });
-}
 
-if (lmBotaoAdicionarObra) {
-  lmBotaoAdicionarObra.addEventListener('click', function () {
-    const obraId = Number(lmCampoObra.dataset.id);
-    const obraTitulo = lmCampoObra.value.trim();
+  document.getElementById("lmCadastrarNovoLivro")?.addEventListener("click", () => {
+    window.location.href = "cadastroLivros.html";
+  });
 
-    if (!obraId || !obraTitulo) {
-      lmExibirMensagem('Selecione uma obra válida da lista.', 'Erro');
-      return;
+  document.getElementById("lmAdicionarObra")?.addEventListener("click", () => {
+    const adicionou = lmGerenciadorItens.adicionarItem(
+      "obra",
+      lmCampoObra.dataset.id,
+      lmCampoObra.value.trim(),
+    );
+
+    if (adicionou) {
+      lmCampoObra.value = "";
+      lmCampoObra.dataset.id = "";
+      lmListaObrasDisponiveis.classList.remove("ativo");
+      lmExibirMensagem("", "");
     }
+  });
 
-    const obraJaExiste = lmObrasSelecionadas.some(function (obra) {
-      return Number(obra.id) === obraId;
-    });
+  document.getElementById("lmAdicionarLivro")?.addEventListener("click", () => {
+    const adicionou = lmGerenciadorItens.adicionarItem(
+      "livro",
+      lmCampoLivro.dataset.id,
+      lmCampoLivro.value.trim(),
+    );
 
-    if (obraJaExiste) {
-      lmExibirMensagem('Esta obra já foi adicionada.', 'Erro');
-      return;
+    if (adicionou) {
+      lmCampoLivro.value = "";
+      lmCampoLivro.dataset.id = "";
+      lmListaLivrosDisponiveis.classList.remove("ativo");
+      lmExibirMensagem("", "");
     }
+  });
 
-    lmObrasSelecionadas.push({
-      id: obraId,
-      titulo: obraTitulo
-    });
-
-    lmCampoObra.value = '';
-    lmCampoObra.dataset.id = '';
-    lmListaObrasDisponiveis.classList.remove('ativo');
-
-    lmExibirMensagem('', '');
-    lmRenderizarObrasSelecionadas();
+  document.getElementById("lmCadastroBotaoCancelar")?.addEventListener("click", () => {
+    lmGerenciadorItens.limparItens();
+    lmCampoObra.value = "";
+    lmCampoLivro.value = "";
+    lmExibirMensagem("", "");
   });
 }
 
-function lmRenderizarObrasSelecionadas() {
-  lmListaObrasSelecionadas.innerHTML = '';
-
-  lmObrasSelecionadas.forEach(function (obra) {
-    const tagObra = document.createElement('div');
-    tagObra.className = 'lmCadastroObraTag';
-
-    tagObra.innerHTML = `
-      <span>${obra.titulo}</span>
-      <button
-        type="button"
-        class="lmCadastroObraRemover"
-        data-id="${obra.id}"
-        aria-label="Remover obra"
-      >
-        ×
-      </button>
-    `;
-
-    lmListaObrasSelecionadas.appendChild(tagObra);
+function lmConfigurarAutocompletes() {
+  tfConfigurarAutocomplete({
+    campo: lmCampoObra,
+    lista: lmListaObrasDisponiveis,
+    itensDisponiveis: lmObrasDisponiveis,
+    obterRotulo: (item) => item.titulo,
+    obterId: (item) => item.id,
   });
 
-  document.querySelectorAll('.lmCadastroObraRemover').forEach(function (botao) {
-    botao.addEventListener('click', function () {
-      const obraId = Number(botao.dataset.id);
+  tfConfigurarAutocomplete({
+    campo: lmCampoLivro,
+    lista: lmListaLivrosDisponiveis,
+    itensDisponiveis: lmLivrosDisponiveis,
+    obterRotulo: (item) => item.titulo,
+    obterId: (item) => item.id,
+  });
 
-      const indiceObra = lmObrasSelecionadas.findIndex(function (obra) {
-        return Number(obra.id) === obraId;
-      });
-
-      if (indiceObra !== -1) {
-        lmObrasSelecionadas.splice(indiceObra, 1);
-      }
-
-      lmRenderizarObrasSelecionadas();
-    });
+  document.addEventListener("click", (evento) => {
+    if (!evento.target.closest(".lmCadastroAutocomplete")) {
+      lmListaObrasDisponiveis.classList.remove("ativo");
+      lmListaLivrosDisponiveis.classList.remove("ativo");
+    }
   });
 }
 
@@ -128,137 +123,96 @@ async function lmCarregarObras() {
     const resposta = await fetch(lmApiObrasUrl);
 
     if (!resposta.ok) {
-      throw new Error('Erro ao carregar obras.');
+      throw new Error("Erro ao carregar obras.");
     }
 
     const dados = await resposta.json();
     const obras = dados.obras || [];
 
     lmObrasDisponiveis.length = 0;
-    lmListaObrasDisponiveis.innerHTML = '';
 
-    if (!Array.isArray(obras) || obras.length === 0) {
-      lmCampoObra.placeholder = 'Nenhuma obra cadastrada';
+    if (!obras.length) {
+      lmCampoObra.placeholder = "Nenhuma obra cadastrada";
       lmCampoObra.disabled = true;
       return;
     }
 
-    obras.forEach(function (obra) {
+    obras.forEach((obra) => {
       lmObrasDisponiveis.push({
-        id: obra.id,
-        titulo: lmObterTituloObra(obra)
+        id: String(obra._id || obra.id),
+        titulo: obra.titulo || "Obra sem título",
       });
     });
-
   } catch (erro) {
-    lmCampoObra.placeholder = 'Erro ao carregar obras';
+    lmCampoObra.placeholder = "Erro ao carregar obras";
     lmCampoObra.disabled = true;
-    lmExibirMensagem('Não foi possível carregar a lista de obras.', 'Erro');
+    lmExibirMensagem("Não foi possível carregar a lista de obras.", "Erro");
     console.error(erro);
   }
 }
 
-function lmRenderizarSugestoesObras(filtro = '') {
-  lmListaObrasDisponiveis.innerHTML = '';
+async function lmCarregarLivros() {
+  try {
+    const resposta = await fetch(lmApiLivrosUrl);
 
-  const filtroNormalizado = filtro.toLowerCase();
+    if (!resposta.ok) {
+      throw new Error("Erro ao carregar livros.");
+    }
 
-  const obrasFiltradas = lmObrasDisponiveis.filter(function (obra) {
-    return obra.titulo.toLowerCase().includes(filtroNormalizado);
-  });
+    const livros = await resposta.json();
+    const listaLivros = Array.isArray(livros) ? livros : livros.livros || [];
 
-  obrasFiltradas.forEach(function (obra) {
-    const itemObra = document.createElement('div');
-    itemObra.className = 'lmCadastroAutocompleteItem';
-    itemObra.textContent = obra.titulo;
-    itemObra.dataset.id = obra.id;
+    lmLivrosDisponiveis.length = 0;
 
-    itemObra.addEventListener('click', function () {
-      lmCampoObra.value = obra.titulo;
-      lmCampoObra.dataset.id = obra.id;
-      lmListaObrasDisponiveis.classList.remove('ativo');
+    if (!listaLivros.length) {
+      lmCampoLivro.placeholder = "Nenhum livro cadastrado";
+      lmCampoLivro.disabled = true;
+      return;
+    }
+
+    listaLivros.forEach((livro) => {
+      lmLivrosDisponiveis.push({
+        id: String(livro.id),
+        titulo: livro.titulo || "Livro sem título",
+      });
     });
-
-    lmListaObrasDisponiveis.appendChild(itemObra);
-  });
-
-  if (obrasFiltradas.length > 0) {
-    lmListaObrasDisponiveis.classList.add('ativo');
-  } else {
-    lmListaObrasDisponiveis.classList.remove('ativo');
+  } catch (erro) {
+    lmCampoLivro.placeholder = "Erro ao carregar livros";
+    lmCampoLivro.disabled = true;
+    lmExibirMensagem("Não foi possível carregar a lista de livros.", "Erro");
+    console.error(erro);
   }
 }
 
-async function lmUploadImagemCapa(arquivoImagem) {
-  if (!arquivoImagem) {
-    return null;
-  }
-
-  const extensaoArquivo = arquivoImagem.name.split('.').pop();
-  const nomeArquivo = `capa-${Date.now()}.${extensaoArquivo}`;
-  const caminhoArquivo = `trilhas/${nomeArquivo}`;
-
-  const { error } = await supabaseClient.storage
-    .from(SUPABASE_BUCKET)
-    .upload(caminhoArquivo, arquivoImagem);
-
-  if (error) {
-    console.error('Erro Supabase Storage:', error);
-    throw new Error(error.message || 'Erro ao enviar imagem da capa.');
-  }
-
-  const { data } = supabaseClient.storage
-    .from(SUPABASE_BUCKET)
-    .getPublicUrl(caminhoArquivo);
-
-  return data.publicUrl;
-}
-
-lmCampoObra.addEventListener('input', function () {
-  lmCampoObra.dataset.id = '';
-  lmRenderizarSugestoesObras(lmCampoObra.value);
-});
-
-lmCampoObra.addEventListener('focus', function () {
-  lmRenderizarSugestoesObras(lmCampoObra.value);
-});
-
-document.addEventListener('click', function (evento) {
-  if (!evento.target.closest('.lmCadastroAutocomplete')) {
-    lmListaObrasDisponiveis.classList.remove('ativo');
-  }
-});
-
-lmFormularioTrilha.addEventListener('submit', async function (evento) {
+lmFormularioTrilha.addEventListener("submit", async (evento) => {
   evento.preventDefault();
 
-  lmExibirMensagem('Enviando cadastro...', 'Info');
+  lmExibirMensagem("Enviando cadastro...", "Info");
 
-  const tema = document.getElementById('tema').value.trim();
-  const descricao = document.getElementById('descricao').value.trim();
-  const nivelDificuldade = document.getElementById('nivelDificuldade').value.trim();
-  const xp = document.getElementById('xp').value;
-  const liberada = document.getElementById('liberada').value.trim();
-  const imagemCapaArquivo = document.getElementById('imagemCapa').files[0];
+  const tema = document.getElementById("tema").value.trim();
+  const descricao = document.getElementById("descricao").value.trim();
+  const nivelDificuldade = Number(document.getElementById("nivelDificuldade").value);
+  const xp = Number(document.getElementById("xp").value);
+  const liberada = document.getElementById("liberada").checked;
 
-  if (!tema || !descricao || !nivelDificuldade || !xp || !liberada) {
-    lmExibirMensagem('Preencha todos os campos obrigatórios.', 'Erro');
+  if (!tema || !nivelDificuldade || Number.isNaN(xp)) {
+    lmExibirMensagem("Preencha todos os campos obrigatórios.", "Erro");
     return;
   }
 
-  if (lmObrasSelecionadas.length === 0) {
-    lmExibirMensagem('Adicione pelo menos uma obra a trilha.', 'Erro');
+  if (!lmGerenciadorItens.itens.length) {
+    lmExibirMensagem("Adicione pelo menos uma obra ou livro à trilha.", "Erro");
     return;
   }
+
+  const { obras, livros } = lmGerenciadorItens.montarPayload();
 
   try {
-    const imagemCapaUrl = await lmUploadImagemCapa(imagemCapaArquivo);
-
-    const respostaTrilha = await fetch(lmApiObrasUrl, {
-      method: 'POST',
+    const respostaTrilha = await fetch(lmApiTrilhasUrl, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${obterToken()}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${obterToken()}`,
       },
       body: JSON.stringify({
         tema,
@@ -266,56 +220,23 @@ lmFormularioTrilha.addEventListener('submit', async function (evento) {
         nivelDificuldade,
         xp,
         liberada,
-        imagemCapa: imagemCapaUrl
-      })
+        obras,
+        livros,
+      }),
     });
 
     const dadosTrilha = await respostaTrilha.json();
 
     if (!respostaTrilha.ok) {
-      throw new Error(dadosTrilha.error || 'Erro ao cadastrar trilha.');
-    }
-
-    const trilhaId = dadosTrilha.trilha.id;
-
-    const respostaVinculo = await fetch(`/trilhas/${trilhaId}/obras/admin`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${obterToken()}`
-      },
-      body: JSON.stringify({
-        obrasIds: lmObrasSelecionadas.map(function (obra) {
-          return Number(obra.id);
-        })
-      })
-    });
-
-    const dadosVinculo = await respostaVinculo.json();
-
-    if (!respostaVinculo.ok) {
-      throw new Error(dadosVinculo.error || 'Trilha cadastrada, mas não foi possível vincular as obras.');
+      throw new Error(dadosTrilha.error || "Erro ao cadastrar trilha.");
     }
 
     lmFormularioTrilha.reset();
-    lmObrasSelecionadas.length = 0;
-    lmRenderizarObrasSelecionadas();
-
-    lmExibirMensagem('Trilha cadastrada com sucesso.', 'Sucesso');
+    tfPreencherSelectNivel(document.getElementById("nivelDificuldade"));
+    lmGerenciadorItens.limparItens();
+    lmExibirMensagem("Trilha cadastrada com sucesso.", "Sucesso");
   } catch (erro) {
-    lmExibirMensagem(erro.message || 'Não foi possível cadastrar a trilha.', 'Erro');
+    lmExibirMensagem(erro.message || "Não foi possível cadastrar a trilha.", "Erro");
     console.error(erro);
   }
 });
-
-if (lmCadastroBotaoCancelar) {
-  lmCadastroBotaoCancelar.addEventListener('click', function () {
-    lmFormularioTrilha.reset();
-
-    lmObrasSelecionadas.length = 0;
-    lmListaObrasSelecionadas.innerHTML = '';
-    lmCampoObra.value = '';
-
-    lmExibirMensagem('', '');
-  });
-}
