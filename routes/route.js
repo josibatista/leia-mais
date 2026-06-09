@@ -6,6 +6,7 @@ const autorController = require('../controllers/autorController');
 const livroAutorController = require('../controllers/livroAutorController');
 const obraController = require('../controllers/obraController');
 const trilhaController = require('../controllers/trilhaController');
+const trilhaUsuarioController = require('../controllers/trilhaUsuarioController');
 const usuarioController = require('../controllers/usuarioController');
 const usuarioLivroController = require('../controllers/usuarioLivroController');
 const autenticacaoController = require('../controllers/autenticacaoController');
@@ -70,6 +71,10 @@ router.delete('/trilhas/:trilhaId/obras/:obraId', autenticarToken, checkAdmin, t
 router.delete('/trilhas/:id', autenticarToken, checkAdmin, trilhaController.deleteTrilha);
 router.get('/trilhas', trilhaController.getTrilhas);
 router.get('/trilhas/:id', trilhaController.getTrilhasById);
+
+// Rotas - TrilhaUsuario
+router.post('/usuarios/:id/trilhas', autenticarToken, trilhaUsuarioController.postTrilhaUsuario);
+router.put('/usuarios/:usuarioId/trilhas/:trilhaId', autenticarToken, trilhaUsuarioController.putTrilhaUsuario);
 
 //rota de login
 router.post('/login', autenticacaoController.login);
