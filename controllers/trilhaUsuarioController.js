@@ -136,6 +136,27 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao buscar trilha do usuário' });
         }
+    },
+
+    async deleteTrilhaUsuario(req, res) {
+        const { usuarioId, trilhaId } = req.params;
+
+        try {
+            if (Number(req.usuario.id) !== Number(usuarioId) && req.usuario.tipo !== 'administrador') {
+                return res.status(403).json({ error: 'Acesso negado.' });
+            }
+
+            const vinculo = await mongo.TrilhaUsuario.findOneAndDelete({ usuarioId: Number(usuarioId), trilhaId });
+
+            if (!vinculo) {
+                return res.status(404).json({ error: 'Vínculo não encontrado' });
+            }
+
+            res.status(200).json({ message: 'Vínculo removido com sucesso' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao remover vínculo' });
+        }
     }
 
 };  
