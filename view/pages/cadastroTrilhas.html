@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Trilhas | Leia Mulheres</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="lmCadastroBody">
+
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCadastroCabecalho">
+    <div class="lmCadastroCabecalhoTopo">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+    </div>
+
+    <div class="lmCadastroCabecalhoCentro">
+      <img src="/assets/logoLeiaMais.png" alt="Logo Leia Mais" class="lmCabecalhoLogoImagem"/>
+      <img
+        src="/assets/logoLeiaClaro.png"
+        alt="Logo Leia Mulheres"
+        class="lmTituloProjetoImagem lmLogoTema"
+        id="lmTituloProjetoImagem"
+      />
+      <p class="lmCadastroSubtitulo">
+        Área administrativa para cadastro de trilhas do catálogo.
+      </p>
+    </div>
+  </header>
+
+  <main class="lmCadastroConteudoPrincipal">
+    <section class="lmCadastroSecaoFormulario">
+      <div class="lmCadastroSecaoCabecalho">
+        <h2 class="lmCadastroTituloSecao">Cadastro de Trilhas</h2>
+        <p class="lmCadastroTextoSecao">
+          Preencha os campos abaixo para registrar um nova trilha no catálogo.
+        </p>
+      </div>
+
+      <form class="lmCadastroFormularioLivro" id="lmCadastroFormularioLivro" enctype="multipart/form-data">
+        <div class="lmGrupoCampo">
+          <label for="tema" class="lmRotuloCampo">Tema da trilha</label>
+          <input
+            type="text"
+            id="tema"
+            name="tema"
+            class="lmCampoTexto"
+            placeholder="Digite o tema da trilha"
+            required
+          />
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="descricao" class="lmRotuloCampo">Descrição</label>
+          <input
+            type="text"
+            id="descricao"
+            name="descricao"
+            class="lmCampoTexto"
+            placeholder="Digite a descrição da trilha"
+            required
+          />
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="nivelDificuldade" class="lmRotuloCampo">Nível de dificuldade</label>
+          <input
+            type="number"
+            id="nivelDificuldade"
+            name="nivelDificuldade"
+            class="lmCampoTexto"
+            placeholder="Digite o nível de dificuldade"
+            min="1"
+            max="5"
+            required
+          />
+        </div>
+
+        <div class="lmGrupoCampo">
+        <label for="idObra" class="lmRotuloCampo">
+          Obras
+        </label>
+
+          <div class="lmCadastroObrasLinha">
+            <div class="lmCadastroAutocomplete">
+              <input
+                type="text"
+                id="idObra"
+                class="lmCampoTexto"
+                placeholder="Digite ou selecione uma obra"
+                autocomplete="off"
+              />
+
+              <div
+                class="lmCadastroAutocompleteLista"
+                id="lmListaObrasDisponiveis"
+              ></div>
+            </div>
+
+            <button
+              type="button"
+              class="lmCadastroBotaoAdicionarObra"
+              id="lmAdicionarObra"
+              aria-label="Adicionar obra"
+            >
+              +
+            </button>
+          </div>
+
+          <div class="lmCadastroAcoesObra">
+            <button
+              type="button"
+              class="lmCadastroLinkObra"
+              id="lmCadastrarNovaObra"
+            >
+              Cadastrar nova obra
+            </button>
+          </div>
+
+          <div
+            class="lmCadastroListaObras"
+            id="lmListaObrasSelecionadas"
+          ></div>
+      </div>
+
+        <div class="lmGrupoLinha">
+          <div class="lmGrupoCampo">
+            <label for="xp" class="lmRotuloCampo">XP</label>
+            <input
+              type="number"
+              id="xp"
+              name="xp"
+              class="lmCampoTexto"
+              placeholder="Ex: 10"
+              min="0"
+              required
+            />
+          </div>
+
+        <!--VALIDAR-->
+        <div class="lmGrupoCampo">
+          <label for="liberada" class="lmRotuloCampo">Trilha liberada?</label>
+          <input
+            type="checkbox"
+            id="liberada"
+            name="liberada"
+            class="lmCampoCheckBox"
+            />
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="imagemCapa" class="lmRotuloCampo">Imagem de capa</label>
+          <input
+            type="file"
+            id="imagemCapa"
+            name="imagemCapa"
+            class="lmCampoArquivo"
+            accept="image/*"
+          />
+        </div>
+
+        <p class="lmCadastroMensagem" id="lmCadastroMensagem" aria-live="polite"></p>
+
+        <div class="lmAcoesFormulario">
+          <button type="button" class="lmCadastroBotaoSecundario" id="lmCadastroBotaoVoltar">Voltar</button>
+          <button type="reset" class="lmCadastroBotaoSecundario" id="lmCadastroBotaoCancelar">
+            Cancelar
+          </button>
+          <button type="submit" class="lmCadastroBotaoPrimario">Cadastrar</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="/js/crudLivros.js"></script>
+</body>
+</html>

@@ -43,7 +43,8 @@ module.exports = {
                 tema,
                 descricao,
                 nivelDificuldade,
-                xp
+                xp,
+                liberada
             });
 
             const getOrCreateObra = async (obraInput) => {
@@ -136,8 +137,9 @@ module.exports = {
             const mudouDescricao = descricao !== undefined && descricao !== trilha.descricao;
             const mudouNivel = nivelDificuldade !== undefined && nivelDificuldade !== trilha.nivelDificuldade;
             const mudouXp = xp !== undefined && xp !== trilha.xp;
+            const mudouLiberada = liberada !== undefined && liberada !== trilha.liberada;
 
-            const temMudancaTrilha = mudouTema || mudouDescricao || mudouNivel || mudouXp;
+            const temMudancaTrilha = mudouTema || mudouDescricao || mudouNivel || mudouXp || mudouLiberada;
 
             const obrasAtuais = await mongo.TrilhaObra.find({ trilhaId: id });
 
@@ -178,7 +180,8 @@ module.exports = {
                     ...(mudouTema && { tema }),
                     ...(mudouDescricao && { descricao }),
                     ...(mudouNivel && { nivelDificuldade }),
-                    ...(mudouXp && { xp })
+                    ...(mudouXp && { xp }),
+                    ...(mudouLiberada && { liberada })
                 },
                 { new: true }
             );
@@ -319,4 +322,3 @@ module.exports = {
         }
     }
 };
-// Implementar: Trilha *liberada* ou não
