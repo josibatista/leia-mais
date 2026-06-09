@@ -1,4 +1,6 @@
 const mongo = require('../config/db_mongoose');
+const db = require('../config/db_sequelize');
+const { Op } = require('sequelize');
 
 module.exports = {
 
@@ -49,10 +51,27 @@ module.exports = {
                     return obraInput.obraId;
                 }
 
+                const autoresIds = await Promise.all(
+                    (obraInput.autores || []).map(async (autor) => {
+                        const nome = typeof autor === 'string' ? autor.trim() : autor.nome?.trim();
+                        if (!nome) throw new Error('Nome do autor inválido.');
+
+                        let autorExistente = await db.Autor.findOne({
+                            where: { nome: { [Op.iLike]: nome } }
+                        });
+
+                        if (!autorExistente) {
+                            autorExistente = await db.Autor.create({ nome });
+                        }
+
+                        return Number(autorExistente.id); 
+                    })
+                );
+
                 const obra = await mongo.Obra.create({
                     titulo: obraInput.titulo,
                     tipo: obraInput.tipo,
-                    autores: obraInput.autores,
+                    autores: autoresIds,
                     descricao: obraInput.descricao,
                     link: obraInput.link
                 });
@@ -167,10 +186,27 @@ module.exports = {
             const getOrCreateObra = async (obraInput) => {
                 if (obraInput.obraId) return obraInput.obraId;
 
+                const autoresIds = await Promise.all(
+                    (obraInput.autores || []).map(async (autor) => {
+                        const nome = typeof autor === 'string' ? autor.trim() : autor.nome?.trim();
+                        if (!nome) throw new Error('Nome do autor inválido.');
+
+                        let autorExistente = await db.Autor.findOne({
+                            where: { nome: { [Op.iLike]: nome } }
+                        });
+
+                        if (!autorExistente) {
+                            autorExistente = await db.Autor.create({ nome });
+                        }
+
+                        return Number(autorExistente.id);
+                    })
+                );
+
                 const obra = await mongo.Obra.create({
                     titulo: obraInput.titulo,
                     tipo: obraInput.tipo,
-                    autores: obraInput.autores,
+                    autores: autoresIds, // ✅ IDs numéricos
                     descricao: obraInput.descricao,
                     link: obraInput.link
                 });

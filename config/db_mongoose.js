@@ -6,8 +6,9 @@ const mongo = {};
 
 mongo.connection = mongoose.connect(process.env.MONGO_DB_URL);
 
-mongo.Obra = require('../models/Obra');
-mongo.Trilha = require('../models/Trilha');
-mongo.TrilhaObra = require('../models/TrilhaObra');
+mongo.Obra = require('../models/obra');
+mongo.Trilha = require('../models/trilha');
+mongo.TrilhaObra = require('../models/trilhaObra');
+mongo.TrilhaUsuario = require('../models/trilhaUsuario');
 
 module.exports = mongo;
