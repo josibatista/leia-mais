@@ -12,10 +12,61 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   configurarBotaoAdicionarObra();
   configurarModalEditarObra();
+  configurarModalMensagemObras();
 
   await carregarAutoresDisponiveis();
   carregarObras();
 });
+
+function abrirModalMensagemObras({
+  titulo = "Atenção",
+  mensagem,
+  mostrarCancelar = false,
+  aoConfirmar = null,
+}) {
+  const modal = document.getElementById("blModalMensagemObras");
+  const tituloModal = document.getElementById("blModalMensagemObrasTitulo");
+  const textoModal = document.getElementById("blModalMensagemObrasTexto");
+  const botaoConfirmar = document.getElementById("blBotaoConfirmarMensagemObras");
+  const botaoCancelar = document.getElementById("blBotaoCancelarMensagemObras");
+
+  tituloModal.textContent = titulo;
+  textoModal.textContent = mensagem;
+  botaoCancelar.style.display = mostrarCancelar ? "inline-flex" : "none";
+
+  const novoBotaoConfirmar = botaoConfirmar.cloneNode(true);
+  botaoConfirmar.parentNode.replaceChild(novoBotaoConfirmar, botaoConfirmar);
+
+  novoBotaoConfirmar.addEventListener("click", async () => {
+    modal.classList.remove("lmModalOverlayAtivo");
+
+    if (typeof aoConfirmar === "function") {
+      await aoConfirmar();
+    }
+  });
+
+  modal.classList.add("lmModalOverlayAtivo");
+}
+
+function configurarModalMensagemObras() {
+  const modal = document.getElementById("blModalMensagemObras");
+  const botaoFechar = document.getElementById("blFecharModalMensagemObras");
+  const botaoCancelar = document.getElementById("blBotaoCancelarMensagemObras");
+
+  botaoFechar.addEventListener("click", () => {
+    modal.classList.remove("lmModalOverlayAtivo");
+  });
+
+  botaoCancelar.addEventListener("click", () => {
+    modal.classList.remove("lmModalOverlayAtivo");
+  });
+
+  modal.addEventListener("click", (evento) => {
+    if (evento.target === modal) {
+      modal.classList.remove("lmModalOverlayAtivo");
+    }
+  });
+}
 
 function obterHeadersJson() {
   return {
@@ -203,17 +254,17 @@ function configurarBotoesExcluirObra() {
   );
 
   botoesExcluir.forEach((botao) => {
-    botao.addEventListener("click", async () => {
+    botao.addEventListener("click", () => {
       const idObra = botao.dataset.id;
-      const confirmarExclusao = confirm(
-        "Tem certeza que deseja excluir esta obra?",
-      );
 
-      if (!confirmarExclusao) {
-        return;
-      }
-
-      await excluirObra(idObra);
+      abrirModalMensagemObras({
+        titulo: "Excluir obra",
+        mensagem: "Tem certeza que deseja excluir esta obra?",
+        mostrarCancelar: true,
+        aoConfirmar: async () => {
+          await excluirObra(idObra);
+        },
+      });
     });
   });
 }
@@ -233,11 +284,18 @@ async function excluirObra(idObra) {
       throw new Error("Erro ao excluir obra.");
     }
 
+    abrirModalMensagemObras({
+      titulo: "Obra excluída",
+      mensagem: "Obra excluída com sucesso.",
+    });
+
     carregarObras();
   } catch (erro) {
     console.error(erro);
-    listaObras.innerHTML =
-      '<p class="lmUsuariosMensagem">Erro ao excluir obra.</p>';
+    abrirModalMensagemObras({
+      titulo: "Atenção",
+      mensagem: erro.message || "Erro ao excluir obra.",
+    });
   }
 }
 
@@ -393,7 +451,10 @@ async function salvarEdicaoObra() {
   const nomeAutor = campoAutor.options[campoAutor.selectedIndex].text.trim();
 
   if (!titulo || !tipo || !autorId) {
-    alert("Preencha todos os campos obrigatórios.");
+    abrirModalMensagemObras({
+      titulo: "Atenção",
+      mensagem: "Preencha todos os campos obrigatórios.",
+    });
     return;
   }
 
@@ -427,12 +488,18 @@ async function salvarEdicaoObra() {
       throw new Error(dados.error || dados.message || "Erro ao editar obra.");
     }
 
-    alert("Obra atualizada com sucesso!");
+    abrirModalMensagemObras({
+      titulo: "Obra atualizada",
+      mensagem: "Obra atualizada com sucesso!",
+    });
 
     fecharModalEditarObra();
     carregarObras();
   } catch (erro) {
     console.error("Erro ao editar obra:", erro);
-    alert(erro.message || "Não foi possível editar a obra.");
+    abrirModalMensagemObras({
+      titulo: "Atenção",
+      mensagem: erro.message || "Não foi possível editar a obra.",
+    });
   }
 }
