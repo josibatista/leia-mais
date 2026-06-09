@@ -2,11 +2,119 @@ const mongo = require('../config/db_mongoose');
 const db = require('../config/db_sequelize');
 const { Op } = require('sequelize');
 
+async function buscarObrasDaTrilha(trilhaId) {
+    const relacoes = await mongo.TrilhaObra.find({ trilhaId }).sort({ ordem: 1 });
+
+    if (relacoes.length === 0) {
+        return [];
+    }
+
+    const obraIds = relacoes.map((relacao) => relacao.obraId);
+    const obras = await mongo.Obra.find({ _id: { $in: obraIds } });
+    const obrasMap = Object.fromEntries(obras.map((obra) => [obra._id.toString(), obra]));
+
+    const todosAutoresIds = [...new Set(
+        obras.flatMap((obra) => obra.autores.map((id) => id.toString()))
+    )];
+
+    const autores = todosAutoresIds.length > 0
+        ? await db.Autor.findAll({
+            where: { id: todosAutoresIds },
+            attributes: ['id', 'nome']
+        })
+        : [];
+
+    const autoresMap = Object.fromEntries(
+        autores.map((autor) => [autor.id.toString(), autor.nome])
+    );
+
+    return relacoes
+        .map((relacao) => {
+            const obra = obrasMap[relacao.obraId.toString()];
+
+            if (!obra) {
+                return null;
+            }
+
+            return {
+                ...obra.toObject(),
+                ordem: relacao.ordem,
+                autores: obra.autores.map((id) => ({
+                    id: id.toString(),
+                    nome: autoresMap[id.toString()] ?? null
+                }))
+            };
+        })
+        .filter(Boolean);
+}
+
+async function buscarLivrosDaTrilha(trilhaId) {
+    const relacoes = await mongo.TrilhaLivro.find({ trilhaId }).sort({ ordem: 1 });
+
+    if (relacoes.length === 0) {
+        return [];
+    }
+
+    const livroIds = relacoes.map((relacao) => Number(relacao.livroId));
+    const livros = await db.Livro.findAll({
+        where: { id: livroIds },
+        attributes: ['id', 'titulo', 'imagemCapa', 'genero', 'paginas']
+    });
+
+    const livrosMap = Object.fromEntries(livros.map((livro) => [livro.id.toString(), livro]));
+
+    return relacoes
+        .map((relacao) => {
+            const livro = livrosMap[relacao.livroId.toString()];
+
+            if (!livro) {
+                return null;
+            }
+
+            return {
+                ...livro.toJSON(),
+                ordem: relacao.ordem,
+                itemTipo: 'livro',
+                tipoItem: 'Livro'
+            };
+        })
+        .filter(Boolean);
+}
+
+async function buscarItensDaTrilha(trilhaId) {
+    const obras = (await buscarObrasDaTrilha(trilhaId)).map((obra) => ({
+        ...obra,
+        itemTipo: 'obra',
+        tipoItem: 'Obra'
+    }));
+
+    const livros = await buscarLivrosDaTrilha(trilhaId);
+
+    return [...obras, ...livros].sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
+}
+
+function normalizarRelacoesItens(obras = [], livros = []) {
+    const obrasNorm = (obras || [])
+        .filter((item) => item.obraId)
+        .map((item) => `obra:${item.obraId}:${item.ordem || 0}`)
+        .sort();
+
+    const livrosNorm = (livros || [])
+        .filter((item) => item.livroId)
+        .map((item) => `livro:${item.livroId}:${item.ordem || 0}`)
+        .sort();
+
+    return [...obrasNorm, ...livrosNorm].join('|');
+}
+
 module.exports = {
+    buscarObrasDaTrilha,
+    buscarLivrosDaTrilha,
+    buscarItensDaTrilha,
 
     async postTrilha(req, res) {
         try {
-            let { tema, descricao, nivelDificuldade, xp, liberada, obras } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, obras, livros } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
@@ -96,6 +204,23 @@ module.exports = {
                 await mongo.TrilhaObra.insertMany(obrasRelacionadas);
             }
 
+            if (livros && livros.length > 0) {
+                const ids = livros.filter((item) => item.livroId).map((item) => Number(item.livroId));
+                const duplicados = ids.filter((id, index) => ids.indexOf(id) !== index);
+
+                if (duplicados.length > 0) {
+                    return res.status(400).json({ error: 'Livros duplicados na trilha' });
+                }
+
+                const livrosRelacionados = livros.map((item) => ({
+                    trilhaId: trilha._id,
+                    livroId: Number(item.livroId),
+                    ordem: item.ordem
+                }));
+
+                await mongo.TrilhaLivro.insertMany(livrosRelacionados);
+            }
+
             return res.status(201).json({
                 message: 'Trilha criada com sucesso',
                 trilha
@@ -110,7 +235,7 @@ module.exports = {
     async putTrilha(req, res) {
         try {
             const id = req.params.id;
-            let { tema, descricao, nivelDificuldade, xp, liberada, obras } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, obras, livros } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
@@ -142,19 +267,23 @@ module.exports = {
             const temMudancaTrilha = mudouTema || mudouDescricao || mudouNivel || mudouXp || mudouLiberada;
 
             const obrasAtuais = await mongo.TrilhaObra.find({ trilhaId: id });
+            const livrosAtuais = await mongo.TrilhaLivro.find({ trilhaId: id });
 
-            const obrasAtuaisIds = obrasAtuais
-                .map(o => o.obraId.toString())
-                .sort();
+            const relacoesAtuais = normalizarRelacoesItens(
+                obrasAtuais.map((item) => ({ obraId: item.obraId.toString(), ordem: item.ordem })),
+                livrosAtuais.map((item) => ({ livroId: item.livroId, ordem: item.ordem }))
+            );
 
-            const novasObrasIds = Array.isArray(obras)
-                ? obras.map(o => o.obraId).filter(Boolean).sort()
-                : [];
+            const relacoesNovas = normalizarRelacoesItens(
+                Array.isArray(obras) ? obras : null,
+                Array.isArray(livros) ? livros : null
+            );
 
-            const obrasMudaram =
-                JSON.stringify(obrasAtuaisIds) !== JSON.stringify(novasObrasIds);
+            const itensMudaram = Array.isArray(obras) || Array.isArray(livros)
+                ? relacoesAtuais !== relacoesNovas
+                : false;
 
-            if (!temMudancaTrilha && !obrasMudaram) {
+            if (!temMudancaTrilha && !itensMudaram) {
                 return res.status(400).json({ error: 'Nenhuma alteração foi realizada' });
             }
 
@@ -234,6 +363,24 @@ module.exports = {
                 await mongo.TrilhaObra.insertMany(relacoes);
             }
 
+            if (Array.isArray(livros)) {
+                const ids = livros.filter((item) => item.livroId).map((item) => Number(item.livroId));
+                const duplicados = ids.filter((id, index) => ids.indexOf(id) !== index);
+
+                if (duplicados.length > 0) {
+                    return res.status(400).json({ error: 'Livros duplicados na trilha' });
+                }
+
+                const relacoesLivros = livros.map((item) => ({
+                    trilhaId: id,
+                    livroId: Number(item.livroId),
+                    ordem: item.ordem
+                }));
+
+                await mongo.TrilhaLivro.deleteMany({ trilhaId: id });
+                await mongo.TrilhaLivro.insertMany(relacoesLivros);
+            }
+
             return res.status(200).json({
                 message: 'Trilha atualizada com sucesso',
                 trilha: trilhaAtualizada
@@ -278,6 +425,10 @@ module.exports = {
                 trilhaId: id 
             });
 
+            await mongo.TrilhaLivro.deleteMany({
+                trilhaId: id
+            });
+
             await mongo.Trilha.deleteOne({
                 _id: id 
             });
@@ -315,7 +466,16 @@ module.exports = {
                 return res.status(404).json({ error: 'Trilha não encontrada' });
             }
 
-            res.status(200).json(trilha);
+            const obras = await buscarObrasDaTrilha(id);
+            const livros = await buscarLivrosDaTrilha(id);
+            const itens = await buscarItensDaTrilha(id);
+
+            res.status(200).json({
+                ...trilha.toObject(),
+                obras,
+                livros,
+                itens
+            });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao consultar trilha' })

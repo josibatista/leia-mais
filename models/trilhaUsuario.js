@@ -13,8 +13,8 @@ const TrilhaUsuario = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        enum: ['em andamento', 'pausada', 'concluída'],
-        default: 'em andamento'
+        enum: ['para ler', 'em andamento', 'pausada', 'concluída'],
+        default: 'para ler'
     },
     dataInicio: {
         type: Date,
