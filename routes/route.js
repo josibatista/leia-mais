@@ -66,9 +66,8 @@ router.get('/obras/:id' , obraController.getObrasById);
 // Rotas - Trilha
 router.post('/trilhas', autenticarToken, checkAdmin, trilhaController.postTrilha);
 router.put('/trilhas/:id', autenticarToken, checkAdmin, trilhaController.putTrilha);
-router.delete('/trilhas/:trilhaId/obras/:obraId', trilhaController.deleteObraTrilha);
-router.delete('/trilhas/:id', trilhaController.deleteTrilha);
-
+router.delete('/trilhas/:trilhaId/obras/:obraId', autenticarToken, checkAdmin, trilhaController.deleteObraTrilha);
+router.delete('/trilhas/:id', autenticarToken, checkAdmin, trilhaController.deleteTrilha);
 router.get('/trilhas', trilhaController.getTrilhas);
 router.get('/trilhas/:id', trilhaController.getTrilhasById);
 
