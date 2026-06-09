@@ -1127,7 +1127,7 @@ body.lmHomeBody {
   font-size: 0.9rem;
   color: var(--lmMarromEscuro);
   line-height: 1.3;
-  min-height: 38px;
+  min-height: 20px;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -1458,6 +1458,7 @@ body.lmAcervoBody {
     max-height: none;
     line-height: 1.2;
     -webkit-line-clamp: unset;
+    line-clamp: unset;
 }
 
 .blCardTrilha .blStatusTrilha {
@@ -2143,6 +2144,342 @@ body.lmCadastroBody {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.blGradeTrilhasSalvas {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+#blGradeTrilhasSalvas .blCardTrilhaSalva {
+  grid-template-columns: 70px 1fr;
+  gap: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  width: 360px;
+  max-width: 100%;
+}
+
+#blGradeTrilhasSalvas .blCardTrilhaSalva img {
+  width: 77px;
+  height: 105px;
+  border-radius: 7px;
+}
+
+#blGradeTrilhasSalvas .blCardTrilhaSalvaInfo {
+  gap: 6px;
+}
+
+#blGradeTrilhasSalvas .blCardTrilhaSalvaInfo h4 {
+  font-size: 0.82rem;
+}
+
+#blGradeTrilhasSalvas .blCardTrilhaSalvaDetalhes {
+  font-size: 0.72rem;
+}
+
+#blGradeTrilhasSalvas .blLabelStatusTrilha {
+  font-size: 0.62rem;
+  padding: 3px 6px;
+}
+
+#blGradeTrilhasSalvas .lmBotaoSaibaMais {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.72rem;
+}
+
+.blCardTrilhaSalva {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  align-items: stretch;
+  background-color: #fff;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(58, 36, 24, 0.12);
+  width: 100%;
+  max-width: 100%;
+}
+
+.blCardTrilhaSalva img {
+  width: 110px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  background-color: #f2e8de;
+}
+
+.blCardTrilhaSalvaInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.blCardTrilhaSalvaInfo h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2f1b12;
+  line-height: 1.3;
+}
+
+.blCardTrilhaSalvaDetalhes {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--corSecundaria);
+  line-height: 1.3;
+}
+
+.blLabelStatusTrilha {
+  align-self: flex-start;
+  background-color: #7b5a42;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.blAreaBotoesTrilhaSalva {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ppCarrossel .blCardTrilhaSalva {
+  min-width: 310px;
+  max-width: 310px;
+}
+
+.vtConteudoTrilha {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.vtSecaoTrilha {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.vtCabecalhoTrilha {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.vtCapaTrilha {
+  width: 140px;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 12px;
+  background-color: #f2e8de;
+  flex-shrink: 0;
+}
+
+.vtTituloTrilha {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--lmMarromEscuro);
+  line-height: 1.3;
+}
+
+.vtDetalheTrilha {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--corSecundaria);
+}
+
+.vtBlocoDescricao,
+.vtBlocoProgresso,
+.vtBlocoObras {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vtBlocoDescricao h3,
+.vtBlocoProgresso h3,
+.vtBlocoObras h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--lmMarromEscuro);
+}
+
+.vtBlocoDescricao p,
+.vtBlocoProgresso p,
+.vtMensagemIndisponivel {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--corSecundaria);
+  line-height: 1.5;
+}
+
+.vtAreaAcao {
+  display: flex;
+  gap: 12px;
+}
+
+.vtListaObras {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vtItemObra {
+  font-size: 0.92rem;
+  color: var(--corSecundaria);
+  line-height: 1.4;
+}
+
+.vtLabelObra {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.lmRotuloCheckbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--lmCadastroMarromEscuro, var(--lmMarromEscuro));
+  margin: 0;
+}
+
+.lmCampoCheckBox {
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: var(--corDestaque, var(--lmMarromClaro));
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.lmContainerListaItensTrilha {
+  width: 100%;
+}
+
+.lmMensagemListaItensTrilha {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--corSecundaria);
+}
+
+.lmListaItensTrilha {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.lmItemTrilhaOrdenado {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 0.5rem 0.65rem;
+  align-items: center;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(123, 90, 66, 0.25);
+  border-radius: 0.65rem;
+  background-color: rgba(255, 253, 250, 0.85);
+}
+
+.lmItemTrilhaOrdem {
+  font-weight: 700;
+  color: var(--corDestaque);
+  min-width: 1.5rem;
+}
+
+.lmItemTrilhaTitulo {
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.lmItemTrilhaTipo {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--corSecundaria);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: rgba(123, 90, 66, 0.12);
+}
+
+.lmItemTrilhaAcoes {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.lmBotaoOrdemTrilha {
+  border: 1px solid rgba(123, 90, 66, 0.35);
+  background: #fff;
+  color: var(--lmMarromEscuro);
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.lmBotaoOrdemTrilha:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.lmBotaoRemoverItemTrilha {
+  color: #a33;
+  border-color: rgba(163, 51, 51, 0.35);
+}
+
+.lmModalConteudoFormulario {
+  max-width: 560px;
+  width: 100%;
+}
+
+.ppStatusTrilha {
+  grid-column: 1 / 3;
+  color: var(--corDestaque);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.ppCardLeituraInfo .blCardTrilhaSalvaDetalhes {
+  grid-column: 1 / 3;
+  margin: 0;
+}
+
+.ppCardLeituraInfo .lmBotaoSaibaMais {
+  grid-column: 1 / 3;
+  justify-self: start;
+  padding: 6px 18px;
+  font-size: 0.78rem;
+  margin-top: 0;
+}
+
+#ppTrilhasSalvas .ppCardLeitura,
+#blCarrosselTrilhas .ppCardLeitura {
+  padding: 7px 12px;
+  gap: 10px;
+  align-items: center;
+}
+
+#ppTrilhasSalvas .ppCardLeituraInfo,
+#blCarrosselTrilhas .ppCardLeituraInfo {
+  gap: 5px;
+  align-content: center;
 }
 
 .blCarrosselLivros {
@@ -3109,6 +3446,7 @@ body.lmAcervoBody.lmTemaEscuro .blCardEstatistica,
 body.lmAcervoBody.lmTemaEscuro .blSecaoMetas,
 body.lmAcervoBody.lmTemaEscuro .blCardLivroPerfil,
 body.lmAcervoBody.lmTemaEscuro .blCardLivroSalvo,
+body.lmAcervoBody.lmTemaEscuro .blCardTrilhaSalva,
 body.lmAcervoBody.lmTemaEscuro .blListaItensConfig {
   background-color: #2b2b2b;
   border-color: rgba(255, 255, 255, 0.12);
@@ -3116,8 +3454,32 @@ body.lmAcervoBody.lmTemaEscuro .blListaItensConfig {
 }
 
 body.lmAcervoBody.lmTemaEscuro .blCardLivroPerfil p,
-body.lmAcervoBody.lmTemaEscuro .blCardLivroSalvo h4 {
+body.lmAcervoBody.lmTemaEscuro .blCardLivroSalvo h4,
+body.lmAcervoBody.lmTemaEscuro .blCardTrilhaSalvaInfo h4,
+body.lmAcervoBody.lmTemaEscuro .vtTituloTrilha {
   color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmItemTrilhaOrdenado,
+body.lmCadastroBody.lmTemaEscuro .lmItemTrilhaOrdenado {
+  background-color: #2b2b2b;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.lmAcervoBody.lmTemaEscuro .lmBotaoOrdemTrilha,
+body.lmCadastroBody.lmTemaEscuro .lmBotaoOrdemTrilha {
+  background-color: #3a3a3a;
+  color: #f5f5f5;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.lmAcervoBody.lmTemaEscuro .blCardTrilhaSalvaDetalhes,
+body.lmAcervoBody.lmTemaEscuro .vtDetalheTrilha,
+body.lmAcervoBody.lmTemaEscuro .vtBlocoDescricao p,
+body.lmAcervoBody.lmTemaEscuro .vtBlocoProgresso p,
+body.lmAcervoBody.lmTemaEscuro .vtMensagemIndisponivel,
+body.lmAcervoBody.lmTemaEscuro .vtItemObra {
+  color: #cdb8a6;
 }
 
 body.lmAcervoBody.lmTemaEscuro .blItemConfig:hover {
@@ -3261,6 +3623,17 @@ body.lmTemaEscuro .modalStatusBox label:hover {
     height: 104px;
   }
 
+  #ppTrilhasSalvas .ppCardLeitura,
+  #blCarrosselTrilhas .ppCardLeitura {
+    padding: 6px 10px;
+    gap: 9px;
+  }
+
+  #ppTrilhasSalvas .ppCardLeituraInfo,
+  #blCarrosselTrilhas .ppCardLeituraInfo {
+    gap: 4px;
+  }
+
   .ppCardAcervo {
     min-width: 118px;
     max-width: 118px;
@@ -3269,6 +3642,46 @@ body.lmTemaEscuro .modalStatusBox label:hover {
   .ppCardAcervo img {
     width: 118px;
     height: 178px;
+  }
+
+  .ppCarrossel .blCardTrilhaSalva {
+    min-width: 250px;
+    max-width: 250px;
+    grid-template-columns: 80px 1fr;
+  }
+
+  .ppCarrossel .blCardTrilhaSalva img {
+    width: 80px;
+    height: 110px;
+  }
+
+  .blCardTrilhaSalva {
+    grid-template-columns: 90px 1fr;
+  }
+
+  .blCardTrilhaSalva img {
+    width: 90px;
+    height: 125px;
+  }
+
+  .vtCabecalhoTrilha {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .vtCapaTrilha {
+    width: 120px;
+    height: 165px;
+  }
+}
+
+@media (min-width: 768px) {
+  .blGradeTrilhasSalvas {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
   }
 }
 
