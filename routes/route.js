@@ -77,6 +77,8 @@ router.post('/usuarios/:id/trilhas', autenticarToken, trilhaUsuarioController.po
 router.put('/usuarios/:usuarioId/trilhas/:trilhaId', autenticarToken, trilhaUsuarioController.putTrilhaUsuario);
 router.get('/usuarios/:id/trilhas', autenticarToken, trilhaUsuarioController.getTrilhasUsuario);
 router.get('/usuarios/:usuarioId/trilhas/:trilhaId', autenticarToken, trilhaUsuarioController.getTrilhasUsuarioById);
+router.put('/usuarios/:usuarioId/trilhas/:trilhaId/obras/:obraId', autenticarToken, trilhaUsuarioController.putTrilhaUsuarioObra);
+router.put('/usuarios/:usuarioId/trilhas/:trilhaId/livros/:livroId', autenticarToken, trilhaUsuarioController.putTrilhaUsuarioLivro);
 router.delete('/usuarios/:usuarioId/trilhas/:trilhaId', autenticarToken, trilhaUsuarioController.deleteTrilhaUsuario);
 
 //rota de login
