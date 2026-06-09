@@ -1,5 +1,6 @@
 const mongo = require('../config/db_mongoose');
 const db = require('../config/db_sequelize');
+const { getTrilhas } = require('./trilhaController');
 
 module.exports = {
 
@@ -112,6 +113,28 @@ module.exports = {
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao buscar trilhas do usuário' });
+        }
+    },
+
+    async getTrilhasUsuarioById(req, res) {
+        const { usuarioId, trilhaId } = req.params;
+
+        try {
+            if (Number(req.usuario.id) !== Number(usuarioId) && req.usuario.tipo !== 'administrador') {
+                return res.status(403).json({ error: 'Acesso negado.' });
+            }
+
+            const vinculo = await mongo.TrilhaUsuario.findOne({ usuarioId: Number(usuarioId), trilhaId })
+                .populate('trilhaId');
+
+            if (!vinculo) {
+                return res.status(404).json({ error: 'Vínculo não encontrado' });
+            }
+
+            res.status(200).json({ trilha: vinculo });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao buscar trilha do usuário' });
         }
     }
 
