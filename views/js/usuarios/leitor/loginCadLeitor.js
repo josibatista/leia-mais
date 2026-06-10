@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         salvarSessaoLogin(dados.token, dados.usuario, !!lembrar);
 
-        window.location.href = "paginaPrincipalLeitor.html";
+        window.location.href = "/pages/usuarios/leitor/paginaPrincipalLeitor.html";
       } catch (erro) {
         console.error("Erro no login:", erro);
         exibirAlertaAcesso("Não foi possível conectar ao servidor.", {
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         exibirAlertaAcesso("Cadastro realizado com sucesso!", {
           titulo: "Sucesso",
-          redirect: "loginLeitor.html",
+          redirect: "/pages/usuarios/leitor/loginLeitor.html",
         });
       } catch (erro) {
         console.error("Erro no cadastro:", erro);

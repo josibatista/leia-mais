@@ -80,7 +80,7 @@ function configurarBotaoAdicionarObra() {
 
   if (botaoAdicionarObra) {
     botaoAdicionarObra.addEventListener("click", () => {
-      window.location.href = "cadastroObras.html";
+      window.location.href = "/pages/obras/cadastroObras.html";
     });
   }
 }

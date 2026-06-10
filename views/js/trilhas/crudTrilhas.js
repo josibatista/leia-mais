@@ -48,11 +48,11 @@ function lmExibirMensagem(texto, tipo) {
 
 function lmConfigurarBotoes() {
   document.getElementById("lmCadastrarNovaObra")?.addEventListener("click", () => {
-    window.location.href = "cadastroObras.html";
+    window.location.href = "/pages/obras/cadastroObras.html";
   });
 
   document.getElementById("lmCadastrarNovoLivro")?.addEventListener("click", () => {
-    window.location.href = "cadastroLivros.html";
+    window.location.href = "/pages/livros/cadastroLivros.html";
   });
 
   document.getElementById("lmAdicionarObra")?.addEventListener("click", () => {

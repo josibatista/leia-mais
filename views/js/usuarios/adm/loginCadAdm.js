@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         exibirAlertaAcesso("Administrador cadastrado com sucesso!", {
           titulo: "Sucesso",
-          redirect: "usuarios.html",
+          redirect: "/pages/usuarios/usuarios.html",
         });
       } catch (erro) {
         console.error("Erro no cadastro:", erro);
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         salvarSessaoLogin(dados.token, dados.usuario, !!lembrar);
 
-        window.location.href = "acervoLivros.html";
+        window.location.href = "/pages/livros/acervoLivros.html";
       } catch (erro) {
         console.error("Erro no login:", erro);
         exibirAlertaAcesso("Não foi possível conectar ao servidor.", {

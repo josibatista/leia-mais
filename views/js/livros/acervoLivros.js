@@ -117,7 +117,7 @@ function lmAbrirModalMensagem({
   botaoIrLista.parentNode.replaceChild(novoBotaoIrLista, botaoIrLista);
 
   novoBotaoIrLista.addEventListener('click', function () {
-    window.location.href = '/pages/livrosSalvos.html';
+    window.location.href = '/pages/livros/livrosSalvos.html';
   });
 
   novoBotaoConfirmar.addEventListener('click', async function () {

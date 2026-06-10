@@ -128,14 +128,14 @@ function configurarLogout() {
 
       limparSessao();
 
-      window.location.href = "loginLeitor.html";
+      window.location.href = "/pages/usuarios/leitor/loginLeitor.html";
     };
   }
 
   if (botaoLogin) {
     botaoLogin.onclick = (evento) => {
       evento.preventDefault();
-      window.location.href = "/pages/loginLeitor.html";
+      window.location.href = "/pages/usuarios/leitor/loginLeitor.html";
     };
   }
 }

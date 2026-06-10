@@ -22,7 +22,7 @@ function exibirCodigoRecuperacao(codigo, username) {
     botaoAlerta.textContent = "OK";
     sessionStorage.setItem(CHAVE_USERNAME_RECUPERACAO, username);
     localStorage.removeItem("emailRecuperacao");
-    window.location.href = "novaSenha.html";
+    window.location.href = "/pages/usuarios/novaSenha.html";
   };
 }
 
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!username) {
         exibirAlertaAcesso("Sessão expirada. Tente novamente.", {
           titulo: "Atenção",
-          redirect: "recuperarSenha.html",
+          redirect: "/pages/usuarios/recuperarSenha.html",
         });
         return;
       }
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         exibirAlertaAcesso("Senha alterada com sucesso!", {
           titulo: "Sucesso",
-          redirect: "loginLeitor.html",
+          redirect: "pages/usuarios/leitor/loginLeitor.html",
         });
       } catch (erro) {
         console.error("Erro:", erro);

@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!token || !usuario) {
     exibirAlertaAcesso("Faça login para continuar.", {
       titulo: "Acesso negado",
-      redirect: "loginLeitor.html",
+      redirect: "/pages/usuarios/leitor/loginLeitor.html",
     });
     return;
   }
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       limparSessao();
       exibirAlertaAcesso("Sessão expirada. Faça login novamente.", {
         titulo: "Acesso negado",
-        redirect: "loginLeitor.html",
+        redirect: "/pages/usuarios/leitor/loginLeitor.html",
       });
     }
   }
@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       exibirAlertaAcesso("Conta apagada com sucesso.", {
         titulo: "Sucesso",
-        redirect: "loginLeitor.html",
+        redirect: "/pages/usuarios/leitor/loginLeitor.html",
       });
     } catch (erro) {
       console.error(erro);

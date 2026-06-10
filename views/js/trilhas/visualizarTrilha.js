@@ -7,7 +7,7 @@ function protegerVisualizarTrilha() {
     ocultarConteudoProtegido();
     exibirAlertaAcesso("Faça login para continuar.", {
       titulo: "Acesso negado",
-      redirect: "loginLeitor.html",
+      redirect: "/pages/usuarios/leitor/loginLeitor.html",
     });
   };
 
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       titulo: "Trilha não encontrada",
       mensagem: "Identificador da trilha não informado.",
       aoFechar: () => {
-        window.location.href = "catalogoTrilhas.html";
+        window.location.href = "/pages/trilhas/catalogoTrilhas.html";
       },
     });
     return;
@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           return;
         }
 
-        window.location.href = "catalogoTrilhas.html";
+        window.location.href = "/pages/trilhas/catalogoTrilhas.html";
       });
     }
   }
