@@ -1,24 +1,22 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  if (!protegerRotaLeitor()) {
+    return;
+  }
+
   const token = obterToken();
   const usuario = obterUsuarioLogado();
 
   const ppBotaoAbrirBusca = document.getElementById("ppBotaoAbrirBusca");
   const ppBuscaHeader = document.getElementById("ppBuscaHeader");
   const ppCampoBusca = document.getElementById("ppCampoBusca");
+  const ppTrilhasSalvas = document.getElementById("ppTrilhasSalvas");
   const ppLeiturasRecentes = document.getElementById("ppLeiturasRecentes");
   const ppAcervoLivros = document.getElementById("ppAcervoLivros");
   const ppAbrirAcervo = document.getElementById("ppAbrirAcervo");
   const ppAbrirLivrosSalvos = document.getElementById("ppAbrirLivrosSalvos");
+  const ppAbrirTrilhasSalvas = document.getElementById("ppAbrirTrilhasSalvas");
 
   let livrosAcervo = [];
-
-  if (!token || !usuario) {
-    exibirAlertaAcesso("Faça login para continuar.", {
-      titulo: "Acesso negado",
-      redirect: "loginLeitor.html",
-    });
-    return;
-  }
 
   function obterHeadersJson() {
     return {
@@ -97,6 +95,140 @@ document.addEventListener("DOMContentLoaded", async () => {
     card.appendChild(info);
 
     return card;
+  }
+
+  function obterTrilhaDoVinculo(vinculo) {
+    const trilhaRef = vinculo.trilhaId;
+
+    if (trilhaRef && typeof trilhaRef === "object") {
+      return trilhaRef;
+    }
+
+    return null;
+  }
+
+  function obterIdTrilha(vinculo) {
+    const trilha = obterTrilhaDoVinculo(vinculo);
+
+    if (trilha) {
+      return String(trilha._id || trilha.id);
+    }
+
+    return String(vinculo.trilhaId);
+  }
+
+  function formatarNivelTrilha(nivel) {
+    return tfFormatarNivelTrilha(nivel);
+  }
+
+  function formatarStatusTrilha(status) {
+    const statusFormatado = {
+      "para ler": "Para ler",
+      pausada: "Pausada",
+      "em andamento": "Em andamento",
+      concluída: "Concluída",
+    };
+
+    return statusFormatado[status] || status || "Sem status";
+  }
+
+  function criarCardTrilhaSalva(vinculo) {
+    const trilha = obterTrilhaDoVinculo(vinculo);
+    const trilhaId = obterIdTrilha(vinculo);
+    const percentual = vinculo.progresso?.percentual || 0;
+
+    const card = document.createElement("article");
+    card.classList.add("ppCardLeitura");
+
+    const imagem = document.createElement("img");
+    imagem.src = trilha?.imagemCapa || "/assets/capaPadrao.jpg";
+    imagem.alt = trilha?.tema || "Capa da trilha";
+    imagem.onerror = () => {
+      imagem.src = "/assets/capaPadrao.jpg";
+    };
+
+    const info = document.createElement("div");
+    info.classList.add("ppCardLeituraInfo");
+
+    const titulo = document.createElement("h4");
+    titulo.textContent = trilha?.tema || "Tema não informado";
+
+    const labelStatus = document.createElement("span");
+    labelStatus.classList.add("ppStatusTrilha");
+    labelStatus.textContent = formatarStatusTrilha(vinculo.status);
+
+    const detalhes = document.createElement("p");
+    detalhes.classList.add("blCardTrilhaSalvaDetalhes");
+
+    const partesDetalhes = [];
+
+    if (trilha?.nivelDificuldade) {
+      partesDetalhes.push(formatarNivelTrilha(trilha.nivelDificuldade));
+    }
+
+    if (trilha?.xp || trilha?.xp === 0) {
+      partesDetalhes.push(`${trilha.xp} XP`);
+    }
+
+    detalhes.textContent = partesDetalhes.join(" • ") || "Detalhes não informados";
+
+    const barraContainer = document.createElement("div");
+    barraContainer.classList.add("ppBarraProgresso");
+
+    const barra = document.createElement("div");
+    barra.style.width = `${percentual}%`;
+    barraContainer.appendChild(barra);
+
+    const progressoTexto = document.createElement("span");
+    progressoTexto.textContent = `${percentual}%`;
+
+    const botaoSaibaMais = document.createElement("button");
+    botaoSaibaMais.classList.add("lmBotaoSaibaMais");
+    botaoSaibaMais.type = "button";
+    botaoSaibaMais.textContent = "Saiba Mais";
+    botaoSaibaMais.addEventListener("click", () => {
+      window.location.href = `visualizarTrilha.html?id=${trilhaId}`;
+    });
+
+    info.appendChild(titulo);
+    info.appendChild(labelStatus);
+    info.appendChild(detalhes);
+    info.appendChild(barraContainer);
+    info.appendChild(progressoTexto);
+    info.appendChild(botaoSaibaMais);
+
+    card.appendChild(imagem);
+    card.appendChild(info);
+
+    return card;
+  }
+
+  function renderizarTrilhasSalvas(trilhas) {
+    ppTrilhasSalvas.innerHTML = "";
+
+    if (!trilhas.length) {
+      ppTrilhasSalvas.innerHTML =
+        `<p class="ppMensagemVazia">Nenhuma trilha salva encontrada.</p>`;
+      return;
+    }
+
+    trilhas.slice(0, 8).forEach((vinculo) => {
+      ppTrilhasSalvas.appendChild(criarCardTrilhaSalva(vinculo));
+    });
+  }
+
+  async function carregarTrilhasSalvas() {
+    const resposta = await fetch(`/usuarios/${usuario.id}/trilhas`, {
+      headers: obterHeadersJson(),
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || "Erro ao carregar trilhas salvas.");
+    }
+
+    renderizarTrilhasSalvas(dados.trilhas || []);
   }
 
   function criarCardAcervo(livro) {
@@ -199,12 +331,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     ppAbrirAcervo.addEventListener("click", () => {
         window.location.href = "acervoLivros.html";
     });
+
+    ppAbrirTrilhasSalvas.addEventListener("click", () => {
+        window.location.href = "trilhasSalvas.html";
+    });
   }
 
   try {
     configurarBusca();
     configurarNavegacao();
 
+    await carregarTrilhasSalvas();
     await carregarLeiturasRecentes();
     await carregarAcervo();
   } catch (erro) {

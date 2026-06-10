@@ -6,6 +6,7 @@ const autorController = require('../controllers/autorController');
 const livroAutorController = require('../controllers/livroAutorController');
 const obraController = require('../controllers/obraController');
 const trilhaController = require('../controllers/trilhaController');
+const trilhaUsuarioController = require('../controllers/trilhaUsuarioController');
 const usuarioController = require('../controllers/usuarioController');
 const usuarioLivroController = require('../controllers/usuarioLivroController');
 const autenticacaoController = require('../controllers/autenticacaoController');
@@ -66,11 +67,19 @@ router.get('/obras/:id' , obraController.getObrasById);
 // Rotas - Trilha
 router.post('/trilhas', autenticarToken, checkAdmin, trilhaController.postTrilha);
 router.put('/trilhas/:id', autenticarToken, checkAdmin, trilhaController.putTrilha);
-router.delete('/trilhas/:trilhaId/obras/:obraId', trilhaController.deleteObraTrilha);
-router.delete('/trilhas/:id', trilhaController.deleteTrilha);
-
+router.delete('/trilhas/:trilhaId/obras/:obraId', autenticarToken, checkAdmin, trilhaController.deleteObraTrilha);
+router.delete('/trilhas/:id', autenticarToken, checkAdmin, trilhaController.deleteTrilha);
 router.get('/trilhas', trilhaController.getTrilhas);
 router.get('/trilhas/:id', trilhaController.getTrilhasById);
+
+// Rotas - TrilhaUsuario
+router.post('/usuarios/:id/trilhas', autenticarToken, trilhaUsuarioController.postTrilhaUsuario);
+router.put('/usuarios/:usuarioId/trilhas/:trilhaId', autenticarToken, trilhaUsuarioController.putTrilhaUsuario);
+router.get('/usuarios/:id/trilhas', autenticarToken, trilhaUsuarioController.getTrilhasUsuario);
+router.get('/usuarios/:usuarioId/trilhas/:trilhaId', autenticarToken, trilhaUsuarioController.getTrilhasUsuarioById);
+router.put('/usuarios/:usuarioId/trilhas/:trilhaId/obras/:obraId', autenticarToken, trilhaUsuarioController.putTrilhaUsuarioObra);
+router.put('/usuarios/:usuarioId/trilhas/:trilhaId/livros/:livroId', autenticarToken, trilhaUsuarioController.putTrilhaUsuarioLivro);
+router.delete('/usuarios/:usuarioId/trilhas/:trilhaId', autenticarToken, trilhaUsuarioController.deleteTrilhaUsuario);
 
 //rota de login
 router.post('/login', autenticacaoController.login);

@@ -123,6 +123,12 @@ module.exports = {
                 if (statusAtual !== 'lendo') {
                     return res.status(422).json({ error: 'Páginas lidas só pode ser atualizado com status "lendo"' });
                 }
+                const livro = await db.Livro.findByPk(livroId);
+                if (livro && paginasLidas > livro.paginas) {
+                    return res.status(422).json({ 
+                        error: `Páginas lidas não pode ser maior que o total de páginas do livro (${livro.paginas})` 
+                    });
+                }
                 vinculo.paginasLidas = paginasLidas;
             }
 

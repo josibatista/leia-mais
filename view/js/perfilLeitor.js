@@ -9,7 +9,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const API_LIVROS_SALVOS = `/usuarios/${usuario.id}/livros`;
 
   let livrosSalvos = [];
+  let trilhasSalvas = [];
+  let itensConcluidosTrilhas = [];
   let statusAtual = "todos";
+  let statusTrilhaAtual = "todos";
+
+  const API_TRILHAS_SALVAS = `/usuarios/${usuario.id}/trilhas`;
 
   function obterHeadersJson() {
     return {
@@ -64,13 +69,47 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function preencherEstatisticas() {
-    const livrosLidos = livrosSalvos.filter((item) => obterStatus(item) === "lido");
+    const idsLivrosLidosSalvos = new Set(
+      livrosSalvos
+        .filter((item) => obterStatus(item) === "lido")
+        .map((item) => String(obterLivro(item).id)),
+    );
 
-    const qtdLivrosLidos = livrosLidos.length;
+    let qtdLivrosLidos = idsLivrosLidosSalvos.size;
 
-    const qtdPaginasLidas = livrosSalvos.reduce((total, item) => {
+    itensConcluidosTrilhas.forEach((item) => {
+      if (item.itemTipo === "livro") {
+        const livroId = String(item.id);
+
+        if (!idsLivrosLidosSalvos.has(livroId)) {
+          idsLivrosLidosSalvos.add(livroId);
+          qtdLivrosLidos += 1;
+        }
+
+        return;
+      }
+
+      qtdLivrosLidos += 1;
+    });
+
+    let qtdPaginasLidas = livrosSalvos.reduce((total, item) => {
       return total + obterPaginasLidas(item);
     }, 0);
+
+    itensConcluidosTrilhas.forEach((item) => {
+      if (item.itemTipo !== "livro") {
+        return;
+      }
+
+      const livroId = String(item.id);
+      const jaContadoEmSalvos = livrosSalvos.some((salvo) => {
+        return String(obterLivro(salvo).id) === livroId && obterStatus(salvo) === "lido";
+      });
+
+      if (!jaContadoEmSalvos) {
+        qtdPaginasLidas += Number(item.paginas || 0);
+      }
+    });
 
     document.getElementById("blQtdLivrosLidos").textContent = qtdLivrosLidos;
     document.getElementById("blQtdDiasLeitura").textContent = calcularDiasLeitura();
@@ -113,8 +152,207 @@ document.addEventListener("DOMContentLoaded", async () => {
     return card;
   }
 
+  function obterTrilhaDoVinculo(vinculo) {
+    const trilhaRef = vinculo.trilhaId;
+
+    if (trilhaRef && typeof trilhaRef === "object") {
+      return trilhaRef;
+    }
+
+    return null;
+  }
+
+  function obterIdTrilha(vinculo) {
+    const trilha = obterTrilhaDoVinculo(vinculo);
+
+    if (trilha) {
+      return String(trilha._id || trilha.id);
+    }
+
+    return String(vinculo.trilhaId);
+  }
+
+  function formatarStatusTrilha(status) {
+    const statusFormatado = {
+      "para ler": "Para ler",
+      pausada: "Pausada",
+      "em andamento": "Em andamento",
+      concluída: "Concluída",
+    };
+
+    return statusFormatado[status] || status || "Sem status";
+  }
+
+  function criarCardTrilha(vinculo) {
+    const trilha = obterTrilhaDoVinculo(vinculo);
+    const trilhaId = obterIdTrilha(vinculo);
+    const percentual = vinculo.progresso?.percentual || 0;
+
+    const card = document.createElement("article");
+    card.classList.add("ppCardLeitura");
+
+    const imagem = document.createElement("img");
+    imagem.src = trilha?.imagemCapa || "/assets/capaPadrao.jpg";
+    imagem.alt = trilha?.tema || "Capa da trilha";
+    imagem.onerror = function () {
+      imagem.src = "/assets/capaPadrao.jpg";
+    };
+
+    const info = document.createElement("div");
+    info.classList.add("ppCardLeituraInfo");
+
+    const titulo = document.createElement("h4");
+    titulo.textContent = trilha?.tema || "Tema não informado";
+
+    const labelStatus = document.createElement("span");
+    labelStatus.classList.add("ppStatusTrilha");
+    labelStatus.textContent = formatarStatusTrilha(vinculo.status);
+
+    const detalhes = document.createElement("p");
+    detalhes.classList.add("blCardTrilhaSalvaDetalhes");
+
+    const partesDetalhes = [];
+
+    if (trilha?.nivelDificuldade) {
+      partesDetalhes.push(tfFormatarNivelTrilha(trilha.nivelDificuldade));
+    }
+
+    if (trilha?.xp || trilha?.xp === 0) {
+      partesDetalhes.push(`${trilha.xp} XP`);
+    }
+
+    detalhes.textContent = partesDetalhes.join(" • ") || "Detalhes não informados";
+
+    const barraContainer = document.createElement("div");
+    barraContainer.classList.add("ppBarraProgresso");
+
+    const barra = document.createElement("div");
+    barra.style.width = `${percentual}%`;
+    barraContainer.appendChild(barra);
+
+    const progressoTexto = document.createElement("span");
+    progressoTexto.textContent = `${percentual}%`;
+
+    const botaoSaibaMais = document.createElement("button");
+    botaoSaibaMais.classList.add("lmBotaoSaibaMais");
+    botaoSaibaMais.type = "button";
+    botaoSaibaMais.textContent = "Saiba Mais";
+    botaoSaibaMais.addEventListener("click", () => {
+      window.location.href = `visualizarTrilha.html?id=${trilhaId}`;
+    });
+
+    info.appendChild(titulo);
+    info.appendChild(labelStatus);
+    info.appendChild(detalhes);
+    info.appendChild(barraContainer);
+    info.appendChild(progressoTexto);
+    info.appendChild(botaoSaibaMais);
+
+    card.appendChild(imagem);
+    card.appendChild(info);
+
+    return card;
+  }
+
+  function renderizarTrilhas() {
+    const carrossel = document.getElementById("blCarrosselTrilhas");
+    carrossel.innerHTML = "";
+
+    const trilhasFiltradas =
+      statusTrilhaAtual === "todos"
+        ? trilhasSalvas
+        : trilhasSalvas.filter((item) => item.status === statusTrilhaAtual);
+
+    const preview = trilhasFiltradas.slice(0, 5);
+
+    if (preview.length === 0) {
+      const mensagem = document.createElement("p");
+      mensagem.classList.add("blMensagemEstado");
+      mensagem.textContent = "Nenhuma trilha encontrada nesta categoria.";
+      carrossel.appendChild(mensagem);
+      return;
+    }
+
+    preview.forEach((vinculo) => {
+      carrossel.appendChild(criarCardTrilha(vinculo));
+    });
+  }
+
+  async function carregarTrilhasSalvas() {
+    const resposta = await fetch(API_TRILHAS_SALVAS, {
+      headers: obterHeadersJson(),
+    });
+
+    const dados = await resposta.json();
+
+    if (!resposta.ok) {
+      throw new Error(dados.error || "Não foi possível carregar as trilhas.");
+    }
+
+    trilhasSalvas = Array.isArray(dados) ? dados : dados.trilhas || [];
+    await carregarItensConcluidosTrilhas();
+    renderizarTrilhas();
+  }
+
+  async function carregarItensConcluidosTrilhas() {
+    if (!trilhasSalvas.length) {
+      itensConcluidosTrilhas = [];
+      return;
+    }
+
+    const detalhes = await Promise.all(
+      trilhasSalvas.map(async (vinculo) => {
+        const trilhaId = obterIdTrilha(vinculo);
+
+        try {
+          const resposta = await fetch(
+            `/usuarios/${usuario.id}/trilhas/${trilhaId}`,
+            { headers: obterHeadersJson() },
+          );
+
+          if (!resposta.ok) {
+            return [];
+          }
+
+          const dados = await resposta.json();
+          return (dados.itens || []).filter((item) => item.concluida);
+        } catch (erro) {
+          console.error("Erro ao carregar itens da trilha:", erro);
+          return [];
+        }
+      }),
+    );
+
+    itensConcluidosTrilhas = detalhes.flat();
+  }
+
+  function configurarFiltrosTrilhas() {
+    const botoesFiltro = document.querySelectorAll('#blMenuFiltrosTrilhas .blFiltroLivro');
+
+    botoesFiltro.forEach((botao) => {
+      botao.addEventListener("click", () => {
+        botoesFiltro.forEach((item) => item.classList.remove("ativo"));
+
+        botao.classList.add("ativo");
+        statusTrilhaAtual = botao.dataset.status;
+
+        renderizarTrilhas();
+      });
+    });
+  }
+
+  function configurarSetaTrilhas() {
+    const botaoAbrirTrilhasSalvas = document.getElementById("blAbrirTrilhasSalvas");
+
+    if (botaoAbrirTrilhasSalvas) {
+      botaoAbrirTrilhasSalvas.addEventListener("click", () => {
+        window.location.href = "trilhasSalvas.html";
+      });
+    }
+  }
+
   function renderizarLivros() {
-    const carrossel = document.querySelector(".blCarrosselLivros");
+    const carrossel = document.getElementById("blCarrosselLivros");
     carrossel.innerHTML = "";
 
     const livrosFiltrados =
@@ -165,13 +403,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     livrosSalvos = Array.isArray(dados) ? dados : dados.livros || [];
-
-    preencherEstatisticas();
     renderizarLivros();
   }
 
   function configurarFiltros() {
-    const botoesFiltro = document.querySelectorAll(".blFiltroLivro");
+    const botoesFiltro = document.querySelectorAll(
+      "#blMenuFiltrosLivros .blFiltroLivro",
+    );
 
     botoesFiltro.forEach((botao) => {
       botao.addEventListener("click", () => {
@@ -215,12 +453,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     await carregarUsuarioAtualizado();
     await carregarLivrosSalvos();
+    await carregarTrilhasSalvas();
+    preencherEstatisticas();
 
     configurarFiltros();
+    configurarFiltrosTrilhas();
     configurarSetaLivros();
-    configurarLogout();
+    configurarSetaTrilhas();
   } catch (erro) {
     console.error("Erro no perfil:", erro);
-    alert(erro.message || "Erro ao carregar perfil.");
+    exibirAlertaAcesso(erro.message || "Não foi possível carregar o perfil.", {
+      titulo: "Atenção",
+    });
   }
 });
