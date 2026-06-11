@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       botaoSaibaMais.type = "button";
       botaoSaibaMais.textContent = "Saiba Mais";
       botaoSaibaMais.addEventListener("click", () => {
-        window.location.href = `visualizarTrilha.html?id=${trilhaId}`;
+        window.location.href = `visualizar.html?id=${trilhaId}`;
       });
   
       areaBotoes.appendChild(botaoSaibaMais);

@@ -47,7 +47,7 @@ function lmObterNomeAutor(autor) {
 
 if (lmCadastrarNovoAutor) {
   lmCadastrarNovoAutor.addEventListener('click', function () {
-    window.location.href = '/pages/autores/cadastroAutor.html';
+    window.location.href = '/pages/autores/cadastro.html';
   });
 }
 

@@ -499,7 +499,7 @@ function lmCriarCardTrilha(trilha) {
   botaoSaibaMais.textContent = "Saiba Mais";
 
   botaoSaibaMais.addEventListener("click", function () {
-    window.location.href = `visualizarTrilha.html?id=${idTrilha}`;
+    window.location.href = `visualizar.html?id=${idTrilha}`;
   });
 
   const areaAcoesTrilha = document.createElement("div");

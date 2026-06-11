@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     botaoSaibaMais.type = "button";
     botaoSaibaMais.textContent = "Saiba Mais";
     botaoSaibaMais.addEventListener("click", () => {
-      window.location.href = `/pages/trilhas/visualizarTrilha.html?id=${trilhaId}`;
+      window.location.href = `/pages/trilhas/visualizar.html?id=${trilhaId}`;
     });
 
     info.appendChild(titulo);
@@ -346,7 +346,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (botaoAbrirTrilhasSalvas) {
       botaoAbrirTrilhasSalvas.addEventListener("click", () => {
-        window.location.href = "/pages/trilhas/trilhasSalvas.html";
+        window.location.href = "/pages/trilhas/salvas.html";
       });
     }
   }
@@ -428,7 +428,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (botaoAbrirLivrosSalvos) {
       botaoAbrirLivrosSalvos.addEventListener("click", () => {
-        window.location.href = "/pages/livros/livrosSalvos.html";
+        window.location.href = "/pages/livros/salvos.html";
       });
     }
   }
@@ -445,7 +445,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         localStorage.removeItem("token");
         localStorage.removeItem("usuario");
 
-        window.location.href = "/pages/usuarios/leitor/loginLeitor.html";
+        window.location.href = "/pages/usuarios/leitor/login.html";
       });
     }
   } */

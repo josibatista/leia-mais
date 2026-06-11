@@ -14,7 +14,7 @@ function configurarBotaoAdicionarAdmin() {
 
   if (botaoAdicionarAdmin) {
     botaoAdicionarAdmin.addEventListener('click', () => {
-      window.location.href = '/pages/usuarios/adm/cadastroAdm.html';
+      window.location.href = '/pages/usuarios/adm/cadastro.html';
     });
   }
 }

@@ -22,7 +22,7 @@ function lmConfigurarBotaoAdicionarAutor() {
   if (!botaoAdicionarAutor) return;
 
   botaoAdicionarAutor.addEventListener('click', function () {
-    window.location.href = '/pages/autores/cadastroAutor.html';
+    window.location.href = '/pages/autores/cadastro.html';
   });
 }
 

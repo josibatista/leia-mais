@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leia Mais - Login Adm</title>
+    <title>Leia Mais - Cadastro Administrador</title>
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -28,39 +28,42 @@
                 <img src="/assets/logo.png" alt="Logo Leia Mais" class="blLogoImagem">
             </div>
 
-            <div id="blLoginAdmin" class="blCartaoLogin">
-                <h1>Login</h1>
-                <h2 class="blSubtitulo">Conta Administrador</h2>
-                
-                <form id="blFormLoginAdm">
+            <div id="blCadAdm" class="blCartaoCad">
+                <h1>Cadastro</h1>
+                <h2 class="blSubtitulo">Administrador</h2>
+
+                <form id="blFormCadastroAdm">
                     <div class="blGrupoInput">
-                        <label for="blInputLoginAdm">Usuário ou e-mail</label>
-                        <input type="text" id="blInputLoginAdm" name="usuario" required>
+                        <label for="blNomeAdm">Nome</label>
+                        <input type="text" id="blNomeAdm" name="nome" required>
+                    </div>
+
+                    <div class="blGrupoInput">
+                        <label for="blUsuarioAdm">Usuário</label>
+                        <input type="text" id="blUsuarioAdm" name="username" required>
+                    </div>
+
+                    <div class="blGrupoInput">
+                        <label for="blEmailAdm">E-mail</label>
+                        <input type="email" id="blEmailAdm" name="email" required>
                     </div>
 
                     <div class="blGrupoInput blInputSenha">
                         <label for="blSenhaAdm">Senha</label>
                         <input type="password" id="blSenhaAdm" name="senha" required>
                         <i class="fa-solid fa-eye" id="blOlhoSenha"></i>
-                        <div class="blEsqueceuSenha">
-                            <a href="/pages/usuarios/recuperarSenha.html">Esqueceu a senha?</a>
-                        </div>
                     </div>
 
-                    <div class="blGrupoInput blGrupoLembrar">
-                        <label for="blLembrarLoginAdm">
-                            <input type="checkbox" id="blLembrarLoginAdm" name="lembrar" />
-                            Lembrar de mim
-                        </label>
-                    </div>
-
-                    <button type="submit" class="blBotaoPrimario">Entrar</button>
+                    <button type="submit" class="blBotaoPrimario">Cadastrar</button>
                 </form>
 
                 <div class="blLinksRodape">
-                    <a href="/pages/usuarios/leitor/loginLeitor.html" id="blMudarParaLeitor" class="blLinkDestaque">Entrar como leitor.</a>
+                    <a href="login.html" class="blLinkDestaque">
+                        Já tem conta? Entrar
+                    </a>
                 </div>
             </div>
+
         </div>
     </main>
 
@@ -68,10 +71,7 @@
         <div class="lmAlertaBox">
             <h3 id="lmAlertaTitulo">Atenção</h3>
             <p id="lmAlertaMensagem">Mensagem do alerta.</p>
-
-            <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">
-            OK
-            </button>
+            <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
         </div>
     </div>
 

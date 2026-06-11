@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leia Mais - Cadastro Administrador</title>
+    <title>Leia Mais - Login Leitor</title>
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -28,39 +28,37 @@
                 <img src="/assets/logo.png" alt="Logo Leia Mais" class="blLogoImagem">
             </div>
 
-            <div id="blCadAdm" class="blCartaoCad">
-                <h1>Cadastro</h1>
-                <h2 class="blSubtitulo">Administrador</h2>
-
-                <form id="blFormCadastroAdm">
+            <div id="blLoginLeitor" class="blCartaoLogin">
+                <h1>Login</h1>
+                
+                <form id="blFormLoginLeitor">
                     <div class="blGrupoInput">
-                        <label for="blNomeAdm">Nome</label>
-                        <input type="text" id="blNomeAdm" name="nome" required>
-                    </div>
-
-                    <div class="blGrupoInput">
-                        <label for="blUsuarioAdm">Usuário</label>
-                        <input type="text" id="blUsuarioAdm" name="username" required>
-                    </div>
-
-                    <div class="blGrupoInput">
-                        <label for="blEmailAdm">E-mail</label>
-                        <input type="email" id="blEmailAdm" name="email" required>
+                        <label for="blInputLoginLeitor">E-mail ou username</label>
+                        <input type="text" id="blInputLoginLeitor" name="login" required>
                     </div>
 
                     <div class="blGrupoInput blInputSenha">
-                        <label for="blSenhaAdm">Senha</label>
-                        <input type="password" id="blSenhaAdm" name="senha" required>
+                        <label for="blSenhaLeitor">Senha</label>
+                        <input type="password" id="blSenhaLeitor" name="senha" required>
                         <i class="fa-solid fa-eye" id="blOlhoSenha"></i>
+                        <div class="blEsqueceuSenha">
+                            <a href="/pages/usuarios/recuperarSenha.html">Esqueceu a senha?</a>
+                        </div>
                     </div>
 
-                    <button type="submit" class="blBotaoPrimario">Cadastrar</button>
+                    <div class="blGrupoInput blGrupoLembrar">
+                        <label for="blLembrarLoginLeitor">
+                            <input type="checkbox" id="blLembrarLoginLeitor" name="lembrar" />
+                            Lembrar de mim
+                        </label>
+                    </div>
+
+                    <button type="submit" class="blBotaoPrimario">Entrar</button>
                 </form>
 
                 <div class="blLinksRodape">
-                    <a href="loginAdm.html" class="blLinkDestaque">
-                        Já tem conta? Entrar
-                    </a>
+                    <p>Não possui conta? <a href="/pages/uusarios/leitor/cadastro.html" class="blLinkDestaque">Cadastre-se aqui.</a></p>
+                    <a href="/pages/usuarios/adm/login.html" id="blMudarParaAdmin" class="blLinkDestaque">Entrar como administrador.</a>
                 </div>
             </div>
 
@@ -71,11 +69,14 @@
         <div class="lmAlertaBox">
             <h3 id="lmAlertaTitulo">Atenção</h3>
             <p id="lmAlertaMensagem">Mensagem do alerta.</p>
-            <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+
+            <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">
+            OK
+            </button>
         </div>
     </div>
 
     <script src="/js/menu.js"></script>
-    <script src="/js/usuarios/adm/loginCadAdm.js"></script>
+    <script src="/js/usuarios/leitor/loginCadLeitor.js"></script>
 </body>
 </html>

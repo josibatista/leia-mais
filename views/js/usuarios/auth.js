@@ -233,7 +233,7 @@ function protegerRotaAdmin() {
     ocultarConteudoProtegido();
     exibirAlertaAcesso("Acesso permitido apenas para administradores.", {
       titulo: "Acesso negado",
-      redirect: "/pages/usuarios/adm/loginAdm.html",
+      redirect: "/pages/usuarios/adm/login.html",
     });
   };
 
@@ -257,7 +257,7 @@ function protegerRotaLeitor() {
     ocultarConteudoProtegido();
     exibirAlertaAcesso("Faça login como leitor para acessar esta página.", {
       titulo: "Acesso negado",
-      redirect: "/pages/usuarios/leitor/loginLeitor.html",
+      redirect: "/pages/usuarios/leitor/login.html",
     });
   };
 

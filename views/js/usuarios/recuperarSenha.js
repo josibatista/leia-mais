@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         exibirAlertaAcesso("Senha alterada com sucesso!", {
           titulo: "Sucesso",
-          redirect: "pages/usuarios/leitor/loginLeitor.html",
+          redirect: "pages/usuarios/leitor/login.html",
         });
       } catch (erro) {
         console.error("Erro:", erro);

@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         salvarSessaoLogin(dados.token, dados.usuario, !!lembrar);
 
-        window.location.href = "/pages/livros/acervoLivros.html";
+        window.location.href = "/pages/livros/acervo.html";
       } catch (erro) {
         console.error("Erro no login:", erro);
         exibirAlertaAcesso("Não foi possível conectar ao servidor.", {

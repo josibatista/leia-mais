@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   if (!token || !usuario) {
     exibirAlertaAcesso("Faça login para continuar.", {
       titulo: "Acesso negado",
-      redirect: "/pages/usuarios/leitor/loginLeitor.html",
+      redirect: "/pages/usuarios/leitor/login.html",
     });
     return;
   }

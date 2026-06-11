@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leia Mais - Login Leitor</title>
+    <title>Leia Mais - Login Adm</title>
     <link rel="stylesheet" href="/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -28,18 +28,19 @@
                 <img src="/assets/logo.png" alt="Logo Leia Mais" class="blLogoImagem">
             </div>
 
-            <div id="blLoginLeitor" class="blCartaoLogin">
+            <div id="blLoginAdmin" class="blCartaoLogin">
                 <h1>Login</h1>
+                <h2 class="blSubtitulo">Conta Administrador</h2>
                 
-                <form id="blFormLoginLeitor">
+                <form id="blFormLoginAdm">
                     <div class="blGrupoInput">
-                        <label for="blInputLoginLeitor">E-mail ou username</label>
-                        <input type="text" id="blInputLoginLeitor" name="login" required>
+                        <label for="blInputLoginAdm">Usuário ou e-mail</label>
+                        <input type="text" id="blInputLoginAdm" name="usuario" required>
                     </div>
 
                     <div class="blGrupoInput blInputSenha">
-                        <label for="blSenhaLeitor">Senha</label>
-                        <input type="password" id="blSenhaLeitor" name="senha" required>
+                        <label for="blSenhaAdm">Senha</label>
+                        <input type="password" id="blSenhaAdm" name="senha" required>
                         <i class="fa-solid fa-eye" id="blOlhoSenha"></i>
                         <div class="blEsqueceuSenha">
                             <a href="/pages/usuarios/recuperarSenha.html">Esqueceu a senha?</a>
@@ -47,8 +48,8 @@
                     </div>
 
                     <div class="blGrupoInput blGrupoLembrar">
-                        <label for="blLembrarLoginLeitor">
-                            <input type="checkbox" id="blLembrarLoginLeitor" name="lembrar" />
+                        <label for="blLembrarLoginAdm">
+                            <input type="checkbox" id="blLembrarLoginAdm" name="lembrar" />
                             Lembrar de mim
                         </label>
                     </div>
@@ -57,11 +58,9 @@
                 </form>
 
                 <div class="blLinksRodape">
-                    <p>Não possui conta? <a href="cadastroLeitor.html" class="blLinkDestaque">Cadastre-se aqui.</a></p>
-                    <a href="/pages/usuarios/adm/loginAdm.html" id="blMudarParaAdmin" class="blLinkDestaque">Entrar como administrador.</a>
+                    <a href="/pages/usuarios/leitor/login.html" id="blMudarParaLeitor" class="blLinkDestaque">Entrar como leitor.</a>
                 </div>
             </div>
-
         </div>
     </main>
 
@@ -77,6 +76,6 @@
     </div>
 
     <script src="/js/menu.js"></script>
-    <script src="/js/usuarios/leitor/loginCadLeitor.js"></script>
+    <script src="/js/usuarios/adm/loginCadAdm.js"></script>
 </body>
 </html>

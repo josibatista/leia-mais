@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     progressoTexto.textContent = `${progresso}%`;
 
     const botao = document.createElement("a");
-    botao.href = "/pages/livros/livrosSalvos.html";
+    botao.href = "/pages/livros/salvos.html";
     botao.classList.add("ppBotaoContinuar");
     botao.textContent = "Continuar";
 
@@ -187,7 +187,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     botaoSaibaMais.type = "button";
     botaoSaibaMais.textContent = "Saiba Mais";
     botaoSaibaMais.addEventListener("click", () => {
-      window.location.href = `/pages/trilhas/visualizarTrilha.html?id=${trilhaId}`;
+      window.location.href = `/pages/trilhas/visualizar.html?id=${trilhaId}`;
     });
 
     info.appendChild(titulo);
@@ -325,15 +325,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function configurarNavegacao() {
     ppAbrirLivrosSalvos.addEventListener("click", () => {
-        window.location.href = "/pages/livros/livrosSalvos.html";
+        window.location.href = "/pages/livros/salvos.html";
     });
 
     ppAbrirAcervo.addEventListener("click", () => {
-        window.location.href = "/pages/livros/acervoLivros.html";
+        window.location.href = "/pages/livros/acervo.html";
     });
 
     ppAbrirTrilhasSalvas.addEventListener("click", () => {
-        window.location.href = "/pages/trilhas/trilhasSalvas.html";
+        window.location.href = "/pages/trilhas/salvas.html";
     });
   }
 
