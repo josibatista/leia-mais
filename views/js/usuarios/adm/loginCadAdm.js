@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         exibirAlertaAcesso("Administrador cadastrado com sucesso!", {
           titulo: "Sucesso",
-          redirect: "/pages/usuarios/usuarios.html",
+          redirect: "/pages/usuarios/listagem.html",
         });
       } catch (erro) {
         console.error("Erro no cadastro:", erro);
