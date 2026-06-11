@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leia Mais - Perfil Leitor</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body class="lmAcervoBody">
+    <!-- Barra Lateral -->
+    <div id="blMenuContainer"></div>
+
+    <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+<header class="lmCabecalho">
+  <div class="lmCabecalhoSuperior">
+    <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+      &#9776;
+    </button>
+  </div>
+</header>
+
+    <!-- Conteúdo Principal -->
+   <main class="blConteudoPrincipal blConteudoLeitor">
+
+      <section class="blSecaoUsuario">
+        <div class="blAvatarContainer">
+          <div class="blAvatarCirculo" id="blLetraPerfil"></div>
+          <div class="blCoroaIcone"><i class="fa-solid fa-crown"></i></div>
+        </div>
+
+        <div class="blInfoPerfil">
+          <div class="blLinhaPrincipal">
+            <span class="blRotuloGrande" id="blNomePerfil"></span>
+          </div>
+
+          <div class="blLinhaSecundaria">
+            <span class="blRotuloPequeno" id="blUsuarioPerfil"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="blGradeEstatisticas">
+        <div class="blCardEstatistica">
+          <i class="fa-solid fa-book blIconeCard"></i>
+          <span class="blNumeroEstatistica"id="blQtdLivrosLidos">0</span>
+          <span class="blTextoEstatistica">Livros Lidos</span>
+        </div>
+        <div class="blCardEstatistica">
+          <i class="fa-solid fa-fire blIconeCard"></i>
+          <span class="blNumeroEstatistica"id="blQtdDiasLeitura">0</span>
+          <span class="blTextoEstatistica">Dias De Leitura</span>
+        </div>
+        <div class="blCardEstatistica">
+          <i class="fa-solid fa-book-open blIconeCard"></i>
+          <span class="blNumeroEstatistica"id="blQtdPaginasLidas">0</span>
+          <span class="blTextoEstatistica">Páginas Lidas</span>
+        </div>
+      </section>
+
+      <section class="blSecaoMetas">
+        <div class="blMetaTitulo">
+          Metas do mês: <span class="blMetaDestaque"></span>
+        </div>
+        <div class="blBarraProgressoContainer">
+          <div class="blBarraProgresso"></div>
+          <span class="blProgressoTexto"></span>
+        </div>
+      </section>
+
+      <section class="blSecaoLista">
+        <div class="blListaCabecalho">
+          <div class="blLivrosTitulos">
+            <h3>Trilhas</h3>
+            <div class="blMenuLivros" id="blMenuFiltrosTrilhas">
+              <button class="blFiltroLivro ativo" data-status="todos" data-tipo="trilha">Trilhas</button>
+              <button class="blFiltroLivro" data-status="para ler" data-tipo="trilha">Para Ler</button>
+              <button class="blFiltroLivro" data-status="em andamento" data-tipo="trilha">Lendo</button>
+              <button class="blFiltroLivro" data-status="pausada" data-tipo="trilha">Pausadas</button>
+              <button class="blFiltroLivro" data-status="concluída" data-tipo="trilha">Concluídas</button>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right" id="blAbrirTrilhasSalvas"></i>
+        </div>
+        <div class="blCarrosselLivros" id="blCarrosselTrilhas"></div>
+      </section>
+
+      <section class="blSecaoLista">
+        <div class="blListaCabecalho">
+          <div class="blLivrosTitulos">
+            <h3>Livros</h3>
+            <div class="blMenuLivros" id="blMenuFiltrosLivros">
+              <button class="blFiltroLivro ativo" data-status="todos">Todos</button>
+              <button class="blFiltroLivro" data-status="lendo">Lendo</button>
+              <button class="blFiltroLivro" data-status="para ler">Para Ler</button>
+              <button class="blFiltroLivro" data-status="lido">Lidos</button>
+            </div>
+          </div>
+          <i class="fa-solid fa-chevron-right" id="blAbrirLivrosSalvos"></i>
+        </div>
+        <div class="blCarrosselLivros" id="blCarrosselLivros"></div>
+      </section>
+    </main>
+
+    <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+      <div class="lmAlertaBox">
+        <h3 id="lmAlertaTitulo">Atenção</h3>
+        <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+        <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+      </div>
+    </div>
+
+    <script src="/js/usuarios/auth.js"></script>
+    <script src="/js/menu.js"></script>
+    <script src="/js/trilhas/trilhaFormularioItens.js"></script>
+    <script src="/js/usuarios/leitor/perfilLeitor.js"></script>
+
+  </body>
+</html>

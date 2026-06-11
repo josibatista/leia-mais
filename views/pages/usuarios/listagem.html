@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usuários | Leia Mulheres</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body class="lmCadastroBody lmUsuariosBody">
+
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCadastroCabecalho">
+    <div class="lmCadastroCabecalhoTopo">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+    </div>
+
+    <div class="lmCadastroCabecalhoCentro">
+      <img src="/assets/logoLeiaMais.png" alt="Logo Leia Mais" class="lmCabecalhoLogoImagem" />
+
+      <p class="lmCadastroSubtitulo">
+        Área administrativa para gerenciamento de usuários.
+      </p>
+    </div>
+  </header>
+
+  <main class="lmListagemConteudo">
+    <section class="lmListagemSecao">
+        <div class="lmListagemCabecalho">
+        <h2>Usuários</h2>
+        <p>Lista de usuários cadastrados no sistema.</p>
+        </div>
+
+        <div class="lmListagemLista" id="lmListagemLista">
+        <p class="lmUsuariosMensagem">Carregando usuários...</p>
+        </div>
+    </section>
+
+    <button class="lmBotaoFlutuante" id="lmBotaoAdicionarAdmin" title="Cadastrar administrador">
+        +
+    </button>
+  </main>
+
+  <script src="/js/usuarios/auth.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="/js/usuarios/usuarios.js"></script>
+</body>
+
+</html>

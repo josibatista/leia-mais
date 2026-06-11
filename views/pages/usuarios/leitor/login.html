@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leia Mais - Login Leitor</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="/js/usuarios/auth.js"></script>
+</head>
+
+<body class="blBody blBodyComMenu">
+    <div id="blMenuContainer"></div>
+    <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+    <header class="blCabecalhoMenuAuth">
+        <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" type="button" aria-label="Abrir menu">
+            &#9776;
+        </button>
+    </header>
+
+    <main class="blAreaCentralAuth">
+        <div class="blContainerPrincipal">
+
+            <div class="blContainerLogo">
+                <img src="/assets/logo.png" alt="Logo Leia Mais" class="blLogoImagem">
+            </div>
+
+            <div id="blLoginLeitor" class="blCartaoLogin">
+                <h1>Login</h1>
+                
+                <form id="blFormLoginLeitor">
+                    <div class="blGrupoInput">
+                        <label for="blInputLoginLeitor">E-mail ou username</label>
+                        <input type="text" id="blInputLoginLeitor" name="login" required>
+                    </div>
+
+                    <div class="blGrupoInput blInputSenha">
+                        <label for="blSenhaLeitor">Senha</label>
+                        <input type="password" id="blSenhaLeitor" name="senha" required>
+                        <i class="fa-solid fa-eye" id="blOlhoSenha"></i>
+                        <div class="blEsqueceuSenha">
+                            <a href="/pages/usuarios/recuperarSenha.html">Esqueceu a senha?</a>
+                        </div>
+                    </div>
+
+                    <div class="blGrupoInput blGrupoLembrar">
+                        <label for="blLembrarLoginLeitor">
+                            <input type="checkbox" id="blLembrarLoginLeitor" name="lembrar" />
+                            Lembrar de mim
+                        </label>
+                    </div>
+
+                    <button type="submit" class="blBotaoPrimario">Entrar</button>
+                </form>
+
+                <div class="blLinksRodape">
+                    <p>Não possui conta? <a href="/pages/uusarios/leitor/cadastro.html" class="blLinkDestaque">Cadastre-se aqui.</a></p>
+                    <a href="/pages/usuarios/adm/login.html" id="blMudarParaAdmin" class="blLinkDestaque">Entrar como administrador.</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+        <div class="lmAlertaBox">
+            <h3 id="lmAlertaTitulo">Atenção</h3>
+            <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+
+            <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">
+            OK
+            </button>
+        </div>
+    </div>
+
+    <script src="/js/menu.js"></script>
+    <script src="/js/usuarios/leitor/loginCadLeitor.js"></script>
+</body>
+</html>

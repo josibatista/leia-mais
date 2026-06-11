@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Leia+ | Início</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/usuarios/auth.js"></script>
+</head>
+
+<body class="lmHomeBody">
+
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmHomeCabecalho">
+    <div class="lmHomeTopo">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+
+      <img
+        src="/assets/logoLeiaMais.png"
+        alt="Logo Leia Mais"
+        class="lmHomeLogoPequena"
+      />
+
+      <a href="/pages/usuarios/leitor/login.html" class="lmHomeLoginLink">Entrar</a>
+    </div>
+
+    <section class="lmHomeHero">
+      <div class="lmHomeHeroTexto">
+        <span class="lmHomeEtiqueta">Leia+ Plataforma Literária</span>
+
+        <h1>Descubra livros, trilhas e novas jornadas de leitura.</h1>
+
+        <p>
+          Explore o acervo do Leia Mulheres e conheça trilhas literárias pensadas
+          para aproximar leitoras e leitores de novas histórias, autoras e experiências.
+        </p>
+
+        <div class="lmHomeAcoes">
+          <a href="/pages/trilhas/catalogo.html" class="lmHomeBotaoPrimario">Explorar Trilhas</a>
+          <a href="/pages/livros/acervo.html" class="lmHomeBotaoSecundario">Ver Acervo</a>
+        </div>
+      </div>
+
+      <div class="lmHomeHeroVisual">
+        <div class="lmHomeCardVisual lmHomeCardVisualMaior">
+          <span>Trilhas</span>
+          <strong>Literature, cultura e descoberta</strong>
+        </div>
+
+        <div class="lmHomeCardVisual">
+          <span>Leia Mulheres</span>
+          <strong>Obras escritas por mulheres</strong>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <main class="lmHomePrincipal">
+
+    <section class="lmHomeSecao">
+      <div class="lmHomeSecaoCabecalho">
+        <span class="lmHomeSecaoEtiqueta">Comece por aqui</span>
+        <h2>Escolha sua experiência</h2>
+      </div>
+
+      <div class="lmHomeGridExperiencias">
+        <article class="lmHomeExperienciaCard">
+          <h3>Leia Mulheres</h3>
+          <p>
+            Conheça livros escritos por mulheres e amplie seu repertório literário.
+          </p>
+          <a href="/pages/livros/acervo.html">Acessar acervo &gt;</a>
+        </article>
+
+        <article class="lmHomeExperienciaCard">
+          <h3>Catálogo de Trilhas</h3>
+          <p>
+            Explore trilhas temáticas para organize sua jornada de leitura.
+          </p>
+          <a href="/pages/trilhas/catalogo.html">Ver trilhas &gt;</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="lmHomeSecao lmHomeSecaoDestaque">
+      <div class="lmHomeSecaoCabecalho">
+        <span class="lmHomeSecaoEtiqueta">Para visitantes</span>
+        <h2>O que você pode acessar sem login?</h2>
+      </div>
+
+      <div class="lmHomeGridInfo">
+        <div class="lmHomeInfoCard">
+          <h3>01</h3>
+          <p>Consultar o acervo do Leia Mulheres.</p>
+        </div>
+
+        <div class="lmHomeInfoCard">
+          <h3>02</h3>
+          <p>Visualizar detalhes dos livros disponíveis.</p>
+        </div>
+
+        <div class="lmHomeInfoCard">
+          <h3>03</h3>
+          <p>Explorar o catálogo de trilhas literárias.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lmHomeChamadaFinal">
+      <h2>Quer salvar trilhas e acompanhar sua jornada?</h2>
+      <p>
+        Crie sua conta para acessar recursos personalizados dentro da plataforma.
+      </p>
+
+      <div class="lmHomeAcoes">
+        <a href="/pages/usuarios/leitor/cadastro.html" class="lmHomeBotaoPrimario">Criar Conta</a>
+        <a href="/pages/usuarios/leitor/login.html" class="lmHomeBotaoSecundario">Fazer Login</a>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Acervo de Trilhas | Leia Mulheres</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body class="lmAcervoBody">
+
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCabecalho">
+    <div class="lmCabecalhoSuperior">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+
+      <button class="lmCabecalhoBotao" id="lmBotaoAbrirBusca" aria-label="Buscar">
+        <svg
+          class="lmIconeBusca"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="lmBuscaHeader" id="lmBuscaHeader">
+      <input
+        type="text"
+        id="lmCampoBuscaTrilhas"
+        placeholder="Buscar por tema, descrição, nível ou XP"
+      />
+    </div>
+
+    <div class="lmCabecalhoCentro">
+      <img
+        src="/assets/logoLeiaMais.png"
+        alt="Logo Leia Mais"
+        class="lmCabecalhoLogoImagem"
+      />
+
+      <h1>Catálogo de Trilhas</h1>
+
+      <div class="lmDescricaoContainer" id="lmDescricaoContainer">
+        <p class="lmDescricaoProjeto">
+          O catálogo de trilhas reúne caminhos de leitura organizados por tema, nível de dificuldade e experiência.
+          Cada trilha foi pensada para guiar a leitora ou o leitor em uma jornada de aprendizado, descoberta e contato
+          com diferentes obras e assuntos.
+        </p>
+
+        <p class="lmDescricaoProjeto">
+          Abaixo estão as trilhas disponíveis. Use a busca para encontrar uma trilha por tema,
+          descrição, nível de dificuldade ou XP.
+        </p>
+      </div>
+
+      <button
+        class="lmToggleDescricao"
+        id="lmToggleDescricao"
+        type="button"
+        aria-label="Exibir ou ocultar descrição"
+      >
+        ▼
+      </button>
+    </div>
+  </header>
+
+  <main class="lmConteudoPrincipal">
+    <section class="lmSecaoAcervo">
+
+      <div class="lmGradeLivros" id="lmGradeTrilhas" aria-live="polite">
+        <p class="lmMensagemEstado" id="lmMensagemEstado">Carregando trilhas...</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="lmModalOverlay" id="lmModalOverlay">
+    <div class="lmModalConteudo">
+      <button class="lmModalFechar" id="lmModalFechar" aria-label="Fechar modal">
+        &times;
+      </button>
+
+      <h2 class="lmModalTitulo" id="lmModalTitulo">Tema da Trilha</h2>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Nível:</span>
+        <span id="lmModalNivel">Nível não informado</span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">XP:</span>
+        <span id="lmModalXp">XP não informado</span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Status: </span>
+        <span id="lmModalStatus">Status não informado</span>
+      </div>
+
+      <div class="lmModalBlocoDescricao">
+        <span class="lmModalRotulo">Descrição:</span>
+        <p id="lmModalDescricao">Descrição da trilha.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lmModalOverlay" id="lmModalEditarTrilha">
+    <div class="lmModalConteudo lmModalConteudoFormulario">
+      <button class="lmModalFechar" id="lmFecharModalEditarTrilha" type="button">
+        &times;
+      </button>
+
+      <h2 class="lmModalTitulo">Editar Trilha</h2>
+
+      <form id="lmFormularioEditarTrilha" class="lmCadastroFormularioLivro">
+        <input type="hidden" id="lmEditarTrilhaId">
+
+        <div class="lmGrupoCampo">
+          <label for="lmEditarTema" class="lmRotuloCampo">Tema</label>
+          <input type="text" id="lmEditarTema" class="lmCampoTexto" required>
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="lmEditarDescricao" class="lmRotuloCampo">Descrição</label>
+          <textarea id="lmEditarDescricao" class="lmCampoTextoArea"></textarea>
+        </div>
+
+        <div class="lmGrupoLinha">
+          <div class="lmGrupoCampo">
+            <label for="lmEditarNivelDificuldade" class="lmRotuloCampo">Nível de dificuldade</label>
+            <select id="lmEditarNivelDificuldade" class="lmCampoSelecao" required></select>
+          </div>
+
+          <div class="lmGrupoCampo">
+            <label for="lmEditarXp" class="lmRotuloCampo">XP</label>
+            <input type="number" id="lmEditarXp" class="lmCampoTexto" min="0" required>
+          </div>
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="lmEditarObra" class="lmRotuloCampo">Obras</label>
+          <div class="lmCadastroAutoresLinha">
+            <div class="lmCadastroAutocomplete">
+              <input type="text" id="lmEditarObra" class="lmCampoTexto" placeholder="Digite ou selecione uma obra" autocomplete="off" />
+              <div class="lmCadastroAutocompleteLista" id="lmEditarListaObras"></div>
+            </div>
+            <button type="button" class="lmCadastroBotaoAdicionarAutor" id="lmEditarAdicionarObra" aria-label="Adicionar obra">+</button>
+          </div>
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="lmEditarLivro" class="lmRotuloCampo">Livros</label>
+          <div class="lmCadastroAutoresLinha">
+            <div class="lmCadastroAutocomplete">
+              <input type="text" id="lmEditarLivro" class="lmCampoTexto" placeholder="Digite ou selecione um livro" autocomplete="off" />
+              <div class="lmCadastroAutocompleteLista" id="lmEditarListaLivros"></div>
+            </div>
+            <button type="button" class="lmCadastroBotaoAdicionarAutor" id="lmEditarAdicionarLivro" aria-label="Adicionar livro">+</button>
+          </div>
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label class="lmRotuloCampo">Itens da trilha</label>
+          <div id="lmEditarListaItensTrilha" class="lmContainerListaItensTrilha"></div>
+        </div>
+
+        <div class="lmGrupoCampo lmGrupoCampoCheck">
+          <label class="lmRotuloCheckbox" for="lmEditarLiberada">
+            <input type="checkbox" id="lmEditarLiberada" class="lmCampoCheckBox" />
+            <span>Trilha liberada?</span>
+          </label>
+        </div>
+
+        <button type="submit" class="lmBotaoSaibaMais">Salvar alterações</button>
+      </form>
+    </div>
+  </div>
+
+  <a
+    href="cadastro.html"
+    class="lmBotaoFlutuante"
+    id="lmBotaoFlutuante"
+    aria-label="Adicionar trilha"
+  >
+    +
+  </a>
+
+  <div class="lmModalOverlay" id="lmModalMensagemAcervo">
+    <div class="lmModalConteudo lmModalMensagemConteudo">
+      <button class="lmModalFechar" id="lmFecharModalMensagemAcervo" type="button">
+        &times;
+      </button>
+
+      <h2 class="lmModalTitulo" id="lmModalMensagemTitulo">Atenção</h2>
+
+      <p class="lmModalMensagemTexto" id="lmModalMensagemTexto"></p>
+
+      <div class="lmModalMensagemAcoes">
+        <button type="button" class="lmBotaoSaibaMais" id="lmBotaoConfirmarMensagem">
+          OK
+        </button>
+
+        <button type="button" class="lmBotaoCancelar" id="lmBotaoCancelar">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/usuarios/auth.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="/js/trilhas/trilhaFormularioItens.js"></script>
+  <script src="/js/trilhas/catalogoTrilhas.js"></script>
+</body>
+</html>

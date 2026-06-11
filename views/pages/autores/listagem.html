@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Autores | Leia Mulheres</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body class="lmCadastroBody lmUsuariosBody">
+
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCadastroCabecalho">
+    <div class="lmCadastroCabecalhoTopo">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+
+      <button class="lmCabecalhoBotao" id="lmBotaoAbrirBusca" aria-label="Buscar autor">
+        <svg
+          class="lmIconeBusca"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.65" y1="16.65" x2="21" y2="21"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="lmCadastroCabecalhoCentro">
+      <img src="/assets/logoLeiaMais.png" alt="Logo Leia Mais" class="lmCabecalhoLogoImagem" />
+
+      <p class="lmCadastroSubtitulo">
+        Área administrativa para gerenciamento de autores.
+      </p>
+    </div>
+  </header>
+
+  <div class="lmBuscaHeader" id="lmBuscaHeader">
+    <input
+      type="text"
+      id="lmCampoBuscaAutores"
+      placeholder="Buscar por nome ou biografia"
+    />
+  </div>
+
+  <main class="lmListagemConteudo">
+    <section class="lmListagemSecao">
+      <div class="lmListagemCabecalho">
+        <h2>Autores</h2>
+        <p>Lista de autores cadastrados no sistema.</p>
+      </div>
+
+      <div class="lmListagemLista" id="lmAutoresLista">
+        <p class="lmUsuariosMensagem">Carregando autores...</p>
+      </div>
+    </section>
+
+    <a
+      href="cadastro.html"
+      class="lmBotaoFlutuante"
+      id="lmBotaoAdicionarAutor"
+      aria-label="Adicionar autor"
+      title="Adicionar autor"
+    >
+      +
+    </a>
+  </main>
+
+  <div class="lmModalOverlay" id="lmModalEditarAutor">
+    <div class="lmModalConteudo">
+      <button class="lmModalFechar" id="lmFecharModalEditarAutor" type="button">
+        &times;
+      </button>
+
+      <h2 class="lmModalTitulo">Editar Autor</h2>
+
+      <form id="lmFormularioEditarAutor">
+        <input type="hidden" id="lmEditarAutorId" />
+
+        <div class="lmGrupoCampo">
+          <label for="lmEditarNomeAutor" class="lmRotuloCampo">Nome</label>
+          <input
+            type="text"
+            id="lmEditarNomeAutor"
+            class="lmCampoTexto"
+            required
+          />
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="lmEditarBiografiaAutor" class="lmRotuloCampo">Biografia</label>
+          <textarea
+            id="lmEditarBiografiaAutor"
+            class="lmCampoTextoArea"
+          ></textarea>
+        </div>
+
+        <p class="lmCadastroMensagem" id="lmMensagemEditarAutor"></p>
+
+        <div class="lmAcoesFormulario">
+          <button type="button" class="lmCadastroBotaoSecundario" id="lmCancelarEdicaoAutor">
+            Cancelar
+          </button>
+
+          <button type="submit" class="lmCadastroBotaoPrimario">
+            Salvar alterações
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="lmModalOverlay" id="lmModalExcluirAutor">
+    <div class="lmModalConteudo lmModalMensagemConteudo">
+      <button class="lmModalFechar" id="lmFecharModalExcluirAutor" type="button">
+        &times;
+      </button>
+
+      <h2 class="lmModalTitulo">Excluir autor</h2>
+
+      <p class="lmModalMensagemTexto" id="lmTextoExcluirAutor">
+        Tem certeza que deseja excluir este autor?
+      </p>
+
+      <div class="lmModalMensagemAcoes">
+        <button type="button" class="lmBotaoCancelar" id="lmCancelarExclusaoAutor">
+          Cancelar
+        </button>
+
+        <button type="button" class="lmBotaoSaibaMais" id="lmConfirmarExclusaoAutor">
+          Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/usuarios/auth.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="/js/autores/autores.js"></script>
+</body>
+
+</html>

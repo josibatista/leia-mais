@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leia Mais - Configurações</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body class="lmAcervoBody">
+    <!-- Barra Lateral -->
+    <div id="blMenuContainer"></div>
+
+    <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+    <header class="lmCabecalho">
+      <div class="lmCabecalhoSuperior">
+        <button
+          class="lmCabecalhoBotao"
+          id="lmMenuAbrirBotao"
+          aria-label="Abrir menu"
+        >
+          &#9776;
+        </button>
+      </div>
+    </header>
+
+    <main class="blConteudoPrincipal">
+      <header class="blCabecalhoConfiguracoes">
+        <h1 class="blTituloPagina">Configurações</h1>
+      </header>
+
+      <div class="blContainerConfiguracoes">
+        <section class="blSecaoConfiguracao">
+          <h2 class="blTituloCategoria">Conta</h2>
+          <div class="blListaItensConfig">
+            <div class="blItemConfig">
+              <div class="blInfoItem">
+                <span class="blNomeItem">Nome</span>
+                <span class="blValorItem" id="blNomePerfil"></span>
+              </div>
+              <button
+                type="button"
+                class="lmBotaoAdminIcone"
+                data-campo="nome"
+                aria-label="Editar nome"
+              >
+                <svg
+                  class="lmIconeAdminLivro"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div class="blItemConfig">
+              <div class="blInfoItem">
+                <span class="blNomeItem">Usuário</span>
+                <span class="blValorItem" id="blUsuarioPerfil"></span>
+              </div>
+              <button
+                type="button"
+                class="lmBotaoAdminIcone"
+                data-campo="username"
+                aria-label="Editar usuário"
+              >
+                <svg
+                  class="lmIconeAdminLivro"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div class="blItemConfig">
+              <div class="blInfoItem">
+                <span class="blNomeItem">Email</span>
+                <span class="blValorItem" id="blEmailPerfil"></span>
+              </div>
+              <button
+                type="button"
+                class="lmBotaoAdminIcone"
+                data-campo="email"
+                aria-label="Editar email"
+              >
+                <svg
+                  class="lmIconeAdminLivro"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div class="blItemConfig">
+              <div class="blInfoItem">
+                <span class="blNomeItem">Senha</span>
+                <span class="blValorItem" id="blSenhaPerfil">******</span>
+              </div>
+              <button
+                type="button"
+                class="lmBotaoAdminIcone"
+                data-campo="senha"
+                aria-label="Editar senha"
+              >
+                <svg
+                  class="lmIconeAdminLivro"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div class="blItemConfig blItemPerigo" id="blApagarConta">
+              <span class="blNomeItem">Apagar conta</span>
+              <i class="fa-solid fa-trash-can"></i>
+            </div>
+          </div>
+        </section>
+
+        <section class="blSecaoConfiguracao">
+          <h2 class="blTituloCategoria">Preferências</h2>
+          <div class="blListaItensConfig">
+            <div class="blItemConfig">
+              <span class="blNomeItem">Modo escuro / Modo claro</span>
+              <select class="blSeletorConfig" id="blSeletorTema">
+                <option value="claro">Modo Claro</option>
+                <option value="escuro">Modo Escuro</option>
+              </select>
+            </div>
+
+            <div class="blItemConfig">
+              <span class="blNomeItem">Nível de dificuldade</span>
+              <select class="blSeletorConfig">
+                <option value="iniciante">Iniciante</option>
+                <option value="intermediario">Intermediário</option>
+                <option value="avancado">Avançado</option>
+              </select>
+            </div>
+
+            <div class="blItemConfig">
+              <span class="blNomeItem">Idioma</span>
+              <select class="blSeletorConfig">
+                <option value="pt">Português</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="blSecaoConfiguracao">
+          <h2 class="blTituloCategoria">Suporte</h2>
+          <div class="blListaItensConfig">
+            <div class="blItemConfig">
+              <span class="blNomeItem">Central de Ajuda</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="blItemConfig">
+              <span class="blNomeItem">Fazer comentários</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+        </section>
+
+        <section class="blSecaoConfiguracao">
+          <h2 class="blTituloCategoria">Sobre</h2>
+          <div class="blListaItensConfig">
+            <div class="blItemConfig">
+              <span class="blNomeItem">Versão do App</span>
+              <span class="blValorItem">1.0.0</span>
+            </div>
+            <div class="blItemConfig">
+              <span class="blNomeItem">Equipe</span>
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <div class="blItemConfig" id="blGithub">
+              <span class="blNomeItem">Repositório do GitHub</span>
+              <i class="fa-brands fa-github"></i>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="lmModalOverlay" id="blModalEditarConfig">
+      <div class="lmModalConteudo">
+        <button class="lmModalFechar" id="blFecharModalEditarConfig" type="button">
+          &times;
+        </button>
+
+        <h2 class="lmModalTitulo" id="blModalEditarTitulo">Editar</h2>
+
+        <form id="blFormEditarConfig">
+          <div class="lmGrupoCampo">
+            <label for="blInputEditarConfig" class="lmRotuloCampo" id="blLabelEditarConfig"
+              >Valor</label
+            >
+            <input
+              type="text"
+              id="blInputEditarConfig"
+              class="lmCampoTexto"
+              required
+            />
+          </div>
+
+          <p class="lmCadastroMensagem" id="blMensagemModalConfig" aria-live="polite"></p>
+
+          <div class="lmAcoesFormulario">
+            <button
+              type="button"
+              class="lmBotaoCancelar"
+              id="blCancelarModalConfig"
+            >
+              Cancelar
+            </button>
+            <button type="submit" class="lmCadastroBotaoPrimario">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="lmModalOverlay" id="blModalConfirmarExclusao">
+      <div class="lmModalConteudo lmModalMensagemConteudo">
+        <button class="lmModalFechar" id="blFecharModalExclusao" type="button">
+          &times;
+        </button>
+
+        <h2 class="lmModalTitulo">Apagar conta</h2>
+        <p>Deseja realmente apagar sua conta? Esta ação não pode ser desfeita.</p>
+
+        <div class="lmAcoesFormulario">
+          <button type="button" class="lmBotaoCancelar" id="blCancelarExclusao">
+            Cancelar
+          </button>
+          <button type="button" class="lmCadastroBotaoPrimario" id="blConfirmarExclusao">
+            Apagar conta
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+      <div class="lmAlertaBox">
+        <h3 id="lmAlertaTitulo">Atenção</h3>
+        <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+        <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+      </div>
+    </div>
+
+    <script src="/js/usuarios/auth.js"></script>
+    <script src="/js/menu.js"></script>
+    <script src="/js/usuarios/configuracoes.js"></script>
+  </body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro de Livros | Leia Mulheres</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body class="lmCadastroBody">
+
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCadastroCabecalho">
+    <div class="lmCadastroCabecalhoTopo">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+    </div>
+
+    <div class="lmCadastroCabecalhoCentro">
+      <img src="/assets/logoLeiaMais.png" alt="Logo Leia Mais" class="lmCabecalhoLogoImagem"/>
+      <p class="lmCadastroSubtitulo">
+        Área administrativa para cadastro de livros do acervo.
+      </p>
+    </div>
+  </header>
+
+  <main class="lmCadastroConteudoPrincipal">
+    <section class="lmCadastroSecaoFormulario">
+      <div class="lmCadastroSecaoCabecalho">
+        <h2 class="lmCadastroTituloSecao">Cadastro de Livros</h2>
+        <p class="lmCadastroTextoSecao">
+          Preencha os campos abaixo para registrar um novo livro no acervo.
+        </p>
+      </div>
+
+      <form class="lmCadastroFormularioLivro" id="lmCadastroFormularioLivro" enctype="multipart/form-data">
+        <div class="lmGrupoCampo">
+          <label for="titulo" class="lmRotuloCampo">Nome do livro</label>
+          <input
+            type="text"
+            id="titulo"
+            name="titulo"
+            class="lmCampoTexto"
+            placeholder="Digite o título do livro"
+            required
+          />
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="editora" class="lmRotuloCampo">Editora</label>
+          <input
+            type="text"
+            id="editora"
+            name="editora"
+            class="lmCampoTexto"
+            placeholder="Digite a editora"
+            required
+          />
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="paginas" class="lmRotuloCampo">Número de páginas</label>
+          <input
+            type="number"
+            id="paginas"
+            name="paginas"
+            class="lmCampoTexto"
+            placeholder="Digite o número de páginas"
+            min="1"
+            required
+          />
+        </div>
+
+        <div class="lmGrupoCampo">
+        <label for="idAutor" class="lmRotuloCampo">
+          Autores
+        </label>
+
+          <div class="lmCadastroAutoresLinha">
+            <div class="lmCadastroAutocomplete">
+              <input
+                type="text"
+                id="idAutor"
+                class="lmCampoTexto"
+                placeholder="Digite ou selecione uma autora"
+                autocomplete="off"
+              />
+
+              <div
+                class="lmCadastroAutocompleteLista"
+                id="lmListaAutoresDisponiveis"
+              ></div>
+            </div>
+
+            <button
+              type="button"
+              class="lmCadastroBotaoAdicionarAutor"
+              id="lmAdicionarAutor"
+              aria-label="Adicionar autora"
+            >
+              +
+            </button>
+          </div>
+
+          <div class="lmCadastroAcoesAutor">
+            <button
+              type="button"
+              class="lmCadastroLinkAutor"
+              id="lmCadastrarNovoAutor"
+            >
+              Cadastrar nova autora
+            </button>
+          </div>
+
+          <div
+            class="lmCadastroListaAutores"
+            id="lmListaAutoresSelecionados"
+          ></div>
+      </div>
+
+        <div class="lmGrupoLinha">
+          <div class="lmGrupoCampo">
+            <label for="anoPublicacao" class="lmRotuloCampo">Ano de publicação</label>
+            <input
+              type="number"
+              id="anoPublicacao"
+              name="anoPublicacao"
+              class="lmCampoTexto"
+              placeholder="Ex: 2024"
+              min="0"
+              required
+            />
+          </div>
+
+          <div class="lmGrupoCampo">
+            <label for="genero" class="lmRotuloCampo">Gênero</label>
+            <input
+              type="text"
+              id="genero"
+              name="genero"
+              class="lmCampoTexto"
+              placeholder="Ex: Romance"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="descricao" class="lmRotuloCampo">Descrição</label>
+          <textarea
+            id="descricao"
+            name="descricao"
+            class="lmCampoTextoArea"
+            placeholder="Digite a descrição do livro"
+          ></textarea>
+        </div>
+
+        <div class="lmGrupoCampo">
+          <label for="imagemCapa" class="lmRotuloCampo">Imagem de capa</label>
+          <input
+            type="file"
+            id="imagemCapa"
+            name="imagemCapa"
+            class="lmCampoArquivo"
+            accept="image/*"
+          />
+        </div>
+
+        <p class="lmCadastroMensagem" id="lmCadastroMensagem" aria-live="polite"></p>
+
+        <div class="lmAcoesFormulario">
+          <button type="button" class="lmCadastroBotaoSecundario" id="lmCadastroBotaoVoltar">Voltar</button>
+          <button type="reset" class="lmCadastroBotaoSecundario" id="lmCadastroBotaoCancelar">
+            Cancelar
+          </button>
+          <button type="submit" class="lmCadastroBotaoPrimario">Cadastrar</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/usuarios/auth.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="/js/livros/crudLivros.js"></script>
+</body>
+</html>

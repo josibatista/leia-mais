@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leia Mais - Visualizar Trilha</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body class="lmAcervoBody">
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCabecalho">
+    <div class="lmCabecalhoSuperior">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+
+      <button class="lmCabecalhoBotao" id="vtBotaoVoltar" aria-label="Voltar">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="blConteudoPrincipal blConteudoLeitor vtConteudoTrilha">
+    <section class="vtSecaoTrilha" id="vtSecaoTrilha">
+      <div class="vtCabecalhoTrilha">
+        <img
+          src="/assets/capaPadrao.jpg"
+          alt="Capa da trilha"
+          class="vtCapaTrilha"
+          id="vtCapaTrilha"
+        />
+
+        <div class="blTrilhaInfo">
+          <h2 class="vtTituloTrilha" id="vtTituloTrilha">Carregando...</h2>
+
+          <p class="vtDetalheTrilha" id="vtNivelTrilha"></p>
+          <p class="vtDetalheTrilha" id="vtXpTrilha"></p>
+          <p class="vtDetalheTrilha" id="vtStatusTrilha"></p>
+        </div>
+      </div>
+
+      <div class="vtBlocoDescricao" id="vtAreaDescricao">
+        <h3>Descrição</h3>
+        <p id="vtDescricaoTrilha"></p>
+      </div>
+
+      <div class="vtBlocoProgresso" id="vtAreaProgresso">
+        <h3>Progresso</h3>
+        <div class="ppBarraProgresso" id="vtBarraProgresso">
+          <div id="vtBarraProgressoPreenchimento"></div>
+        </div>
+        <span id="vtProgressoTexto"></span>
+      </div>
+
+      <div class="vtBlocoObras" id="vtAreaObras">
+        <h3>Livros da trilha</h3>
+        <ul class="vtListaObras" id="vtListaObras"></ul>
+        <p class="vtMensagemIndisponivel" id="vtMensagemObras" hidden>
+          Nenhuma obra vinculada a esta trilha.
+        </p>
+      </div>
+
+      <div class="vtAreaAcao" id="vtAreaAcao"></div>
+    </section>
+  </main>
+
+  <div class="lmModalOverlay" id="vtModalMensagem">
+    <div class="lmModalConteudo lmModalMensagemConteudo">
+      <button class="lmModalFechar" id="vtFecharModalMensagem" type="button">
+        &times;
+      </button>
+
+      <h2 class="lmModalTitulo" id="vtModalMensagemTitulo">Atenção</h2>
+
+      <p class="lmModalMensagemTexto" id="vtModalMensagemTexto"></p>
+
+      <div class="lmModalMensagemAcoes">
+        <button type="button" class="lmBotaoSaibaMais" id="vtBotaoConfirmarMensagem">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/usuarios/auth.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="/js/trilhas/trilhaFormularioItens.js"></script>
+  <script src="/js/trilhas/visualizarTrilha.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leia Mais - Livros Salvos</title>
+
+  <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body class="lmAcervoBody">
+  <div id="blMenuContainer"></div>
+  <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+  <header class="lmCabecalho">
+    <div class="lmCabecalhoSuperior">
+      <button class="lmCabecalhoBotao" id="lmMenuAbrirBotao" aria-label="Abrir menu">
+        &#9776;
+      </button>
+
+      <button class="lmCabecalhoBotao" id="lmBotaoVoltarPerfil" aria-label="Voltar para perfil">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="blConteudoPrincipal blConteudoLeitor">
+    <section class="blSecaoLista">
+      <div class="blListaCabecalho">
+        <div class="blLivrosTitulos">
+          <h3>Livros Salvos</h3>
+
+          <div class="blMenuLivros">
+            <button class="blFiltroLivro ativo" data-status="todos">Todos</button>
+            <button class="blFiltroLivro" data-status="lendo">Lendo</button>
+            <button class="blFiltroLivro" data-status="para ler">Para Ler</button>
+            <button class="blFiltroLivro" data-status="lido">Lidos</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="blGradeLivrosSalvos" id="blGradeLivrosSalvos"></div>
+    </section>
+  </main>
+
+  <div class="lmModalOverlay" id="lsModalLivroOverlay">
+    <div class="lmModalConteudo">
+      <button class="lmModalFechar" id="lsModalLivroFechar" type="button">&times;</button>
+
+      <h2 class="lmModalTitulo" id="lsModalLivroTitulo"></h2>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Autor:</span>
+        <span id="lsModalLivroAutor"></span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Gênero:</span>
+        <span id="lsModalLivroGenero"></span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Editora:</span>
+        <span id="lsModalLivroEditora"></span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Páginas:</span>
+        <span id="lsModalLivroPaginas"></span>
+      </div>
+
+      <div class="lmModalLinha">
+        <span class="lmModalRotulo">Avaliação geral:</span>
+        <span class="lmModalAvaliacao" id="lsModalLivroAvaliacaoGeral"></span>
+      </div>
+
+      <div class="lmModalLinha" id="lsAreaMinhaAvaliacao">
+        <span class="lmModalRotulo">Sua avaliação:</span>
+        <span class="lmModalAvaliacao" id="lsModalMinhaAvaliacao"></span>
+      </div>
+
+      <div class="lmModalBlocoDescricao">
+        <span class="lmModalRotulo">Descrição:</span>
+        <p id="lsModalLivroDescricao"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lmModalOverlay" id="lsModalPaginasOverlay">
+    <div class="lmModalConteudo">
+      <button class="lmModalFechar" id="lsModalPaginasFechar" type="button">&times;</button>
+
+      <h2 class="lmModalTitulo">Alterar páginas lidas</h2>
+
+      <div class="lmGrupoCampo">
+        <label for="lsInputPaginasLidas" class="lmRotuloCampo">Quantidade de páginas lidas</label>
+        <input type="number" id="lsInputPaginasLidas" class="lmCampoTexto" min="0">
+      </div>
+
+      <button type="button" class="lmBotaoSaibaMais" id="lsSalvarPaginasLidas">
+        Salvar
+      </button>
+    </div>
+  </div>
+
+  <div id="modalStatusLivro" class="modalStatusOverlay hidden">
+    <div class="modalStatusBox">
+      <h3>Alterar status</h3>
+      <p>Selecione o novo status do livro:</p>
+
+      <label>
+        <input type="radio" name="novoStatusLivro" value="para ler">
+        Para ler
+      </label>
+
+      <label>
+        <input type="radio" name="novoStatusLivro" value="lendo">
+        Lendo
+      </label>
+
+      <label>
+        <input type="radio" name="novoStatusLivro" value="lido">
+        Lido
+      </label>
+
+      <div class="modalStatusAcoes">
+        <button id="btnCancelarStatus" type="button">Cancelar</button>
+        <button id="btnConfirmarStatus" type="button">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="lmModalOverlay" id="lsModalConfirmacao">
+    <div class="lmModalConteudo lmModalMensagemConteudo">
+      <button class="lmModalFechar" id="lsFecharModalConfirmacao" type="button">
+        &times;
+      </button>
+
+      <h2 class="lmModalTitulo" id="lsModalConfirmacaoTitulo">Atenção</h2>
+
+      <p class="lmModalMensagemTexto" id="lsModalConfirmacaoTexto"></p>
+
+      <div class="lmModalMensagemAcoes">
+        <button type="button" class="lmBotaoCancelar" id="lsCancelarConfirmacao">
+          Cancelar
+        </button>
+
+        <button type="button" class="lmBotaoSaibaMais" id="lsConfirmarAcao">
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/usuarios/auth.js"></script>
+  <script src="/js/menu.js"></script>
+  <script src="/js/livros/livrosSalvos.js"></script>
+</body>
+</html>

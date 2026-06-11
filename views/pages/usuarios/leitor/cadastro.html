@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leia Mais - Cadastro Leitor</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="/js/usuarios/auth.js"></script>
+</head>
+
+<body class="blBody">
+    <div class="blContainerPrincipal">
+
+        <div class="blContainerLogo">
+            <img src="/assets/logo.png" alt="Logo Leia Mais" class="blLogoImagem">
+        </div>
+
+        <div id="blCadAdm" class="blCartaoCad">
+            <h1>Cadastro</h1>
+            <h2 class="blSubtitulo">Leitor</h2>
+
+            <form id="blFormCadastroLeitor">
+                <div class="blGrupoInput">
+                    <label for="blNomeLeitor">Nome</label>
+                    <input type="text" id="blNomeLeitor" name="nome" required>
+                </div>
+
+                <div class="blGrupoInput">
+                    <label for="blUsuarioLeitor">Usuário</label>
+                    <input type="text" id="blUsuarioLeitor" name="usuario" required>
+                </div>
+
+                <div class="blGrupoInput">
+                    <label for="blEmailLeitor">E-mail</label>
+                    <input type="email" id="blEmailLeitor" name="email" required>
+                </div>
+
+                <div class="blGrupoInput blInputSenha">
+                    <label for="blSenhaLeitor">Senha</label>
+                    <input type="password" id="blSenhaLeitor" name="senha" required>
+                    <i class="fa-solid fa-eye" id="blOlhoSenha"></i>
+                </div>
+
+                    <button type="submit" class="blBotaoPrimario">Cadastrar</button>
+            </form>
+            <div class="blLinksRodape">
+                <a href="login.html" class="blLinkDestaque">Já tem conta? Entrar</a>
+            </div>
+        </div>
+
+    </div>
+    
+    <script src="/js/loginCadLeitor.js"></script>
+</body>
+</html>
