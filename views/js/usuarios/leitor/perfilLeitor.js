@@ -191,6 +191,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const card = document.createElement("article");
     card.classList.add("ppCardLeitura");
 
+    if (vinculo.status === "pausada") {
+      card.classList.add("blCardTrilhaPausada");
+    }
+
     const imagem = document.createElement("img");
     imagem.src = trilha?.imagemCapa || "/assets/capaPadrao.jpg";
     imagem.alt = trilha?.tema || "Capa da trilha";
@@ -432,23 +436,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
   }
-
-  /* SOBROU DA CONFIGURAÇÃO ANTIGA
-  
-  function configurarLogout() {
-    const botaoSair = document.querySelector(".blBotaoSair");
-
-    if (botaoSair) {
-      botaoSair.addEventListener("click", (evento) => {
-        evento.preventDefault();
-
-        localStorage.removeItem("token");
-        localStorage.removeItem("usuario");
-
-        window.location.href = "/pages/usuarios/leitor/login.html";
-      });
-    }
-  } */
 
   try {
     await carregarUsuarioAtualizado();

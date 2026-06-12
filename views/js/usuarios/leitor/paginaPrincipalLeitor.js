@@ -140,6 +140,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const card = document.createElement("article");
     card.classList.add("ppCardLeitura");
 
+    if (vinculo.status === "pausada") {
+      card.classList.add("blCardTrilhaPausada");
+    }
+
     const imagem = document.createElement("img");
     imagem.src = trilha?.imagemCapa || "/assets/capaPadrao.jpg";
     imagem.alt = trilha?.tema || "Capa da trilha";
