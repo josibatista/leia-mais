@@ -1440,40 +1440,80 @@ body.lmAcervoBody {
   border-color: var(--lmMarromClaro);
 }
 
-/*Adicionais do acervo de trilhas*/
-.blCardTrilha .lmCardConteudo {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 8px;
+/* Catálogo de Trilhas - cards horizontais (padrão Trilhas Salvas) */
+#lmGradeTrilhas.lmGradeLivros {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.lmAcervoBody .blCardTrilha.lmCardLivro {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  align-items: stretch;
+  flex-direction: unset;
+  min-height: unset;
+  width: 360px;
+  max-width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(58, 36, 24, 0.12);
+  overflow: visible;
+}
+
+.lmAcervoBody .blCardTrilha .lmCardImagem {
+  width: 110px;
+  height: 150px;
+  aspect-ratio: unset;
+  border-radius: 10px;
+  object-fit: cover;
+  background-color: #f2e8de;
+}
+
+.lmAcervoBody .blCardTrilha .lmCardConteudo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  padding: 0;
 }
 
 .blCardTrilha .lmCardTitulo {
-    margin: 0;
+  margin: 0;
+  min-height: auto;
+  max-height: none;
+  font-size: 0.95rem;
+  color: #2f1b12;
 }
 
 .blCardTrilha .lmCardAutor {
-    margin: 0;
-    min-height: auto;
-    max-height: none;
-    line-height: 1.2;
-    -webkit-line-clamp: unset;
-    line-clamp: unset;
+  margin: 0;
+  min-height: auto;
+  max-height: none;
+  line-height: 1.3;
+  font-size: 0.8rem;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
 }
 
 .blCardTrilha .blStatusTrilha {
-    margin: 0;
-    min-height: auto;
-    max-height: none;
-    line-height: 1.2;
+  margin: 0;
+  min-height: auto;
+  max-height: none;
+  line-height: 1.2;
 }
 
 .blCardTrilha .lmAreaAcoesLivro {
-    margin-top: 8px;
+  margin-top: auto;
 }
 
 .blCardTrilha .lmCardAcoesAdmin {
-    margin-top: 8px;
+  margin-top: 8px;
 }
 
 #lmModalEditarTrilha {
@@ -3228,6 +3268,10 @@ body.lmAcervoBody.lmTemaEscuro .lmCardLivro {
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+body.lmAcervoBody.lmTemaEscuro .blCardTrilha.lmCardLivro {
+  border: none;
+}
+
 body.lmAcervoBody.lmTemaEscuro .lmCardTitulo,
 body.lmAcervoBody.lmTemaEscuro .lmCardAutor {
   color: #f5f5f5;
@@ -3632,6 +3676,18 @@ body.lmTemaEscuro .modalStatusBox label:hover {
   .blCardTrilhaSalva img {
     width: 90px;
     height: 125px;
+  }
+
+  .lmAcervoBody .blCardTrilha.lmCardLivro {
+    width: 100%;
+    grid-template-columns: 77px 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .lmAcervoBody .blCardTrilha .lmCardImagem {
+    width: 77px;
+    height: 105px;
   }
 
   .vtCabecalhoTrilha {
