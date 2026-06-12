@@ -1556,7 +1556,8 @@ body.lmCadastroBody {
   line-height: 1.6;
 }
 
-.lmCadastroBody .lmCadastroFormularioLivro {
+.lmCadastroBody .lmCadastroFormularioLivro,
+.lmCadastroBody .lmCadastroFormularioObras {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -2080,49 +2081,6 @@ body.lmCadastroBody {
   font-weight: 700;
 }
 
-.blSecaoMetas {
-  border: 2px solid var(--corPrimaria);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 30px;
-}
-
-.blMetaTitulo {
-  font-weight: 700;
-  font-size: 20px;
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-.blMetaDestaque {
-  color: var(--corDestaque);
-}
-
-.blBarraProgressoContainer {
-  position: relative;
-  width: 100%;
-  height: 30px;
-  background-color: #fff;
-  border: 1px solid var(--corPrimaria);
-  border-radius: 15px;
-  overflow: hidden;
-}
-
-.blBarraProgresso {
-  height: 100%;
-  background-color: var(--corDestaque);
-}
-
-.blProgressoTexto {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--corDestaque);
-}
-
 .blSecaoLista {
   margin-bottom: 30px;
 }
@@ -2254,6 +2212,13 @@ body.lmCadastroBody {
 .ppCarrossel .blCardTrilhaSalva {
   min-width: 310px;
   max-width: 310px;
+}
+
+/* Trilha pausada - fundo em cinza claro para indicar pausa */
+.ppCardLeitura.blCardTrilhaPausada,
+.blCardTrilhaSalva.blCardTrilhaPausada {
+  background-color: #e8e7e4;
+  border-color: rgba(94, 86, 78, 0.25);
 }
 
 .vtConteudoTrilha {
@@ -2509,6 +2474,7 @@ body.lmCadastroBody {
   border: none;
   background-color: transparent;
   color: var(--corSecundaria);
+  font-family: "Poppins", sans-serif;
   font-size: 13px;
   cursor: pointer;
   padding: 4px 0;
@@ -3376,7 +3342,6 @@ body.lmAcervoBody.lmTemaEscuro .blTituloPagina,
 body.lmAcervoBody.lmTemaEscuro .blTituloCategoria,
 body.lmAcervoBody.lmTemaEscuro .blNomeItem,
 body.lmAcervoBody.lmTemaEscuro .blListaCabecalho h3,
-body.lmAcervoBody.lmTemaEscuro .blMetaTitulo,
 body.lmAcervoBody.lmTemaEscuro .blTextoEstatistica,
 body.lmCadastroBody.lmTemaEscuro .lmListagemCabecalho h2 {
   color: #f5f5f5;
@@ -3443,7 +3408,6 @@ body.lmAcervoBody.lmTemaEscuro .ppBarraProgresso {
 }
 
 body.lmAcervoBody.lmTemaEscuro .blCardEstatistica,
-body.lmAcervoBody.lmTemaEscuro .blSecaoMetas,
 body.lmAcervoBody.lmTemaEscuro .blCardLivroPerfil,
 body.lmAcervoBody.lmTemaEscuro .blCardLivroSalvo,
 body.lmAcervoBody.lmTemaEscuro .blCardTrilhaSalva,
@@ -3458,6 +3422,12 @@ body.lmAcervoBody.lmTemaEscuro .blCardLivroSalvo h4,
 body.lmAcervoBody.lmTemaEscuro .blCardTrilhaSalvaInfo h4,
 body.lmAcervoBody.lmTemaEscuro .vtTituloTrilha {
   color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .ppCardLeitura.blCardTrilhaPausada,
+body.lmAcervoBody.lmTemaEscuro .blCardTrilhaSalva.blCardTrilhaPausada {
+  background-color: #3a3a3a;
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
 body.lmAcervoBody.lmTemaEscuro .lmItemTrilhaOrdenado,
