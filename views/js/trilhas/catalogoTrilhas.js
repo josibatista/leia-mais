@@ -196,7 +196,6 @@ async function lmEditarTrilha(trilha) {
       dados.nivelDificuldade,
     );
     document.getElementById("lmEditarXp").value = dados.xp ?? "";
-    document.getElementById("lmEditarLiberada").checked = Boolean(dados.liberada);
 
     const itensTrilha = dados.itens || [
       ...(dados.obras || []).map((obra) => ({ ...obra, itemTipo: "obra" })),
