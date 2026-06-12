@@ -100,6 +100,94 @@ function lmFormatarStatus(liberada) {
   return "Não definida";
 }
 
+function lmObterQuantidadeItensTrilha(trilha) {
+  if (!trilha || typeof trilha !== "object") {
+    return { total: null, obras: 0, livros: 0, temCampoQuantidade: false };
+  }
+
+  if (
+    typeof trilha.quantidadeItens === "number" &&
+    !Number.isNaN(trilha.quantidadeItens)
+  ) {
+    return {
+      total: trilha.quantidadeItens,
+      obras: 0,
+      livros: 0,
+      temCampoQuantidade: true,
+    };
+  }
+
+  if (Array.isArray(trilha.itens)) {
+    let obras = 0;
+    let livros = 0;
+
+    trilha.itens.forEach(function (item) {
+      const tipo = item?.itemTipo || item?.tipoItem;
+
+      if (tipo === "obra" || tipo === "Obra") {
+        obras += 1;
+        return;
+      }
+
+      if (tipo === "livro" || tipo === "Livro") {
+        livros += 1;
+      }
+    });
+
+    if (!obras && !livros && trilha.itens.length) {
+      return {
+        total: trilha.itens.length,
+        obras: 0,
+        livros: 0,
+        temCampoQuantidade: false,
+      };
+    }
+
+    return {
+      total: trilha.itens.length,
+      obras,
+      livros,
+      temCampoQuantidade: false,
+    };
+  }
+
+  const obras = Array.isArray(trilha.obras) ? trilha.obras.length : 0;
+  const livros = Array.isArray(trilha.livros) ? trilha.livros.length : 0;
+
+  return { total: obras + livros, obras, livros, temCampoQuantidade: false };
+}
+
+function lmFormatarQuantidadeItens(trilha) {
+  const { total, obras, livros, temCampoQuantidade } =
+    lmObterQuantidadeItensTrilha(trilha);
+
+  if (temCampoQuantidade) {
+    if (total === 0) {
+      return "0 itens";
+    }
+
+    if (total === 1) {
+      return "1 item";
+    }
+
+    return `${total} itens`;
+  }
+
+  if (total === 0 || total === null) {
+    return null;
+  }
+
+  if (obras > 0 && livros === 0) {
+    return obras === 1 ? "1 obra" : `${obras} obras`;
+  }
+
+  if (livros > 0 && obras === 0) {
+    return livros === 1 ? "1 livro" : `${livros} livros`;
+  }
+
+  return total === 1 ? "1 item" : `${total} obras`;
+}
+
 function lmAbrirModalMensagem({
   titulo = "Atenção",
   mensagem,
@@ -482,6 +570,24 @@ function lmCriarCardTrilha(trilha) {
 
   conteudoCard.appendChild(tituloTrilha);
   conteudoCard.appendChild(nivelTrilha);
+
+  const textoQuantidade = lmFormatarQuantidadeItens(trilha);
+
+  if (textoQuantidade) {
+    const quantidadeItens = document.createElement("p");
+    quantidadeItens.classList.add("blCardTrilhaSalvaDetalhes");
+    quantidadeItens.textContent = textoQuantidade;
+    conteudoCard.appendChild(quantidadeItens);
+  }
+
+  const descricaoTexto = String(trilha.descricao || "").trim();
+
+  if (descricaoTexto) {
+    const descricaoTrilha = document.createElement("p");
+    descricaoTrilha.classList.add("blCardTrilhaDescricao");
+    descricaoTrilha.textContent = descricaoTexto;
+    conteudoCard.appendChild(descricaoTrilha);
+  }
 
   if (lmUsuarioEhAdmin()) {
     const statusTrilha = document.createElement("p");

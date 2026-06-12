@@ -93,6 +93,37 @@ async function buscarItensDaTrilha(trilhaId) {
     return [...obras, ...livros].sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
 }
 
+async function contarItensPorTrilhas(trilhaIds) {
+    if (!trilhaIds.length) {
+        return {};
+    }
+
+    const [obrasPorTrilha, livrosPorTrilha] = await Promise.all([
+        mongo.TrilhaObra.aggregate([
+            { $match: { trilhaId: { $in: trilhaIds } } },
+            { $group: { _id: '$trilhaId', total: { $sum: 1 } } },
+        ]),
+        mongo.TrilhaLivro.aggregate([
+            { $match: { trilhaId: { $in: trilhaIds } } },
+            { $group: { _id: '$trilhaId', total: { $sum: 1 } } },
+        ]),
+    ]);
+
+    const contagens = Object.fromEntries(
+        trilhaIds.map((id) => [id.toString(), 0]),
+    );
+
+    obrasPorTrilha.forEach(({ _id, total }) => {
+        contagens[_id.toString()] = (contagens[_id.toString()] || 0) + total;
+    });
+
+    livrosPorTrilha.forEach(({ _id, total }) => {
+        contagens[_id.toString()] = (contagens[_id.toString()] || 0) + total;
+    });
+
+    return contagens;
+}
+
 function normalizarRelacoesItens(obras = [], livros = []) {
     const obrasNorm = (obras || [])
         .filter((item) => item.obraId)
@@ -450,7 +481,15 @@ module.exports = {
                 return res.status(404).json({ error: 'Nenhuma trilha cadastrada' });
             }
 
-            res.status(200).json(trilhas);
+            const trilhaIds = trilhas.map((trilha) => trilha._id);
+            const contagensPorTrilha = await contarItensPorTrilhas(trilhaIds);
+
+            const trilhasComQuantidade = trilhas.map((trilha) => ({
+                ...trilha.toObject(),
+                quantidadeItens: contagensPorTrilha[trilha._id.toString()] || 0,
+            }));
+
+            res.status(200).json(trilhasComQuantidade);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao consultar trilhas' });
