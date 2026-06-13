@@ -125,9 +125,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   
       const card = document.createElement("article");
       card.classList.add("blCardTrilhaSalva");
+
+      if (vinculo.status === "pausada") {
+        card.classList.add("blCardTrilhaPausada");
+      }
   
       const imagem = document.createElement("img");
-      imagem.src = "/assets/capaPadrao.jpg";
+      imagem.src = tfResolverCapaTrilha(trilha?.imagemCapa);
       imagem.alt = trilha?.tema || "Capa da trilha";
       imagem.onerror = function () {
         imagem.src = "/assets/capaPadrao.jpg";

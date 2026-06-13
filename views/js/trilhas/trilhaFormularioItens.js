@@ -286,3 +286,99 @@ function tfConfigurarAutocomplete({
 
   return { renderizarSugestoes };
 }
+
+const TF_SUPABASE_URL = "https://htregzpvwyhrrqdzqtrd.supabase.co";
+const TF_SUPABASE_ANON_KEY =
+  "sb_publishable_F5w-U17IUYOQoZySjx0RQQ_UdYMH0MP";
+const TF_SUPABASE_BUCKET = "capa-livros";
+
+function tfResolverCapaTrilha(imagemCapa) {
+  const capa = String(imagemCapa || "").trim();
+
+  if (!capa || capa === "null" || capa === "undefined") {
+    return "/assets/capaPadrao.jpg";
+  }
+
+  return capa;
+}
+
+function tfValidarArquivoImagem(arquivoImagem) {
+  return Boolean(arquivoImagem && arquivoImagem.type.startsWith("image/"));
+}
+
+function tfObterClienteSupabase() {
+  if (typeof supabase === "undefined") {
+    return null;
+  }
+
+  return supabase.createClient(TF_SUPABASE_URL, TF_SUPABASE_ANON_KEY);
+}
+
+async function tfUploadImagemCapaTrilha(arquivoImagem) {
+  if (!arquivoImagem) {
+    return null;
+  }
+
+  if (!tfValidarArquivoImagem(arquivoImagem)) {
+    throw new Error("Selecione um arquivo de imagem válido.");
+  }
+
+  const clienteSupabase = tfObterClienteSupabase();
+
+  if (!clienteSupabase) {
+    throw new Error("Não foi possível conectar ao serviço de imagens.");
+  }
+
+  const extensaoArquivo = arquivoImagem.name.split(".").pop();
+  const nomeArquivo = `capa-trilha-${Date.now()}.${extensaoArquivo}`;
+  const caminhoArquivo = `trilhas/${nomeArquivo}`;
+
+  const { error } = await clienteSupabase.storage
+    .from(TF_SUPABASE_BUCKET)
+    .upload(caminhoArquivo, arquivoImagem);
+
+  if (error) {
+    console.error("Erro Supabase Storage:", error);
+    throw new Error(error.message || "Erro ao enviar imagem da capa.");
+  }
+
+  const { data } = clienteSupabase.storage
+    .from(TF_SUPABASE_BUCKET)
+    .getPublicUrl(caminhoArquivo);
+
+  return data.publicUrl;
+}
+
+function tfConfigurarPreviewCapaTrilha(inputElemento, previewElemento, capaAtual) {
+  if (!inputElemento || !previewElemento) {
+    return;
+  }
+
+  const capaInicial = tfResolverCapaTrilha(capaAtual);
+  previewElemento.src = capaInicial;
+
+  inputElemento.addEventListener("change", function () {
+    const arquivo = inputElemento.files[0];
+
+    if (!arquivo) {
+      previewElemento.src = capaInicial;
+      return;
+    }
+
+    if (!tfValidarArquivoImagem(arquivo)) {
+      inputElemento.value = "";
+      previewElemento.src = capaInicial;
+      return;
+    }
+
+    previewElemento.src = URL.createObjectURL(arquivo);
+  });
+}
+
+function tfAtualizarPreviewCapaTrilha(previewElemento, capaAtual) {
+  if (!previewElemento) {
+    return;
+  }
+
+  previewElemento.src = tfResolverCapaTrilha(capaAtual);
+}

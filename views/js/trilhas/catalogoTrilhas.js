@@ -100,6 +100,110 @@ function lmFormatarStatus(liberada) {
   return "Não definida";
 }
 
+function lmObterQuantidadeItensTrilha(trilha) {
+  if (!trilha || typeof trilha !== "object") {
+    return { total: null, obras: 0, livros: 0, temCampoQuantidade: false };
+  }
+
+  if (
+    typeof trilha.quantidadeItens === "number" &&
+    !Number.isNaN(trilha.quantidadeItens)
+  ) {
+    return {
+      total: trilha.quantidadeItens,
+      obras: 0,
+      livros: 0,
+      temCampoQuantidade: true,
+    };
+  }
+
+  if (Array.isArray(trilha.itens)) {
+    let obras = 0;
+    let livros = 0;
+
+    trilha.itens.forEach(function (item) {
+      const tipo = item?.itemTipo || item?.tipoItem;
+
+      if (tipo === "obra" || tipo === "Obra") {
+        obras += 1;
+        return;
+      }
+
+      if (tipo === "livro" || tipo === "Livro") {
+        livros += 1;
+      }
+    });
+
+    if (!obras && !livros && trilha.itens.length) {
+      return {
+        total: trilha.itens.length,
+        obras: 0,
+        livros: 0,
+        temCampoQuantidade: false,
+      };
+    }
+
+    return {
+      total: trilha.itens.length,
+      obras,
+      livros,
+      temCampoQuantidade: false,
+    };
+  }
+
+  const obras = Array.isArray(trilha.obras) ? trilha.obras.length : 0;
+  const livros = Array.isArray(trilha.livros) ? trilha.livros.length : 0;
+
+  return { total: obras + livros, obras, livros, temCampoQuantidade: false };
+}
+
+function lmFormatarQuantidadeItens(trilha) {
+  const { total, obras, livros, temCampoQuantidade } =
+    lmObterQuantidadeItensTrilha(trilha);
+
+  if (temCampoQuantidade) {
+    if (total === 0) {
+      return "0 itens";
+    }
+
+    if (total === 1) {
+      return "1 item";
+    }
+
+    return `${total} itens`;
+  }
+
+  if (total === 0 || total === null) {
+    return null;
+  }
+
+  if (obras > 0 && livros === 0) {
+    return obras === 1 ? "1 obra" : `${obras} obras`;
+  }
+
+  if (livros > 0 && obras === 0) {
+    return livros === 1 ? "1 livro" : `${livros} livros`;
+  }
+
+  return total === 1 ? "1 item" : `${total} obras`;
+}
+
+function lmTruncarDescricaoCard(descricao) {
+  const texto = String(descricao || "").trim();
+
+  if (!texto) {
+    return "";
+  }
+
+  const palavras = texto.split(/\s+/).filter(Boolean);
+
+  if (palavras.length <= 4) {
+    return texto;
+  }
+
+  return `${palavras.slice(0, 4).join(" ")}...`;
+}
+
 function lmAbrirModalMensagem({
   titulo = "Atenção",
   mensagem,
@@ -196,7 +300,6 @@ async function lmEditarTrilha(trilha) {
       dados.nivelDificuldade,
     );
     document.getElementById("lmEditarXp").value = dados.xp ?? "";
-    document.getElementById("lmEditarLiberada").checked = Boolean(dados.liberada);
 
     const itensTrilha = dados.itens || [
       ...(dados.obras || []).map((obra) => ({ ...obra, itemTipo: "obra" })),
@@ -204,6 +307,16 @@ async function lmEditarTrilha(trilha) {
     ].sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
 
     lmGerenciadorItensEdicao.carregarItens(itensTrilha);
+
+    const campoImagemCapa = document.getElementById("lmEditarImagemCapa");
+    if (campoImagemCapa) {
+      campoImagemCapa.value = "";
+    }
+
+    tfAtualizarPreviewCapaTrilha(
+      document.getElementById("lmEditarPreviewCapaTrilha"),
+      dados.imagemCapa,
+    );
 
     lmModalEditarTrilha.classList.add("lmModalOverlayAtivo");
   } catch (erro) {
@@ -463,7 +576,7 @@ function lmCriarCardTrilha(trilha) {
 
   const imagemTrilha = document.createElement("img");
   imagemTrilha.classList.add("lmCardImagem");
-  imagemTrilha.src = "/assets/capaPadrao.jpg";
+  imagemTrilha.src = tfResolverCapaTrilha(trilha.imagemCapa);
   imagemTrilha.alt = trilha.tema || "Trilha de leitura";
 
   imagemTrilha.onerror = function () {
@@ -483,6 +596,24 @@ function lmCriarCardTrilha(trilha) {
 
   conteudoCard.appendChild(tituloTrilha);
   conteudoCard.appendChild(nivelTrilha);
+
+  const textoQuantidade = lmFormatarQuantidadeItens(trilha);
+
+  if (textoQuantidade) {
+    const quantidadeItens = document.createElement("p");
+    quantidadeItens.classList.add("blCardTrilhaSalvaDetalhes");
+    quantidadeItens.textContent = textoQuantidade;
+    conteudoCard.appendChild(quantidadeItens);
+  }
+
+  const descricaoTexto = String(trilha.descricao || "").trim();
+
+  if (descricaoTexto) {
+    const descricaoTrilha = document.createElement("p");
+    descricaoTrilha.classList.add("blCardTrilhaDescricao");
+    descricaoTrilha.textContent = lmTruncarDescricaoCard(descricaoTexto);
+    conteudoCard.appendChild(descricaoTrilha);
+  }
 
   if (lmUsuarioEhAdmin()) {
     const statusTrilha = document.createElement("p");
@@ -768,8 +899,9 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
     document.getElementById("lmEditarNivelDificuldade").value,
   );
   const xp = Number(document.getElementById("lmEditarXp").value);
-  const liberada = document.getElementById("lmEditarLiberada").checked;
+  const liberada = document.getElementById("lmEditarLiberada")?.checked;
   const { obras, livros } = lmGerenciadorItensEdicao.montarPayload();
+  const novaImagemArquivo = document.getElementById("lmEditarImagemCapa")?.files[0];
 
   if (!lmGerenciadorItensEdicao.itens.length) {
     lmAbrirModalMensagem({
@@ -780,6 +912,8 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
   }
 
   try {
+    const novaImagemUrl = await tfUploadImagemCapaTrilha(novaImagemArquivo);
+
     const resposta = await fetch(`/trilhas/${trilhaId}`, {
       method: "PUT",
       headers: lmObterHeadersJson(),
@@ -791,6 +925,7 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
         liberada,
         obras,
         livros,
+        imagemCapa: novaImagemUrl || lmTrilhaEmEdicao.imagemCapa || "",
       }),
     });
 
@@ -913,6 +1048,30 @@ function lmInicializarEdicaoTrilha() {
       listaObras.classList.remove("ativo");
       listaLivros.classList.remove("ativo");
     }
+  });
+
+  const campoImagemCapa = document.getElementById("lmEditarImagemCapa");
+  const previewImagemCapa = document.getElementById("lmEditarPreviewCapaTrilha");
+
+  campoImagemCapa?.addEventListener("change", function () {
+    const arquivo = campoImagemCapa.files[0];
+
+    if (!arquivo) {
+      tfAtualizarPreviewCapaTrilha(previewImagemCapa, lmTrilhaEmEdicao?.imagemCapa);
+      return;
+    }
+
+    if (!tfValidarArquivoImagem(arquivo)) {
+      campoImagemCapa.value = "";
+      tfAtualizarPreviewCapaTrilha(previewImagemCapa, lmTrilhaEmEdicao?.imagemCapa);
+      lmAbrirModalMensagem({
+        titulo: "Atenção",
+        mensagem: "Selecione um arquivo de imagem válido.",
+      });
+      return;
+    }
+
+    previewImagemCapa.src = URL.createObjectURL(arquivo);
   });
 }
 

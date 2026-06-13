@@ -31,6 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
   lmCarregarLivros();
   lmConfigurarAutocompletes();
   lmConfigurarBotoes();
+  tfConfigurarPreviewCapaTrilha(
+    document.getElementById("imagemCapa"),
+    document.getElementById("lmPreviewCapaTrilha"),
+  );
 
   if (document.getElementById("lmCadastroBotaoVoltar")) {
     document.getElementById("lmCadastroBotaoVoltar").addEventListener("click", voltarPaginaAnterior);
@@ -89,6 +93,7 @@ function lmConfigurarBotoes() {
     lmGerenciadorItens.limparItens();
     lmCampoObra.value = "";
     lmCampoLivro.value = "";
+    tfAtualizarPreviewCapaTrilha(document.getElementById("lmPreviewCapaTrilha"));
     lmExibirMensagem("", "");
   });
 }
@@ -206,8 +211,11 @@ lmFormularioTrilha.addEventListener("submit", async (evento) => {
   }
 
   const { obras, livros } = lmGerenciadorItens.montarPayload();
+  const imagemCapaArquivo = document.getElementById("imagemCapa").files[0];
 
   try {
+    const imagemCapaUrl = await tfUploadImagemCapaTrilha(imagemCapaArquivo);
+
     const respostaTrilha = await fetch(lmApiTrilhasUrl, {
       method: "POST",
       headers: {
@@ -222,6 +230,7 @@ lmFormularioTrilha.addEventListener("submit", async (evento) => {
         liberada,
         obras,
         livros,
+        ...(imagemCapaUrl && { imagemCapa: imagemCapaUrl }),
       }),
     });
 
@@ -234,6 +243,7 @@ lmFormularioTrilha.addEventListener("submit", async (evento) => {
     lmFormularioTrilha.reset();
     tfPreencherSelectNivel(document.getElementById("nivelDificuldade"));
     lmGerenciadorItens.limparItens();
+    tfAtualizarPreviewCapaTrilha(document.getElementById("lmPreviewCapaTrilha"));
     lmExibirMensagem("Trilha cadastrada com sucesso.", "Sucesso");
   } catch (erro) {
     lmExibirMensagem(erro.message || "Não foi possível cadastrar a trilha.", "Erro");

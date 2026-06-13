@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let progressoAtual = { concluidas: 0, total: 0, percentual: 0 };
 
   const vtTituloTrilha = document.getElementById("vtTituloTrilha");
+  const vtCapaTrilha = document.getElementById("vtCapaTrilha");
   const vtNivelTrilha = document.getElementById("vtNivelTrilha");
   const vtXpTrilha = document.getElementById("vtXpTrilha");
   const vtStatusTrilha = document.getElementById("vtStatusTrilha");
@@ -321,6 +322,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     const trilha = trilhaDetalhes || obterTrilhaDoVinculo(vinculoAtual);
 
     vtTituloTrilha.textContent = trilha?.tema || "Tema não informado";
+
+    if (vtCapaTrilha) {
+      vtCapaTrilha.src = tfResolverCapaTrilha(trilha?.imagemCapa);
+      vtCapaTrilha.onerror = function () {
+        vtCapaTrilha.src = "/assets/capaPadrao.jpg";
+      };
+    }
 
     const nivelFormatado = formatarNivel(trilha?.nivelDificuldade);
     vtNivelTrilha.textContent = nivelFormatado

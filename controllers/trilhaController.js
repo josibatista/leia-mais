@@ -93,6 +93,37 @@ async function buscarItensDaTrilha(trilhaId) {
     return [...obras, ...livros].sort((a, b) => (a.ordem || 0) - (b.ordem || 0));
 }
 
+async function contarItensPorTrilhas(trilhaIds) {
+    if (!trilhaIds.length) {
+        return {};
+    }
+
+    const [obrasPorTrilha, livrosPorTrilha] = await Promise.all([
+        mongo.TrilhaObra.aggregate([
+            { $match: { trilhaId: { $in: trilhaIds } } },
+            { $group: { _id: '$trilhaId', total: { $sum: 1 } } },
+        ]),
+        mongo.TrilhaLivro.aggregate([
+            { $match: { trilhaId: { $in: trilhaIds } } },
+            { $group: { _id: '$trilhaId', total: { $sum: 1 } } },
+        ]),
+    ]);
+
+    const contagens = Object.fromEntries(
+        trilhaIds.map((id) => [id.toString(), 0]),
+    );
+
+    obrasPorTrilha.forEach(({ _id, total }) => {
+        contagens[_id.toString()] = (contagens[_id.toString()] || 0) + total;
+    });
+
+    livrosPorTrilha.forEach(({ _id, total }) => {
+        contagens[_id.toString()] = (contagens[_id.toString()] || 0) + total;
+    });
+
+    return contagens;
+}
+
 function normalizarRelacoesItens(obras = [], livros = []) {
     const obrasNorm = (obras || [])
         .filter((item) => item.obraId)
@@ -114,10 +145,11 @@ module.exports = {
 
     async postTrilha(req, res) {
         try {
-            let { tema, descricao, nivelDificuldade, xp, liberada, obras, livros } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
+            imagemCapa = imagemCapa?.trim();
 
             if (!tema) {
                 return res.status(422).json({ error: 'O campo tema é obrigatório' });
@@ -152,7 +184,8 @@ module.exports = {
                 descricao,
                 nivelDificuldade,
                 xp,
-                liberada
+                liberada,
+                ...(imagemCapa && { imagemCapa })
             });
 
             const getOrCreateObra = async (obraInput) => {
@@ -235,10 +268,11 @@ module.exports = {
     async putTrilha(req, res) {
         try {
             const id = req.params.id;
-            let { tema, descricao, nivelDificuldade, xp, liberada, obras, livros } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
+            imagemCapa = imagemCapa?.trim();
 
             const trilha = await mongo.Trilha.findById(id);
 
@@ -263,8 +297,9 @@ module.exports = {
             const mudouNivel = nivelDificuldade !== undefined && nivelDificuldade !== trilha.nivelDificuldade;
             const mudouXp = xp !== undefined && xp !== trilha.xp;
             const mudouLiberada = liberada !== undefined && liberada !== trilha.liberada;
+            const mudouImagemCapa = imagemCapa !== undefined && imagemCapa !== (trilha.imagemCapa || '');
 
-            const temMudancaTrilha = mudouTema || mudouDescricao || mudouNivel || mudouXp || mudouLiberada;
+            const temMudancaTrilha = mudouTema || mudouDescricao || mudouNivel || mudouXp || mudouLiberada || mudouImagemCapa;
 
             const obrasAtuais = await mongo.TrilhaObra.find({ trilhaId: id });
             const livrosAtuais = await mongo.TrilhaLivro.find({ trilhaId: id });
@@ -310,7 +345,8 @@ module.exports = {
                     ...(mudouDescricao && { descricao }),
                     ...(mudouNivel && { nivelDificuldade }),
                     ...(mudouXp && { xp }),
-                    ...(mudouLiberada && { liberada })
+                    ...(mudouLiberada && { liberada }),
+                    ...(mudouImagemCapa && { imagemCapa })
                 },
                 { new: true }
             );
@@ -450,7 +486,15 @@ module.exports = {
                 return res.status(404).json({ error: 'Nenhuma trilha cadastrada' });
             }
 
-            res.status(200).json(trilhas);
+            const trilhaIds = trilhas.map((trilha) => trilha._id);
+            const contagensPorTrilha = await contarItensPorTrilhas(trilhaIds);
+
+            const trilhasComQuantidade = trilhas.map((trilha) => ({
+                ...trilha.toObject(),
+                quantidadeItens: contagensPorTrilha[trilha._id.toString()] || 0,
+            }));
+
+            res.status(200).json(trilhasComQuantidade);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao consultar trilhas' });
