@@ -1471,6 +1471,7 @@ body.lmAcervoBody {
   border-radius: 10px;
   object-fit: cover;
   background-color: #f2e8de;
+  align-self: center;
 }
 
 .lmAcervoBody .blCardTrilha .lmCardConteudo {
@@ -1481,6 +1482,7 @@ body.lmAcervoBody {
   flex: 1;
   min-width: 0;
   padding: 0;
+  position: relative;
 }
 
 .blCardTrilha .lmCardTitulo {
@@ -1503,12 +1505,14 @@ body.lmAcervoBody {
   font-size: 0.78rem;
   color: var(--corSecundaria);
   line-height: 1.35;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  min-width: 0;
+}
+
+.blCardTrilha .lmCardConteudo:has(.lmCardAcoesAdmin) .blCardTrilhaDescricao {
+  padding-right: 42px;
 }
 
 .blCardTrilha .lmCardAutor {
@@ -1532,8 +1536,20 @@ body.lmAcervoBody {
   margin-top: auto;
 }
 
-.blCardTrilha .lmCardAcoesAdmin {
-  margin-top: 8px;
+.lmAcervoBody .blCardTrilha .lmCardAcoesAdmin {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 2;
+}
+
+.blCardTrilha .lmCardConteudo:has(.lmCardAcoesAdmin) .lmCardTitulo {
+  padding-right: 42px;
 }
 
 #lmModalEditarTrilha {

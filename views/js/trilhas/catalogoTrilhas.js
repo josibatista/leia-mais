@@ -188,6 +188,22 @@ function lmFormatarQuantidadeItens(trilha) {
   return total === 1 ? "1 item" : `${total} obras`;
 }
 
+function lmTruncarDescricaoCard(descricao) {
+  const texto = String(descricao || "").trim();
+
+  if (!texto) {
+    return "";
+  }
+
+  const palavras = texto.split(/\s+/).filter(Boolean);
+
+  if (palavras.length <= 4) {
+    return texto;
+  }
+
+  return `${palavras.slice(0, 4).join(" ")}...`;
+}
+
 function lmAbrirModalMensagem({
   titulo = "Atenção",
   mensagem,
@@ -595,7 +611,7 @@ function lmCriarCardTrilha(trilha) {
   if (descricaoTexto) {
     const descricaoTrilha = document.createElement("p");
     descricaoTrilha.classList.add("blCardTrilhaDescricao");
-    descricaoTrilha.textContent = descricaoTexto;
+    descricaoTrilha.textContent = lmTruncarDescricaoCard(descricaoTexto);
     conteudoCard.appendChild(descricaoTrilha);
   }
 
