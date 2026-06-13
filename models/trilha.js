@@ -23,6 +23,10 @@ const Trilha = new mongoose.Schema({
     liberada: {
         type: Boolean,
         required: false
+    },
+    imagemCapa: {
+        type: String,
+        required: false
     }
 });
 module.exports = mongoose.model("Trilha", Trilha, "Trilha");

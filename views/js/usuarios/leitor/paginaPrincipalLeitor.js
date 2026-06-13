@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     const imagem = document.createElement("img");
-    imagem.src = trilha?.imagemCapa || "/assets/capaPadrao.jpg";
+    imagem.src = tfResolverCapaTrilha(trilha?.imagemCapa);
     imagem.alt = trilha?.tema || "Capa da trilha";
     imagem.onerror = () => {
       imagem.src = "/assets/capaPadrao.jpg";

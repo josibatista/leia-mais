@@ -2307,6 +2307,10 @@ body.lmCadastroBody {
   flex-shrink: 0;
 }
 
+.lmGrupoCampo .vtCapaTrilha {
+  margin-top: 0.15rem;
+}
+
 .vtTituloTrilha {
   margin: 0;
   font-size: 1.5rem;

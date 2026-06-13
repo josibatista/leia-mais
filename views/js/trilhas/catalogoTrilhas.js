@@ -292,6 +292,16 @@ async function lmEditarTrilha(trilha) {
 
     lmGerenciadorItensEdicao.carregarItens(itensTrilha);
 
+    const campoImagemCapa = document.getElementById("lmEditarImagemCapa");
+    if (campoImagemCapa) {
+      campoImagemCapa.value = "";
+    }
+
+    tfAtualizarPreviewCapaTrilha(
+      document.getElementById("lmEditarPreviewCapaTrilha"),
+      dados.imagemCapa,
+    );
+
     lmModalEditarTrilha.classList.add("lmModalOverlayAtivo");
   } catch (erro) {
     console.error("Erro ao abrir edição da trilha:", erro);
@@ -550,7 +560,7 @@ function lmCriarCardTrilha(trilha) {
 
   const imagemTrilha = document.createElement("img");
   imagemTrilha.classList.add("lmCardImagem");
-  imagemTrilha.src = "/assets/capaPadrao.jpg";
+  imagemTrilha.src = tfResolverCapaTrilha(trilha.imagemCapa);
   imagemTrilha.alt = trilha.tema || "Trilha de leitura";
 
   imagemTrilha.onerror = function () {
@@ -873,8 +883,9 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
     document.getElementById("lmEditarNivelDificuldade").value,
   );
   const xp = Number(document.getElementById("lmEditarXp").value);
-  const liberada = document.getElementById("lmEditarLiberada").checked;
+  const liberada = document.getElementById("lmEditarLiberada")?.checked;
   const { obras, livros } = lmGerenciadorItensEdicao.montarPayload();
+  const novaImagemArquivo = document.getElementById("lmEditarImagemCapa")?.files[0];
 
   if (!lmGerenciadorItensEdicao.itens.length) {
     lmAbrirModalMensagem({
@@ -885,6 +896,8 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
   }
 
   try {
+    const novaImagemUrl = await tfUploadImagemCapaTrilha(novaImagemArquivo);
+
     const resposta = await fetch(`/trilhas/${trilhaId}`, {
       method: "PUT",
       headers: lmObterHeadersJson(),
@@ -896,6 +909,7 @@ lmFormularioEditarTrilha.addEventListener("submit", async function (evento) {
         liberada,
         obras,
         livros,
+        imagemCapa: novaImagemUrl || lmTrilhaEmEdicao.imagemCapa || "",
       }),
     });
 
@@ -1018,6 +1032,30 @@ function lmInicializarEdicaoTrilha() {
       listaObras.classList.remove("ativo");
       listaLivros.classList.remove("ativo");
     }
+  });
+
+  const campoImagemCapa = document.getElementById("lmEditarImagemCapa");
+  const previewImagemCapa = document.getElementById("lmEditarPreviewCapaTrilha");
+
+  campoImagemCapa?.addEventListener("change", function () {
+    const arquivo = campoImagemCapa.files[0];
+
+    if (!arquivo) {
+      tfAtualizarPreviewCapaTrilha(previewImagemCapa, lmTrilhaEmEdicao?.imagemCapa);
+      return;
+    }
+
+    if (!tfValidarArquivoImagem(arquivo)) {
+      campoImagemCapa.value = "";
+      tfAtualizarPreviewCapaTrilha(previewImagemCapa, lmTrilhaEmEdicao?.imagemCapa);
+      lmAbrirModalMensagem({
+        titulo: "Atenção",
+        mensagem: "Selecione um arquivo de imagem válido.",
+      });
+      return;
+    }
+
+    previewImagemCapa.src = URL.createObjectURL(arquivo);
   });
 }
 

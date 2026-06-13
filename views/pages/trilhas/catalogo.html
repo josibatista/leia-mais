@@ -185,6 +185,22 @@
           <div id="lmEditarListaItensTrilha" class="lmContainerListaItensTrilha"></div>
         </div>
 
+        <div class="lmGrupoCampo">
+          <label for="lmEditarImagemCapa" class="lmRotuloCampo">Imagem de capa</label>
+          <input
+            type="file"
+            id="lmEditarImagemCapa"
+            class="lmCampoArquivo"
+            accept="image/*"
+          />
+          <img
+            id="lmEditarPreviewCapaTrilha"
+            class="vtCapaTrilha"
+            src="/assets/capaPadrao.jpg"
+            alt="Preview da capa da trilha"
+          />
+        </div>
+
         <button type="submit" class="lmBotaoSaibaMais">Salvar alterações</button>
       </form>
     </div>
@@ -221,6 +237,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/js/usuarios/auth.js"></script>
   <script src="/js/menu.js"></script>
   <script src="/js/trilhas/trilhaFormularioItens.js"></script>

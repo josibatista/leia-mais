@@ -145,10 +145,11 @@ module.exports = {
 
     async postTrilha(req, res) {
         try {
-            let { tema, descricao, nivelDificuldade, xp, liberada, obras, livros } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
+            imagemCapa = imagemCapa?.trim();
 
             if (!tema) {
                 return res.status(422).json({ error: 'O campo tema é obrigatório' });
@@ -183,7 +184,8 @@ module.exports = {
                 descricao,
                 nivelDificuldade,
                 xp,
-                liberada
+                liberada,
+                ...(imagemCapa && { imagemCapa })
             });
 
             const getOrCreateObra = async (obraInput) => {
@@ -266,10 +268,11 @@ module.exports = {
     async putTrilha(req, res) {
         try {
             const id = req.params.id;
-            let { tema, descricao, nivelDificuldade, xp, liberada, obras, livros } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
+            imagemCapa = imagemCapa?.trim();
 
             const trilha = await mongo.Trilha.findById(id);
 
@@ -294,8 +297,9 @@ module.exports = {
             const mudouNivel = nivelDificuldade !== undefined && nivelDificuldade !== trilha.nivelDificuldade;
             const mudouXp = xp !== undefined && xp !== trilha.xp;
             const mudouLiberada = liberada !== undefined && liberada !== trilha.liberada;
+            const mudouImagemCapa = imagemCapa !== undefined && imagemCapa !== (trilha.imagemCapa || '');
 
-            const temMudancaTrilha = mudouTema || mudouDescricao || mudouNivel || mudouXp || mudouLiberada;
+            const temMudancaTrilha = mudouTema || mudouDescricao || mudouNivel || mudouXp || mudouLiberada || mudouImagemCapa;
 
             const obrasAtuais = await mongo.TrilhaObra.find({ trilhaId: id });
             const livrosAtuais = await mongo.TrilhaLivro.find({ trilhaId: id });
@@ -341,7 +345,8 @@ module.exports = {
                     ...(mudouDescricao && { descricao }),
                     ...(mudouNivel && { nivelDificuldade }),
                     ...(mudouXp && { xp }),
-                    ...(mudouLiberada && { liberada })
+                    ...(mudouLiberada && { liberada }),
+                    ...(mudouImagemCapa && { imagemCapa })
                 },
                 { new: true }
             );
