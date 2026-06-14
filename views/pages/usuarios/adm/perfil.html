@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leia Mais - Perfil Administrador</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body class="lmAcervoBody">
+    <div id="blMenuContainer"></div>
+
+    <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+    <header class="lmCabecalho">
+      <div class="lmCabecalhoSuperior">
+        <button
+          class="lmCabecalhoBotao"
+          id="lmMenuAbrirBotao"
+          aria-label="Abrir menu"
+        >
+          &#9776;
+        </button>
+
+        <button
+          class="lmCabecalhoBotao"
+          id="blBotaoConfiguracoes"
+          aria-label="Abrir configurações"
+        >
+          <i class="fa-solid fa-gear"></i>
+        </button>
+      </div>
+    </header>
+
+    <main class="blConteudoPrincipal">
+
+      <section class="blSecaoUsuario">
+        <div class="blAvatarContainer">
+          <div class="blAvatarCirculo" id="blLetraPerfil"></div>
+          <div class="blCoroaIcone"><i class="fa-solid fa-crown"></i></div>
+        </div>
+
+        <div class="blInfoPerfil">
+          <div class="blLinhaPrincipal">
+            <span class="blRotuloGrande" id="blNomePerfil"></span>
+          </div>
+
+          <div class="blLinhaSecundaria">
+            <span class="blRotuloPequeno" id="blEmailPerfil"></span>
+          </div>
+
+          <div class="blLinhaSecundaria">
+            <span class="blRotuloPequeno blRotuloTipoAdmin">
+              <i class="fa-solid fa-shield-halved"></i> Administrador
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="blSecaoConfiguracao">
+        <h2 class="blTituloCategoria">Visão Geral</h2>
+        <div class="blGradeEstatisticas blGradeEstatisticasAdmin">
+          <div class="blCardEstatistica">
+            <i class="fa-solid fa-users blIconeCard"></i>
+            <span class="blNumeroEstatistica" id="blQtdUsuarios">0</span>
+            <span class="blTextoEstatistica">Usuários</span>
+          </div>
+          <div class="blCardEstatistica">
+            <i class="fa-solid fa-book blIconeCard"></i>
+            <span class="blNumeroEstatistica" id="blQtdLivros">0</span>
+            <span class="blTextoEstatistica">Livros</span>
+          </div>
+          <div class="blCardEstatistica">
+            <i class="fa-solid fa-route blIconeCard"></i>
+            <span class="blNumeroEstatistica" id="blQtdTrilhas">0</span>
+            <span class="blTextoEstatistica">Trilhas</span>
+          </div>
+          <div class="blCardEstatistica">
+            <i class="fa-solid fa-book-open blIconeCard"></i>
+            <span class="blNumeroEstatistica" id="blQtdLeituras">0</span>
+            <span class="blTextoEstatistica">Leituras</span>
+          </div>
+        </div>
+
+        <div class="blFiltrosVisaoGeral" id="blFiltrosVisaoGeral">
+          <button
+            type="button"
+            class="blBotaoVisaoGeral"
+            data-rota="/pages/usuarios/listagem.html"
+          >
+            Usuários
+          </button>
+          <button
+            type="button"
+            class="blBotaoVisaoGeral"
+            data-rota="/pages/livros/acervo.html"
+          >
+            Livros
+          </button>
+          <button
+            type="button"
+            class="blBotaoVisaoGeral"
+            data-rota="/pages/trilhas/catalogo.html"
+          >
+            Trilhas
+          </button>
+          <button
+            type="button"
+            class="blBotaoVisaoGeral"
+            data-rota="/pages/autores/listagem.html"
+          >
+            Autores
+          </button>
+
+          <button
+            type="button"
+            class="blBotaoVisaoGeral"
+            data-rota="/pages/usuarios/adm/dashboard.html"
+          >
+            Relatórios
+          </button>
+        </div>
+      </section>
+
+      <section class="blSecaoConfiguracao">
+        <h2 class="blTituloCategoria">Ações Rápidas</h2>
+        <div class="blAcoesRapidas" id="blAcoesRapidas">
+          <button
+            type="button"
+            class="blBotaoAcaoRapida"
+            data-rota="/pages/livros/cadastro.html"
+          >
+            <i class="fa-solid fa-book-medical"></i> Adicionar Livro
+          </button>
+          <button
+            type="button"
+            class="blBotaoAcaoRapida"
+            data-rota="/pages/trilhas/cadastro.html"
+          >
+            <i class="fa-solid fa-route"></i> Criar Trilha
+          </button>
+          <button
+            type="button"
+            class="blBotaoAcaoRapida"
+            data-rota="/pages/autores/cadastro.html"
+          >
+            <i class="fa-solid fa-user-pen"></i> Cadastrar Autor
+          </button>
+
+          <!-- criar a tela de "Avisos" e apontar data-rota quando existir -->
+          <button
+            type="button"
+            class="blBotaoAcaoRapida"
+            data-rota=""
+            data-indisponivel="true"
+          >
+            <i class="fa-solid fa-bell"></i> Avisos
+          </button>
+        </div>
+      </section>
+
+      <div class="blPainelDuplo">
+        <section class="blSecaoConfiguracao">
+          <h2 class="blTituloCategoria">Atividades Recentes</h2>
+          <ul class="blAtividades" id="blAtividades">
+            <li class="blAtividadeItem blAtividadeVazia">Carregando atividades...</li>
+          </ul>
+        </section>
+
+        <section class="blSecaoConfiguracao">
+          <h2 class="blTituloCategoria blTituloCategoriaAcao">
+            <span>Métricas</span>
+            <button
+              type="button"
+              class="blTituloChevron"
+              id="blChevronMetricas"
+              data-rota="/pages/usuarios/adm/dashboard.html"
+              aria-label="Abrir relatórios"
+            >
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </h2>
+          <div class="blMetricasGrade">
+            <div class="blCardMetrica">
+              <span class="blMetricaTitulo" id="blMetricaBarrasTitulo">Cadastros</span>
+              <div class="blMiniBarras" id="blMiniBarras"></div>
+            </div>
+            <div class="blCardMetrica">
+              <span class="blMetricaTitulo">Distribuição</span>
+              <div class="blDonutContainer">
+                <div class="blDonut" id="blDonut"></div>
+                <div class="blDonutLegenda" id="blDonutLegenda"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+      <div class="lmAlertaBox">
+        <h3 id="lmAlertaTitulo">Atenção</h3>
+        <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+        <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+      </div>
+    </div>
+
+    <script src="/js/usuarios/auth.js"></script>
+    <script src="/js/menu.js"></script>
+    <script src="/js/usuarios/adm/perfilAdm.js"></script>
+  </body>
+</html>
