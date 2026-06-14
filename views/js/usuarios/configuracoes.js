@@ -102,6 +102,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   await carregarUsuario();
   sincronizarSeletorTema(seletorTema);
 
+  const botaoVoltarConfig = document.getElementById("blBotaoVoltarConfig");
+  if (botaoVoltarConfig) {
+    botaoVoltarConfig.addEventListener("click", () => {
+      voltarPaginaAnterior();
+    });
+  }
+
   document.querySelectorAll(".blListaItensConfig button[data-campo]").forEach((botao) => {
     botao.addEventListener("click", () => {
       abrirModalEdicao(botao.dataset.campo);
