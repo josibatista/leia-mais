@@ -85,7 +85,17 @@ async function atualizarProgressoTrilha(usuarioId, trilhaId, vinculo) {
     if (progresso.percentual === 100 && progresso.total > 0) {
         await concluirTrilhaComXp(vinculo, trilhaId, usuarioId);
     } else if (progresso.percentual < 100 && vinculo.status === 'concluída') {
+        if (vinculo.xpGanho > 0) {
+            const usuario = await db.Usuario.findByPk(Number(usuarioId));
+            if (usuario) {
+                usuario.xpTotal = Math.max(0, Number(usuario.xpTotal) - vinculo.xpGanho);
+                await usuario.save();
+            }
+        }
+
         vinculo.status = 'em andamento';
+        vinculo.dataConclusao = null;
+        vinculo.xpGanho = 0;
         await vinculo.save();
     }
 
