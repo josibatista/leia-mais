@@ -117,5 +117,78 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao consultar relatórios' });
         }
+    },
+    async getRelatorioCSV(req, res) {
+        try {
+            const estatisticas = await calcularEstatisticas();
+
+            const cabecalho = Object.keys(estatisticas).join(';');
+
+            const valores = Object.values(estatisticas).join(';');
+
+            const csv = `${cabecalho}\n${valores}`;
+
+            res.setHeader(
+                'Content-Type',
+                'text/csv'
+            );
+
+            res.setHeader(
+                'Content-Disposition',
+                'attachment; filename=relatorio.csv'
+            );
+
+            res.send(csv);
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                error: 'Erro ao gerar CSV'
+            });
+        }
+    },
+    async exportarCSV(req, res) {
+        try {
+
+            const estatisticas = await calcularEstatisticas();
+
+            const campos = req.body.campos || [];
+
+            const dadosFiltrados = {};
+
+            campos.forEach(campo => {
+                if (estatisticas[campo] !== undefined) {
+                    dadosFiltrados[campo] = estatisticas[campo];
+                }
+            });
+
+            const cabecalho =
+                Object.keys(dadosFiltrados).join(';');
+
+            const valores =
+                Object.values(dadosFiltrados).join(';');
+
+            const csv =
+                `${cabecalho}\n${valores}`;
+
+            res.setHeader(
+                'Content-Type',
+                'text/csv'
+            );
+
+            res.setHeader(
+                'Content-Disposition',
+                'attachment; filename=relatorio.csv'
+            );
+
+            res.send(csv);
+
+        } catch (error) {
+            console.error(error);
+
+            res.status(500).json({
+                error: 'Erro ao gerar CSV'
+            });
+        }
     }
 };
