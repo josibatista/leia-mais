@@ -163,14 +163,14 @@ function lmFormatarQuantidadeItens(trilha) {
 
   if (temCampoQuantidade) {
     if (total === 0) {
-      return "0 itens";
+      return "0 leituras";
     }
 
     if (total === 1) {
-      return "1 item";
+      return "1 leitura";
     }
 
-    return `${total} itens`;
+    return `${total} leituras`;
   }
 
   if (total === 0 || total === null) {
@@ -185,7 +185,7 @@ function lmFormatarQuantidadeItens(trilha) {
     return livros === 1 ? "1 livro" : `${livros} livros`;
   }
 
-  return total === 1 ? "1 item" : `${total} obras`;
+  return total === 1 ? "1 leitura" : `${total} leituras`;
 }
 
 function lmTruncarDescricaoCard(descricao) {
