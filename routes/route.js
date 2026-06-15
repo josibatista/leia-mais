@@ -15,14 +15,14 @@ const autenticarToken = require('../middleware/autenticarToken');
 const checkAdmin = require('../middleware/checkAdmin');
 
 // Rotas - Relatório
-router.get('/relatorios', relatorioController.getRelatorios);
-router.get('/relatorio',  relatorioController.getRelatorio);
-router.get('/metricas',  relatorioController.getMetricas);
-router.post('/relatorio',  relatorioController.postRelatorio);
-router.get('/relatorio/csv', relatorioController.getRelatorioCSV);
-router.post('/relatorio/csv', relatorioController.exportarCSV);
-router.get('/relatorio/atividades', relatorioController.getAtividadesRecentes);
-router.get('/relatorio/dashboard', relatorioController.getDashboard);
+router.get('/relatorios', autenticarToken, checkAdmin, relatorioController.getRelatorios);
+router.get('/relatorio', autenticarToken, checkAdmin, relatorioController.getRelatorio);
+router.get('/metricas', autenticarToken, checkAdmin, relatorioController.getMetricas);
+router.post('/relatorio', autenticarToken, checkAdmin, relatorioController.postRelatorio);
+router.get('/relatorio/csv', autenticarToken, checkAdmin, relatorioController.getRelatorioCSV);
+router.post('/relatorio/csv', autenticarToken, checkAdmin, relatorioController.exportarCSV);
+router.get('/relatorio/atividades', autenticarToken, checkAdmin, relatorioController.getAtividadesRecentes);
+router.get('/relatorio/dashboard', autenticarToken, checkAdmin, relatorioController.getDashboard);
 
 // Rotas - Livro
 router.post('/livros/admin', livroController.postLivro);
