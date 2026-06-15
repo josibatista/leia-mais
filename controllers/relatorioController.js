@@ -54,6 +54,21 @@ async function buscarAtividadesObra(limite = 5) {
     }));
 }
 
+// busca atividades recentes de livros
+async function buscarAtividadesLivro(limite = 5) {
+    const livros = await db.Livro.findAll({
+        order: [['id', 'DESC']],
+        limit: limite
+    });
+
+    return livros.map(l => ({
+        tipo: 'livro',
+        descricao: `Livro cadastrado: ${l.titulo}`,
+        imagemCapa: l.imagemCapa,
+        paginas: l.paginas
+    }));
+}
+
 // métricas para gráficos do dashboard
 async function calcularMetricas() {
     // cadastros de usuários por mês
@@ -223,8 +238,9 @@ module.exports = {
             const limite = Number(req.query.limite) || 5;
             const atividadesTrilha = await buscarAtividadesTrilha(limite);
             const atividadesObra = await buscarAtividadesObra(limite);
+            const atividadesLivro = await buscarAtividadesLivro(limite);
 
-            res.status(200).json({ atividades: [...atividadesTrilha, ...atividadesObra] });
+            res.status(200).json({ atividades: [...atividadesTrilha, ...atividadesObra, ...atividadesLivro] });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao buscar atividades recentes' });
