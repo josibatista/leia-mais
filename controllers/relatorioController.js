@@ -9,6 +9,12 @@ async function calcularEstatisticas() {
     const numeroUsuarios = await db.Usuario.count();
     const numeroTrilhas = await mongo.Trilha.countDocuments();
     const numeroObras = await mongo.Obra.countDocuments();
+    const paginasLidasResult = await db.UsuarioLivro.findAll({
+        attributes: [[fn('SUM', col('paginasLidas')), 'totalPaginasLidas']],
+        where: { status: { [db.Sequelize.Op.in]: ['lido', 'lendo'] } },
+        raw: true
+    });
+    const paginasLidas = paginasLidasResult[0].totalPaginasLidas || 0;
 
     const numeroLeituras = await db.UsuarioLivro.count({ where: { status: 'lido' } });
 
@@ -23,7 +29,8 @@ async function calcularEstatisticas() {
         numeroUsuarios,
         numeroTrilhas,
         numeroObras,
-        numeroItensConcluidos
+        numeroItensConcluidos,
+        paginasLidas
     };
 }
 
@@ -39,6 +46,94 @@ async function buscarAtividadesTrilha(limite = 5) {
         liberada: t.liberada,
         data: t.dataHora
     }));
+}
+
+async function calcularTrilhasPopulares(limite = 3) {
+    const ranking = await mongo.TrilhaUsuario.aggregate([
+        { $group: { _id: '$trilhaId', total: { $sum: 1 } } },
+        { $sort: { total: -1 } },
+        { $limit: limite }
+    ]);
+
+    const trilhaIds = ranking.map(r => r._id);
+    const trilhas = await mongo.Trilha.find({ _id: { $in: trilhaIds } });
+    const trilhasMap = Object.fromEntries(trilhas.map(t => [t._id.toString(), t.tema]));
+
+    return ranking.map(r => ({
+        trilhaId: r._id,
+        tema: trilhasMap[r._id.toString()] || 'Trilha removida',
+        totalUsuarios: r.total
+    }));
+}
+
+async function calcularGenerosPopulares(limite = 3) {
+    const resultado = await db.UsuarioLivro.findAll({
+        attributes: [
+            [col('livro.genero'), 'genero'],
+            [fn('COUNT', col('UsuarioLivro.id')), 'total']
+        ],
+        include: [{
+            model: db.Livro,
+            as: 'livro',
+            attributes: []
+        }],
+        where: { status: 'lido' },
+        group: ['livro.genero'],
+        order: [[fn('COUNT', col('UsuarioLivro.id')), 'DESC']],
+        limit: limite,
+        raw: true
+    });
+
+    return resultado.map(r => ({
+        genero: r.genero,
+        total: Number(r.total)
+    }));
+}
+
+async function calcularMaiorAbandono() {
+    const resultado = await db.UsuarioLivro.findAll({
+        attributes: [
+            [col('livro.genero'), 'genero'],
+            'status',
+            [fn('COUNT', col('UsuarioLivro.id')), 'total']
+        ],
+        include: [{
+            model: db.Livro,
+            as: 'livro',
+            attributes: []
+        }],
+        group: ['livro.genero', 'status'],
+        raw: true
+    });
+
+    // agrupa por gênero: total geral e total "para ler"
+    const porGenero = {};
+    resultado.forEach(r => {
+        if (!porGenero[r.genero]) {
+            porGenero[r.genero] = { total: 0, paraLer: 0 };
+        }
+        porGenero[r.genero].total += Number(r.total);
+        if (r.status === 'para ler') {
+            porGenero[r.genero].paraLer += Number(r.total);
+        }
+    });
+
+    // calcula proporção de abandono por gênero
+    let maiorAbandono = null;
+    let maiorProporcao = -1;
+
+    for (const [genero, dados] of Object.entries(porGenero)) {
+        const proporcao = dados.total > 0 ? dados.paraLer / dados.total : 0;
+        if (proporcao > maiorProporcao) {
+            maiorProporcao = proporcao;
+            maiorAbandono = genero;
+        }
+    }
+
+    return {
+        genero: maiorAbandono,
+        proporcao: maiorProporcao
+    };
 }
 
 // busca atividades recentes de obras
@@ -259,5 +354,23 @@ module.exports = {
             console.error(error);
             res.status(500).json({ error: 'Erro ao buscar atividades recentes' });
         }
-    }
+    },
+    async getDashboard(req, res) {
+        try {
+            const [trilhasPopulares, generosPopulares, maiorAbandono] = await Promise.all([
+                calcularTrilhasPopulares(3),
+                calcularGenerosPopulares(3),
+                calcularMaiorAbandono()
+            ]);
+
+            res.status(200).json({
+                trilhasPopulares,
+                generosPopulares,
+                maiorAbandono
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao gerar dashboard' });
+        }
+    },
 };

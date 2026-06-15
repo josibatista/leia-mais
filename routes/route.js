@@ -22,6 +22,7 @@ router.post('/relatorio',  relatorioController.postRelatorio);
 router.get('/relatorio/csv', relatorioController.getRelatorioCSV);
 router.post('/relatorio/csv', relatorioController.exportarCSV);
 router.get('/relatorio/atividades', relatorioController.getAtividadesRecentes);
+router.get('/relatorio/dashboard', relatorioController.getDashboard);
 
 // Rotas - Livro
 router.post('/livros/admin', livroController.postLivro);
