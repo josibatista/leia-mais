@@ -19,7 +19,9 @@ router.get('/relatorios', relatorioController.getRelatorios);
 router.get('/relatorio',  relatorioController.getRelatorio);
 router.get('/metricas',  relatorioController.getMetricas);
 router.post('/relatorio',  relatorioController.postRelatorio);
-router.post('/relatorio/csv', relatorioController.getRelatorioCSV);
+router.get('/relatorio/csv', relatorioController.getRelatorioCSV);
+router.post('/relatorio/csv', relatorioController.exportarCSV);
+router.get('/relatorio/atividades', relatorioController.getAtividadesRecentes);
 
 // Rotas - Livro
 router.post('/livros/admin', livroController.postLivro);

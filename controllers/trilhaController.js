@@ -145,7 +145,7 @@ module.exports = {
 
     async postTrilha(req, res) {
         try {
-            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros, dataHora } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
@@ -185,6 +185,7 @@ module.exports = {
                 nivelDificuldade,
                 xp,
                 liberada,
+                dataHora: new Date(),
                 ...(imagemCapa && { imagemCapa })
             });
 
@@ -268,7 +269,7 @@ module.exports = {
     async putTrilha(req, res) {
         try {
             const id = req.params.id;
-            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros, dataHora } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
@@ -346,7 +347,8 @@ module.exports = {
                     ...(mudouNivel && { nivelDificuldade }),
                     ...(mudouXp && { xp }),
                     ...(mudouLiberada && { liberada }),
-                    ...(mudouImagemCapa && { imagemCapa })
+                    ...(mudouImagemCapa && { imagemCapa }),
+                    dataHora: new Date()
                 },
                 { new: true }
             );
@@ -374,7 +376,7 @@ module.exports = {
                 const obra = await mongo.Obra.create({
                     titulo: obraInput.titulo,
                     tipo: obraInput.tipo,
-                    autores: autoresIds, // ✅ IDs numéricos
+                    autores: autoresIds, 
                     descricao: obraInput.descricao,
                     link: obraInput.link
                 });
@@ -439,6 +441,8 @@ module.exports = {
             if (trilhaObra.deletedCount === 0) {
                 return res.status(404).json({ error: 'Relação não encontrada' });
             }
+
+            await mongo.Trilha.findByIdAndUpdate(trilhaId, { dataHora: new Date() });
 
             res.status(200).json({ 
                 message: 'Obra removida da trilha'

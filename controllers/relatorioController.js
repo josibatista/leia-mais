@@ -27,6 +27,33 @@ async function calcularEstatisticas() {
     };
 }
 
+// busca atividades recentes de trilhas 
+async function buscarAtividadesTrilha(limite = 5) {
+    const trilhas = await mongo.Trilha.find()
+        .sort({ dataHora: -1 })
+        .limit(limite);
+
+    return trilhas.map(t => ({
+        tipo: 'trilha',
+        descricao: `Trilha cadastrada: ${t.tema}`,
+        liberada: t.liberada,
+        data: t.dataHora
+    }));
+}
+
+// busca atividades recentes de obras
+async function buscarAtividadesObra(limite = 5) {
+    const obras = await mongo.Obra.find()
+        .sort({ dataHora: -1 })
+        .limit(limite);
+
+    return obras.map(o => ({
+        tipo: 'obra',
+        descricao: `Obra cadastrada: ${o.titulo}`,
+        data: o.dataHora
+    }));
+}
+
 // métricas para gráficos do dashboard
 async function calcularMetricas() {
     // cadastros de usuários por mês
@@ -189,6 +216,18 @@ module.exports = {
             res.status(500).json({
                 error: 'Erro ao gerar CSV'
             });
+        }
+    },
+    async getAtividadesRecentes(req, res) {
+        try {
+            const limite = Number(req.query.limite) || 5;
+            const atividadesTrilha = await buscarAtividadesTrilha(limite);
+            const atividadesObra = await buscarAtividadesObra(limite);
+
+            res.status(200).json({ atividades: [...atividadesTrilha, ...atividadesObra] });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erro ao buscar atividades recentes' });
         }
     }
 };

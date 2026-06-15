@@ -6,7 +6,7 @@ module.exports = {
     
     async postObra(req, res) {
         try {
-            let { titulo, tipo, autores, descricao } = req.body;
+            let { titulo, tipo, autores, descricao, dataHora } = req.body;
 
             titulo = titulo?.trim();
             descricao = descricao?.trim();
@@ -53,7 +53,8 @@ module.exports = {
                 titulo,
                 tipo,
                 autores: autoresIds,
-                descricao
+                descricao,
+                dataHora: new Date()
             });
 
             const autoresNomes = await db.Autor.findAll({
@@ -77,7 +78,7 @@ module.exports = {
     async putObra(req, res) {
         try {
             const id = req.params.id;
-            let { titulo, tipo, autores, descricao } = req.body;
+            let { titulo, tipo, autores, descricao, dataHora } = req.body;
 
             titulo = titulo?.trim();
             descricao = descricao?.trim();
@@ -165,7 +166,8 @@ module.exports = {
                     ...(titulo && { titulo }),
                     ...(tipo && { tipo }),
                     ...(descricao && { descricao }),
-                    autores: autoresIds
+                    autores: autoresIds,
+                    dataHora: new Date()
                 },
                 { new: true }
             );
@@ -196,6 +198,8 @@ module.exports = {
             if (!obra) {
                 return res.status(404).json({ error: 'Obra não encontada' });
             }
+
+            await mongo.Obra.findByIdAndUpdate(id, { dataHora: new Date()});
 
             res.status(200).json({
                 message: 'Obra deletada com sucesso',
