@@ -1,42 +1,45 @@
-// O que já vem de rota real (ver funções abaixo):
-//   - Usuários - GET /usuarios
-//   - Livros - GET /livros
-//   - Trilhas - GET /trilhas
-//   - Atividades recentes (novos cadastros) - GET /usuarios (dataCriacao/tipo) [incompleto]
+// Rotas reais utilizadas nesta tela:
+//   - GET /usuarios          → contagem e atividades (novos cadastros)
+//   - GET /livros            → contagem
+//   - GET /trilhas           → contagem
+//   - GET /usuarios/:id      → perfil do administrador logado
+//   - GET /relatorio         → leituras (numeroLeituras + numeroItensConcluidos)
+//   - GET /metricas          → mini gráficos (cadastrosPorMes, distribuicaoUsuarios)
 //
-// O que AINDA é mockado (sem rota pronta no backend):
-//   - Leituras (livros lidos + itens de trilha concluídos de TODOS os
-//     usuários): não há rota de agregação global. Ver calcularLeituras().
-//   - Métricas (mini gráficos): não há rota de estatísticas. Ver
-//     carregarMetricas().
-//   - Atividades de "atualização feita por administrador": não há
-//     updatedAt/auditoria no backend. Ver carregarAtividades().
+// Ainda sem rota no backend (mock/fallback apenas em erro):
+//   - Atividades administrativas (livro aprovado, trilha atualizada, etc.):
+//     não há endpoint de auditoria/histórico de ações. Ver carregarAtividades().
 
 const PERFIL_ADM_MOCK = {
   perfil: {
     nome: "Administrador Leia+",
     email: "admin@leiamais.com",
   },
-  leituras: 0,
+  // Fallback visual apenas se GET /usuarios falhar em carregarAtividades().
   atividades: [
     { icone: "fa-user-plus", texto: "Novo usuário cadastrado", detalhe: "recentemente" },
     { icone: "fa-book", texto: "Livro aprovado no acervo", detalhe: "recentemente" },
     { icone: "fa-user-shield", texto: "Novo administrador", detalhe: "recentemente" },
     { icone: "fa-route", texto: "Trilha atualizada", detalhe: "recentemente" },
   ],
-  metricas: {
-    // Mini gráfico de barras
-    barras: [
-      { rotulo: "Seg", valor: 40 },
-      { rotulo: "Ter", valor: 65 },
-      { rotulo: "Qua", valor: 50 },
-      { rotulo: "Qui", valor: 80 },
-      { rotulo: "Sex", valor: 60 },
-    ],
-    // Mini gráfico redondo
-    donut: { leitores: 70, administradores: 30 },
-  },
 };
+
+// Fallback visual das métricas — usado somente se GET /metricas falhar.
+const PERFIL_ADM_FALLBACK_METRICAS = {
+  barras: [
+    { rotulo: "Seg", valor: 40 },
+    { rotulo: "Ter", valor: 65 },
+    { rotulo: "Qua", valor: 50 },
+    { rotulo: "Qui", valor: 80 },
+    { rotulo: "Sex", valor: 60 },
+  ],
+  donut: { leitores: 70, administradores: 30 },
+};
+
+const MESES_CURTOS = [
+  "Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
+  "Jul", "Ago", "Set", "Out", "Nov", "Dez",
+];
 
 document.addEventListener("DOMContentLoaded", async () => {
   if (!protegerRotaAdmin()) {
@@ -71,6 +74,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     return extrairLista(await resposta.json());
   }
 
+  async function buscarJson(url) {
+    const resposta = await fetch(url, { headers: obterHeadersAuth() });
+
+    if (!resposta.ok) {
+      const erro = await resposta.json().catch(() => ({}));
+      throw new Error(erro.error || `Falha ao consultar ${url}`);
+    }
+
+    return resposta.json();
+  }
+
   function preencherIdentificacao() {
     const nome = usuario.nome || PERFIL_ADM_MOCK.perfil.nome;
     const email = usuario.email || PERFIL_ADM_MOCK.perfil.email;
@@ -89,15 +103,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     try {
-      const resposta = await fetch(`/usuarios/${usuario.id}`, {
-        headers: obterHeadersAuth(),
-      });
-
-      if (!resposta.ok) {
-        throw new Error("Não foi possível atualizar o perfil.");
-      }
-
-      const dados = await resposta.json();
+      const dados = await buscarJson(`/usuarios/${usuario.id}`);
       usuario = dados;
       salvarUsuarioNaSessao(dados);
       preencherIdentificacao();
@@ -106,14 +112,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+  // Leituras = livros lidos + itens de trilha concluídos (todos os usuários).
+  // Fonte: GET /relatorio → numeroLeituras + numeroItensConcluidos.
   async function calcularLeituras() {
-    // Estrutura pronta para integração:
-    //
-    //   const dados = await buscarLista("/leituras"); // rota futura
-    //   const livrosLidos = dados.livrosLidos;        // status === "lido"
-    //   const itensTrilhaConcluidos = dados.itensConcluidos; // item.concluida
-    //   return livrosLidos + itensTrilhaConcluidos;
-    return PERFIL_ADM_MOCK.leituras;
+    const dados = await buscarJson("/relatorio");
+
+    const livrosLidos = Number(dados.numeroLeituras) || 0;
+    const itensTrilhaConcluidos = Number(dados.numeroItensConcluidos) || 0;
+
+    return livrosLidos + itensTrilhaConcluidos;
   }
 
   async function carregarIndicadores() {
@@ -140,11 +147,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.warn("Indicador 'trilhas' usando fallback local (0).", erro);
     }
 
-    let leituras = PERFIL_ADM_MOCK.leituras;
+    let leituras = 0;
     try {
       leituras = await calcularLeituras();
     } catch (erro) {
-      console.warn("Indicador 'leituras' usando fallback mock.", erro);
+      console.warn("Indicador 'leituras' usando fallback local (0).", erro);
     }
 
     document.getElementById("blQtdUsuarios").textContent = qtdUsuarios;
@@ -212,15 +219,45 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // Novos cadastros: GET /usuarios (dataCriacao + tipo).
+  // TODO: incluir ações administrativas quando o backend expor auditoria/histórico.
   async function carregarAtividades() {
     try {
       const usuarios = listaUsuarios || (await buscarLista("/usuarios"));
-      const atividades = montarAtividadesReais(usuarios);
-      renderizarAtividades(atividades.length ? atividades : PERFIL_ADM_MOCK.atividades);
+      renderizarAtividades(montarAtividadesReais(usuarios));
     } catch (erro) {
       console.warn("Atividades recentes usando fallback mock.", erro);
       renderizarAtividades(PERFIL_ADM_MOCK.atividades);
     }
+  }
+
+  function adaptarCadastrosParaBarras(cadastrosPorMes) {
+    const lista = Array.isArray(cadastrosPorMes) ? cadastrosPorMes : [];
+    return lista.slice(-5).map((item) => {
+      const mes = String(item.mes || "");
+      const indiceMes = parseInt(mes.split("-")[1], 10) - 1;
+      return {
+        rotulo: MESES_CURTOS[indiceMes] || mes,
+        valor: Number(item.total) || 0,
+      };
+    });
+  }
+
+  function adaptarUsuariosParaDonut(distribuicaoUsuarios) {
+    const lista = Array.isArray(distribuicaoUsuarios) ? distribuicaoUsuarios : [];
+    let leitores = 0;
+    let administradores = 0;
+
+    lista.forEach((item) => {
+      const total = Number(item.total) || 0;
+      if (item.tipo === "administrador") {
+        administradores = total;
+      } else {
+        leitores += total;
+      }
+    });
+
+    return { leitores, administradores };
   }
 
   function renderizarMiniBarras(barras) {
@@ -265,9 +302,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     `;
   }
 
-  function carregarMetricas() {
-    renderizarMiniBarras(PERFIL_ADM_MOCK.metricas.barras);
-    renderizarDonut(PERFIL_ADM_MOCK.metricas.donut);
+  // Fonte: GET /metricas → cadastrosPorMes (barras) e distribuicaoUsuarios (donut).
+  async function carregarMetricas() {
+    try {
+      const dados = await buscarJson("/metricas");
+      const barras = adaptarCadastrosParaBarras(dados.cadastrosPorMes);
+      const donut = adaptarUsuariosParaDonut(dados.distribuicaoUsuarios);
+
+      if (!barras.length) {
+        throw new Error("Sem dados de cadastros por mês.");
+      }
+
+      renderizarMiniBarras(barras);
+      renderizarDonut(donut);
+    } catch (erro) {
+      console.warn("Métricas usando fallback visual.", erro);
+      renderizarMiniBarras(PERFIL_ADM_FALLBACK_METRICAS.barras);
+      renderizarDonut(PERFIL_ADM_FALLBACK_METRICAS.donut);
+    }
   }
 
   function configurarEngrenagem() {
@@ -311,7 +363,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await carregarPerfilAdmin();
     await carregarIndicadores();
     await carregarAtividades();
-    carregarMetricas();
+    await carregarMetricas();
     configurarEngrenagem();
     configurarAcoesRapidas();
     configurarNavegacaoSimples(".blBotaoVisaoGeral");
