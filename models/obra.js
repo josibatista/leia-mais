@@ -39,6 +39,11 @@ const Obra = new mongoose.Schema({
     descricao: {
         type: String,
         required: false
+    },
+    dataHora: {
+        type: Date,
+        default: Date.now,
+        required: false
     }
 });
 module.exports = mongoose.model("Obra", Obra, "Obra");

@@ -36,7 +36,21 @@ async function buscarAtividadesTrilha(limite = 5) {
     return trilhas.map(t => ({
         tipo: 'trilha',
         descricao: `Trilha cadastrada: ${t.tema}`,
+        liberada: t.liberada,
         data: t.dataHora
+    }));
+}
+
+// busca atividades recentes de obras
+async function buscarAtividadesObra(limite = 5) {
+    const obras = await mongo.Obra.find()
+        .sort({ dataHora: -1 })
+        .limit(limite);
+
+    return obras.map(o => ({
+        tipo: 'obra',
+        descricao: `Obra cadastrada: ${o.titulo}`,
+        data: o.dataHora
     }));
 }
 
@@ -207,9 +221,10 @@ module.exports = {
     async getAtividadesRecentes(req, res) {
         try {
             const limite = Number(req.query.limite) || 5;
-            const atividades = await buscarAtividadesTrilha(limite);
+            const atividadesTrilha = await buscarAtividadesTrilha(limite);
+            const atividadesObra = await buscarAtividadesObra(limite);
 
-            res.status(200).json({ atividades });
+            res.status(200).json({ atividades: [...atividadesTrilha, ...atividadesObra] });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'Erro ao buscar atividades recentes' });
