@@ -269,7 +269,7 @@ module.exports = {
     async putTrilha(req, res) {
         try {
             const id = req.params.id;
-            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros, dataHora } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
@@ -347,9 +347,7 @@ module.exports = {
                     ...(mudouNivel && { nivelDificuldade }),
                     ...(mudouXp && { xp }),
                     ...(mudouLiberada && { liberada }),
-                    ...(mudouImagemCapa && { imagemCapa }),
-                    dataHora: new Date()
-                },
+                    ...(mudouImagemCapa && { imagemCapa })                },
                 { new: true }
             );
 
@@ -441,8 +439,6 @@ module.exports = {
             if (trilhaObra.deletedCount === 0) {
                 return res.status(404).json({ error: 'Relação não encontrada' });
             }
-
-            await mongo.Trilha.findByIdAndUpdate(trilhaId, { dataHora: new Date() });
 
             res.status(200).json({ 
                 message: 'Obra removida da trilha'

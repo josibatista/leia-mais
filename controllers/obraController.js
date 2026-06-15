@@ -78,7 +78,7 @@ module.exports = {
     async putObra(req, res) {
         try {
             const id = req.params.id;
-            let { titulo, tipo, autores, descricao, dataHora } = req.body;
+            let { titulo, tipo, autores, descricao } = req.body;
 
             titulo = titulo?.trim();
             descricao = descricao?.trim();
@@ -167,7 +167,6 @@ module.exports = {
                     ...(tipo && { tipo }),
                     ...(descricao && { descricao }),
                     autores: autoresIds,
-                    dataHora: new Date()
                 },
                 { new: true }
             );
@@ -198,8 +197,6 @@ module.exports = {
             if (!obra) {
                 return res.status(404).json({ error: 'Obra não encontada' });
             }
-
-            await mongo.Obra.findByIdAndUpdate(id, { dataHora: new Date()});
 
             res.status(200).json({
                 message: 'Obra deletada com sucesso',
