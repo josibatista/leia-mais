@@ -2,6 +2,55 @@ const { fn, col, literal } = require('sequelize');
 const db = require('../config/db_sequelize');
 const mongo = require('../config/db_mongoose');
 
+// Total de páginas lidas — mesma regra do perfil do leitor (perfilLeitor.js)
+async function calcularPaginasLidas() {
+    const vinculos = await db.UsuarioLivro.findAll({
+        where: {
+            status: { [db.Sequelize.Op.in]: ['lido', 'lendo'] }
+        },
+        include: [{
+            model: db.Livro,
+            as: 'livro',
+            attributes: ['id', 'paginas']
+        }]
+    });
+
+    let total = 0;
+    const livrosLidosPorUsuario = new Set();
+
+    for (const vinculo of vinculos) {
+        if (vinculo.status === 'lido') {
+            total += Number(vinculo.livro?.paginas) || 0;
+            livrosLidosPorUsuario.add(`${vinculo.usuarioId}-${vinculo.livroId}`);
+        } else if (vinculo.status === 'lendo') {
+            total += Number(vinculo.paginasLidas) || 0;
+        }
+    }
+
+    const concluidosTrilha = await mongo.TrilhaUsuarioLivro.find({ concluida: true }).lean();
+
+    if (concluidosTrilha.length > 0) {
+        const livroIds = [...new Set(concluidosTrilha.map((item) => item.livroId))];
+        const livros = await db.Livro.findAll({
+            where: { id: livroIds },
+            attributes: ['id', 'paginas']
+        });
+        const paginasPorLivro = new Map(
+            livros.map((livro) => [livro.id.toString(), Number(livro.paginas) || 0])
+        );
+
+        for (const item of concluidosTrilha) {
+            const chave = `${item.usuarioId}-${item.livroId}`;
+            if (livrosLidosPorUsuario.has(chave)) {
+                continue;
+            }
+            total += paginasPorLivro.get(String(item.livroId)) || 0;
+        }
+    }
+
+    return total;
+}
+
 // estatísticas gerais (números totais)
 async function calcularEstatisticas() {
     const numeroLivros = await db.Livro.count();
@@ -9,12 +58,7 @@ async function calcularEstatisticas() {
     const numeroUsuarios = await db.Usuario.count();
     const numeroTrilhas = await mongo.Trilha.countDocuments();
     const numeroObras = await mongo.Obra.countDocuments();
-    const paginasLidasResult = await db.UsuarioLivro.findAll({
-        attributes: [[fn('SUM', col('paginasLidas')), 'totalPaginasLidas']],
-        where: { status: { [db.Sequelize.Op.in]: ['lido', 'lendo'] } },
-        raw: true
-    });
-    const paginasLidas = paginasLidasResult[0].totalPaginasLidas || 0;
+    const paginasLidas = await calcularPaginasLidas();
 
     const numeroLeituras = await db.UsuarioLivro.count({ where: { status: 'lido' } });
 
