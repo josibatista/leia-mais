@@ -1,27 +1,29 @@
 // Rotas reais utilizadas nesta tela:
-//   - GET /usuarios          → contagem e atividades (novos cadastros)
-//   - GET /livros            → contagem
-//   - GET /trilhas           → contagem
-//   - GET /usuarios/:id      → perfil do administrador logado
-//   - GET /relatorio         → leituras (numeroLeituras + numeroItensConcluidos)
-//   - GET /metricas          → mini gráficos (cadastrosPorMes, distribuicaoUsuarios)
-//
-// Ainda sem rota no backend (mock/fallback apenas em erro):
-//   - Atividades administrativas (livro aprovado, trilha atualizada, etc.):
-//     não há endpoint de auditoria/histórico de ações. Ver carregarAtividades().
+//   - GET /usuarios            → contagem (e fallback de atividades)
+//   - GET /livros              → contagem
+//   - GET /trilhas             → contagem
+//   - GET /usuarios/:id        → perfil do administrador logado
+//   - GET /relatorio           → leituras (numeroLeituras + numeroItensConcluidos)
+//   - GET /metricas            → mini gráficos (cadastrosPorMes, distribuicaoUsuarios)
+//   - GET /relatorio/atividades → "Atividades Recentes" (últimos registros reais:
+//                                 trilha, obra, livro e autor cadastrados)
+
 
 const PERFIL_ADM_MOCK = {
   perfil: {
     nome: "Administrador Leia+",
     email: "admin@leiamais.com",
   },
-  // Fallback visual apenas se GET /usuarios falhar em carregarAtividades().
-  atividades: [
-    { icone: "fa-user-plus", texto: "Novo usuário cadastrado", detalhe: "recentemente" },
-    { icone: "fa-book", texto: "Livro aprovado no acervo", detalhe: "recentemente" },
-    { icone: "fa-user-shield", texto: "Novo administrador", detalhe: "recentemente" },
-    { icone: "fa-route", texto: "Trilha atualizada", detalhe: "recentemente" },
-  ],
+};
+
+// Ícone por tipo de registro retornado por GET /relatorio/atividades.
+const PERFIL_ADM_ICONE_ATIVIDADE = {
+  trilha: "fa-route",
+  obra: "fa-book-open",
+  livro: "fa-book",
+  autor: "fa-user-pen",
+  usuario: "fa-user-plus",
+  administrador: "fa-user-shield",
 };
 
 // Fallback visual das métricas — usado somente se GET /metricas falhar.
@@ -219,15 +221,60 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Novos cadastros: GET /usuarios (dataCriacao + tipo).
-  // TODO: incluir ações administrativas quando o backend expor auditoria/histórico.
+  // Converte os registros de GET /relatorio/atividades no formato da lista.
+  function montarAtividadesDaRota(atividades) {
+    return [...atividades]
+      .sort((a, b) => {
+        const tempoA = a.data ? new Date(a.data).getTime() : 0;
+        const tempoB = b.data ? new Date(b.data).getTime() : 0;
+        return tempoB - tempoA;
+      })
+      .slice(0, 5)
+      .map((item) => {
+        const descricao = String(item.descricao || "");
+        const separador = descricao.indexOf(":");
+        const texto =
+          separador >= 0 ? descricao.slice(0, separador).trim() : descricao || "Registro";
+        const nome = separador >= 0 ? descricao.slice(separador + 1).trim() : "";
+        const partesDetalhe = [];
+
+        if (nome) {
+          partesDetalhe.push(nome);
+        }
+        if (item.data) {
+          partesDetalhe.push(tempoRelativo(item.data));
+        }
+
+        return {
+          icone: PERFIL_ADM_ICONE_ATIVIDADE[item.tipo] || "fa-circle-info",
+          texto: texto || "Registro",
+          detalhe: partesDetalhe.join(" · "),
+        };
+      });
+  }
+
+  // Fonte principal: GET /relatorio/atividades (últimos registros reais).
   async function carregarAtividades() {
     try {
+      const dados = await buscarJson("/relatorio/atividades?limite=5");
+      const atividades = Array.isArray(dados.atividades) ? dados.atividades : [];
+
+      if (atividades.length) {
+        renderizarAtividades(montarAtividadesDaRota(atividades));
+        return;
+      }
+
       const usuarios = listaUsuarios || (await buscarLista("/usuarios"));
       renderizarAtividades(montarAtividadesReais(usuarios));
     } catch (erro) {
-      console.warn("Atividades recentes usando fallback mock.", erro);
-      renderizarAtividades(PERFIL_ADM_MOCK.atividades);
+      console.warn("Atividades: tentando fallback por usuários.", erro);
+      try {
+        const usuarios = listaUsuarios || (await buscarLista("/usuarios"));
+        renderizarAtividades(montarAtividadesReais(usuarios));
+      } catch (erroFallback) {
+        console.warn("Atividades recentes indisponíveis.", erroFallback);
+        renderizarAtividades([]);
+      }
     }
   }
 
