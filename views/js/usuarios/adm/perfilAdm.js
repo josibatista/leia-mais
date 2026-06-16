@@ -8,7 +8,6 @@
 //   - GET /relatorio/atividades → "Atividades Recentes" (últimos registros reais:
 //                                 trilha, obra, livro e autor cadastrados)
 
-
 const PERFIL_ADM_MOCK = {
   perfil: {
     nome: "Administrador Leia+",
