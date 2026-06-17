@@ -3901,3 +3901,856 @@ body.lmTemaEscuro .modalStatusBox label:hover {
     max-width: 100%;
   }
 }
+
+/* Perfil do administrador */
+
+/* Visão geral (4 indicadores) */
+.blGradeEstatisticasAdmin {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Atalhos da Visão Geral (botões rosas/salmão) */
+.blFiltrosVisaoGeral {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+  margin-bottom: 28px;
+}
+
+.blBotaoVisaoGeral {
+  flex: 1 1 140px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--corDestaque);
+  border-radius: 10px;
+  background-color: rgba(199, 109, 94, 0.14);
+  color: var(--corPrimaria);
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.blBotaoVisaoGeral:hover {
+  background-color: rgba(199, 109, 94, 0.26);
+}
+
+.blBotaoVisaoGeral:active {
+  transform: translateY(1px);
+}
+
+/* Título de seção com ação à direita (ex.: chevron de Métricas) */
+.blTituloCategoriaAcao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.blTituloChevron {
+  border: none;
+  background: transparent;
+  color: var(--corDestaque);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+  line-height: 1;
+  transition: transform 0.1s;
+}
+
+.blTituloChevron:hover {
+  transform: translateX(2px);
+}
+
+/* Rótulo do tipo de usuário no cabeçalho do perfil */
+.blRotuloTipoAdmin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--corDestaque);
+  font-weight: 600;
+}
+
+/* Ações rápidas: botões marrons em linha, responsivos */
+.blAcoesRapidas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.blBotaoAcaoRapida {
+  flex: 1 1 180px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--corPrimaria);
+  color: var(--lmBranco);
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.blBotaoAcaoRapida:hover {
+  background-color: var(--corSecundaria);
+}
+
+.blBotaoAcaoRapida:active {
+  transform: translateY(1px);
+}
+
+/* Painel duplo: Atividades Recentes + Métricas */
+.blPainelDuplo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+/* Atividades recentes */
+.blAtividades {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.blAtividadeItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(62, 42, 31, 0.1);
+}
+
+.blAtividadeItem:last-child {
+  border-bottom: none;
+}
+
+.blAtividadeBolinha {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--corDestaque);
+  color: var(--lmBranco);
+  font-size: 14px;
+}
+
+.blAtividadeTexto {
+  display: flex;
+  flex-direction: column;
+}
+
+.blAtividadeTexto strong {
+  font-size: 15px;
+  color: var(--corPrimaria);
+}
+
+.blAtividadeTexto small {
+  font-size: 13px;
+  color: var(--corSecundaria);
+}
+
+.blAtividadeVazia {
+  justify-content: center;
+  color: var(--corSecundaria);
+}
+
+/* Métricas (mini gráficos em HTML/CSS) */
+.blMetricasGrade {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.blCardMetrica {
+  border: 2px solid var(--corPrimaria);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.blMetricaTitulo {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--corPrimaria);
+}
+
+.blMiniBarras {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  height: 110px;
+}
+
+.blMiniBarraColuna {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 6px;
+}
+
+.blMiniBarra {
+  width: 100%;
+  min-height: 4px;
+  border-radius: 6px 6px 0 0;
+  background-color: var(--corDestaque);
+}
+
+.blMiniBarraRotulo {
+  font-size: 11px;
+  color: var(--corSecundaria);
+}
+
+.blDonutContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.blDonut {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: conic-gradient(var(--corDestaque) 0% 70%, var(--corSecundaria) 70% 100%);
+  -webkit-mask: radial-gradient(circle 28px at center, transparent 98%, #000 100%);
+  mask: radial-gradient(circle 28px at center, transparent 98%, #000 100%);
+}
+
+.blDonutLegenda {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--corPrimaria);
+}
+
+.blDonutItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.blDonutCor {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.blDonutCorLeitores {
+  background-color: var(--corDestaque);
+}
+
+.blDonutCorAdmins {
+  background-color: var(--corSecundaria);
+}
+
+/* Modo escuro - perfil do administrador */
+body.lmAcervoBody.lmTemaEscuro .blAtividades {
+  background-color: #2b2b2b;
+}
+
+body.lmAcervoBody.lmTemaEscuro .blAtividadeItem {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.lmAcervoBody.lmTemaEscuro .blAtividadeTexto strong,
+body.lmAcervoBody.lmTemaEscuro .blMetricaTitulo,
+body.lmAcervoBody.lmTemaEscuro .blDonutLegenda {
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .blAtividadeTexto small,
+body.lmAcervoBody.lmTemaEscuro .blMiniBarraRotulo,
+body.lmAcervoBody.lmTemaEscuro .blAtividadeVazia {
+  color: #d6d6d6;
+}
+
+body.lmAcervoBody.lmTemaEscuro .blCardMetrica {
+  background-color: #2b2b2b;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.lmAcervoBody.lmTemaEscuro .blBotaoAcaoRapida {
+  background-color: #6b4f3a;
+  color: #ffffff;
+}
+
+body.lmAcervoBody.lmTemaEscuro .blBotaoAcaoRapida:hover {
+  background-color: #836448;
+}
+
+body.lmAcervoBody.lmTemaEscuro .blBotaoVisaoGeral {
+  background-color: rgba(199, 109, 94, 0.22);
+  color: #f5f5f5;
+  border-color: var(--corDestaque);
+}
+
+body.lmAcervoBody.lmTemaEscuro .blBotaoVisaoGeral:hover {
+  background-color: rgba(199, 109, 94, 0.36);
+}
+
+/* Responsividade - perfil do administrador */
+@media (max-width: 768px) {
+  .blGradeEstatisticasAdmin {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .blPainelDuplo {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 520px) {
+  .blMetricasGrade {
+    grid-template-columns: 1fr;
+  }
+
+  .blBotaoAcaoRapida {
+    flex: 1 1 100%;
+  }
+
+  .blBotaoVisaoGeral {
+    flex: 1 1 calc(50% - 12px);
+  }
+}
+
+/* ============================================================
+   Dashboard / Relatórios do administrador
+   ============================================================ */
+
+.dbCabecalhoTopo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Botão e popover de exportação */
+.dbExportarWrapper {
+  position: relative;
+}
+
+.dbBotaoExportar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--corPrimaria);
+  color: var(--lmBranco);
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dbBotaoExportar:hover {
+  background-color: var(--corSecundaria);
+}
+
+.dbPopover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 150px;
+  background-color: var(--lmBranco);
+  border: 1px solid var(--lmBordaSuave);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px var(--lmSombra);
+  padding: 6px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 20;
+}
+
+.dbPopover.dbPopoverAberto {
+  display: flex;
+}
+
+.dbPopoverItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--corPrimaria);
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dbPopoverItem:hover {
+  background-color: rgba(199, 109, 94, 0.16);
+}
+
+.dbPopoverItem i {
+  color: var(--corDestaque);
+  width: 16px;
+  text-align: center;
+}
+
+/* Painéis de gráficos */
+.dbPainelGraficos {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.dbPainelInferior {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.dbCardGrafico {
+  background-color: var(--lmBranco);
+  border: 1px solid var(--lmBordaSuave);
+  border-radius: 14px;
+  box-shadow: 0 4px 12px var(--lmSombra);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dbTituloCard {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--corPrimaria);
+}
+
+.dbDonutContainer {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Trilhas populares (barras horizontais) */
+.dbBarrasHorizontais {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dbBarraLinha {
+  display: grid;
+  grid-template-columns: 130px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+}
+
+.dbBarraRotulo {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--corPrimaria);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dbBarraTrack {
+  height: 16px;
+  border-radius: 8px;
+  background-color: var(--corFundoInput);
+  overflow: hidden;
+}
+
+.dbBarraFill {
+  display: block;
+  height: 100%;
+  min-width: 4px;
+  border-radius: 8px;
+  background-color: var(--corDestaque);
+}
+
+.dbBarraValor {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--corDestaque);
+  text-align: right;
+}
+
+/* Card Páginas lidas */
+.dbCardPaginas {
+  min-height: 240px;
+}
+
+.dbPaginasCorpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 8px 12px 4px;
+}
+
+.dbPaginasNumero {
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--corDestaque);
+  line-height: 1;
+}
+
+.dbPaginasSub {
+  font-size: 13px;
+  color: var(--corSecundaria);
+  line-height: 1.4;
+  max-width: 220px;
+}
+
+/* Donut maior — Leitura por status */
+.dbCardDonutStatus {
+  min-height: 240px;
+}
+
+.dbDonutGrande {
+  flex: 1;
+  min-height: 160px;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.dbDonutGrande .blDonut {
+  width: 120px;
+  height: 120px;
+  -webkit-mask: radial-gradient(circle 42px at center, transparent 98%, #000 100%);
+  mask: radial-gradient(circle 42px at center, transparent 98%, #000 100%);
+}
+
+.dbDonutGrande .blDonutLegenda {
+  gap: 10px;
+  font-size: 14px;
+}
+
+/* Gêneros populares */
+.dbListaGeneros {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.dbGeneroItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(62, 42, 31, 0.1);
+}
+
+.dbGeneroItem:last-child {
+  border-bottom: none;
+}
+
+.dbGeneroPos {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--corDestaque);
+  color: var(--lmBranco);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dbGeneroNome {
+  flex: 1;
+  font-size: 14px;
+  color: var(--corPrimaria);
+}
+
+.dbGeneroTotal {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--corDestaque);
+}
+
+/* Maior abandono */
+.dbAbandono {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--corDestaque);
+  border-radius: 10px;
+  background-color: rgba(199, 109, 94, 0.12);
+}
+
+.dbAbandonoLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--corSecundaria);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.dbAbandonoValor {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--corPrimaria);
+}
+
+.dbMensagemVazia {
+  font-size: 14px;
+  color: var(--corSecundaria);
+  text-align: center;
+  padding: 12px 0;
+}
+
+/* Modo escuro - dashboard */
+body.lmAcervoBody.lmTemaEscuro .dbCardGrafico {
+  background-color: #2b2b2b;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.lmAcervoBody.lmTemaEscuro .dbTituloCard,
+body.lmAcervoBody.lmTemaEscuro .dbBarraRotulo,
+body.lmAcervoBody.lmTemaEscuro .dbGeneroNome,
+body.lmAcervoBody.lmTemaEscuro .dbAbandonoValor {
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .dbPaginasSub,
+body.lmAcervoBody.lmTemaEscuro .dbAbandonoLabel,
+body.lmAcervoBody.lmTemaEscuro .dbMensagemVazia {
+  color: #d6d6d6;
+}
+
+body.lmAcervoBody.lmTemaEscuro .dbBarraTrack {
+  background-color: #3a3a3a;
+}
+
+body.lmAcervoBody.lmTemaEscuro .dbGeneroItem {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.lmAcervoBody.lmTemaEscuro .dbPopover {
+  background-color: #2b2b2b;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.lmAcervoBody.lmTemaEscuro .dbPopoverItem {
+  color: #f5f5f5;
+}
+
+body.lmAcervoBody.lmTemaEscuro .dbBotaoExportar {
+  background-color: #6b4f3a;
+}
+
+body.lmAcervoBody.lmTemaEscuro .dbBotaoExportar:hover {
+  background-color: #836448;
+}
+
+/* Título visível apenas na exportação PDF */
+.dbTituloExportacao {
+  display: none;
+}
+
+/* Estado temporário de exportação PDF — modo claro forçado */
+#dbConteudoCaptura.dbExportandoPdf {
+  width: 1100px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 32px;
+  background-color: #ffffff !important;
+  box-sizing: border-box;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbTituloExportacao {
+  display: block;
+  font-family: "Poppins", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #3e2a1f !important;
+  margin: 0 0 24px;
+  text-align: left;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .blGradeEstatisticasAdmin {
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 16px !important;
+  margin-bottom: 24px !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbPainelGraficos {
+  grid-template-columns: 2fr 1fr !important;
+  gap: 20px !important;
+  margin-top: 0 !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbPainelInferior {
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  margin-top: 20px !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .blCardEstatistica {
+  background-color: #ffffff !important;
+  border: 2px solid #3e2a1f !important;
+  box-shadow: none !important;
+  padding: 16px 12px !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbCardGrafico {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(62, 42, 31, 0.22) !important;
+  box-shadow: 0 2px 8px rgba(62, 42, 31, 0.08) !important;
+  padding: 18px !important;
+  gap: 14px !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbTituloCard,
+#dbConteudoCaptura.dbExportandoPdf .dbBarraRotulo,
+#dbConteudoCaptura.dbExportandoPdf .blDonutLegenda,
+#dbConteudoCaptura.dbExportandoPdf .dbGeneroNome,
+#dbConteudoCaptura.dbExportandoPdf .dbAbandonoValor,
+#dbConteudoCaptura.dbExportandoPdf .blTextoEstatistica,
+#dbConteudoCaptura.dbExportandoPdf .blIconeCard {
+  color: #3e2a1f !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .blNumeroEstatistica,
+#dbConteudoCaptura.dbExportandoPdf .dbPaginasNumero,
+#dbConteudoCaptura.dbExportandoPdf .dbBarraValor,
+#dbConteudoCaptura.dbExportandoPdf .dbGeneroTotal {
+  color: #c76d5e !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbPaginasSub,
+#dbConteudoCaptura.dbExportandoPdf .dbAbandonoLabel,
+#dbConteudoCaptura.dbExportandoPdf .dbMensagemVazia,
+#dbConteudoCaptura.dbExportandoPdf .blMiniBarraRotulo {
+  color: #6b4f3a !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbBarraTrack {
+  background-color: #f5efe6 !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbBarraFill {
+  background-color: #c76d5e !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbAbandono {
+  background-color: rgba(199, 109, 94, 0.12) !important;
+  border-color: #c76d5e !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbGeneroItem {
+  border-bottom-color: rgba(62, 42, 31, 0.12) !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbPaginasNumero {
+  font-size: 56px !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbPaginasCorpo {
+  padding: 12px 8px !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbDonutContainer,
+#dbConteudoCaptura.dbExportandoPdf .dbDonutGrande {
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .blDonut {
+  width: 110px !important;
+  height: 110px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  -webkit-mask: none !important;
+  mask: none !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbDonutGrande .blDonut {
+  width: 130px !important;
+  height: 130px !important;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbDonutSvgExportacao {
+  display: block;
+  flex-shrink: 0;
+}
+
+#dbConteudoCaptura.dbExportandoPdf .dbBarraLinha {
+  grid-template-columns: 120px 1fr 44px !important;
+}
+
+/* Responsividade - dashboard */
+@media (max-width: 900px) {
+  .dbPainelGraficos {
+    grid-template-columns: 1fr;
+  }
+
+  .dbPainelInferior {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .dbBarraLinha {
+    grid-template-columns: 96px 1fr 40px;
+    gap: 8px;
+  }
+
+  .dbPaginasNumero {
+    font-size: 40px;
+  }
+
+  .dbDonutGrande .blDonut {
+    width: 100px;
+    height: 100px;
+    -webkit-mask: radial-gradient(circle 36px at center, transparent 98%, #000 100%);
+    mask: radial-gradient(circle 36px at center, transparent 98%, #000 100%);
+  }
+
+  .dbDonutGrande {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

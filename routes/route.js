@@ -9,9 +9,20 @@ const trilhaController = require('../controllers/trilhaController');
 const trilhaUsuarioController = require('../controllers/trilhaUsuarioController');
 const usuarioController = require('../controllers/usuarioController');
 const usuarioLivroController = require('../controllers/usuarioLivroController');
+const relatorioController = require('../controllers/relatorioController');
 const autenticacaoController = require('../controllers/autenticacaoController');
 const autenticarToken = require('../middleware/autenticarToken');
 const checkAdmin = require('../middleware/checkAdmin');
+
+// Rotas - Relatório
+router.get('/relatorios', autenticarToken, checkAdmin, relatorioController.getRelatorios);
+router.get('/relatorio', autenticarToken, checkAdmin, relatorioController.getRelatorio);
+router.get('/metricas', autenticarToken, checkAdmin, relatorioController.getMetricas);
+router.post('/relatorio', autenticarToken, checkAdmin, relatorioController.postRelatorio);
+router.get('/relatorio/csv', autenticarToken, checkAdmin, relatorioController.getRelatorioCSV);
+router.post('/relatorio/csv', autenticarToken, checkAdmin, relatorioController.exportarCSV);
+router.get('/relatorio/atividades', autenticarToken, checkAdmin, relatorioController.getAtividadesRecentes);
+router.get('/relatorio/dashboard', autenticarToken, checkAdmin, relatorioController.getDashboard);
 
 // Rotas - Livro
 router.post('/livros/admin', livroController.postLivro);

@@ -145,7 +145,7 @@ module.exports = {
 
     async postTrilha(req, res) {
         try {
-            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros } = req.body;
+            let { tema, descricao, nivelDificuldade, xp, liberada, imagemCapa, obras, livros, dataHora } = req.body;
 
             tema = tema?.trim();
             descricao = descricao?.trim();
@@ -185,6 +185,7 @@ module.exports = {
                 nivelDificuldade,
                 xp,
                 liberada,
+                dataHora: new Date(),
                 ...(imagemCapa && { imagemCapa })
             });
 
@@ -346,8 +347,7 @@ module.exports = {
                     ...(mudouNivel && { nivelDificuldade }),
                     ...(mudouXp && { xp }),
                     ...(mudouLiberada && { liberada }),
-                    ...(mudouImagemCapa && { imagemCapa })
-                },
+                    ...(mudouImagemCapa && { imagemCapa })                },
                 { new: true }
             );
 
@@ -374,7 +374,7 @@ module.exports = {
                 const obra = await mongo.Obra.create({
                     titulo: obraInput.titulo,
                     tipo: obraInput.tipo,
-                    autores: autoresIds, // ✅ IDs numéricos
+                    autores: autoresIds, 
                     descricao: obraInput.descricao,
                     link: obraInput.link
                 });

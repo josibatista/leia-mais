@@ -6,7 +6,7 @@ module.exports = {
     
     async postObra(req, res) {
         try {
-            let { titulo, tipo, autores, descricao } = req.body;
+            let { titulo, tipo, autores, descricao, dataHora } = req.body;
 
             titulo = titulo?.trim();
             descricao = descricao?.trim();
@@ -53,7 +53,8 @@ module.exports = {
                 titulo,
                 tipo,
                 autores: autoresIds,
-                descricao
+                descricao,
+                dataHora: new Date()
             });
 
             const autoresNomes = await db.Autor.findAll({
@@ -165,7 +166,7 @@ module.exports = {
                     ...(titulo && { titulo }),
                     ...(tipo && { tipo }),
                     ...(descricao && { descricao }),
-                    autores: autoresIds
+                    autores: autoresIds,
                 },
                 { new: true }
             );

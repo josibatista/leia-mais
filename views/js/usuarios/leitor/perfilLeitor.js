@@ -59,13 +59,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     return 0;
   }
 
-  function calcularDiasLeitura() {
-    const datas = livrosSalvos
-      .map((item) => item.updatedAt || item.dataAtualizacao || item.createdAt)
-      .filter(Boolean)
-      .map((data) => new Date(data).toISOString().split("T")[0]);
+  function calcularXpTrilhasConcluidas() {
+    const xpPorTrilha = new Map();
 
-    return new Set(datas).size;
+    trilhasSalvas.forEach((vinculo) => {
+      if (vinculo.status !== "concluída") {
+        return;
+      }
+
+      const trilha = obterTrilhaDoVinculo(vinculo);
+      const trilhaId = obterIdTrilha(vinculo);
+      const xp = Number(trilha?.xp ?? vinculo.xpGanho ?? 0) || 0;
+
+      xpPorTrilha.set(trilhaId, xp);
+    });
+
+    let total = 0;
+    xpPorTrilha.forEach((xp) => {
+      total += xp;
+    });
+
+    return total;
   }
 
   function preencherEstatisticas() {
@@ -112,7 +126,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     document.getElementById("blQtdLivrosLidos").textContent = qtdLivrosLidos;
-    document.getElementById("blQtdDiasLeitura").textContent = calcularDiasLeitura();
+    document.getElementById("blQtdXp").textContent = calcularXpTrilhasConcluidas();
     document.getElementById("blQtdPaginasLidas").textContent = qtdPaginasLidas;
   }
 

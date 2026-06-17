@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leia Mais - Relatórios</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body class="lmAcervoBody">
+    <!-- Barra Lateral -->
+    <div id="blMenuContainer"></div>
+
+    <div class="lmMenuOverlay" id="lmMenuOverlay"></div>
+
+    <header class="lmCabecalho">
+      <div class="lmCabecalhoSuperior">
+        <button
+          class="lmCabecalhoBotao"
+          id="lmMenuAbrirBotao"
+          aria-label="Abrir menu"
+        >
+          &#9776;
+        </button>
+
+        <button
+          class="lmCabecalhoBotao"
+          id="blBotaoVoltarDashboard"
+          aria-label="Voltar"
+        >
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+    </header>
+
+    <main class="blConteudoPrincipal">
+      <header class="blCabecalhoConfiguracoes dbCabecalhoTopo">
+        <h1 class="blTituloPagina">Relatórios</h1>
+
+        <div class="dbExportarWrapper">
+          <button
+            type="button"
+            class="dbBotaoExportar"
+            id="dbBotaoExportar"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-label="Exportar relatório"
+          >
+            <i class="fa-solid fa-download"></i>
+            <span>Exportar</span>
+          </button>
+
+          <div class="dbPopover" id="dbPopoverExportar" role="menu">
+            <button type="button" class="dbPopoverItem" id="dbExportarPdf" role="menuitem">
+              <i class="fa-solid fa-file-pdf"></i> PDF
+            </button>
+            <button type="button" class="dbPopoverItem" id="dbExportarCsv" role="menuitem">
+              <i class="fa-solid fa-file-csv"></i> CSV
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Área capturada na exportação PDF -->
+      <div id="dbConteudoCaptura">
+        <h1 class="dbTituloExportacao">Relatórios</h1>
+        <!-- Cards superiores de indicadores -->
+        <section class="blGradeEstatisticas blGradeEstatisticasAdmin">
+          <div class="blCardEstatistica">
+            <i class="fa-solid fa-users blIconeCard"></i>
+            <span class="blNumeroEstatistica" id="dbQtdUsuarios">0</span>
+            <span class="blTextoEstatistica">Usuários cadastrados</span>
+          </div>
+          <div class="blCardEstatistica">
+            <i class="fa-solid fa-book blIconeCard"></i>
+            <span class="blNumeroEstatistica" id="dbQtdLivros">0</span>
+            <span class="blTextoEstatistica">Livros cadastrados</span>
+          </div>
+          <div class="blCardEstatistica">
+            <i class="fa-solid fa-route blIconeCard"></i>
+            <span class="blNumeroEstatistica" id="dbQtdTrilhas">0</span>
+            <span class="blTextoEstatistica">Trilhas cadastradas</span>
+          </div>
+          <div class="blCardEstatistica">
+            <i class="fa-solid fa-circle-check blIconeCard"></i>
+            <span class="blNumeroEstatistica" id="dbQtdItens">0</span>
+            <span class="blTextoEstatistica">Obras concluídas</span>
+          </div>
+        </section>
+
+        <!-- Gráfico grande (trilhas populares) + donut leitores vs admins -->
+        <div class="dbPainelGraficos">
+          <section class="dbCardGrafico">
+            <h2 class="dbTituloCard">Trilhas populares</h2>
+            <div class="dbBarrasHorizontais" id="dbTrilhasPopulares">
+              <p class="dbMensagemVazia">Carregando trilhas...</p>
+            </div>
+          </section>
+
+          <section class="dbCardGrafico">
+            <h2 class="dbTituloCard">Leitores vs Admins</h2>
+            <div class="blDonutContainer dbDonutContainer">
+              <div class="blDonut" id="dbDonutUsuarios"></div>
+              <div class="blDonutLegenda" id="dbDonutUsuariosLegenda"></div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Painel inferior: páginas lidas + gêneros populares + leitura por status -->
+        <div class="dbPainelInferior">
+          <section class="dbCardGrafico dbCardPaginas">
+            <h2 class="dbTituloCard">Páginas lidas</h2>
+            <div class="dbPaginasCorpo">
+              <span class="dbPaginasNumero" id="dbPaginasLidas">0</span>
+              <span class="dbPaginasSub">Total registrado pelos leitores</span>
+            </div>
+          </section>
+
+          <section class="dbCardGrafico">
+            <h2 class="dbTituloCard">Gêneros populares</h2>
+            <ol class="dbListaGeneros" id="dbGenerosPopulares">
+              <li class="dbMensagemVazia">Carregando gêneros...</li>
+            </ol>
+
+            <div class="dbAbandono" id="dbAbandono">
+              <span class="dbAbandonoLabel">Maior abandono</span>
+              <span class="dbAbandonoValor" id="dbMaiorAbandono">—</span>
+            </div>
+          </section>
+
+          <section class="dbCardGrafico dbCardDonutStatus">
+            <h2 class="dbTituloCard">Leitura por status</h2>
+            <div class="blDonutContainer dbDonutContainer dbDonutGrande">
+              <div class="blDonut" id="dbDonutStatus"></div>
+              <div class="blDonutLegenda" id="dbDonutStatusLegenda"></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div class="lmAlertaOverlay" id="lmAlertaOverlay">
+      <div class="lmAlertaBox">
+        <h3 id="lmAlertaTitulo">Atenção</h3>
+        <p id="lmAlertaMensagem">Mensagem do alerta.</p>
+        <button type="button" id="lmAlertaBotao" class="lmAlertaBotao">OK</button>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="/js/usuarios/auth.js"></script>
+    <script src="/js/menu.js"></script>
+    <script src="/js/usuarios/adm/dashboard.js"></script>
+  </body>
+</html>

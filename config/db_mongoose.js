@@ -13,5 +13,6 @@ mongo.TrilhaLivro = require('../models/trilhaLivro');
 mongo.TrilhaUsuario = require('../models/trilhaUsuario');
 mongo.TrilhaUsuarioObra = require('../models/trilhaUsuarioObra');
 mongo.TrilhaUsuarioLivro = require('../models/trilhaUsuarioLivro');
+mongo.Relatorio = require('../models/relatorio');
 
 module.exports = mongo;
