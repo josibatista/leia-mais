@@ -1440,6 +1440,93 @@ body.lmAcervoBody {
   border-color: var(--lmMarromClaro);
 }
 
+.blCabecalhoCatalogo{
+  position: relative;
+  max-width: 1280px;
+  margin: 40px auto 24px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blCabecalhoCatalogo .lmTituloSecao {
+  margin: 0;
+  text-align: center;
+}
+
+.blAreaFiltro {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.blBotaoFiltro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--lmMarromEscuro);
+  cursor: pointer;
+}
+
+.blBotaoFiltro:hover {
+  color: #a35f4c;
+}
+
+.blPainelFiltros {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  width: 300px;
+  background-color: #fffaf3;
+  border: 1px solid #d8c8b8;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  padding: 16px;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.blPainelFiltrosEscondido {
+  display: none;
+}
+
+.blCabecalhoFiltros {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.blCabecalhoFiltros h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.blBotaoFecharFiltros {
+  border: none;
+  background: none;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.blPainelFiltros label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
 /* Catálogo de Trilhas - cards horizontais (padrão Trilhas Salvas) */
 #lmGradeTrilhas.lmGradeLivros {
   display: flex;
