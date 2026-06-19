@@ -21,6 +21,15 @@ const lmGradeLivros = document.getElementById('lmGradeLivros');
 const lmBotaoAbrirBusca = document.getElementById('lmBotaoAbrirBusca');
 const lmBuscaHeader = document.getElementById('lmBuscaHeader');
 const lmCampoBuscaLivros = document.getElementById('lmCampoBuscaLivros');
+ 
+const blFiltroAutor = document.getElementById('blFiltroAutor');
+const blFiltroGenero = document.getElementById('blFiltroGenero');
+const blOrdenacaoLivros = document.getElementById('blOrdenacaoLivros');
+const blBotaoLimparFiltros = document.getElementById('blBotaoLimparFiltros');
+const blBotaoAbrirFiltros = document.getElementById('blBotaoAbrirFiltros');
+const blPainelFiltros = document.getElementById('blPainelFiltros');
+const blBotaoFecharFiltros = document.getElementById('blBotaoFecharFiltros');
+const blAreaFiltro = document.querySelector('.blAreaFiltro');
 
 let lmLivrosCarregados = [];
 let lmLivrosSalvosIds = [];
@@ -598,27 +607,95 @@ function lmNormalizarTexto(texto) {
     .replace(/[\u0300-\u036f]/g, '');
 }
 
-function lmFiltrarLivros() {
+ function blPreencherFiltrosCatalogo(livros) {
+  const autores = new Set();
+  const generos = new Set();
+
+  livros.forEach(function (livro){
+    const nomeAutor = lmObterNomeAutor(livro);
+    const genero = livro.genero;
+
+    if (nomeAutor && nomeAutor !== 'Autor não informado') {
+      nomeAutor.split(',').forEach(function (autor) {
+        const autorTratado = autor.trim();
+
+        if (autorTratado) {
+          autores.add(autorTratado);
+        }
+      });
+    }
+
+    if(genero) {
+      generos.add(genero.trim());
+    }
+
+  });
+
+  blFiltroAutor.innerHTML = '<option value="">Todas as autoras</option>';
+  blFiltroGenero.innerHTML = '<option value="">Todas os gêneros</option>';
+
+  Array.from(autores).sort(function (a, b) {
+    return a.localeCompare(b, 'pt-BR');
+  }).forEach(function (autor) {
+    const option = document.createElement('option');
+    option.value = autor;
+    option.textContent = autor;
+    blFiltroAutor.appendChild(option);
+  });
+
+  Array.from(generos).sort(function (a, b) {
+    return a.localeCompare(b, 'pt-BR');
+  }).forEach(function (genero) {
+    const option = document.createElement('option');
+    option.value = genero;
+    option.textContent = genero;
+    blFiltroGenero.appendChild(option);
+  });
+}
+
+  function lmFiltrarLivros() {
+  blAplicarFiltrosCatalogo();
+}
+
+function blAplicarFiltrosCatalogo() {
   const termoBusca = lmNormalizarTexto(lmCampoBuscaLivros.value);
+  const autorSelecionado = lmNormalizarTexto(blFiltroAutor.value);
+  const generoSelecionado = lmNormalizarTexto(blFiltroGenero.value);
+  const ordenacaoSelecionada = blOrdenacaoLivros.value;
 
-  if (!termoBusca) {
-    lmRenderizarLivros(lmLivrosCarregados);
-    return;
-  }
-
-  const livrosFiltrados = lmLivrosCarregados.filter(function (livro) {
+  let livrosFiltrados = lmLivrosCarregados.filter(function (livro) {
     const titulo = lmNormalizarTexto(livro.titulo);
     const nomeAutor = lmNormalizarTexto(lmObterNomeAutor(livro));
     const editora = lmNormalizarTexto(livro.editora);
     const genero = lmNormalizarTexto(livro.genero);
 
-    return (
+    const correspondeBusca =
+      !termoBusca ||
       titulo.includes(termoBusca) ||
       editora.includes(termoBusca) ||
       genero.includes(termoBusca) ||
-      nomeAutor.includes(termoBusca)
-    );
+      nomeAutor.includes(termoBusca);
+
+    const correspondeAutor =
+      !autorSelecionado || nomeAutor.includes(autorSelecionado);
+
+    const correspondeGenero =
+      !generoSelecionado || genero === generoSelecionado;
+
+    return correspondeBusca && correspondeAutor && correspondeGenero;
   });
+
+  if (ordenacaoSelecionada === 'az') {
+    livrosFiltrados.sort(function (a, b) {
+      return String(a.titulo || '').localeCompare(String(b.titulo || ''), 'pt-BR');
+    });
+  }
+
+  if (ordenacaoSelecionada === 'za') {
+    livrosFiltrados.sort(function (a, b) {
+      return String(b.titulo || '').localeCompare(String(a.titulo || ''), 'pt-BR');
+    });
+  }
 
   lmRenderizarLivros(livrosFiltrados);
 }
@@ -634,7 +711,8 @@ async function lmCarregarLivros() {
     const livros = await resposta.json();
 
     lmLivrosCarregados = livros;
-    lmRenderizarLivros(lmLivrosCarregados);
+    blPreencherFiltrosCatalogo(lmLivrosCarregados);
+    blAplicarFiltrosCatalogo();
 
   } catch (erro) {
     lmGradeLivros.innerHTML = '';
@@ -646,7 +724,7 @@ async function lmCarregarLivros() {
     lmGradeLivros.appendChild(mensagemErro);
     console.error(erro);
   }
-}
+} 
 
 lmModalFechar.addEventListener('click', function () {
   lmModalOverlay.classList.remove('lmModalOverlayAtivo');
@@ -755,6 +833,43 @@ document.addEventListener('click', function () {
 });
 
 lmCampoBuscaLivros.addEventListener('input', lmFiltrarLivros);
+
+blFiltroAutor.addEventListener('change', blAplicarFiltrosCatalogo);
+
+blFiltroGenero.addEventListener('change', blAplicarFiltrosCatalogo);
+
+blOrdenacaoLivros.addEventListener('change', blAplicarFiltrosCatalogo);
+
+blBotaoLimparFiltros.addEventListener('click', function () {
+  lmCampoBuscaLivros.value = '';
+  blFiltroAutor.value = '';
+  blFiltroGenero.value = '';
+  blOrdenacaoLivros.value = '';
+
+  blAplicarFiltrosCatalogo();
+});
+
+blBotaoAbrirFiltros.addEventListener('click', function (event) {
+  event.stopPropagation();
+  blPainelFiltros.classList.toggle('blPainelFiltrosEscondido');
+});
+
+blBotaoFecharFiltros.addEventListener('click', function () {
+  blPainelFiltros.classList.add('blPainelFiltrosEscondido');
+});
+
+document.addEventListener('click', function (event) {
+  const clicouDentroDoFiltro = blAreaFiltro.contains(event.target);
+
+  if (!clicouDentroDoFiltro) {
+    blPainelFiltros.classList.add('blPainelFiltrosEscondido');
+  }
+});
+
+blPainelFiltros.addEventListener('click', function (event) {
+  event.stopPropagation();
+});
+
 async function lmInicializarAcervo() {
   await lmCarregarLivrosSalvosUsuario();
   await lmCarregarLivros();

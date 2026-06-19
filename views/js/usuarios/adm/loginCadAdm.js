@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-        const resposta = await fetch(`/usuarios`, {
+        const resposta = await fetch(`/usuarios/admin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -54,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
             email,
             username,
             senha,
-            tipo: "administrador",
           }),
         });
 
