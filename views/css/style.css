@@ -1559,6 +1559,7 @@ body.lmTemaEscuro .logo-leia-mulheres--escura {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
 }
 
