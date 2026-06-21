@@ -8,6 +8,11 @@ O **Leia+** é uma plataforma digital desenvolvida para o projeto de extensão *
 ![HTML5](https://img.shields.io/badge/html5%20-%23E34F26.svg?&style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3%20-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F0DB4F?style=for-the-badge&logo=javascript&logoColor=black)
+![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
 ![Supabase](https://img.shields.io/badge/-Supabase-333333?style=for-the-badge&logo=supabase&logoColor=3ECF8E)
 ![MongoDB](https://img.shields.io/badge/-MongoDB-13aa52?style=for-the-badge&logo=mongodb&logoColor=white)
 ![Figma](https://img.shields.io/badge/-Figma-333333?style=for-the-badge&logo=figma&logoColor=white)
@@ -32,7 +37,7 @@ O sistema foi concebido para dar visibilidade a escritoras e oferecer uma jornad
 ### ✨ Principais Funcionalidades
 
 - **Trilhas de Leitura:** Jornadas temáticas com níveis de complexidade crescente.
-- **Acervo Digital:** Catálogo detalhado de obras e biografias de autoras.
+- **Acervo Digital:** Catálogo dos livros disponíveis na estante Leia Mulheres, com listagem das autoras.
 - **Painel Administrativo:** Gestão de conteúdo e relatórios de engajamento para a equipe de extensão.
 - (futura) **Gamificação:** Sistema de metas diárias/mensais e conquista de insígnias.
 - (futura) **Clube do Livro:** Fórum para discussões e compartilhamento de resenhas.
@@ -41,10 +46,10 @@ O sistema foi concebido para dar visibilidade a escritoras e oferecer uma jornad
 ### 🛠️ Stack Tecnológica
 O projeto utiliza uma abordagem **Full-Stack**:
 
-- **Frontend:** HTML5, CSS3 e JavaScript.
+- **Front-end:** HTML5, CSS3 e JavaScript.
 - **Design & Prototipação:** Figma.
-- **Backend & Auth:** [Supabase](https://supabase.com/) (Autenticação e Banco Relacional).
-- **Banco de Dados NoSQL:** [MongoDB Atlas](https://www.mongodb.com/atlas) (Estrutura flexível para as Trilhas).
+- **Backend & Auth:** Node.js, Express, Sequelize, Mongoose e JWT.
+- **Banco de Dados:** [Supabase](https://supabase.com/) (relacional) [MongoDB Atlas](https://www.mongodb.com/atlas) (não-relacional).
 - **Hospedagem:** Render.
 - **Documentação:** Overleaf (LaTeX) e Markdown.
 
@@ -52,9 +57,9 @@ O projeto utiliza uma abordagem **Full-Stack**:
 
 A solução adota uma **Arquitetura Híbrida**, onde:
 
-1.  **Supabase** gerencia a integridade dos perfis de usuários e segurança (RLS).
-2.  **MongoDB** armazena os documentos dinâmicos das trilhas de leitura.
-3.  **Render** servindo a interface do sistema, garantindo a acessibilidade online.
+1.  **Supabase** gerencia a integridade dos perfis de usuários e segurança (RLS), junto das entidades livro e autora.
+2.  **MongoDB** armazena os documentos dinâmicos das obras e trilhas de leitura, além de armazenar os relatórios gerados.
+3.  **Render** serve a interface do sistema, garantindo a acessibilidade online.
 
 <br>
 
@@ -99,7 +104,7 @@ Crie um arquivo chamado `.env` na raiz do projeto (ele já está listado no `.gi
 
 ```env
 # String de conexão do Supabase (PostgreSQL)
-SUPABASE_DB_URL="postgresql://postgres:[SUA_SENHA]@db.[ID_DO_PROJETO].supabase.co:5432/postgres"
+SUPABASE_DB_URL="SUPABASE_DB_URL=postgresql://postgres.[ID_DO_PROJETO]:[SUA_SENHA]@aws-0-us-west-2.pooler.supabase.com:6543/postgres"
 
 # String de conexão do MongoDB Atlas
 MONGO_DB_URL="mongodb+srv://[USUARIO]:[SENHA]@[CLUSTER].mongodb.net/?appName=[NOME_DO_APP]"
