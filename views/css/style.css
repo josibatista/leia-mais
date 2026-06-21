@@ -1295,6 +1295,33 @@ body.lmAcervoBody {
   margin: 0 auto;
 }
 
+.logo-leia-mulheres {
+  display: block;
+  width: 55%;
+  max-width: 200px;
+  height: auto;
+  margin: 0.5rem auto 0.25rem;
+}
+
+.logo-leia-mulheres--escura {
+  display: none;
+}
+
+body.lmTemaEscuro .logo-leia-mulheres--clara {
+  display: none;
+}
+
+body.lmTemaEscuro .logo-leia-mulheres--escura {
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .logo-leia-mulheres {
+    width: 70%;
+    max-width: 160px;
+  }
+}
+
 .lmAcervoBody .lmDescricaoProjeto {
   font-size: 0.95rem;
   line-height: 1.7;
