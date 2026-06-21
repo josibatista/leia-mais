@@ -1,5 +1,5 @@
 # 📚 Leia+
-![imagem](view/assets/capa.png)
+![imagem](views/assets/capa.png)
 
 O **Leia+** é uma plataforma digital desenvolvida para o projeto de extensão **Meninas Digitais (UTFPR-CP)**, com foco no apoio à ação **Leia Mulheres**. O objetivo principal é incentivar a leitura, dando foco à autoras mulheres, para que mais pessoas criem ou retomem o hábito de ler através de uma experiência gamificada, trilhas de conhecimento e um acervo curado.
 
@@ -156,27 +156,27 @@ O Leia+ está disponível online! O site está hospedado no [Render](https://ren
 <table align="center">
   <tr>
     <td align="center" valign="top">
-      <img src="view/assets/equipe/josiane.png" alt="Josiane Batista" width="100"/><br />
+      <img src="views/assets/equipe/josiane.png" alt="Josiane Batista" width="100"/><br />
       <sub><b>Josiane Batista</b></sub><br />
       <sub>Product Owner & QA</sub>
     </td>
     <td align="center" valign="top">
-      <img src="view/assets/equipe/pamela.jpg" alt="Pamela Berti" width="100"/><br />
+      <img src="views/assets/equipe/pamela.png" alt="Pamela Berti" width="100"/><br />
       <sub><b>Pamela Berti</b></sub><br />
       <sub>Back-end</sub>
     </td>
     <td align="center" valign="top">
-      <img src="view/assets/equipe/nadia.png" alt="Nadia Yuzawa" width="100"/><br />
+      <img src="views/assets/equipe/nadia.png" alt="Nadia Yuzawa" width="100"/><br />
       <sub><b>Nadia Yuzawa</b></sub><br />
       <sub>Back-end</sub>
     </td>
     <td align="center" valign="top">
-      <img src="view/assets/equipe/beatriz.jpg" alt="Beatriz Milanezi" width="100"/><br />
+      <img src="views/assets/equipe/beatriz.png" alt="Beatriz Milanezi" width="100"/><br />
       <sub><b>Beatriz Milanezi</b></sub><br />
       <sub>Front-end</sub>
     </td>
     <td align="center" valign="top">
-      <img src="view/assets/equipe/maria.jpg" alt="Maria Clara de Jesus" width="100"/><br />
+      <img src="views/assets/equipe/maria.png" alt="Maria Clara de Jesus" width="100"/><br />
       <sub><b>Maria Clara de Jesus</b></sub><br />
       <sub>Front-end</sub>
     </td>
