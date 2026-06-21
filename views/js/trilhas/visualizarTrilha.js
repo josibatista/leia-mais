@@ -1,30 +1,5 @@
-function protegerVisualizarTrilha() {
-  if (usuarioEstaLogado()) {
-    return true;
-  }
-
-  const executarBloqueio = () => {
-    ocultarConteudoProtegido();
-    exibirAlertaAcesso("Faça login para continuar.", {
-      titulo: "Acesso negado",
-      redirect: "/pages/usuarios/leitor/login.html",
-    });
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", executarBloqueio, { once: true });
-  } else {
-    executarBloqueio();
-  }
-
-  return false;
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
-  if (!protegerVisualizarTrilha()) {
-    return;
-  }
-
+  const estaLogado = usuarioEstaLogado();
   const token = obterToken();
   const usuario = obterUsuarioLogado();
 
@@ -250,6 +225,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderizarBotaoAcao() {
     vtAreaAcao.innerHTML = "";
 
+    if (!estaLogado) {
+      const linkLogin = document.createElement("a");
+      linkLogin.href = "/pages/usuarios/leitor/login.html";
+      linkLogin.classList.add("lmBotaoSaibaMais");
+      linkLogin.textContent = "Entrar para salvar e acompanhar";
+      vtAreaAcao.appendChild(linkLogin);
+      return;
+    }
+
     if (!vinculoAtual?.status || vinculoAtual.status === "concluída") {
       return;
     }
@@ -360,30 +344,38 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   async function carregarTrilha() {
-    const respostaVinculo = await fetch(
-      `/usuarios/${usuario.id}/trilhas/${trilhaId}`,
-      { headers: obterHeadersJson() },
-    );
+    if (estaLogado && usuario?.id) {
+      const respostaVinculo = await fetch(
+        `/usuarios/${usuario.id}/trilhas/${trilhaId}`,
+        { headers: obterHeadersJson() },
+      );
 
-    if (respostaVinculo.ok) {
-      const dadosVinculo = await respostaVinculo.json();
-      vinculoAtual = dadosVinculo.trilha;
-      trilhaDetalhes = obterTrilhaDoVinculo(vinculoAtual);
-      itensAtuais = dadosVinculo.itens || dadosVinculo.obras || [];
-      progressoAtual = dadosVinculo.progresso || progressoAtual;
-    } else {
-      const respostaTrilha = await fetch(`/trilhas/${trilhaId}`);
-      const dadosTrilha = await respostaTrilha.json();
+      if (respostaVinculo.ok) {
+        const dadosVinculo = await respostaVinculo.json();
+        vinculoAtual = dadosVinculo.trilha;
+        trilhaDetalhes = obterTrilhaDoVinculo(vinculoAtual);
+        itensAtuais = dadosVinculo.itens || dadosVinculo.obras || [];
+        progressoAtual = dadosVinculo.progresso || progressoAtual;
 
-      if (!respostaTrilha.ok) {
-        throw new Error(dadosTrilha.error || "Não encontramos os dados dessa trilha.");
+        renderizarTrilha();
+        renderizarProgresso(progressoAtual);
+        renderizarItens();
+        renderizarBotaoAcao();
+        return;
       }
-
-      vinculoAtual = null;
-      trilhaDetalhes = dadosTrilha;
-      itensAtuais = dadosTrilha.itens || dadosTrilha.obras || [];
-      progressoAtual = { concluidas: 0, total: itensAtuais.length, percentual: 0 };
     }
+
+    const respostaTrilha = await fetch(`/trilhas/${trilhaId}`);
+    const dadosTrilha = await respostaTrilha.json();
+
+    if (!respostaTrilha.ok) {
+      throw new Error(dadosTrilha.error || "Não encontramos os dados dessa trilha.");
+    }
+
+    vinculoAtual = null;
+    trilhaDetalhes = dadosTrilha;
+    itensAtuais = dadosTrilha.itens || dadosTrilha.obras || [];
+    progressoAtual = { concluidas: 0, total: itensAtuais.length, percentual: 0 };
 
     renderizarTrilha();
     renderizarProgresso(progressoAtual);
