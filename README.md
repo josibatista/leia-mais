@@ -149,9 +149,11 @@ O Leia+ está disponível online! O site está hospedado no [Render](https://ren
 
 <br>
 
-## 📄Documentação
+## 📄Documentação e Apresentação
 
-### 📋 [Documento de Projeto Completo](docs/documentoProjeto.md)
+### 📽️ [Vídeo de Apresentação da Versão 1 do Projeto](https://canva.link/krmfavska5r1pm2)
+
+### 📋 [Documento de Projeto Completo](docs/documentoProjeto.pdf)
 
 ### 🧪 [Plano de Testes](docs/planoDeTestes.md)
 
